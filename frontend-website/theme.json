@@ -1,0 +1,80 @@
+{
+	"name": "musixmatch",
+	"title": "MusixMatch",
+	"version": "1.0.0",
+	"author": {
+		"name": "Amir.h Yeganemehr",
+		"website": "http://www.yeganemehr.ir/"
+	},
+	"homepage": "https://www.musixmatch.com/",
+	"assets": [
+		{
+			"type": "js",
+			"file": "assets/plugins/jquery/jquery-2.2.4.min.js"
+		},
+		{
+			"type": "js",
+			"file": "assets/plugins/bootstrap/js/bootstrap.min.js"
+		},
+		{
+			"type": "css",
+			"file": "assets/css/main.css"
+		}
+	],
+	"autoload": "autoloader.json",
+	"languages": {
+		"fa_IR": "langs/fa_IR.json"
+	},
+	"views": [
+		{
+			"name": "\\themes\\musixmatch\\views\\index",
+			"parent": "\\packages\\ghafiye\\views\\index",
+			"file": "html/index.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\contact",
+			"parent": "\\packages\\ghafiye\\views\\contact",
+			"file": "html/contact.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\about",
+			"parent": "\\packages\\ghafiye\\views\\about",
+			"file": "html/about.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\lyrics\\view",
+			"parent": "\\packages\\ghafiye\\views\\lyrics\\view",
+			"file": "html/lyrics/view.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\artists\\view",
+			"parent": "\\packages\\ghafiye\\views\\artists\\view",
+			"file": "html/artists/view.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\artists\\albums",
+			"parent": "\\packages\\ghafiye\\views\\artists\\albums",
+			"file": "html/artists/albums.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\artists\\album",
+			"parent": "\\packages\\ghafiye\\views\\artists\\album",
+			"file": "html/artists/album.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\explore\\best",
+			"parent": "\\packages\\ghafiye\\views\\explore\\best",
+			"file": "html/explore/best.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\explore\\lastest",
+			"parent": "\\packages\\ghafiye\\views\\explore\\lastest",
+			"file": "html/explore/lastest.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\explore\\genre",
+			"parent": "\\packages\\ghafiye\\views\\explore\\genre",
+			"file": "html/explore/genre.php"
+		}
+	]
+}

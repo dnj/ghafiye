@@ -1,0 +1,74 @@
+body.album{
+	background: #fff;
+	> main{
+		img.album-image{
+			max-width: 300px;
+		}
+		> .row:first-child{
+			margin-top: 50px;
+			min-height: 400px;
+			h1{
+				font-family: nazanin;
+				font-size: 50px;
+				margin-bottom: 5px;
+				line-height: 62px;
+				font-weight: 700;
+				color: #2c3e50;
+			}
+			h2{
+				margin-top: 8px;
+			}
+			h2, h2 a{
+				color: #808b96;
+				font-family: yekan;
+				font-size: 20px;
+			}
+			span{
+				font-family: yekan;
+				color: #a6aeb6;
+				font-size: 15px;
+				margin-top: 8px;
+			}
+			img{
+				box-shadow: 0 3px 15px 0 rgba(0,0,0,0.1);
+			}
+
+			ul{
+				list-style: none;
+				padding-right: 0;
+				margin-top:10px;
+				li{
+					border-bottom: 1px solid #f0f0f0;
+					transition-property: all;
+					transition-duration: .3s;
+
+					a{
+						display: block;
+						padding: 15px 10px 15px 15px ;
+						width: 100%;
+						span{
+							width: 25px;
+							text-align: center;
+							color: #a6aeb6;
+						}
+						strong{
+							padding-right: 5px;
+							padding-left: 45px;
+							color: #2c3e50;
+							font-family: koodak;
+							font-weight: normal;
+							font-size: 17px;
+						}
+					}
+					&:hover{
+						background-color: rgba(0,0,0,0.02);
+						strong{
+							color:#f63;
+						}
+					}
+				}
+			}
+		}
+
+	}
+}

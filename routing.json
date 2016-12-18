@@ -1,0 +1,52 @@
+[
+	{
+		"path": "/",
+		"controller": "controllers\\home@index",
+		"method":"get"
+	},
+	{
+		"path": "contact",
+		"controller": "controllers\\home@contact",
+		"method":["post","get"]
+	},
+	{
+		"path": "about",
+		"controller": "controllers\\home@about",
+		"method":"get"
+	},
+	{
+		"path": "explore",
+		"controller": "controllers\\explore@best",
+		"method":"get"
+	},
+	{
+		"path": "explore/lastest",
+		"controller": "controllers\\explore@lastest",
+		"method":"get"
+	},
+	{
+		"path": ["explore","genre",{"type":"dynamic","name":"genre"}],
+		"controller": "controllers\\explore@genre",
+		"method":"get"
+	},
+	{
+		"path": [{"type":"dynamic","name":"artist"},"albums"],
+		"controller": "controllers\\artists@albums",
+		"method":"get"
+	},
+	{
+		"path": [{"type":"dynamic","name":"artist"},"albums",{"type":"dynamic","name":"album"}],
+		"controller": "controllers\\artists@album",
+		"method":"get"
+	},
+	{
+		"path": [{"type":"dynamic","name":"artist"},{"type":"dynamic","name":"song"}],
+		"controller": "controllers\\lyrics@view",
+		"method":"get"
+	},
+	{
+		"path": [{"type":"dynamic","name":"artist"}],
+		"controller": "controllers\\artists@view",
+		"method":"get"
+	}
+]
