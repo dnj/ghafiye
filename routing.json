@@ -10,7 +10,7 @@
 		"method":["post","get"]
 	},
 	{
-		"path": "about",
+		"path": "about-us",
 		"controller": "controllers\\home@about",
 		"method":"get"
 	},

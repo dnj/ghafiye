@@ -245,6 +245,8 @@
 		"explore.lastest.description":"شعر آخرین آهنگ های منتشر شده را در اینجا بیابید.",
 		"explore.genres" : "بر اساس سبک",
 		"explore.genre.title" : "آهنگ های سبک {genre}",
-		"explore.genre.description" : "متن تمام آهنگ های {genre} را در اینجا پیدا کنید."
+		"explore.genre.description" : "متن تمام آهنگ های {genre} را در اینجا پیدا کنید.",
+		"about.title":"درباره قافیه",
+		"about.what":"قافیه؟چی هست؟برای چی؟"
 	}
 }
