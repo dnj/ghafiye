@@ -75,6 +75,11 @@
 			"name": "\\themes\\musixmatch\\views\\explore\\genre",
 			"parent": "\\packages\\ghafiye\\views\\explore\\genre",
 			"file": "html/explore/genre.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\blog\\listview",
+			"parent": "\\packages\\blog\\views\\post\\index",
+			"file": "html/blog/listview.php"
 		}
 	]
 }

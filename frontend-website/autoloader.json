@@ -63,6 +63,14 @@
 		{
 			"classes":["views\\explore\\genre"],
 			"file":"views/explore/genre.php"
+		},
+		{
+			"classes":["views\\blog\\listview"],
+			"file":"views/blog/list.php"
+		},
+		{
+			"classes":["views\\blogTrait"],
+			"file":"libraries/mvc/views/blog.php"
 		}
 	]
 }

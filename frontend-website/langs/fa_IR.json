@@ -254,6 +254,11 @@
 		"contact.form.text" : "چی؟",
 		"contact.form.submit":"بفرست",
 		"data_validation": "داده وارد شده معتبر نیست",
-		"data_duplicate": "داده وارد شده تکراری میباشد"
+		"data_duplicate": "داده وارد شده تکراری میباشد",
+		"blog.continue.read.post": "ادامه مطلب",
+		"blog.list.title": "وبلاگ",
+		"blog.list.description": "آموزش هایی که شاید شما هم به دنبال آن بودید!",
+		"blog.archive_box": "ارشیو پست ها",
+		"blog.popular_blog": "پست های برتر"
 	}
 }
