@@ -10976,6 +10976,14 @@ body > header nav form.searchbox .form-group .form-control-icon {
 body > main {
   min-height: 300px;
 }
+.form-group label.control-label {
+  font-family: yekan;
+  font-size: 13px;
+}
+form button[type=submit] {
+  font-family: koodak;
+  font-size: 15px;
+}
 body.home {
   background-color: #fff;
 }
@@ -11927,6 +11935,7 @@ body.article > main article {
   padding: 20px 30px;
   min-height: 500px;
 }
+body.article > main article > h1,
 body.article > main article > h2 {
   font-family: nazanin;
   font-weight: 700;

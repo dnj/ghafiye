@@ -9,7 +9,7 @@ use \packages\base\views\FormError;
 
 use \packages\ghafiye\controller;
 use \packages\ghafiye\view;
-use \packages\ghafiye\contact;
+use \packages\contactus\letter;
 
 use \packages\chatdesign\plan;
 class home extends controller{
@@ -38,12 +38,11 @@ class home extends controller{
 			);
 			try{
 				$inputs = $this->checkinputs($inputsRules);
-				$contact = new contact($inputs);
+				$contact = new letter($inputs);
 				$contact->ip = http::$client['ip'];
 				$contact->save();
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
-				echo $error;
 				$view->setFormError(FormError::fromException($error));
 			}
 			$view->setDataForm($this->inputsvalue($inputsRules));

@@ -5,7 +5,7 @@
 		"method":"get"
 	},
 	{
-		"path": "contact",
+		"path": "contact-us",
 		"controller": "controllers\\home@contact",
 		"method":["post","get"]
 	},

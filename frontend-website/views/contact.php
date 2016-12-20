@@ -11,6 +11,8 @@ class contact extends homepagecontact{
 	use viewTrait, formTrait;
 	function __beforeLoad(){
 		$this->setTitle(translator::trans('contact.title'));
+		$this->addBodyClass('article');
+		$this->addBodyClass('contact');
 		$this->addAssets();
 	}
 	private function addAssets(){
