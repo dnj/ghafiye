@@ -105,6 +105,11 @@
 			"name": "\\themes\\musixmatch\\views\\blog\\tag",
 			"parent": "\\packages\\blog\\views\\post\\tag",
 			"file": "html/blog/listview.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\notfound",
+			"parent": "\\packages\\ghafiye\\views\\notfound",
+			"file": "html/notfound.php"
 		}
 	]
 }

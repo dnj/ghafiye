@@ -91,6 +91,10 @@
 		{
 			"classes":["views\\blog\\tag"],
 			"file":"views/blog/tag.php"
+		},
+		{
+			"classes":["views\\notfound"],
+			"file":"views/notfound.php"
 		}
 	]
 }

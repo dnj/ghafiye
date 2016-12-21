@@ -48,5 +48,14 @@
 		"path": [{"type":"dynamic","name":"artist"}],
 		"controller": "controllers\\artists@view",
 		"method":"get"
+	},
+	{
+		"paths": [
+			"/"
+		],
+		"exceptions":[
+			"\\packages\\base\\NotFound"
+		],
+		"handler": "controllers\\home@notfound"
 	}
 ]

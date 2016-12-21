@@ -132,6 +132,10 @@
 		{
 			"classes":["views\\explore\\genre"],
 			"file":"views/explore/genre.php"
+		},
+		{
+			"classes":["views\\notfound"],
+			"file":"views/notfound.php"
 		}
 	]
 }

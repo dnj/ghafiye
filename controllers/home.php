@@ -57,4 +57,11 @@ class home extends controller{
 		$this->response->setView($view);
 		return $this->response;
 	}
+	public function notfound(){
+		$this->response->setHttpCode(404);
+		if($view = view::byName("\\packages\\ghafiye\\views\\notfound")){
+			$this->response->setView($view);
+		}
+		return $this->response;
+	}
 }

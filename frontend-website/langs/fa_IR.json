@@ -274,6 +274,8 @@
 		"blog.list.title.author": "نوشته های {author}",
 		"blog.list.title.category": "دسته بندی {category}",
 		"blog.list.title.archive": "ارشیو پست های {date}",
-		"blog.list.title.tag": "برچسب {tag}"
+		"blog.list.title.tag": "برچسب {tag}",
+		"notfound.title":"یافت نشد!",
+		"notfound.description":"گشتیم ولی چیزی که مد نظر شما بود را برای ارائه نیافتیم، سایت را با جستجوگر بالای سایت کامل بگردید شاید آن را پیدا کنید، یا به <a href=\"/\">صفحه اصلی</a> بگردید آن جا شانس یک شروع نو برای شماست!"
 	}
 }
