@@ -71,6 +71,26 @@
 		{
 			"classes":["views\\blogTrait"],
 			"file":"libraries/mvc/views/blog.php"
+		},
+		{
+			"classes":["views\\blog\\view"],
+			"file":"views/blog/view.php"
+		},
+		{
+			"classes":["views\\blog\\author"],
+			"file":"views/blog/author.php"
+		},
+		{
+			"classes":["views\\blog\\category"],
+			"file":"views/blog/category.php"
+		},
+		{
+			"classes":["views\\blog\\archive"],
+			"file":"views/blog/archive.php"
+		},
+		{
+			"classes":["views\\blog\\tag"],
+			"file":"views/blog/tag.php"
 		}
 	]
 }

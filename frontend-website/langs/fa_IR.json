@@ -259,6 +259,21 @@
 		"blog.list.title": "وبلاگ",
 		"blog.list.description": "آموزش هایی که شاید شما هم به دنبال آن بودید!",
 		"blog.archive_box": "ارشیو پست ها",
-		"blog.popular_blog": "پست های برتر"
+		"blog.popular_blog": "پست های برتر",
+		"blog.post.wrightby": "نوشته شده توسط {author}",
+		"blog.post.sendin": "ارسال شده در {date}",
+		"blog.post.tags": "برچسب ها",
+		"blog.post.comment.name": "نام شما",
+		"blog.post.comment.email": "ایمیل شما",
+		"blog.post.comment.text": "متن نظر",
+		"blog.post.comment.send": "ارسال نظر",
+		"blog.post.comment.reply": "پاسخ دادن",
+		"blog.post.cancel.comment.reply": "انصراف",
+		"blog.post.comments": "نظرات",
+		"blog.post.setcomment": "گذاشتن نظر",
+		"blog.list.title.author": "نوشته های {author}",
+		"blog.list.title.category": "دسته بندی {category}",
+		"blog.list.title.archive": "ارشیو پست های {date}",
+		"blog.list.title.tag": "برچسب {tag}"
 	}
 }

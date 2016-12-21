@@ -1,0 +1,25 @@
+<?php
+namespace themes\musixmatch\views\blog;
+use \packages\base\translator;
+use \packages\base\frontend\theme;
+
+use \packages\userpanel\date;
+
+use \themes\musixmatch\viewTrait;
+use \themes\musixmatch\views\blogTrait;
+
+use \packages\blog\views\post\archive as postArchive;
+class archive extends postArchive{
+	use viewTrait, blogTrait;
+	function __beforeLoad(){
+		$this->setTitle(array(
+			translator::trans("blog.list.title"),
+			translator::trans("blog.list.title.archive", array("date" => date::format("F Y", $this->getPosts()[0]->date)))
+		));
+		$this->addAssets();
+	}
+	private function addAssets(){
+		$this->addCSSFile(theme::url("assets/css/blog.css"));
+		$this->addJSFile(theme::url("assets/js/pages/blog.js"));
+	}
+}

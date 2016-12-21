@@ -80,6 +80,31 @@
 			"name": "\\themes\\musixmatch\\views\\blog\\listview",
 			"parent": "\\packages\\blog\\views\\post\\index",
 			"file": "html/blog/listview.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\blog\\view",
+			"parent": "\\packages\\blog\\views\\post\\view",
+			"file": "html/blog/view.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\blog\\author",
+			"parent": "\\packages\\blog\\views\\post\\author",
+			"file": "html/blog/listview.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\blog\\category",
+			"parent": "\\packages\\blog\\views\\post\\category",
+			"file": "html/blog/listview.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\blog\\archive",
+			"parent": "\\packages\\blog\\views\\post\\archive",
+			"file": "html/blog/listview.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\blog\\tag",
+			"parent": "\\packages\\blog\\views\\post\\tag",
+			"file": "html/blog/listview.php"
 		}
 	]
 }
