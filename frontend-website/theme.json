@@ -110,6 +110,11 @@
 			"name": "\\themes\\musixmatch\\views\\notfound",
 			"parent": "\\packages\\ghafiye\\views\\notfound",
 			"file": "html/notfound.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\copyright",
+			"parent": "\\packages\\ghafiye\\views\\copyright",
+			"file": "html/copyright.php"
 		}
 	]
 }

@@ -64,4 +64,10 @@ class home extends controller{
 		}
 		return $this->response;
 	}
+	public function copyright(){
+		$view = view::byName("\\packages\\ghafiye\\views\\copyright");
+		$this->response->setStatus(true);
+		$this->response->setView($view);
+		return $this->response;
+	}
 }

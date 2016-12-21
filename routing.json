@@ -25,6 +25,11 @@
 		"method":"get"
 	},
 	{
+		"path": ["copyright"],
+		"controller": "controllers\\home@copyright",
+		"method":"get"
+	},
+	{
 		"path": ["explore","genre",{"type":"dynamic","name":"genre"}],
 		"controller": "controllers\\explore@genre",
 		"method":"get"

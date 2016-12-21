@@ -136,6 +136,10 @@
 		{
 			"classes":["views\\notfound"],
 			"file":"views/notfound.php"
+		},
+		{
+			"classes":["views\\copyright"],
+			"file":"views/copyright.php"
 		}
 	]
 }
