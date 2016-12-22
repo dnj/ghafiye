@@ -17,7 +17,7 @@ $this->the_header();
 				<h2><a href="<?php echo(base\url("blog/author/".$this->post->author->id)); ?>"><?php echo translator::trans("blog.post.wrightby", array("author" => $this->post->author->getFullName())); ?></a></h2>
 				<div class="translations">
 					<span><?php echo translator::trans('blog.post.sendin', array('date' => date::format("F Y", $this->post->date))); ?></span>
-					<h5><?php echo translator::trans('blog.post.sendin').$this->showCategories(); ?></h5>
+					<h5><?php if($this->showCategories())echo translator::trans('blog.post.sendin').$this->showCategories(); ?></h5>
 				</div>
 			</div>
 		</header>

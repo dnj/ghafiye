@@ -64,12 +64,15 @@ class view extends postView{
 	protected function showCategories(){
 		$categories = $this->getCategories();
 		$code = '';
-		if(count($categories) > 1){
-			foreach($categories as $category){
-				$code .= '<span> : </span> <a href="'.base\url("blog/categories/".$category->id).'" rel="category tag">'.$category->title.'</a>';
+		if(!empty($categories)){
+
+			if(count($categories) > 1){
+				foreach($categories as $category){
+					$code .= '<span> : </span> <a href="'.base\url("blog/categories/".$category->id).'" rel="category tag">'.$category->title.'</a>';
+				}
+			}else{
+				$code = '<a class="dotted-link1" href="'.base\url("blog/categories/".$categories[0]->id).'" rel="category tag">'.$categories[0]->title.'</a>';
 			}
-		}else{
-			$code = '<a class="dotted-link1" href="'.base\url("blog/categories/".$categories[0]->id).'" rel="category tag">'.$categories[0]->title.'</a>';
 		}
 		return $code;
 	}
