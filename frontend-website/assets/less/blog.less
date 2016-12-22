@@ -1,0 +1,120 @@
+body.blog{
+	section.posts{
+		article{
+			min-height: 0;
+			padding-top: 25px;
+			padding-bottom: 25px;
+			margin-bottom: 30px;
+			div.image{
+				height: 250px;
+				width: 100%;
+				border: 1px solid #ccc;
+
+			}
+			header{
+				padding-bottom: 15px;
+				position: relative;
+				h2{
+					font-weight: 700;
+					font-size: 18px;
+					font-family: yekan;
+					margin-top:0;
+					a{
+						color: #333333;
+						&:hover{
+							color:#f63;
+						}
+					}
+				}
+				ul.post-meta{
+					list-style-type: none;
+					padding-right: 0;
+					overflow: hidden;
+					li{
+						float: right;
+						margin-left: 10px;
+						i{
+							margin: 3px 0px 0px 5px;
+						}
+					}
+				}
+				&::after{
+					position: absolute;
+					content: " ";
+					display: block;
+					width: 100%;
+					height: 1px;
+					border-bottom: 1px solid #cccccc80;
+
+				}
+			}
+			div.post-content{
+				img{
+					float: right;
+					height: 250px;
+					width: 250px;
+					margin-left: 25px;
+					margin-bottom: 25px;
+				}
+			}
+			div.tags{
+				section{
+				    padding-right: 0;
+				}
+				a{
+					margin-bottom: 5px;
+					font-size: 11px;
+					padding: 5px;
+				}
+			}
+			footer{
+				margin-top: 30px;
+				.btn{
+					font-family: koodak;
+					font-size:15px;
+				}
+			}
+		}
+	}
+	div.comments{
+		h1{
+			font-family: nazanin;
+		}
+		section.posts{
+			article.post{
+				header ul.post-meta{
+					li{
+						&:nth-child(2){
+							float: left;
+						}
+					}
+				}
+			}
+		}
+	}
+	div.setcomment{
+		h1{
+			font-family: nazanin;
+		}
+		div.reply-info{
+			padding-bottom: 20px;
+			p.reply-info-name{
+				margin-top: 10px;
+				margin-bottom: 0;
+			}
+		}
+	}
+	.sidebar{
+		.panel{
+			background:#fff;
+			border-radius: 3px;
+			box-shadow: 0 1px 2px rgba(0,0,0,.1);
+			.panel-heading{
+				font-family: yekan;
+				font-size:18px;
+				border-bottom: 1px solid rgba(0,0,0,0.05);
+				padding: 6.5px 15px;
+			}
+		}
+	}
+}

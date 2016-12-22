@@ -14,10 +14,7 @@ class author extends blogAuthor{
 			translator::trans("blog.list.title"),
 			translator::trans("blog.list.title.author", array("author" => $this->getPosts()[0]->author->getFullName()))
 		));
-		$this->addAssets();
-	}
-	private function addAssets(){
-		$this->addCSSFile(theme::url("assets/css/blog.css"));
-		$this->addJSFile(theme::url("assets/js/pages/blog.js"));
+		$this->addBodyClass('article');
+		$this->addBodyClass('blog');
 	}
 }

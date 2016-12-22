@@ -4,7 +4,7 @@ var blogViewPost = function(){
 			e.preventDefault();
 			$('html, body').animate({ scrollTop: $(".setcomment").offset().top }, 2000);
 			$("input[name=reply]").val($(this).data("comment"));
-			var inreply = $(this).parents(".media-card-body").find(".comment-name").text();
+			var inreply = $(this).parents("header").find("h2").text();
 			$(".reply-info-name").html("در پاسخ به: "+inreply);
 			$(".reply-info").show();
 		});

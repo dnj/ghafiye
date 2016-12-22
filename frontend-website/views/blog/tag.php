@@ -14,10 +14,7 @@ class tag extends postTags{
 			translator::trans("blog.list.title"),
 			translator::trans("blog.list.title.tag", array("tag" => $this->getTag()->title))
 		));
-		$this->addAssets();
-	}
-	private function addAssets(){
-		$this->addCSSFile(theme::url("assets/css/blog.css"));
-		$this->addJSFile(theme::url("assets/js/pages/blog.js"));
+		$this->addBodyClass('article');
+		$this->addBodyClass('blog');
 	}
 }

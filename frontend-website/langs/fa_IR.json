@@ -255,13 +255,13 @@
 		"contact.form.submit":"بفرست",
 		"data_validation": "داده وارد شده معتبر نیست",
 		"data_duplicate": "داده وارد شده تکراری میباشد",
-		"blog.continue.read.post": "ادامه مطلب",
+		"blog.post.continue": "ادامه مطلب",
 		"blog.list.title": "وبلاگ",
 		"blog.list.description": "آموزش هایی که شاید شما هم به دنبال آن بودید!",
 		"blog.archive_box": "ارشیو پست ها",
 		"blog.popular_blog": "پست های برتر",
 		"blog.post.wrightby": "نوشته شده توسط {author}",
-		"blog.post.sendin": "ارسال شده در {date}",
+		"blog.post.sendin": "ارسال شده در {category}",
 		"blog.post.tags": "برچسب ها",
 		"blog.post.comment.name": "نام شما",
 		"blog.post.comment.email": "ایمیل شما",
@@ -277,6 +277,8 @@
 		"blog.list.title.tag": "برچسب {tag}",
 		"notfound.title":"یافت نشد!",
 		"notfound.description":"گشتیم ولی چیزی که مد نظر شما بود را برای ارائه نیافتیم، سایت را با جستجوگر بالای سایت کامل بگردید شاید آن را پیدا کنید، یا به <a href=\"/\">صفحه اصلی</a> بگردید آن جا شانس یک شروع نو برای شماست!",
-		"copyright.title":"قوانین حق تکثیر"
+		"copyright.title":"قوانین حق تکثیر",
+		"blog.post.comments.number": "{count} دیدگاه",
+		"blog.post.view.number": "{view} بازدید"
 	}
 }

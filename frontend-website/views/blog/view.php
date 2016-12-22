@@ -22,12 +22,11 @@ class view extends postView{
 			translator::trans("blog.list.title"),
 			$this->post->title
 		));
-		$this->addBodyClass('lyric');
+		$this->addBodyClass('article');
+		$this->addBodyClass('blog');
 		$this->addAsseste();
 	}
 	private function addAsseste(){
-		$this->addCSSFile(theme::url("assets/css/styles-453111948d9c7c5c7ceb.css"));
-		$this->addCSSFile(theme::url("assets/css/blog.css"));
 		$this->addJSFile(theme::url("assets/js/pages/blog.view.js"));
 		$this->addJSFile(theme::url("assets/plugins/jquery.growl/javascripts/jquery.growl.js"));
 		$this->addCSSFile(theme::url("assets/plugins/jquery.growl/stylesheets/jquery.growl.css"));
@@ -40,22 +39,23 @@ class view extends postView{
 			if($comment->reply == $reply and $comment->status == comment::accepted){
 				$gravatar = 'http://www.gravatar.com/avatar/'.md5(strtolower(trim($comment->email))).'?s=50&r=G&d='.urlencode("http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=50");
 				$date = date::format("l j F Y",  $comment->date);
-				$html .= "<li>";
 				if($comment->reply === null){
 					$this->number = 1;
-					$html .= '<div class="activity-item show-avatar-icon track_translation">';
+					$html .= "<article class=\"post\">";
 				}else{
-					$html .= "<div class=\"activity-item show-avatar-icon track_translation col-md-offset-{$this->number}\">";
+					$html .= "<article class=\"post col-md-offset-{$this->number}\">";
 					$this->number++;
 				}
-				$html .= "<div class=\"activity-type\"></div><div class=\"container\"><div class=\"avatar\"><a class=\"profile-pic\">";
-				$html .= "<img class=\"avatar-icon avatar-icon\" src=\"{$gravatar}\">";
-				$html .= "</a></div></div>";
-				$html .= "<div class=\"list\"><div class=\"track-card media-card has-picture\">";
-				$html .= "<div class=\"media-card-body\"><h4 class=\"media-card-subtitle comment-name\">{$comment->name}</h4>{$comment->text}<div class=\"media-card-text\"><h3 class=\"media-card-subtitle\"><span class=\"artist-field\">";
-				$html .= "<span><a class=\"artist reply\" data-comment=\"{$comment->id}\" href=\"#\">{$replyText}</a></span>";
-				$html .= "</span></h3></div></div></div></div>";
-				$html .= "<span class=\"date\">{$date}</span></div></li>";
+				$html .= "<div class=\"row\"><div class=\"col-md-1\">";
+				$html .= "<img src=\"{$gravatar}\"></div>";
+				$html .= "<div class=\"col-md-11\">";
+				$html .= "<header><h2>{$comment->name}</a></h2>";
+				$html .= "<ul class=\"post-meta\">";
+				$html .= "<li><i class=\"fa fa-clock-o\"></i>{$date}</li>";
+				$html .= "<li><a class=\"artist reply\" data-comment=\"{$comment->id}\" href=\"#\"><i class=\"fa fa-undo\"></i>{$replyText}</a></li>";
+				$html .= "</ul></header>";
+				$html .= "<div class=\"post-content\">{$comment->text}</div>";
+				$html .= "</div></div></article>";
 				$html .= $this->revertReply($comment->id);
 			}
 		}
