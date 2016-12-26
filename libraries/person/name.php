@@ -7,7 +7,7 @@ class name extends dbObject{
 	protected $dbFields = array(
 		'person' => array('type' => 'int', 'required' => true),
 		'lang' => array('type' => 'text', 'required' => true),
-		'name' => array('type' => 'text', 'required' => true)
+		'name' => array('type' => 'text', 'required' => true, 'unique' => true)
 	);
 	static function byName($name){
 		$obj = new name();

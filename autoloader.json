@@ -140,6 +140,38 @@
 		{
 			"classes":["views\\copyright"],
 			"file":"views/copyright.php"
+		},
+		{
+			"classes":["listeners\\settings\\usertype"],
+			"file":"listeners/settings/usertype.php"
+		},
+		{
+			"classes":["authorization"],
+			"file":"libraries/users/authorization.php"
+		},
+		{
+			"classes":["authentication"],
+			"file":"libraries/users/authentication.php"
+		},
+		{
+			"classes":["views\\panel\\person\\listview"],
+			"file":"views/panel/persons/list.php"
+		},
+		{
+			"classes":["controllers\\panel\\persons"],
+			"file":"controllers/panel/persons.php"
+		},
+		{
+			"classes":["views\\panel\\person\\edit"],
+			"file":"views/panel/persons/edit.php"
+		},
+		{
+			"classes":["views\\panel\\person\\add"],
+			"file":"views/panel/persons/add.php"
+		},
+		{
+			"classes":["views\\panel\\person\\delete"],
+			"file":"views/panel/persons/delete.php"
 		}
 	]
 }

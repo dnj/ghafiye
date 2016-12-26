@@ -1,0 +1,20 @@
+{
+	"files":[
+		{
+			"classes":["views\\ghafiye\\person\\listview"],
+			"file":"views/persons/list.php"
+		},
+		{
+			"classes":["views\\ghafiye\\person\\edit"],
+			"file":"views/persons/edit.php"
+		},
+		{
+			"classes":["views\\ghafiye\\person\\add"],
+			"file":"views/persons/add.php"
+		},
+		{
+			"classes":["views\\ghafiye\\person\\delete"],
+			"file":"views/persons/delete.php"
+		}
+	]
+}

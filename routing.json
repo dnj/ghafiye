@@ -35,6 +35,23 @@
 		"method":"get"
 	},
 	{
+		"path": ["userpanel", "persons"],
+		"controller": "controllers\\panel\\persons@listview",
+		"method":"get"
+	},
+	{
+		"path": ["userpanel", "persons", "edit", {"type":"dynamic", "name":"id", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\persons@edit"
+	},
+	{
+		"path": ["userpanel", "persons", "add"],
+		"controller": "controllers\\panel\\persons@add"
+	},
+	{
+		"path": ["userpanel", "persons", "delete", {"type":"dynamic", "name":"id", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\persons@delete"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

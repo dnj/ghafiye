@@ -1,0 +1,39 @@
+{
+	"name": "clipone",
+	"title": "clipone",
+	"version": "1.0.0",
+	"author": {
+		"name": "Mahdi abedi",
+		"website": "http://www.jeyserver.com/"
+	},
+	"homepage": "http://ghafiye.com/",
+	"assets": [
+	],
+	"autoload": "autoloader.json",
+	"languages": {
+		"fa_IR": "langs/fa_IR.json"
+	},
+	"views": [
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\person\\listview",
+			"parent": "\\packages\\ghafiye\\views\\panel\\person\\listview",
+			"file": "html/persons/list.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\person\\edit",
+			"parent": "\\packages\\ghafiye\\views\\panel\\person\\edit",
+			"file": "html/persons/edit.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\person\\add",
+			"parent": "\\packages\\ghafiye\\views\\panel\\person\\add",
+			"file": "html/persons/add.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\person\\delete",
+			"parent": "\\packages\\ghafiye\\views\\panel\\person\\delete",
+			"file": "html/persons/delete.php"
+		}
+	],
+	"production": true
+}

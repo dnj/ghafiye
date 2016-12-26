@@ -1,5 +1,6 @@
 <?php
 namespace packages\ghafiye\translator;
+use \packages\base\db;
 use \packages\base\translator;
 trait name{
 	public function name($lang = null){
@@ -55,6 +56,19 @@ trait name{
 	}
 	public static function decodeName($name){
 		return str_replace('-', ' ',$name);
+	}
+	public function addName($nametxt, $lang){
+		$name = new $this->relations['names'][1]();
+		$name->person = $this->id;
+		$name->name = $nametxt;
+		$name->lang = $lang;
+		$name->save();
+	}
+	public function editName($nametxt, $lang){
+		$name = new $this->relations['names'][1]();
+		$person = $name->where("lang", $lang)->where("person", $this->id)->getOne();
+		$person->name = $nametxt;
+		$person->save();
 	}
 }
 class nameRelationException extends \Exception{}

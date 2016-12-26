@@ -4,6 +4,8 @@ use packages\base\db\dbObject;
 use packages\ghafiye\translator\name;
 class person extends dbObject{
 	use name;
+	const men = 1;
+	const women = -1;
 	protected $dbTable = "ghafiye_persons";
 	protected $primaryKey = "id";
 	protected $dbFields = array(
