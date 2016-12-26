@@ -172,6 +172,38 @@
 		{
 			"classes":["views\\panel\\person\\delete"],
 			"file":"views/panel/persons/delete.php"
+		},
+		{
+			"classes":["controllers\\panel\\groups"],
+			"file":"controllers/panel/groups.php"
+		},
+		{
+			"classes":["group"],
+			"file":"libraries/group/group.php"
+		},
+		{
+			"classes":["group\\title"],
+			"file":"libraries/group/title.php"
+		},
+		{
+			"classes":["group\\person"],
+			"file":"libraries/group/person.php"
+		},
+		{
+			"classes":["views\\panel\\group\\listview"],
+			"file":"views/panel/groups/list.php"
+		},
+		{
+			"classes":["views\\panel\\group\\edit"],
+			"file":"views/panel/groups/edit.php"
+		},
+		{
+			"classes":["views\\panel\\group\\add"],
+			"file":"views/panel/groups/add.php"
+		},
+		{
+			"classes":["views\\panel\\group\\delete"],
+			"file":"views/panel/groups/delete.php"
 		}
 	]
 }

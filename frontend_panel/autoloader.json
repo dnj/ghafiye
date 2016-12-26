@@ -15,6 +15,22 @@
 		{
 			"classes":["views\\ghafiye\\person\\delete"],
 			"file":"views/persons/delete.php"
+		},
+		{
+			"classes":["views\\ghafiye\\group\\listview"],
+			"file":"views/groups/list.php"
+		},
+		{
+			"classes":["views\\ghafiye\\group\\edit"],
+			"file":"views/groups/edit.php"
+		},
+		{
+			"classes":["views\\ghafiye\\group\\add"],
+			"file":"views/groups/add.php"
+		},
+		{
+			"classes":["views\\ghafiye\\group\\delete"],
+			"file":"views/groups/delete.php"
 		}
 	]
 }

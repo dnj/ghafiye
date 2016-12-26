@@ -10,6 +10,10 @@ class usertype{
 			'person_delete',
 			'person_name_add',
 			'person_name_delete',
+			'groups_list',
+			'group_add',
+			'group_edit',
+			'group_delete'
 		);
 		foreach($permissions as $permission){
 			permissions::add('ghafiye_'.$permission);
