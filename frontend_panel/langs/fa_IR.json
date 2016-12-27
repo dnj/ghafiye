@@ -70,6 +70,7 @@
 		"ghafiye.panel.album.avatar": "تصویر",
 		"ghafiye.panel.album.songs": "آهنگ های آلبوم",
 		"ghafiye.album.delete.warning": "آیا شما از حذف آلبوم به شناسه #{album_id} اطمینان دارید؟ این عملیات بدون بازگشت است",
-		"ghafiye.panel.album.word.key": "عنوان"
+		"ghafiye.panel.album.word.key": "عنوان",
+		"ghafiye.panel.person.word.key": "کلمه کلیدی"
 	}
 }

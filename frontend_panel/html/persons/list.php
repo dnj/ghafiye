@@ -15,7 +15,7 @@ $this->the_header();
 		<!-- start: BASIC TABLE PANEL -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="clip-globe"></i> <?php echo "title"; ?>
+				<i class="clip-users"></i> <?php echo(translator::trans("ghafiye.panle.persons.list")); ?>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link tooltips" title="<?php echo translator::trans('search'); ?>" href="#search" data-toggle="modal" data-original-title=""><i class="fa fa-search"></i></a>
 					<?php if($this->canAdd){ ?>
@@ -81,6 +81,30 @@ $this->the_header();
 					'type' => 'number',
 					'label' => translator::trans("ghafiye.panel.person.id"),
 					'ltr' => true
+				),
+				array(
+					'name' => 'name_prefix',
+					'label' => translator::trans("ghafiye.panel.person.name_prefix")
+				),
+				array(
+					'name' => 'first_name',
+					'label' => translator::trans("ghafiye.panel.person.first_name")
+				),
+				array(
+					'name' => 'middle_name',
+					'label' => translator::trans("ghafiye.panel.person.middle_name")
+				),
+				array(
+					'name' => 'last_name',
+					'label' => translator::trans("ghafiye.panel.person.last_name")
+				),
+				array(
+					'name' => 'name_suffix',
+					'label' => translator::trans("ghafiye.panel.person.name_suffix")
+				),
+				array(
+					'name' => 'word',
+					'label' => translator::trans("ghafiye.panel.person.word.key")
 				),
 				array(
 					'type' => 'select',

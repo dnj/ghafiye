@@ -8,6 +8,7 @@ use \packages\base\NotFound;
 use \packages\base\packages;
 use \packages\base\view\error;
 use \packages\base\translator;
+use \packages\base\db\parenthesis;
 use \packages\base\inputValidation;
 use \packages\base\views\FormError;
 
@@ -30,6 +31,36 @@ class persons extends controller{
 				'optional' => true,
 				'empty' => true
 			),
+			'name_prefix' => array(
+				'type' => 'string',
+				'optional' => true,
+				'empty' => true
+			),
+			'first_name' => array(
+				'type' => 'string',
+				'optional' => true,
+				'empty' => true
+			),
+			'middle_name' => array(
+				'type' => 'string',
+				'optional' => true,
+				'empty' => true
+			),
+			'last_name' => array(
+				'type' => 'string',
+				'optional' => true,
+				'empty' => true
+			),
+			'name_suffix' => array(
+				'type' => 'string',
+				'optional' => true,
+				'empty' => true
+			),
+			'word' => array(
+				'type' => 'string',
+				'optional' => true,
+				'empty' => true
+			),
 			'comparison' => array(
 				'values' => array('equals', 'startswith', 'contains'),
 				'default' => 'contains',
@@ -39,14 +70,23 @@ class persons extends controller{
 		$this->response->setStatus(true);
 		try{
 			$inputs = $this->checkinputs($inputsRules);
-			foreach(array('id', 'status') as $item){
+			foreach(array('id', 'name_prefix', 'first_name', 'middle_name', 'last_name', 'name_suffix') as $item){
 				if(isset($inputs[$item]) and $inputs[$item]){
 					$comparison = $inputs['comparison'];
-					if(in_array($item, array('id', 'status'))){
+					if(in_array($item, array('id'))){
 						$comparison = 'equals';
 					}
 					$person->where($item, $inputs[$item], $comparison);
 				}
+			}
+			if(isset($inputs['word']) and $inputs['word']){
+				$parenthesis = new parenthesis();
+				foreach(array("name_prefix", "first_name", "middle_name", "last_name", "name_suffix") as $item){
+					if(!isset($inputs[$item]) or !$inputs[$item]){
+						$parenthesis->where($item, $inputs['word'], $inputs['comparison'], 'OR');
+					}
+				}
+				$person->where($parenthesis);
 			}
 		}catch(inputValidation $error){
 			$view->setFormError(FormError::fromException($error));
