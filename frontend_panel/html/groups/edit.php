@@ -71,7 +71,7 @@ $group = $this->getGroup();
 							<div class="panel panel-default">
 								<!-- start: TAGS PANEL -->
 						        <div class="panel-heading">
-						            <i class="fa fa-external-link-square"></i> <?php echo translator::trans("ghafiye.panel.group.translated.titles"); ?>
+						            <i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.group.translated.titles"); ?>
 						            <div class="panel-tools">
 										<a class="btn btn-xs btn-link tooltips" title="" href="#addTitle" data-toggle="modal" data-original-title=""><i class="fa fa-plus"></i></a>
 						                <a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
@@ -109,7 +109,7 @@ $group = $this->getGroup();
 							<div class="panel panel-default">
 								<!-- start: TAGS PANEL -->
 						        <div class="panel-heading">
-						            <i class="fa fa-external-link-square"></i> <?php echo translator::trans("ghafiye.panel.group.persons"); ?>
+						            <i class="fa fa-users"></i> <?php echo translator::trans("ghafiye.panel.group.persons"); ?>
 						            <div class="panel-tools">
 										<a class="btn btn-xs btn-link tooltips" title="" href="#addPerson" data-toggle="modal" data-original-title=""><i class="fa fa-plus"></i></a>
 						                <a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>

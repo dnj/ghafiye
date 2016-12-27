@@ -8,6 +8,7 @@ use \packages\base\NotFound;
 use \packages\base\packages;
 use \packages\base\view\error;
 use \packages\base\translator;
+use \packages\base\db\parenthesis;
 use \packages\base\inputValidation;
 use \packages\base\views\FormError;
 
@@ -37,7 +38,7 @@ class groups extends controller{
 				'optional' => true,
 				'empty' => true
 			),
-			'title' => array(
+			'word' => array(
 				'type' => 'string',
 				'optional' => true,
 				'empty' => true
@@ -60,10 +61,16 @@ class groups extends controller{
 					$group->where($item, $inputs[$item], $comparison);
 				}
 			}
-			if(isset($inputs["title"]) and $inputs["title"]){
-				$titles = title::where("title", $inputs["title"], $inputs["comparison"])->get();
+			if(isset($inputs['word']) and $inputs['word']){
+				$parenthesis = new parenthesis();
+				$title = new group\title;
+				foreach(array("title") as $item){
+					$parenthesis->where($item, $inputs['word'], $inputs['comparison'], 'OR');
+				}
+				$title->where($parenthesis);
+				$titles = $title->get();
 				foreach($titles as $title){
-					$group->where("id", $title->group, 'equals');
+					$group->where("id", $title->group_id);
 				}
 			}
 		}catch(inputValidation $error){

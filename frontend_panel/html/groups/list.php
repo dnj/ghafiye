@@ -83,7 +83,7 @@ $this->the_header();
 					'ltr' => true
 				),
 				array(
-					'name' => 'title',
+					'name' => 'word',
 					'label' => translator::trans("ghafiye.panel.group.title")
 				),
 				array(

@@ -9,7 +9,7 @@ var groupEdit = function () {
 					dataType: "json",
 					data: {
 						ajax:1,
-						first_name: request.term
+						word: request.term
 					},
 					success: function( data ) {
 						if(data.hasOwnProperty('status')){
