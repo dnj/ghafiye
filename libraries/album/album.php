@@ -9,7 +9,8 @@ class album extends dbObject{
 	protected $dbTable = "ghafiye_albums";
 	protected $primaryKey = "id";
 	protected $dbFields = array(
-        'image' => array('type' => 'text')
+        'image' => array('type' => 'text'),
+        'lang' => array('type' => 'text', 'required' => true)
 	);
     protected $relations = array(
 		'titles' => array("hasMany", "packages\\ghafiye\\album\\title", "album"),
@@ -41,5 +42,13 @@ class album extends dbObject{
 			return null;
 		}
 		return new self($data);
+	}
+	public function getTitle(){
+		foreach($this->titles as $title){
+			if($title->lang == $this->lang){
+				return $title->title;
+			}
+		}
+		return false;
 	}
 }

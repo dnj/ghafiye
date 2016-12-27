@@ -57,8 +57,9 @@ trait title{
 		return str_replace('-', ' ',$title);
 	}
 	public function addTitle($titletxt, $lang){
+		$column = $this->relations['titles'][2];
 		$title = new $this->relations['titles'][1]();
-		$title->group_id = $this->id;
+		$title->$column = $this->id;
 		$title->title = $titletxt;
 		$title->lang = $lang;
 		$title->save();

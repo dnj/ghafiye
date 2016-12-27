@@ -53,6 +53,26 @@
 			"name": "\\themes\\clipone\\views\\ghafiye\\group\\delete",
 			"parent": "\\packages\\ghafiye\\views\\panel\\group\\delete",
 			"file": "html/groups/delete.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\album\\listview",
+			"parent": "\\packages\\ghafiye\\views\\panel\\album\\listview",
+			"file": "html/albums/list.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\album\\edit",
+			"parent": "\\packages\\ghafiye\\views\\panel\\album\\edit",
+			"file": "html/albums/edit.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\album\\add",
+			"parent": "\\packages\\ghafiye\\views\\panel\\album\\add",
+			"file": "html/albums/add.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\album\\delete",
+			"parent": "\\packages\\ghafiye\\views\\panel\\album\\delete",
+			"file": "html/albums/delete.php"
 		}
 	],
 	"production": true

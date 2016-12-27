@@ -64,11 +64,5 @@ trait name{
 		$name->lang = $lang;
 		$name->save();
 	}
-	public function editName($nametxt, $lang){
-		$name = new $this->relations['names'][1]();
-		$person = $name->where("lang", $lang)->where("person", $this->id)->getOne();
-		$person->name = $nametxt;
-		$person->save();
-	}
 }
 class nameRelationException extends \Exception{}

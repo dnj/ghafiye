@@ -16,6 +16,10 @@
 		"usertype.permissions.ghafiye_group_add": "افزدون گروه",
 		"usertype.permissions.ghafiye_group_edit": "ویرایش گروه",
 		"usertype.permissions.ghafiye_group_delete": "حذف گروه",
+		"usertype.permissions.ghafiye_albums_list": "لیست آلبوم ها",
+		"usertype.permissions.ghafiye_album_add": "افزدون آلبوم",
+		"usertype.permissions.ghafiye_album_edit": "ویرایش آلبوم",
+		"usertype.permissions.ghafiye_album_delete": "حذف آلبوم",
 		"persons": "اشخاص",
 		"ghafiye.panel.person.id": "شناسه",
 		"ghafiye.panel.person.name_prefix": "پیشوند",
@@ -52,6 +56,20 @@
 		"ghafiye.panel.group.translated.titles": "عنوان های ترجمه شده",
 		"ghafiye.panel.group.person.name": "نام",
 		"ghafiye.panel.group.persons": "اشخاص گروه",
-		"ghafiye.panel.group.add.person": "افزودن شخص"
+		"ghafiye.panel.group.add.person": "افزودن شخص",
+		"albums": "آلبوم ها",
+		"ghafiye.panle.albums.list": "لیست آلبوم ها",
+		"ghafiye.panel.album.id": "شناسه",
+		"ghafiye.panel.album.lang": "زبان",
+		"ghafiye.panel.album.title": "عنوان آلبوم",
+		"ghafiye.panel.album.translated.titles": "نام های ترجمه شده",
+		"ghafiye.panel.album.title.lang": "زبان",
+		"ghafiye.panel.album.translated.title": "نام ترجمه شده",
+		"error.translated.album.lang.empty": "باید حتما ترجمه ای با زبان انتخاب شده برای آلبوم وجود داشته باشد!",
+		"ghafiye.panel.album.song.name": "نام آهنگ",
+		"ghafiye.panel.album.avatar": "تصویر",
+		"ghafiye.panel.album.songs": "آهنگ های آلبوم",
+		"ghafiye.album.delete.warning": "آیا شما از حذف آلبوم به شناسه #{album_id} اطمینان دارید؟ این عملیات بدون بازگشت است",
+		"ghafiye.panel.album.word.key": "عنوان"
 	}
 }

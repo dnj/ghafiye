@@ -204,6 +204,26 @@
 		{
 			"classes":["views\\panel\\group\\delete"],
 			"file":"views/panel/groups/delete.php"
+		},
+		{
+			"classes":["controllers\\panel\\albums"],
+			"file":"controllers/panel/albums.php"
+		},
+		{
+			"classes":["views\\panel\\album\\listview"],
+			"file":"views/panel/albums/list.php"
+		},
+		{
+			"classes":["views\\panel\\album\\edit"],
+			"file":"views/panel/albums/edit.php"
+		},
+		{
+			"classes":["views\\panel\\album\\add"],
+			"file":"views/panel/albums/add.php"
+		},
+		{
+			"classes":["views\\panel\\album\\delete"],
+			"file":"views/panel/albums/delete.php"
 		}
 	]
 }

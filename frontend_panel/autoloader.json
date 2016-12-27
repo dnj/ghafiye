@@ -31,6 +31,22 @@
 		{
 			"classes":["views\\ghafiye\\group\\delete"],
 			"file":"views/groups/delete.php"
+		},
+		{
+			"classes":["views\\ghafiye\\album\\listview"],
+			"file":"views/albums/list.php"
+		},
+		{
+			"classes":["views\\ghafiye\\album\\edit"],
+			"file":"views/albums/edit.php"
+		},
+		{
+			"classes":["views\\ghafiye\\album\\add"],
+			"file":"views/albums/add.php"
+		},
+		{
+			"classes":["views\\ghafiye\\album\\delete"],
+			"file":"views/albums/delete.php"
 		}
 	]
 }

@@ -13,7 +13,11 @@ class usertype{
 			'groups_list',
 			'group_add',
 			'group_edit',
-			'group_delete'
+			'group_delete',
+			'albums_list',
+			'album_add',
+			'album_edit',
+			'album_delete'
 		);
 		foreach($permissions as $permission){
 			permissions::add('ghafiye_'.$permission);
