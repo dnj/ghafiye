@@ -73,4 +73,12 @@ class song extends dbObject{
 		}
 		return $songs;
 	}
+	public function getTitle(){
+		foreach($this->titles as $title){
+			if($title->lang == $this->lang){
+				return $title->title;
+			}
+		}
+		return false;
+	}
 }

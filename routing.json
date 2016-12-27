@@ -35,6 +35,57 @@
 		"method":"get"
 	},
 	{
+		"path": ["userpanel", "persons"],
+		"controller": "controllers\\panel\\persons@listview",
+		"method":"get"
+	},
+	{
+		"path": ["userpanel", "persons", "edit", {"type":"dynamic", "name":"id", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\persons@edit"
+	},
+	{
+		"path": ["userpanel", "persons", "add"],
+		"controller": "controllers\\panel\\persons@add"
+	},
+	{
+		"path": ["userpanel", "persons", "delete", {"type":"dynamic", "name":"id", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\persons@delete"
+	},
+	{
+		"path": ["userpanel", "groups"],
+		"controller": "controllers\\panel\\groups@listview",
+		"method":"get"
+	},
+	{
+		"path": ["userpanel", "groups", "edit", {"type":"dynamic", "name":"id", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\groups@edit"
+	},
+	{
+		"path": ["userpanel", "groups", "add"],
+		"controller": "controllers\\panel\\groups@add"
+	},
+	{
+		"path": ["userpanel", "groups", "delete", {"type":"dynamic", "name":"id", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\groups@delete"
+	},
+	{
+		"path": ["userpanel", "albums"],
+		"controller": "controllers\\panel\\albums@listview",
+		"method":"get"
+	},
+	{
+		"path": ["userpanel", "albums", "edit", {"type":"dynamic", "name":"id", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\albums@edit"
+	},
+	{
+		"path": ["userpanel", "albums", "add"],
+		"controller": "controllers\\panel\\albums@add"
+	},
+	{
+		"path": ["userpanel", "albums", "delete", {"type":"dynamic", "name":"id", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\albums@delete"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

@@ -1,0 +1,79 @@
+{
+	"name": "clipone",
+	"title": "clipone",
+	"version": "1.0.0",
+	"author": {
+		"name": "Mahdi abedi",
+		"website": "http://www.jeyserver.com/"
+	},
+	"homepage": "http://ghafiye.com/",
+	"assets": [
+	],
+	"autoload": "autoloader.json",
+	"languages": {
+		"fa_IR": "langs/fa_IR.json"
+	},
+	"views": [
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\person\\listview",
+			"parent": "\\packages\\ghafiye\\views\\panel\\person\\listview",
+			"file": "html/persons/list.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\person\\edit",
+			"parent": "\\packages\\ghafiye\\views\\panel\\person\\edit",
+			"file": "html/persons/edit.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\person\\add",
+			"parent": "\\packages\\ghafiye\\views\\panel\\person\\add",
+			"file": "html/persons/add.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\person\\delete",
+			"parent": "\\packages\\ghafiye\\views\\panel\\person\\delete",
+			"file": "html/persons/delete.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\group\\listview",
+			"parent": "\\packages\\ghafiye\\views\\panel\\group\\listview",
+			"file": "html/groups/list.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\group\\edit",
+			"parent": "\\packages\\ghafiye\\views\\panel\\group\\edit",
+			"file": "html/groups/edit.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\group\\add",
+			"parent": "\\packages\\ghafiye\\views\\panel\\group\\add",
+			"file": "html/groups/add.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\group\\delete",
+			"parent": "\\packages\\ghafiye\\views\\panel\\group\\delete",
+			"file": "html/groups/delete.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\album\\listview",
+			"parent": "\\packages\\ghafiye\\views\\panel\\album\\listview",
+			"file": "html/albums/list.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\album\\edit",
+			"parent": "\\packages\\ghafiye\\views\\panel\\album\\edit",
+			"file": "html/albums/edit.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\album\\add",
+			"parent": "\\packages\\ghafiye\\views\\panel\\album\\add",
+			"file": "html/albums/add.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\album\\delete",
+			"parent": "\\packages\\ghafiye\\views\\panel\\album\\delete",
+			"file": "html/albums/delete.php"
+		}
+	],
+	"production": true
+}

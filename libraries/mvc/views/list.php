@@ -1,8 +1,8 @@
 <?php
 namespace packages\ghafiye\views;
-use \packages\ghafiye\view;
-class listview extends view{
-	protected $dataList = array();
+use \packages\userpanel\views\listview as list_View;
+class listview extends list_View{
+	/*protected $dataList = array();
 	protected $currentPage;
 	protected $totalPages;
 	protected $itemsPage;
@@ -13,5 +13,5 @@ class listview extends view{
 		$this->currentPage = $currentPage;
 		$this->totalPages = $totalPages;
 		$this->itemsPage = $itemsPage;
-	}
+	}*/
 }

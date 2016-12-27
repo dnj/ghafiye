@@ -56,5 +56,13 @@ trait title{
 	public static function decodeTitle($title){
 		return str_replace('-', ' ',$title);
 	}
+	public function addTitle($titletxt, $lang){
+		$column = $this->relations['titles'][2];
+		$title = new $this->relations['titles'][1]();
+		$title->$column = $this->id;
+		$title->title = $titletxt;
+		$title->lang = $lang;
+		$title->save();
+	}
 }
 class titleRelationException extends \Exception{}

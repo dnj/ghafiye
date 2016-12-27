@@ -190,8 +190,92 @@
 			"file":"processes/musixmatch.php"
 		},
 		{
+			"classes":["listeners\\settings\\usertype"],
+			"file":"listeners/settings/usertype.php"
+		},
+		{
 			"classes":["jsonrpc"],
 			"file":"libraries/musixmatch/jsonrpc.php"
+		},
+		{
+			"classes":["authorization"],
+			"file":"libraries/users/authorization.php"
+		},
+		{
+			"classes":["authentication"],
+			"file":"libraries/users/authentication.php"
+		},
+		{
+			"classes":["views\\panel\\person\\listview"],
+			"file":"views/panel/persons/list.php"
+		},
+		{
+			"classes":["controllers\\panel\\persons"],
+			"file":"controllers/panel/persons.php"
+		},
+		{
+			"classes":["views\\panel\\person\\edit"],
+			"file":"views/panel/persons/edit.php"
+		},
+		{
+			"classes":["views\\panel\\person\\add"],
+			"file":"views/panel/persons/add.php"
+		},
+		{
+			"classes":["views\\panel\\person\\delete"],
+			"file":"views/panel/persons/delete.php"
+		},
+		{
+			"classes":["controllers\\panel\\groups"],
+			"file":"controllers/panel/groups.php"
+		},
+		{
+			"classes":["group"],
+			"file":"libraries/group/group.php"
+		},
+		{
+			"classes":["group\\title"],
+			"file":"libraries/group/title.php"
+		},
+		{
+			"classes":["group\\person"],
+			"file":"libraries/group/person.php"
+		},
+		{
+			"classes":["views\\panel\\group\\listview"],
+			"file":"views/panel/groups/list.php"
+		},
+		{
+			"classes":["views\\panel\\group\\edit"],
+			"file":"views/panel/groups/edit.php"
+		},
+		{
+			"classes":["views\\panel\\group\\add"],
+			"file":"views/panel/groups/add.php"
+		},
+		{
+			"classes":["views\\panel\\group\\delete"],
+			"file":"views/panel/groups/delete.php"
+		},
+		{
+			"classes":["controllers\\panel\\albums"],
+			"file":"controllers/panel/albums.php"
+		},
+		{
+			"classes":["views\\panel\\album\\listview"],
+			"file":"views/panel/albums/list.php"
+		},
+		{
+			"classes":["views\\panel\\album\\edit"],
+			"file":"views/panel/albums/edit.php"
+		},
+		{
+			"classes":["views\\panel\\album\\add"],
+			"file":"views/panel/albums/add.php"
+		},
+		{
+			"classes":["views\\panel\\album\\delete"],
+			"file":"views/panel/albums/delete.php"
 		}
 	]
 }
