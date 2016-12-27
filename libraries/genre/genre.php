@@ -8,7 +8,9 @@ class genre extends dbObject{
 	use title;
 	protected $dbTable = "ghafiye_genres";
 	protected $primaryKey = "id";
-	protected $dbFields = array();
+	protected $dbFields = array(
+		'musixmatch_id' => array('type' => 'int', 'unique' => true)
+	);
     protected $relations = array(
         'titles' => array("hasMany", "packages\\ghafiye\\genre\\title", "genre")
     );

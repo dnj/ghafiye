@@ -9,6 +9,7 @@ class album extends dbObject{
 	protected $dbTable = "ghafiye_albums";
 	protected $primaryKey = "id";
 	protected $dbFields = array(
+		'musixmatch_id' => array('type' => 'int', 'unique'=>true),
         'image' => array('type' => 'text')
 	);
     protected $relations = array(

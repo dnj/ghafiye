@@ -7,6 +7,7 @@ class person extends dbObject{
 	protected $dbTable = "ghafiye_persons";
 	protected $primaryKey = "id";
 	protected $dbFields = array(
+		'musixmatch_id' => array('type' => 'int', 'unique' => true),
 		'user' => array('type' => 'int'),
 		'name_prefix' => array('type' => 'text'),
 		'first_name' => array('type' => 'text'),

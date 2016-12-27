@@ -7,15 +7,18 @@ use packages\ghafiye\song\person as songPerson;
 class song extends dbObject{
 	use title;
 	const publish = 1;
+	const draft = 2;
 	protected $dbTable = "ghafiye_songs";
 	protected $primaryKey = "id";
 	protected $dbFields = array(
+		'musixmatch_id' => array('type' => 'int', 'unique' => true),
+		'spotify_id' => array('type' => 'text', 'unique' => true),
 		'album' => array('type' => 'int'),
 		'group' => array('type' => 'int'),
         'release_at' => array('type' => 'int', 'required' => true),
         'update_at' => array('type' => 'int'),
         'duration' => array('type' => 'int', 'required' => true),
-        'genre' => array('type' => 'int', 'required' => true),
+        'genre' => array('type' => 'int', 'required' => false),
         'lang' => array('type' => 'text', 'required' => true),
         'image' => array('type' => 'text'),
         'views' => array('type' => 'int'),
@@ -25,6 +28,7 @@ class song extends dbObject{
     protected $relations = array(
 		'titles' => array("hasMany", "packages\\ghafiye\\song\\title", "song"),
 		'persons' => array("hasMany", "packages\\ghafiye\\song\\person", "song"),
+		'videoss' => array("hasMany", "packages\\ghafiye\\song\\videos", "song"),
         'album' => array("hasOne", "packages\\ghafiye\\album", "album"),
         //'group' => array("hasOne", "packages\\ghafiye\\group", "group"),
         'genre' => array("hasOne", "packages\\ghafiye\\genre", "genre"),
