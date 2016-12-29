@@ -94,6 +94,9 @@
 		"notfound.description":"گشتیم ولی چیزی که مد نظر شما بود را برای ارائه نیافتیم، سایت را با جستجوگر بالای سایت کامل بگردید شاید آن را پیدا کنید، یا به <a href=\"/\">صفحه اصلی</a> بگردید آن جا شانس یک شروع نو برای شماست!",
 		"copyright.title":"قوانین حق تکثیر",
 		"blog.post.comments.number": "{count} دیدگاه",
-		"blog.post.view.number": "{view} بازدید"
+		"blog.post.view.number": "{view} بازدید",
+		"explore.pager.older" : "آهنگ های قبلی",
+		"explore.pager.newer" : "آهنگ های بعدی"
+
 	}
 }

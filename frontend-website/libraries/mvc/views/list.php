@@ -1,5 +1,7 @@
 <?php
 namespace themes\musixmatch\views;
+use \packages\base\http;
+use \packages\base\translator;
 trait listTrait{
 	private $buttons;
 	public function setButton($name, $active, $params = array()){
@@ -120,6 +122,43 @@ trait listTrait{
 
 		return $code;
 	}
-}
+	public function pager(){
+		$prev_page = $this->currentPage-1;
+        $next_page = $this->currentPage+1;
 
-?>
+		$prev_active = ($this->currentPage > 1);
+		$next_active = ($this->currentPage < $this->totalPages);
+
+		$prev_link = $prev_active ? $this->pageurl($prev_page) : '#';
+		$next_link = $next_active ? $this->pageurl($next_page) : '#';
+
+		$prev_active = !$prev_active ? ' disabled' : '';
+		$next_active = !$next_active ? ' disabled' : '';
+
+		$return  = "<nav><ul class=\"pager\">";
+		$return .= "<li class=\"previous{$prev_active}\"><a href=\"{$prev_link}\"><span aria-hidden=\"true\">&rarr;</span> ".translator::trans('explore.pager.older')."</a></li>";
+		$return .= "<li class=\"next{$next_active}\"><a href=\"{$next_link}\">".translator::trans('explore.pager.newer')." <span aria-hidden=\"true\">&larr;</span></a></li>";
+		$return .= "</ul></nav>";
+		echo $return;
+	}
+	private function pageurl($page, $ipp = null){
+		if($ipp === null){
+			$ipp = $this->itemsPage;
+		}
+		if($ipp == 25){
+			$ipp = null;
+		}
+		$paginationData = http::$request['get'];
+		if($page != 1){
+			$paginationData['page'] = $page;
+		}else{
+			unset($paginationData['page']);
+		}
+		if($ipp){
+			$paginationData['ipp'] = $ipp;
+		}else{
+			unset($paginationData['ipp']);
+		}
+		return($paginationData ? '?'.http_build_query($paginationData) : http::$request['uri']);
+	}
+}

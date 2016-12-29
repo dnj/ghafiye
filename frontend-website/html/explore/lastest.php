@@ -28,6 +28,7 @@ $this->the_header();
 			}
 			?>
 		</ul>
+		<?php echo $this->pager(); ?>
 	</section>
 </div>
 </div>

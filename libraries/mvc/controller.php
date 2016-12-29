@@ -9,10 +9,14 @@ class controller extends \packages\base\controller{
 	protected $total_pages = 1;
 	protected $items_per_page = 25;
 	function __construct(){
-		$this->page = http::getURIData('page');
-		$this->items_per_page = http::getURIData('ipp');
-		if($this->page < 1)$this->page = 1;
-		if($this->items_per_page < 1)$this->items_per_page = 1;
+		if(http::getURIData('page')){
+			$this->page = http::getURIData('page');
+			if($this->page < 1)$this->page = 1;
+		}
+		if(http::getURIData('ipp')){
+			$this->items_per_page = http::getURIData('ipp');
+			if($this->items_per_page < 1)$this->items_per_page = 1;
+		}
 		db::pageLimit($this->items_per_page);
 		$this->response = new response();
 	}
