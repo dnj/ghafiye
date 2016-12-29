@@ -73,6 +73,16 @@
 			"name": "\\themes\\clipone\\views\\ghafiye\\album\\delete",
 			"parent": "\\packages\\ghafiye\\views\\panel\\album\\delete",
 			"file": "html/albums/delete.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\song\\listview",
+			"parent": "\\packages\\ghafiye\\views\\panel\\song\\listview",
+			"file": "html/songs/list.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\song\\delete",
+			"parent": "\\packages\\ghafiye\\views\\panel\\song\\delete",
+			"file": "html/songs/delete.php"
 		}
 	],
 	"production": true

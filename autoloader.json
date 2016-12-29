@@ -276,6 +276,18 @@
 		{
 			"classes":["views\\panel\\album\\delete"],
 			"file":"views/panel/albums/delete.php"
+		},
+		{
+			"classes":["controllers\\panel\\songs"],
+			"file":"controllers/panel/songs.php"
+		},
+		{
+			"classes":["views\\panel\\song\\listview"],
+			"file":"views/panel/songs/list.php"
+		},
+		{
+			"classes":["views\\panel\\song\\delete"],
+			"file":"views/panel/songs/delete.php"
 		}
 	]
 }

@@ -86,6 +86,15 @@
 		"controller": "controllers\\panel\\albums@delete"
 	},
 	{
+		"path": ["userpanel", "songs"],
+		"controller": "controllers\\panel\\songs@listview",
+		"method":"get"
+	},
+	{
+		"path": ["userpanel", "songs", "delete", {"type":"dynamic", "name":"id", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\songs@delete"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

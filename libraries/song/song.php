@@ -30,7 +30,7 @@ class song extends dbObject{
 		'persons' => array("hasMany", "packages\\ghafiye\\song\\person", "song"),
 		'videoss' => array("hasMany", "packages\\ghafiye\\song\\videos", "song"),
         'album' => array("hasOne", "packages\\ghafiye\\album", "album"),
-        //'group' => array("hasOne", "packages\\ghafiye\\group", "group"),
+        'group' => array("hasOne", "packages\\ghafiye\\group", "group"),
         'genre' => array("hasOne", "packages\\ghafiye\\genre", "genre"),
     );
 	public function getPerson($role){
@@ -72,13 +72,5 @@ class song extends dbObject{
 			$songs[] = new song($data);
 		}
 		return $songs;
-	}
-	public function getTitle(){
-		foreach($this->titles as $title){
-			if($title->lang == $this->lang){
-				return $title->title;
-			}
-		}
-		return false;
 	}
 }

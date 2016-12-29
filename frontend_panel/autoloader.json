@@ -47,6 +47,14 @@
 		{
 			"classes":["views\\ghafiye\\album\\delete"],
 			"file":"views/albums/delete.php"
+		},
+		{
+			"classes":["views\\ghafiye\\song\\listview"],
+			"file":"views/songs/list.php"
+		},
+		{
+			"classes":["views\\ghafiye\\song\\delete"],
+			"file":"views/songs/delete.php"
 		}
 	]
 }
