@@ -276,6 +276,10 @@
 		{
 			"classes":["views\\panel\\album\\delete"],
 			"file":"views/panel/albums/delete.php"
+		},
+		{
+			"classes":["controllers\\sitemap"],
+			"file":"controllers/sitemap.php"
 		}
 	]
 }
