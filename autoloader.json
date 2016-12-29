@@ -278,6 +278,10 @@
 			"file":"views/panel/albums/delete.php"
 		},
 		{
+			"classes":["controllers\\sitemap"],
+			"file":"controllers/sitemap.php"
+		},
+		{
 			"classes":["controllers\\panel\\songs"],
 			"file":"controllers/panel/songs.php"
 		},

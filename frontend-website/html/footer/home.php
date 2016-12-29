@@ -27,10 +27,10 @@ use \packages\base\translator;
 			<div class="col-md-3">
 				<h4><?php echo translator::trans('footer.socialnetworks'); ?></h4>
 				<ul class="socialnetworks">
-					<li><a href="https://telegram.me/ghafiye_com"><i class="fa fa-telegram"></i> <?php echo translator::trans('footer.link.telegram'); ?></a></li>
-					<li><a href="<?php echo base\url('instagram'); ?>"><i class="fa fa-instagram"></i> <?php echo translator::trans('footer.link.instagram'); ?></a></li>
-					<li><a href="<?php echo base\url('facebook'); ?>"><i class="fa fa-facebook"></i> <?php echo translator::trans('footer.link.facebook'); ?></a></li>
-					<li><a href="<?php echo base\url('twitter'); ?>"><i class="fa fa-twitter"></i> <?php echo translator::trans('footer.link.twitter'); ?></a></li>
+					<li><a href="https://telegram.me/ghafiyecom"><i class="fa fa-telegram"></i> <?php echo translator::trans('footer.link.telegram'); ?></a></li>
+					<li><a href="https://instagram.com/ghafiyecom"><i class="fa fa-instagram"></i> <?php echo translator::trans('footer.link.instagram'); ?></a></li>
+					<li><a href="https://www.facebook.com/ghafiyecom"><i class="fa fa-facebook"></i> <?php echo translator::trans('footer.link.facebook'); ?></a></li>
+					<li><a href="https://twitter.com/ghafiyecom"><i class="fa fa-twitter"></i> <?php echo translator::trans('footer.link.twitter'); ?></a></li>
 				</ul>
 			</div>
 		</div>
