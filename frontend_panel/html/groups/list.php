@@ -72,11 +72,14 @@ $this->the_header();
 		<h4 class="modal-title"><?php echo translator::trans('search'); ?></h4>
 	</div>
 	<div class="modal-body">
-		<form id="gamakeySearch" class="form-horizontal" action="<?php echo userpanel\url("groups"); ?>" method="GET">
+		<form id="groupSearch" class="form-horizontal" action="<?php echo userpanel\url("groups"); ?>" method="GET">
 			<?php
 			$this->setHorizontalForm('sm-3','sm-9');
 			$feilds = array(
 				array(
+					'name' => 'person',
+					'type' => 'hidden'
+				),array(
 					'name' => 'id',
 					'type' => 'number',
 					'label' => translator::trans("ghafiye.panel.group.id"),
@@ -85,6 +88,10 @@ $this->the_header();
 				array(
 					'name' => 'word',
 					'label' => translator::trans("ghafiye.panel.group.title")
+				),
+				array(
+					'name' => 'person_name',
+					'label' => translator::trans("ghafiye.panel.group.person")
 				),
 				array(
 					'type' => 'select',
@@ -106,7 +113,7 @@ $this->the_header();
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" form="gamakeySearch" class="btn btn-success"><?php echo translator::trans("search"); ?></button>
+		<button type="submit" form="groupSearch" class="btn btn-success"><?php echo translator::trans("search"); ?></button>
 		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
 	</div>
 </div>

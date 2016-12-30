@@ -24,18 +24,18 @@ var groupEdit = function () {
 				});
 			},
 			select: function( event, ui ) {
-				$(this).val((ui.item.first_name ? ui.item.first_name : ui.item.first_name));
+				$(this).val(ui.item.name);
 				$('#addPersonForm input[name=person]').val(ui.item.id).trigger('change');
 				return false;
 			},
 			focus: function( event, ui ) {
-				$(this).val((ui.item.first_name ? ui.item.first_name : ui.item.first_name));
+				$(this).val(ui.item.name);
 				$('#addPersonForm input[name=person]').val(ui.item.id);
 				return false;
 			}
 		}).autocomplete( "instance" )._renderItem = function( ul, item ) {
 			return $( "<li>" )
-				.append( "<strong>" +(item.first_name ? item.first_name : item.last_name)+ "</strong><small class=\"ltr\">"+item.last_name+"</small><small class=\"ltr\">"+(item.getder == 1 ? "مذکر" : "مونث")+"</small>" )
+				.append( "<strong>" +item.name+"</strong>" )
 				.appendTo( ul );
 		};
 	};

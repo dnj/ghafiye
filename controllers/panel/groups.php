@@ -38,6 +38,11 @@ class groups extends controller{
 				'optional' => true,
 				'empty' => true
 			),
+			'person' => array(
+				'type' => 'number',
+				'optional' => true,
+				'empty' => true
+			),
 			'word' => array(
 				'type' => 'string',
 				'optional' => true,
@@ -58,20 +63,22 @@ class groups extends controller{
 					if(in_array($item, array('id'))){
 						$comparison = 'equals';
 					}
-					$group->where($item, $inputs[$item], $comparison);
+					$group->where("`$item`", $inputs[$item], $comparison);
 				}
+			}
+			if(isset($inputs['person']) and $inputs['person']){
+				$parenthesis = new parenthesis();
+				$parenthesis->where("ghafiye_groups_persons.person", $inputs['person'], 'equals', "OR");
+				$group->where($parenthesis);
+				db::join("ghafiye_groups_persons", "ghafiye_groups_persons.group_id=ghafiye_groups.id", "INNER");
+				db::setQueryOption("DISTINCT");
 			}
 			if(isset($inputs['word']) and $inputs['word']){
 				$parenthesis = new parenthesis();
-				$title = new group\title;
-				foreach(array("title") as $item){
-					$parenthesis->where($item, $inputs['word'], $inputs['comparison'], 'OR');
-				}
-				$title->where($parenthesis);
-				$titles = $title->get();
-				foreach($titles as $title){
-					$group->where("id", $title->group_id);
-				}
+				$parenthesis->where("ghafiye_groups_titles.title", $inputs['word'], $inputs['comparison']);
+				$group->where($parenthesis);
+				db::join("ghafiye_groups_titles", "ghafiye_groups_titles.group_id=ghafiye_groups.id", "INNER");
+				db::setQueryOption("DISTINCT");
 			}
 		}catch(inputValidation $error){
 			$view->setFormError(FormError::fromException($error));
@@ -79,7 +86,7 @@ class groups extends controller{
 		}
 		$view->setDataForm($this->inputsvalue($inputsRules));
 		$group->pageLimit = $this->items_per_page;
-		$groups = $group->paginate($this->page);
+		$groups = $group->paginate($this->page, array("ghafiye_groups.*"));
 		$this->total_pages = $group->totalPages;
 		$view->setDataList($groups);
 		$view->setPaginate($this->page, $group->totalCount, $this->items_per_page);

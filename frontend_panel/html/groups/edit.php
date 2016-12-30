@@ -135,7 +135,7 @@ $group = $this->getGroup();
 														'value' => $person->id
 													));
 												?>
-												<a href="<?php echo userpanel\url("persons/edit/{$person->id}"); ?>"><?php echo($person->first_name); ?></a>
+												<a href="<?php echo userpanel\url("persons/edit/{$person->id}"); ?>"><?php echo($person->name()); ?></a>
 												</td>
 												<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips person-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
 									        </tr>

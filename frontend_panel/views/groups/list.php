@@ -22,7 +22,11 @@ class listview extends groupsList{
 			translator::trans('list')
 		));
 		$this->setButtons();
+		$this->addAssets();
 		navigation::active("groups");
+	}
+	private function addAssets(){
+		$this->addJSFile(theme::url("assets/js/pages/group.list.js"));
 	}
 	public function setButtons(){
 		$this->setButton('edit', $this->canEdit, array(
