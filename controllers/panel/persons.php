@@ -86,7 +86,10 @@ class persons extends controller{
 						$parenthesis->where($item, $inputs['word'], $inputs['comparison'], 'OR');
 					}
 				}
+				$parenthesis->where("ghafiye_persons_names.name", $inputs['word'], $inputs['comparison'], "or");
 				$person->where($parenthesis);
+				db::join("ghafiye_persons_names", "ghafiye_persons_names.person=ghafiye_persons.id", "INNER");
+				db::setQueryOption("DISTINCT");
 			}
 		}catch(inputValidation $error){
 			$view->setFormError(FormError::fromException($error));
@@ -94,7 +97,7 @@ class persons extends controller{
 		}
 		$view->setDataForm($this->inputsvalue($inputsRules));
 		$person->pageLimit = $this->items_per_page;
-		$persons = $person->paginate($this->page);
+		$persons = $person->paginate($this->page, array("ghafiye_persons.*"));
 		$this->total_pages = $person->totalPages;
 		$view->setDataList($persons);
 		$view->setPaginate($this->page, $person->totalCount, $this->items_per_page);

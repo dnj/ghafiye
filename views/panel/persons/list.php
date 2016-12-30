@@ -21,4 +21,14 @@ class listview extends list_view{
 	public static function onSourceLoad(){
 		self::$navigation = authorization::is_accessed('persons_list');
 	}
+	public function export(){
+		$export = parent::export();
+		$export['data']['items'] = array();
+		foreach($this->getPersonsLists() as $person){
+			$item = $person->toArray();
+			$item['name'] = $person->name();
+			$export['data']['items'][] = $item;
+		}
+		return $export;
+	}
 }
