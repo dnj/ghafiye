@@ -27,11 +27,11 @@ class artists extends controller{
 			throw new NotFound;
 		}
 		$person = person::byId($personName->person);
-		$songs = song::bySinger($person);
+		$songs = song::where("status", song::publish)->bySinger($person);
 		if(!$songs){
 			throw new NotFound;
 		}
-		$albums = album::bySinger($person, 5);
+		$albums = album::where("ghafiye_songs.status", song::publish)->bySinger($person, 5);
 		$view->setArtist($person);
 		$view->setSongs($songs);
 		$view->setAlbums($albums);
@@ -48,7 +48,7 @@ class artists extends controller{
 			throw new NotFound;
 		}
 		$person = person::byId($personName->person);
-		$albums = album::bySinger($person);
+		$albums = album::where("ghafiye_songs.status", song::publish)->bySinger($person);
 		$view->setArtist($person);
 		$view->setAlbums($albums);
 		$view->setSongLanguage($personName->lang);
@@ -65,7 +65,10 @@ class artists extends controller{
 			throw new NotFound;
 		}
 		$person = person::byId($personName->person);
-		$album = album::bySingerAndTitle($person, $data['album']);
+		$album = album::where("ghafiye_songs.status", song::publish)->bySingerAndTitle($person, $data['album']);
+		if(!$album){
+			throw new NotFound;
+		}
 		$view->setArtist($person);
 		$view->setAlbum($album);
 		$view->setSongLanguage($personName->lang);

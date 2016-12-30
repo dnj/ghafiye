@@ -24,6 +24,7 @@ class album extends dbObject{
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.person", $singer->id);
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.role", songPerson::singer);
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.primary", true);
+		db::setQueryOption('DISTINCT');
 		foreach(db::get("ghafiye_albums", $limit,"ghafiye_albums.*") as $data){
 			$albums[] = new self($data);
 		}

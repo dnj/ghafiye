@@ -26,7 +26,7 @@ class lyrics extends controller{
 			throw new NotFound;
 		}
 		$person = person::byId($personName->person);
-		$song = song::bySingerAndTitle($person, $data['song']);
+		$song = song::where("status", song::publish)->bySingerAndTitle($person, $data['song']);
 		if(!$song){
 			throw new NotFound;
 		}

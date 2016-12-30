@@ -2,6 +2,7 @@
 use \packages\base;
 use \packages\base\translator;
 use \packages\userpanel\date;
+use \packages\ghafiye\song;
 use \packages\ghafiye\song\person;
 $this->the_header();
 $lang = $this->getSongLanguage();
@@ -18,6 +19,7 @@ $lang = $this->getSongLanguage();
 			<?php
 			$x=0;
 			foreach($this->getSongs() as $song){
+				if($song->status == song::publish){
 			?>
 			<li><a href="<?php echo(base\url($this->artist->encodedName($lang).'/'.$song->encodedTitle($lang))); ?>">
 				<span><?php echo ++$x; ?></span>
@@ -25,6 +27,7 @@ $lang = $this->getSongLanguage();
 			</li></li>
 
 			<?php
+				}
 			}
 			?>
 		</ul>
