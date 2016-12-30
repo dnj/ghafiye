@@ -32,6 +32,11 @@ class albums extends controller{
 				'optional' => true,
 				'empty' => true
 			),
+			'musixmatch_id' => array(
+				'type' => 'number',
+				'optional' => true,
+				'empty' => true
+			),
 			'lang' => array(
 				'type' => 'string',
 				'optional' => true,
@@ -56,10 +61,10 @@ class albums extends controller{
 		$this->response->setStatus(true);
 		try{
 			$inputs = $this->checkinputs($inputsRules);
-			foreach(array('id', 'lang') as $item){
+			foreach(array('id', 'lang', 'musixmatch_id') as $item){
 				if(isset($inputs[$item]) and $inputs[$item]){
 					$comparison = $inputs['comparison'];
-					if(in_array($item, array('id'))){
+					if(in_array($item, array('id', 'musixmatch_id'))){
 						$comparison = 'equals';
 					}
 					$album->where($item, $inputs[$item], $comparison);
@@ -105,6 +110,11 @@ class albums extends controller{
 				'type' => 'file',
 				'empty' => true,
 				'optional' => true
+			),
+			'musixmatch_id' => array(
+				'type' => 'number',
+				'optional' => true,
+				'empty' => true
 			),
 			'album-lang' => array(
 				'type' => 'string',
@@ -178,6 +188,9 @@ class albums extends controller{
 					}
 					$album->lang = $inputs['album-lang'];
 				}
+				if(isset($inputs['musixmatch_id']) and $inputs['musixmatch_id']){
+					$album->musixmatch_id = $inputs['musixmatch_id'];
+				}
 				if($inputs["avatar"]['error'] == 0){
 					$type = getimagesize($inputs["avatar"]['tmp_name']);
 					if(in_array($type[2], array(IMAGETYPE_JPEG ,IMAGETYPE_GIF, IMAGETYPE_PNG))){
@@ -230,6 +243,10 @@ class albums extends controller{
 				'type' => 'file',
 				'empty' => true
 			),
+			'musixmatch_id' => array(
+				'type' => 'number',
+				'empty' => true
+			),
 			'album-lang' => array(
 				'type' => 'string'
 			),
@@ -244,6 +261,10 @@ class albums extends controller{
 					throw new inputValidation("album-lang");
 				}
 				$album = new album();
+				$album->lang = $inputs['album-lang'];
+				if(isset($inputs['musixmatch_id']) and $inputs['musixmatch_id']){
+					$album->musixmatch_id = $inputs['musixmatch_id'];
+				}
 				$album->lang = $inputs['album-lang'];
 				if($inputs["avatar"]['error'] == 0){
 					$type = getimagesize($inputs["avatar"]['tmp_name']);

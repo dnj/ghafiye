@@ -59,6 +59,12 @@ $this->the_header();
 	                    </div>
 						<div class="col-md-7">
 							<?php $this->createField(array(
+								'name' => 'musixmatch_id',
+								'label' => translator::trans("ghafiye.panel.album.musixmatch_id"),
+								'ltr' => true
+							));
+							?>
+							<?php $this->createField(array(
 								'name' => 'album-lang',
 								'type' => 'select',
 								'label' => translator::trans("ghafiye.panel.album.lang"),

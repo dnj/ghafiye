@@ -7,6 +7,7 @@ class edit extends form{
 	public function setAlbum(album $album){
 		$this->setData($album, "album");
 		$this->setDataForm($album->avatar, "avatar");
+		$this->setDataForm($album->musixmatch_id, "musixmatch_id");
 		$this->setDataForm($album->lang, "album-lang");
 	}
 	protected function getAlbum(){

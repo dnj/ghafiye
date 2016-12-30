@@ -36,6 +36,11 @@ class persons extends controller{
 				'optional' => true,
 				'empty' => true
 			),
+			'musixmatch_id' => array(
+				'type' => 'number',
+				'optional' => true,
+				'empty' => true
+			),
 			'first_name' => array(
 				'type' => 'string',
 				'optional' => true,
@@ -70,10 +75,10 @@ class persons extends controller{
 		$this->response->setStatus(true);
 		try{
 			$inputs = $this->checkinputs($inputsRules);
-			foreach(array('id', 'name_prefix', 'first_name', 'middle_name', 'last_name', 'name_suffix') as $item){
+			foreach(array('id', 'name_prefix', 'first_name', 'middle_name', 'last_name', 'name_suffix', 'musixmatch_id') as $item){
 				if(isset($inputs[$item]) and $inputs[$item]){
 					$comparison = $inputs['comparison'];
-					if(in_array($item, array('id'))){
+					if(in_array($item, array('id', 'musixmatch_id'))){
 						$comparison = 'equals';
 					}
 					$person->where($item, $inputs[$item], $comparison);
@@ -144,6 +149,11 @@ class persons extends controller{
 		$person = $this->getPersonById($data['id']);
 		$view->setPerson($person);
 		$inputsRules = array(
+			'musixmatch_id' => array(
+				'type' => 'number',
+				'optional' => true,
+				'empty' => true
+			),
 			'name_prefix' => array(
 				'type' => 'string',
 				'optional' => true,
@@ -229,7 +239,7 @@ class persons extends controller{
 					}
 				}
 
-				foreach(array('name_prefix', 'first_name', 'middle_name', 'last_name', 'name_suffix', 'gender') as $item){
+				foreach(array('name_prefix', 'first_name', 'middle_name', 'last_name', 'name_suffix', 'gender', 'musixmatch_id') as $item){
 					if(array_key_exists($item, $inputs) and $inputs[$item]){
 						$person->$item = $inputs[$item];
 					}
@@ -264,6 +274,11 @@ class persons extends controller{
 		authorization::haveOrFail('person_add');
 		$view = view::byName("\\packages\\ghafiye\\views\\panel\\person\\add");
 		$inputsRules = array(
+			'musixmatch_id' => array(
+				'type' => 'number',
+				'optional' => true,
+				'empty' => true
+			),
 			'name_prefix' => array(
 				'type' => 'string',
 				'optional' => true,
@@ -329,7 +344,7 @@ class persons extends controller{
 				if(!in_array($inputs['lang'], translator::$allowlangs))
 					throw new inputValidation("lang");
 				$person = new person();
-				foreach(array('name_prefix', 'first_name', 'middle_name', 'last_name', 'name_suffix', 'gender') as $item){
+				foreach(array('name_prefix', 'first_name', 'middle_name', 'last_name', 'name_suffix', 'gender', 'musixmatch_id') as $item){
 					if(array_key_exists($item, $inputs) and $inputs[$item]){
 						$person->$item = $inputs[$item];
 					}

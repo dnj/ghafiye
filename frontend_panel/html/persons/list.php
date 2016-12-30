@@ -33,8 +33,7 @@ $this->the_header();
 						<thead>
 							<tr>
 								<th class="center">#</th>
-								<th><?php echo translator::trans('ghafiye.panel.person.first_name'); ?></th>
-								<th><?php echo translator::trans('ghafiye.panel.person.last_name'); ?></th>
+								<th><?php echo translator::trans('ghafiye.panel.person.name'); ?></th>
 								<?php if($hasButtons){ ?><th></th><?php } ?>
 							</tr>
 						</thead>
@@ -46,8 +45,7 @@ $this->the_header();
 							?>
 							<tr>
 								<td class="center"><?php echo $person->id; ?></td>
-								<td><?php echo $person->first_name; ?></td>
-								<td><?php echo $person->last_name; ?></td>
+								<td><?php echo $person->name(); ?></td>
 								<?php
 								if($hasButtons){
 									echo("<td class=\"center\">".$this->genButtons()."</td>");
@@ -72,7 +70,7 @@ $this->the_header();
 		<h4 class="modal-title"><?php echo translator::trans('search'); ?></h4>
 	</div>
 	<div class="modal-body">
-		<form id="gamakeySearch" class="form-horizontal" action="<?php echo userpanel\url("persons"); ?>" method="GET">
+		<form id="personSearch" class="form-horizontal" action="<?php echo userpanel\url("persons"); ?>" method="GET" autocomplete="off">
 			<?php
 			$this->setHorizontalForm('sm-3','sm-9');
 			$feilds = array(
@@ -80,6 +78,11 @@ $this->the_header();
 					'name' => 'id',
 					'type' => 'number',
 					'label' => translator::trans("ghafiye.panel.person.id"),
+					'ltr' => true
+				),
+				array(
+					'name' => 'musixmatch_id',
+					'label' => translator::trans("ghafiye.panel.person.musixmatch_id"),
 					'ltr' => true
 				),
 				array(
@@ -120,7 +123,7 @@ $this->the_header();
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" form="gamakeySearch" class="btn btn-success"><?php echo translator::trans("search"); ?></button>
+		<button type="submit" form="personSearch" class="btn btn-success"><?php echo translator::trans("search"); ?></button>
 		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
 	</div>
 </div>

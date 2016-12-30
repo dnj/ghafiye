@@ -45,7 +45,7 @@ $this->the_header();
 								$this->setButtonParam('delete', 'link', userpanel\url("albums/delete/".$album->id));
 							?>
 							<tr>
-								<td><?php echo $album->id; ?></td>
+								<td class="center"><?php echo $album->id; ?></td>
 								<td><?php echo translator::trans("translations.langs.{$album->lang}"); ?></td>
 								<td><?php echo $album->getTitle(); ?></td>
 								<?php
@@ -84,6 +84,11 @@ $this->the_header();
 					'name' => 'id',
 					'type' => 'number',
 					'label' => translator::trans("ghafiye.panel.album.id"),
+					'ltr' => true
+				),
+				array(
+					'name' => 'musixmatch_id',
+					'label' => translator::trans("ghafiye.panel.album.musixmatch_id"),
 					'ltr' => true
 				),
 				array(

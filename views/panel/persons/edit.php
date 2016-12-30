@@ -12,6 +12,7 @@ class edit extends form{
 	}
 	public function setPerson(person $person){
 		$this->setData($person, "person");
+		$this->setDataForm($person->musixmatch_id, "musixmatch_id");
 		$this->setDataForm($person->name_prefix, "name_prefix");
 		$this->setDataForm($person->first_name, "first_name");
 		$this->setDataForm($person->middle_name, "middle_name");

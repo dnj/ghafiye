@@ -31,6 +31,12 @@ $this->the_header();
                     <form id="editPerson" class="create_form" action="<?php echo userpanel\url('persons/add') ?>" method="post" enctype="multipart/form-data">
 						<div class="col-md-6">
 	                        <?php $this->createField(array(
+								'name' => 'musixmatch_id',
+								'label' => translator::trans("ghafiye.panel.person.musixmatch_id"),
+								'ltr' => true
+							));
+							?>
+	                        <?php $this->createField(array(
 								'name' => 'name_prefix',
 								'label' => translator::trans("ghafiye.panel.person.name_prefix"),
 							));
@@ -68,58 +74,60 @@ $this->the_header();
 							));
 							?>
 						</div>
-						<div class="col-md-3">
-							<div class="form-group">
-								<label class="control-label"><?php echo translator::trans("ghafiye.panel.person.avatar"); ?></label>
-								<div class="center person-image-box">
-									<div class="fileupload fileupload-new" data-provides="fileupload">
-										<div class="person-image">
-											<div class="fileupload-new thumbnail">
-												<img src="<?php echo $this->getImage(); ?>" alt="personImage">
-											</div>
-											<div class="fileupload-preview fileupload-exists thumbnail"></div>
-											<div class="person-image-buttons">
-												<span class="btn btn-teal btn-file btn-sm">
-													<span class="fileupload-new">
-														<i class="fa fa-pencil"></i>
+						<div class="col-md-12">
+							<div class="col-md-3">
+								<div class="form-group">
+									<label class="control-label"><?php echo translator::trans("ghafiye.panel.person.avatar"); ?></label>
+									<div class="center person-image-box">
+										<div class="fileupload fileupload-new" data-provides="fileupload">
+											<div class="person-image">
+												<div class="fileupload-new thumbnail">
+													<img src="<?php echo $this->getImage(); ?>" alt="personImage">
+												</div>
+												<div class="fileupload-preview fileupload-exists thumbnail"></div>
+												<div class="person-image-buttons">
+													<span class="btn btn-teal btn-file btn-sm">
+														<span class="fileupload-new">
+															<i class="fa fa-pencil"></i>
+														</span>
+														<span class="fileupload-exists">
+															<i class="fa fa-pencil"></i>
+														</span>
+														<input name="avatar" type="file">
 													</span>
-													<span class="fileupload-exists">
-														<i class="fa fa-pencil"></i>
-													</span>
-													<input name="avatar" type="file">
-												</span>
-												<a href="#" class="btn fileupload-exists btn-bricky btn-sm" data-dismiss="fileupload">
-													<i class="fa fa-times"></i>
-												</a>
+													<a href="#" class="btn fileupload-exists btn-bricky btn-sm" data-dismiss="fileupload">
+														<i class="fa fa-times"></i>
+													</a>
+												</div>
 											</div>
 										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-						<div class="col-md-9">
-							<div class="form-group">
-								<label class="control-label"><?php echo translator::trans("ghafiye.panel.person.cover"); ?></label>
-								<div class="center person-image-box">
-									<div class="fileupload fileupload-new" data-provides="fileupload">
-										<div class="person-image cover">
-											<div class="fileupload-new thumbnail">
-												<img class="cover" src="<?php echo $this->getImage(); ?>" alt="personImage">
-											</div>
-											<div class="fileupload-preview fileupload-exists thumbnail"></div>
-											<div class="person-image-buttons">
-												<span class="btn btn-teal btn-file btn-sm">
-													<span class="fileupload-new">
-														<i class="fa fa-pencil"></i>
+							<div class="col-md-9">
+								<div class="form-group">
+									<label class="control-label"><?php echo translator::trans("ghafiye.panel.person.cover"); ?></label>
+									<div class="center person-image-box">
+										<div class="fileupload fileupload-new" data-provides="fileupload">
+											<div class="person-image cover">
+												<div class="fileupload-new thumbnail">
+													<img class="cover" src="<?php echo $this->getImage(); ?>" alt="personImage">
+												</div>
+												<div class="fileupload-preview fileupload-exists thumbnail"></div>
+												<div class="person-image-buttons">
+													<span class="btn btn-teal btn-file btn-sm">
+														<span class="fileupload-new">
+															<i class="fa fa-pencil"></i>
+														</span>
+														<span class="fileupload-exists">
+															<i class="fa fa-pencil"></i>
+														</span>
+														<input name="cover" type="file">
 													</span>
-													<span class="fileupload-exists">
-														<i class="fa fa-pencil"></i>
-													</span>
-													<input name="cover" type="file">
-												</span>
-												<a href="#" class="btn fileupload-exists btn-bricky btn-sm" data-dismiss="fileupload">
-													<i class="fa fa-times"></i>
-												</a>
+													<a href="#" class="btn fileupload-exists btn-bricky btn-sm" data-dismiss="fileupload">
+														<i class="fa fa-times"></i>
+													</a>
+												</div>
 											</div>
 										</div>
 									</div>
