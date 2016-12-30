@@ -29,6 +29,7 @@ $lang = $this->getSongLanguage();
 			}
 			?>
 		</ul>
+		<?php echo $this->pager(); ?>
 	</section>
 </div>
 </div>

@@ -1,14 +1,14 @@
 <?php
 namespace packages\ghafiye\views\explore;
 use \packages\base\db\dbObject;
-use \packages\ghafiye\view;
+use \packages\ghafiye\views\listview;
 use \packages\ghafiye\genre as genreObj;
-class genre extends view{
+class genre extends listview{
 	public function setSongs($songs){
-		$this->setData($songs, 'songs');
+		$this->setDataList($songs);
 	}
 	public function getSongs(){
-		return $this->getData('songs');
+		return $this->getDataList();
 	}
 	public function setGenre(genreObj $genre){
 		$this->setData($genre, 'genre');
@@ -23,12 +23,9 @@ class genre extends view{
 		return $this->getData('songsLang');
 	}
 	public function export(){
-		return array(
-			'data' => array(
-				'genre' => $this->getGenre()->toArray(),
-				'songs' => dbObject::objectToArray($this->getSongs()),
-				'lang' => $this->getSongLanguage()
-			)
-		);
+		$export = parent::export();
+		$export['data']['genre'] = $this->getGenre()->toArray();
+		$export['data']['lang'] = $this->getSongLanguage();
+		return $export;
 	}
 }

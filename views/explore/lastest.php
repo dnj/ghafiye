@@ -1,19 +1,12 @@
 <?php
 namespace packages\ghafiye\views\explore;
-use \packages\ghafiye\view;
+use \packages\ghafiye\views\listview;
 use \packages\base\db\dbObject;
-class lastest extends view{
+class lastest extends listview{
 	public function setSongs($songs){
-		$this->setData($songs, 'songs');
+		$this->setDataList($songs);
 	}
 	public function getSongs(){
-		return $this->getData('songs');
-	}
-	public function export(){
-		return array(
-			'data' => array(
-				'songs' => dbObject::objectToArray($this->getSongs())
-			)
-		);
+		return $this->getDataList();
 	}
 }

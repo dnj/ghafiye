@@ -11,12 +11,16 @@ use \packages\ghafiye\genre;
 use \packages\ghafiye\genre\title as genreTitle;
 
 class explore extends controller{
+	protected $items_per_page = 40;
 	public function best(){
 		$view = view::byName("\\packages\\ghafiye\\views\\explore\\best");
 		$song = new song();
 		$song->where("status", song::publish);
 		$song->orderBy("views", "desc");
-		$view->setSongs($song->get(40));
+		$song->pageLimit = $this->items_per_page;
+		$songs = $song->paginate($this->page);
+		$view->setSongs($songs);
+		$view->setPaginate($this->page, $song->totalCount, $song->pageLimit);
 		$this->response->setStatus(true);
 		$this->response->setView($view);
 		return $this->response;
@@ -26,7 +30,10 @@ class explore extends controller{
 		$song = new song();
 		$song->where("status", song::publish);
 		$song->orderBy("release_at", "desc");
-		$view->setSongs($song->get(40));
+		$song->pageLimit = $this->items_per_page;
+		$songs = $song->paginate($this->page);
+		$view->setSongs($songs);
+		$view->setPaginate($this->page, $song->totalCount, $song->pageLimit);
 		$this->response->setStatus(true);
 		$this->response->setView($view);
 		return $this->response;
@@ -43,9 +50,12 @@ class explore extends controller{
 		$song->where("genre", $genre->id);
 		$song->where("status", song::publish);
 		$song->orderBy("views", "desc");
+		$song->pageLimit = $this->items_per_page;
+		$songs = $song->paginate($this->page);
 
 		$view->setGenre($genre);
-		$view->setSongs($song->get(40));
+		$view->setSongs($songs);
+		$view->setPaginate($this->page, $song->totalCount, $song->pageLimit);
 		$view->setSongLanguage($genreTitle->lang);
 		$this->response->setStatus(true);
 		$this->response->setView($view);

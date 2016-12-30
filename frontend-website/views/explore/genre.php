@@ -4,10 +4,11 @@ use \packages\base;
 use \packages\base\translator;
 use \packages\ghafiye\views\explore\genre as genreView;
 use \themes\musixmatch\viewTrait;
+use \themes\musixmatch\views\listTrait;
 use \themes\musixmatch\views\musicTrait;
 
 class genre extends genreView{
-	use viewTrait,musicTrait;
+	use viewTrait,listTrait, musicTrait;
 	protected $genre;
 	function __beforeLoad(){
 		$this->genre = $this->getGenre();
