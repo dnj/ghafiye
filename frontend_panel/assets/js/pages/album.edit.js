@@ -9,7 +9,7 @@ var albumEdit = function () {
 					dataType: "json",
 					data: {
 						ajax:1,
-						first_name: request.term
+						word: request.term
 					},
 					success: function( data ) {
 						if(data.hasOwnProperty('status')){
@@ -24,18 +24,18 @@ var albumEdit = function () {
 				});
 			},
 			select: function( event, ui ) {
-				$(this).val((ui.item.first_name ? ui.item.first_name : ui.item.first_name));
+				$(this).val(ui.item.title);
 				$('#addSongForm input[name=song]').val(ui.item.id).trigger('change');
 				return false;
 			},
 			focus: function( event, ui ) {
-				$(this).val((ui.item.first_name ? ui.item.first_name : ui.item.first_name));
+				$(this).val(ui.item.title);
 				$('#addSongForm input[name=song]').val(ui.item.id);
 				return false;
 			}
 		}).autocomplete( "instance" )._renderItem = function( ul, item ) {
 			return $( "<li>" )
-				.append( "<strong>" +(item.first_name ? item.first_name : item.last_name)+ "</strong><small class=\"ltr\">"+item.last_name+"</small><small class=\"ltr\">"+(item.getder == 1 ? "مذکر" : "مونث")+"</small>" )
+				.append( "<strong>" +item.title+ "</strong><small>"+item.singer.name+"</small>" )
 				.appendTo( ul );
 		};
 	};
