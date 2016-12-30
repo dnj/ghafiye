@@ -134,7 +134,7 @@ $album = $this->getAlbum();
 														'value' => $song->id
 													));
 												?>
-												<a href="<?php echo userpanel\url("songs/edit/{$song->id}"); ?>"><?php echo($song->getTitle()); ?></a>
+												<a href="<?php echo userpanel\url("songs/edit/{$song->id}"); ?>"><?php echo($song->title($song->lang)); ?></a>
 												</td>
 												<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips song-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
 									        </tr>

@@ -3,6 +3,7 @@ namespace packages\ghafiye\views\panel\song;
 use \packages\ghafiye\views\listview as list_view;
 use \packages\ghafiye\authorization;
 use \packages\base\views\traits\form as formTrait;
+use \packages\ghafiye\song\person;
 class listview extends list_view{
 	use formTrait;
 	protected $canAdd;
@@ -20,5 +21,17 @@ class listview extends list_view{
 
 	public static function onSourceLoad(){
 		self::$navigation = authorization::is_accessed('songs_list');
+	}
+	public function export(){
+		$export = parent::export();
+		$export['data']['items'] = array();
+		foreach($this->getsongsLists() as $song){
+			$item = $song->toArray();
+			$item['title'] = $song->title($song->lang);
+			$item['singer'] = $song->getPerson(person::singer)->toArray();
+			$item['singer']['name'] = $song->getPerson(person::singer)->name();
+			$export['data']['items'][] = $item;
+		}
+		return $export;
 	}
 }

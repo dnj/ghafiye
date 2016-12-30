@@ -21,4 +21,14 @@ class listview extends list_view{
 	public static function onSourceLoad(){
 		self::$navigation = authorization::is_accessed('albums_list');
 	}
+	public function export(){
+		$export = parent::export();
+		$export['data']['items'] = array();
+		foreach($this->getAlbumsLists() as $album){
+			$item = $album->toArray();
+			$item['title'] = $album->title($album->lang);
+			$export['data']['items'][] = $item;
+		}
+		return $export;
+	}
 }

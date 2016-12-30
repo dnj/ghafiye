@@ -37,6 +37,11 @@ class albums extends controller{
 				'optional' => true,
 				'empty' => true
 			),
+			'song' => array(
+				'type' => 'number',
+				'optional' => true,
+				'empty' => true
+			),
 			'word' => array(
 				'type' => 'string',
 				'optional' => true,
@@ -60,17 +65,19 @@ class albums extends controller{
 					$album->where($item, $inputs[$item], $comparison);
 				}
 			}
+			if(isset($inputs['song']) and $inputs['song']){
+				$parenthesis = new parenthesis();
+				$parenthesis->where("ghafiye_songs.id", $inputs['song'], 'equals', "OR");
+				$album->where($parenthesis);
+				db::join("ghafiye_songs", "ghafiye_songs.album=ghafiye_albums.id", "INNER");
+				db::setQueryOption("DISTINCT");
+			}
 			if(isset($inputs['word']) and $inputs['word']){
 				$parenthesis = new parenthesis();
-				$title = new album\title;
-				foreach(array("title") as $item){
-					$parenthesis->where($item, $inputs['word'], $inputs['comparison'], 'OR');
-				}
-				$title->where($parenthesis);
-				$titles = $title->get();
-				foreach($titles as $title){
-					$album->where("id", $title->album);
-				}
+				$parenthesis->where("ghafiye_albums_titles.title", $inputs['word'], $inputs['comparison']);
+				$album->where($parenthesis);
+				db::join("ghafiye_albums_titles", "ghafiye_albums_titles.album=ghafiye_albums.id", "INNER");
+				db::setQueryOption("DISTINCT");
 			}
 		}catch(inputValidation $error){
 			$view->setFormError(FormError::fromException($error));
@@ -78,7 +85,7 @@ class albums extends controller{
 		}
 		$view->setDataForm($this->inputsvalue($inputsRules));
 		$album->pageLimit = $this->items_per_page;
-		$albums = $album->paginate($this->page);
+		$albums = $album->paginate($this->page, array("ghafiye_albums.*"));
 		$this->total_pages = $album->totalPages;
 		$view->setDataList($albums);
 		$view->setPaginate($this->page, $album->totalCount, $this->items_per_page);

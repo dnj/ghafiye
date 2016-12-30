@@ -85,7 +85,7 @@ class songs extends controller{
 				$parenthesis = new parenthesis();
 				$parenthesis->where("ghafiye_songs_titles.title", $inputs['word'], $inputs['comparison']);
 				$song->where($parenthesis);
-				db::join("ghafiye_songs_titles", "ghafiye_songs_titles.album=ghafiye_songs.id", "INNER");
+				db::join("ghafiye_songs_titles", "ghafiye_songs_titles.song=ghafiye_songs.id", "INNER");
 				db::setQueryOption("DISTINCT");
 			}
 		}catch(inputValidation $error){

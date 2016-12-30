@@ -72,10 +72,14 @@ $this->the_header();
 		<h4 class="modal-title"><?php echo translator::trans('search'); ?></h4>
 	</div>
 	<div class="modal-body">
-		<form id="gamakeySearch" class="form-horizontal" action="<?php echo userpanel\url("albums"); ?>" method="GET">
+		<form id="AlbumSearch" class="form-horizontal" action="<?php echo userpanel\url("albums"); ?>" method="GET">
 			<?php
 			$this->setHorizontalForm('sm-3','sm-9');
 			$feilds = array(
+				array(
+					'name' => 'song',
+					'type' => 'hidden'
+				),
 				array(
 					'name' => 'id',
 					'type' => 'number',
@@ -84,8 +88,11 @@ $this->the_header();
 				),
 				array(
 					'name' => 'word',
-					'label' => translator::trans("ghafiye.panel.album.word.key"),
-					'ltr' => true
+					'label' => translator::trans("ghafiye.panel.album.word.key")
+				),
+				array(
+					'name' => 'song_name',
+					'label' => translator::trans("ghafiye.panel.album.song.name")
 				),
 				array(
 					'type' => 'select',
@@ -107,7 +114,7 @@ $this->the_header();
 		</form>
 	</div>
 	<div class="modal-footer">
-		<button type="submit" form="gamakeySearch" class="btn btn-success"><?php echo translator::trans("search"); ?></button>
+		<button type="submit" form="AlbumSearch" class="btn btn-success"><?php echo translator::trans("search"); ?></button>
 		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
 	</div>
 </div>
