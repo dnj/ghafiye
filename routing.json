@@ -95,6 +95,23 @@
 		"controller": "controllers\\panel\\songs@delete"
 	},
 	{
+		"path": ["userpanel", "genres"],
+		"controller": "controllers\\panel\\genres@listview",
+		"method":"get"
+	},
+	{
+		"path": ["userpanel", "genres", "edit", {"type":"dynamic", "name":"id", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\genres@edit"
+	},
+	{
+		"path": ["userpanel", "genres", "add"],
+		"controller": "controllers\\panel\\genres@add"
+	},
+	{
+		"path": ["userpanel", "genres", "delete", {"type":"dynamic", "name":"id", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\genres@delete"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

@@ -83,6 +83,26 @@
 			"name": "\\themes\\clipone\\views\\ghafiye\\song\\delete",
 			"parent": "\\packages\\ghafiye\\views\\panel\\song\\delete",
 			"file": "html/songs/delete.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\genre\\listview",
+			"parent": "\\packages\\ghafiye\\views\\panel\\genre\\listview",
+			"file": "html/genres/list.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\genre\\edit",
+			"parent": "\\packages\\ghafiye\\views\\panel\\genre\\edit",
+			"file": "html/genres/edit.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\genre\\add",
+			"parent": "\\packages\\ghafiye\\views\\panel\\genre\\add",
+			"file": "html/genres/add.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\genre\\delete",
+			"parent": "\\packages\\ghafiye\\views\\panel\\genre\\delete",
+			"file": "html/genres/delete.php"
 		}
 	],
 	"production": true

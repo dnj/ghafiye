@@ -55,6 +55,22 @@
 		{
 			"classes":["views\\ghafiye\\song\\delete"],
 			"file":"views/songs/delete.php"
+		},
+		{
+			"classes":["views\\ghafiye\\genre\\listview"],
+			"file":"views/genres/list.php"
+		},
+		{
+			"classes":["views\\ghafiye\\genre\\edit"],
+			"file":"views/genres/edit.php"
+		},
+		{
+			"classes":["views\\ghafiye\\genre\\add"],
+			"file":"views/genres/add.php"
+		},
+		{
+			"classes":["views\\ghafiye\\genre\\delete"],
+			"file":"views/genres/delete.php"
 		}
 	]
 }

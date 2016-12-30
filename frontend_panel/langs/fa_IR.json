@@ -24,6 +24,10 @@
 		"usertype.permissions.ghafiye_song_add": "افزدون آهنگ",
 		"usertype.permissions.ghafiye_song_edit": "ویرایش آهنگ",
 		"usertype.permissions.ghafiye_song_delete": "حذف آهنگ",
+		"usertype.permissions.ghafiye_genres_list": "لیست سبک ها",
+		"usertype.permissions.ghafiye_genre_add": "افزدون سبک",
+		"usertype.permissions.ghafiye_genre_edit": "ویرایش سبک",
+		"usertype.permissions.ghafiye_genre_delete": "حذف سبک",
 		"persons": "اشخاص",
 		"ghafiye.panel.person.name": "نام",
 		"ghafiye.panel.person.id": "شناسه",
@@ -96,6 +100,17 @@
 		"ghafiye.panel.song.status.publish": "منتشر شده",
 		"ghafiye.panel.song.status.draft": "پیش نویس",
 		"ghafiye.panel.song.person": "خواننده",
-		"ghafiye.song.delete.warning": "آیا از حذف آهنگ به شناسه #{song_id} اطمینان دارید؟ این عملیات بدون بازگشت است."
+		"ghafiye.song.delete.warning": "آیا از حذف آهنگ به شناسه #{song_id} اطمینان دارید؟ این عملیات بدون بازگشت است.",
+		"genres": "سبک ها",
+		"ghafiye.panle.genres.list": "لیست سبک ها",
+		"ghafiye.panel.genre.id": "شناسه",
+		"ghafiye.panel.genre.musixmatch_id": "شناسه musixmatch",
+		"ghafiye.panel.genre.title": "عنوان سبک",
+		"ghafiye.panel.genre.song": "اهنگ",
+		"ghafiye.panel.genre.word.key": "عنوان",
+		"ghafiye.panel.genre.translated.titles": "عنوان های ترجمه شده",
+		"ghafiye.panel.genre.translated.title": "عنوان ترجمه شده",
+		"ghafiye.panel.genre.translated.lang": "زبان",
+		"ghafiye.genre.delete.warning": "آیا شما از حذف سبک به شناسه #{genre_id} اطمینان دارید؟ این عملیات بدون بازگشت است."
 	}
 }

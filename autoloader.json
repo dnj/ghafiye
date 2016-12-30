@@ -292,6 +292,26 @@
 		{
 			"classes":["views\\panel\\song\\delete"],
 			"file":"views/panel/songs/delete.php"
+		},
+		{
+			"classes":["controllers\\panel\\genres"],
+			"file":"controllers/panel/genres.php"
+		},
+		{
+			"classes":["views\\panel\\genre\\listview"],
+			"file":"views/panel/genres/list.php"
+		},
+		{
+			"classes":["views\\panel\\genre\\edit"],
+			"file":"views/panel/genres/edit.php"
+		},
+		{
+			"classes":["views\\panel\\genre\\add"],
+			"file":"views/panel/genres/add.php"
+		},
+		{
+			"classes":["views\\panel\\genre\\delete"],
+			"file":"views/panel/genres/delete.php"
 		}
 	]
 }

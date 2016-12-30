@@ -24,7 +24,12 @@ class usertype{
 			'songs_list',
 			'song_add',
 			'song_edit',
-			'song_delete'
+			'song_delete',
+
+			'genres_list',
+			'genre_add',
+			'genre_edit',
+			'genre_delete'
 		);
 		foreach($permissions as $permission){
 			permissions::add('ghafiye_'.$permission);
