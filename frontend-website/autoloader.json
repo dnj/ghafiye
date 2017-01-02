@@ -99,6 +99,10 @@
 		{
 			"classes":["views\\copyright"],
 			"file":"views/copyright.php"
+		},
+		{
+			"classes":["views\\search\\index"],
+			"file":"views/search/index.php"
 		}
 	]
 }

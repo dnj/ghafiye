@@ -17,6 +17,14 @@
 			"file": "assets/plugins/bootstrap/js/bootstrap.min.js"
 		},
 		{
+			"type": "js",
+			"file": "assets/plugins/jquery-ui/jquery-ui.min.js"
+		},
+		{
+			"type": "js",
+			"file": "assets/js/pages/search.js"
+		},
+		{
 			"type": "css",
 			"file": "assets/css/main.css"
 		}
@@ -115,6 +123,11 @@
 			"name": "\\themes\\musixmatch\\views\\copyright",
 			"parent": "\\packages\\ghafiye\\views\\copyright",
 			"file": "html/copyright.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\search\\index",
+			"parent": "\\packages\\ghafiye\\views\\search\\index",
+			"file": "html/search/index.php"
 		}
 	]
 }

@@ -112,6 +112,11 @@
 		"controller": "controllers\\panel\\genres@delete"
 	},
 	{
+		"path": ["search"],
+		"controller": "controllers\\search@index",
+		"method":"get"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

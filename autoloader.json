@@ -312,6 +312,14 @@
 		{
 			"classes":["views\\panel\\genre\\delete"],
 			"file":"views/panel/genres/delete.php"
+		},
+		{
+			"classes":["controllers\\search"],
+			"file":"controllers/search.php"
+		},
+		{
+			"classes":["views\\search\\index"],
+			"file":"views/search/index.php"
 		}
 	]
 }
