@@ -96,7 +96,10 @@
 		"blog.post.comments.number": "{count} دیدگاه",
 		"blog.post.view.number": "{view} بازدید",
 		"explore.pager.older" : "آهنگ های قبلی",
-		"explore.pager.newer" : "آهنگ های بعدی"
+		"explore.pager.newer" : "آهنگ های بعدی",
+		"artist.persons": "اشخاص",
+		"result.searchBy": "نتایج جستوجوی {word}",
+		"all-result-search": "تمام نتایج"
 
 	}
 }

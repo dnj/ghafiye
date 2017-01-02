@@ -5,11 +5,10 @@ var HomePageSearch = function(){
 		$input.autocomplete({
 			source: function( request, response ) {
 				$.ajax({
-					url: "/fa/search",
+					url: "/fa/search/"+request.term,
 					dataType: "json",
 					data: {
-						ajax:1,
-						word: request.term
+						ajax:1
 					},
 					success: function( data ) {
 						if(data.hasOwnProperty('status')){
@@ -24,13 +23,15 @@ var HomePageSearch = function(){
 				});
 			},
 			select: function( event, ui ) {
-				switch(ui.item.type){
-					case("person"):
-						window.location.href = '/fa/'+ui.item.name;
-						break;
-					case("song"):
-						window.location.href = '/fa/'+ui.item.singer.name+'/'+ui.item.title;
-						break;
+				if(typeof ui.item != 'undefined'){
+					switch(ui.item.type){
+						case("person"):
+							window.location.href = '/fa/'+ui.item.name;
+							break;
+						case("song"):
+							window.location.href = '/fa/'+ui.item.singer.name+'/'+ui.item.title;
+							break;
+					}
 				}
 				return false;
 			},
@@ -68,6 +69,12 @@ var HomePageSearch = function(){
 				that._renderItemData( ul, item );
 			});
 			$( ul ).addClass('search-autocomplete');
+			if(items.length){
+				$( '<li class="ui-menu-item all-result"><a href="/fa/search/'+$input.val()+'">مشاهده همه نتایج</a></li>' ).prependTo(ul).click(function(){
+					window.location.href = $('a', this).attr('href');
+				});
+			}
+
 		}
 		$instance._resizeMenu= function( ul, items ) {
 			this.menu.element.outerWidth( $input.outerWidth() );

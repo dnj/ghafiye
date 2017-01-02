@@ -112,8 +112,23 @@
 		"controller": "controllers\\panel\\genres@delete"
 	},
 	{
-		"path": ["search"],
+		"path": ["search", {"type":"dynamic", "name":"word"}],
 		"controller": "controllers\\search@index",
+		"method":"get"
+	},
+	{
+		"path": ["search", {"type":"dynamic", "name":"word"}, "lyrics"],
+		"controller": "controllers\\search@byLyrics",
+		"method":"get"
+	},
+	{
+		"path": ["search", {"type":"dynamic", "name":"word"}, "persons"],
+		"controller": "controllers\\search@byPersons",
+		"method":"get"
+	},
+	{
+		"path": ["search", {"type":"dynamic", "name":"word"}, "songs"],
+		"controller": "controllers\\search@bySongs",
 		"method":"get"
 	},
 	{
