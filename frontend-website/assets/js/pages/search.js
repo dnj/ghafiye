@@ -26,10 +26,10 @@ var HomePageSearch = function(){
 			select: function( event, ui ) {
 				switch(ui.item.type){
 					case("person"):
-						window.location.href = 'fa/'+ui.item.name;
+						window.location.href = '/fa/'+ui.item.name;
 						break;
 					case("song"):
-						window.location.href = 'fa/'+ui.item.singer.name+'/'+ui.item.title;
+						window.location.href = '/fa/'+ui.item.singer.name+'/'+ui.item.title;
 						break;
 				}
 				return false;
@@ -52,10 +52,10 @@ var HomePageSearch = function(){
 			var $html = '';
 			switch(item.type){
 				case("person"):
-					$html = "<div class=\"col-md-1\"><img src=\"/packages/ghafiye/"+item.avatar+"\"/></div><div class=\"col-md-11\"><strong>" +item.name+ "</strong></div>";
+					$html = "<div class=\"col-md-2 avatar\"><img src=\"/packages/ghafiye/"+item.avatar+"\"/></div><div class=\"col-md-10 title\"><strong>" +item.name+ "</strong></div>";
 					break;
 				case("song"):
-					$html = "<div class=\"col-md-1\"><img src=\"/packages/ghafiye/"+item.image+"\"/></div><div class=\"col-md-11\"><strong>" +item.title+ "</strong><small>"+item.singer.name+"</small></div>";
+					$html = "<div class=\"col-md-2 avatar\"><img src=\"/packages/ghafiye/"+item.image+"\"/></div><div class=\"col-md-10 title\"><strong>" +item.title+ "</strong><small>"+item.singer.name+"</small></div>";
 					break;
 			}
 			return $( "<li>" )
@@ -68,6 +68,9 @@ var HomePageSearch = function(){
 				that._renderItemData( ul, item );
 			});
 			$( ul ).addClass('search-autocomplete');
+		}
+		$instance._resizeMenu= function( ul, items ) {
+			this.menu.element.outerWidth( $input.outerWidth() );
 		}
 	};
 	return{

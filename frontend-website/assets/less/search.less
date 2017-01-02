@@ -9,14 +9,14 @@
 	z-index:105000;
 	li{
 		height: 62px;
-		div.col-md-1{
+		div.avatar{
 			img{
 				width: 50px;
 				height: 50px;
 			    border-radius: 50%;
 			}
 		}
-		div.col-md-11{
+		div.title{
 			top: 15px;
 		}
 		&.ui-menu-item, &.ui-state-focus{
@@ -65,6 +65,16 @@
 		}
 	}
 }
+body{
+	.search-autocomplete{
+		background: rgba(255,255,255,0.95);
+		border-top-left-radius: 0;
+		border-top-right-radius: 0;
+		border-top: 0;
+		box-shadow: 0 10px 10px rgba(0,0,0,.2);
+		padding-top: 0;
+	}
+}
 body.home{
 	header{
 		.searchbox {
@@ -77,12 +87,11 @@ body.home{
 			}
 		}
 	}
+}
+body:not(.home){
 	.search-autocomplete{
-		background: rgba(255,255,255,0.95);
-		border-top-left-radius: 0;
-		border-top-right-radius: 0;
-		border-top: 0;
-		box-shadow: 0 10px 10px rgba(0,0,0,.2);
-		padding-top: 0;
+		background: #f9f9f9;
+		box-shadow: 0 4px 4px rgba(0,0,0,.08);
+		border-color: #f0f0f0;
 	}
 }
