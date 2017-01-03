@@ -1,12 +1,17 @@
 <?php
 use \packages\base;
+use \packages\base\frontend\theme;
 use \packages\base\translator;
 ?>
 </main>
 <footer>
 	<div class="container">
 		<div class="row">
-			<div class="col-md-3"></div>
+			<div class="col-md-3 text-center">
+				<a href="<?php echo base\url(); ?>">
+					<img src="<?php echo theme::url('assets/images/android-chrome-192x192.png'); ?>" width="180">
+				</a>
+			</div>
 			<div class="col-md-3">
 				<h4><?php echo translator::trans('footer.overview'); ?></h4>
 				<ul>

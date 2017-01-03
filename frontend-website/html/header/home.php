@@ -12,6 +12,8 @@ use \packages\base\frontend\theme;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="google-site-verification" content="QJ5ExDHPeGh0ibENsXRe_tFwfKzEPMz8yNEXNSYSzWs" />
+	<link rel="icon" href="<?php echo theme::url('assets/images/favicon.ico'); ?>" type="image/x-icon" />
+	<link rel="shortcut icon" href="<?php echo theme::url('assets/images/favicon.ico'); ?>" type="image/x-icon">
 	<?php
 	$description = $this->getDescription();
 	if($description){
@@ -25,7 +27,12 @@ use \packages\base\frontend\theme;
 		<div class="banner"></div>
 		<div class="container">
 			<nav>
-				<a class="logo" href="<?php echo base\url(); ?>"><img src="<?php echo theme::url('assets/images/logo.white.png'); ?>" alt="Logo"></a>
+				<a class="logo" href="<?php echo base\url(); ?>">
+					<img src="<?php echo theme::url('assets/images/logo-70x70.png'); ?>" alt="Logo">
+					<span>قــا</span>
+					<span>فــ&zwj;</span>
+					<span>یـه</span>
+				</a>
 				<ul>
 					<li><a href="<?php echo base\url('explore'); ?>"><?php echo translator::trans('toplyrics'); ?></a></li>
 				</ul>
