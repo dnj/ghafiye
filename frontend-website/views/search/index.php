@@ -16,6 +16,7 @@ use \themes\musixmatch\views\listTrait;
 class index extends homepage{
 	use viewTrait, listTrait;
 	function __beforeLoad(){
+		$this->setTitle(translator::trans("result.searchBy", array("word"=>$this->getWord())));
 		$this->addBodyClass('search article');
 	}
 	protected function getAvatar(person $person){
