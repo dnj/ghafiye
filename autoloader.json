@@ -70,6 +70,10 @@
 			"file":"libraries/song/lyric.php"
 		},
 		{
+			"classes":["song\\like"],
+			"file":"libraries/song/like.php"
+		},
+		{
 			"classes":["song\\video"],
 			"file":"libraries/song/video.php"
 		},

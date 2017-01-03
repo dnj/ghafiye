@@ -13,6 +13,7 @@ use \themes\musixmatch\views\formTrait;
 class index extends homepage{
 	use viewTrait;
 	function __beforeLoad(){
+		$this->setTitle(translator::trans("ghafiye.homepage.title"));
 		$this->addBodyClass('home');
 	}
 	function getGenres(){

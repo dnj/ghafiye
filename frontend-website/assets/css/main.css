@@ -11510,6 +11510,22 @@ body.lyric > main > .row:first-child > .title .translations .bootstrap-select:fo
 body.lyric > main > .row:first-child > .title .translations .bootstrap-select.open .dropdown-toggle {
   box-shadow: none;
 }
+body.lyric > main div.tools {
+  padding-top: 40px;
+}
+body.lyric > main div.tools ul {
+  font-family: koodak;
+}
+body.lyric > main div.tools ul a {
+  background: 0;
+  border: none;
+  font-size: 20px;
+}
+body.lyric > main div.tools ul li {
+  background: 0;
+  border: none;
+  font-size: 20px;
+}
 body.lyric > main section.text {
   padding-top: 20px;
 }
