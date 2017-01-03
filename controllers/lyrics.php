@@ -43,7 +43,9 @@ class lyrics extends controller{
 		$lyrices = $lyric->get();
 		$parenthesis = new parenthesis();
 		$parenthesis->where("ip", http::$client['ip']);
-		$parenthesis->where("cookie", http::$request['cookies']['like'],'=', "OR");
+		if(isset( http::$request['cookies']['like'])){
+			$parenthesis->where("cookie", http::$request['cookies']['like'],'=', "OR");
+		}
 		$songLiked = song\like::where($parenthesis)->where("song", $song->id)->getOne();
 		$view->setlikeStatus(($songLiked ? true : false));
 		$view->setSinger($person);
