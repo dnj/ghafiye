@@ -1,7 +1,7 @@
 var HomePageSearch = function(){
 	var form = $(".searchbox");
+	var $input= $("input[name=word]", form);
 	var runWordSeachListener = function(){
-		var $input= $("input[name=word]", form);
 		$input.autocomplete({
 			source: function( request, response ) {
 				$.ajax({
@@ -80,9 +80,17 @@ var HomePageSearch = function(){
 			this.menu.element.outerWidth( $input.outerWidth() );
 		}
 	};
+	var runFormSubmit = function(){
+		$(form).submit(function(e){
+			e.preventDefault();
+			window.location.href = "/fa/search/"+$input.val();
+
+		});
+	}
 	return{
 		init:function(){
 			runWordSeachListener();
+			runFormSubmit();
 		}
 	}
 }();
