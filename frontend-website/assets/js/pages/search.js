@@ -26,10 +26,10 @@ var HomePageSearch = function(){
 				if(typeof ui.item != 'undefined'){
 					switch(ui.item.type){
 						case("person"):
-							window.location.href = '/fa/'+ui.item.name;
+							window.location.href = '/fa/'+ui.item.encodedName;
 							break;
 						case("song"):
-							window.location.href = '/fa/'+ui.item.singer.name+'/'+ui.item.title;
+							window.location.href = '/fa/'+ui.item.singer.encodedName+'/'+ui.item.encodedTitle;
 							break;
 					}
 				}

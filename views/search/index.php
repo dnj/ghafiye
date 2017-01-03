@@ -44,6 +44,7 @@ class index extends list_view{
 				$item = $person->toArray();
 				$item['type'] = 'person';
 				$item["name"] = $person->name($person->showing_lang);
+				$item["encodedName"] = $person->encodedName($person->showing_lang);
 				$export['data']['items'][] = $item;
 			}
 		}
@@ -52,8 +53,10 @@ class index extends list_view{
 				$item = $song->toArray();
 				$item['type'] = 'song';
 				$item['title'] = $song->title($song->showing_lang);
+				$item['encodedTitle'] = $song->encodedTitle($song->showing_lang);
 				$item['singer'] = $song->getPerson(songPerson::singer)->toArray();
 				$item['singer']['name'] = $song->getPerson(songPerson::singer)->name($song->showing_lang);
+				$item['singer']['encodedName'] = $song->getPerson(songPerson::singer)->encodedName($song->showing_lang);
 				$export['data']['items'][] = $item;
 			}
 		}
