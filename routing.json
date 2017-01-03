@@ -132,6 +132,11 @@
 		"method":"get"
 	},
 	{
+		"path": ["songs", "like", {"type":"dynamic", "name":"song", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\lyrics@likeSong",
+		"method": "get"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

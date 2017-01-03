@@ -37,7 +37,21 @@ $lang = $this->getLyricsLanguage();
 	</div>
 </header>
 <div class="row">
-	<div class="col-sm-3">
+	<div class="col-sm-3 tools">
+		<ul class="list-group">
+			<a href="#" id="like" class="list-group-item" data-song="<?php echo($this->song->id); ?>">
+				<span class="float-xs-right"><i class="fa like-icon <?php echo(($this->getlikeStatus() ? "fa-heart" : "fa-heart-o")); ?>"></i></span>
+				<?php echo(translator::trans("songs.likes.number", array('number' => $this->song->likes))); ?>
+			</a>
+			<li class="list-group-item">
+				<span class="float-xs-right"><i class="fa fa-language"></i></span>
+				<?php echo(translator::trans("songs.translations.number", array('number' => $numberOfLangs))); ?>
+			</li>
+			<li class="list-group-item">
+				<span class="float-xs-right"><i class="fa fa-tag"></i></span>
+				<?php echo($this->song->genre->title()); ?>
+			</li>
+		</ul>
 	</div>
 	<section class="col-sm-9 col-md-7 text col-md-offset-1">
 		<?php foreach($this->getLyrices() as $lyric){ ?>

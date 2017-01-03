@@ -28,6 +28,7 @@ class song extends dbObject{
     protected $relations = array(
 		'titles' => array("hasMany", "packages\\ghafiye\\song\\title", "song"),
 		'persons' => array("hasMany", "packages\\ghafiye\\song\\person", "song"),
+		'like' => array("hasMany", "packages\\ghafiye\\song\\like", "song"),
 		'videoss' => array("hasMany", "packages\\ghafiye\\song\\videos", "song"),
         'album' => array("hasOne", "packages\\ghafiye\\album", "album"),
         'group' => array("hasOne", "packages\\ghafiye\\group", "group"),

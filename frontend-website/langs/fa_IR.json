@@ -99,7 +99,9 @@
 		"explore.pager.newer" : "آهنگ های بعدی",
 		"artist.persons": "اشخاص",
 		"result.searchBy": "نتایج جستوجوی {word}",
-		"all-result-search": "تمام نتایج"
+		"all-result-search": "تمام نتایج",
+		"songs.likes.number": "<span class=\"like-number\">{number}</span> پسند",
+		"songs.translations.number": "{number} زبان ترجمه شده"
 
 	}
 }

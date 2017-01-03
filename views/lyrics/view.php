@@ -24,4 +24,10 @@ class view extends \packages\ghafiye\view{
 	public function getLyricsLanguage(){
 		return $this->getData('lyricsLang');
 	}
+	public function setlikeStatus($status){
+		$this->setData($status, "liked");
+	}
+	protected function getlikeStatus(){
+		return $this->getData("liked");
+	}
 }

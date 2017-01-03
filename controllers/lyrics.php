@@ -4,6 +4,7 @@ use \packages\base;
 use \packages\base\db;
 use \packages\base\http;
 use \packages\base\NotFound;
+use \packages\base\db\parenthesis;
 use \packages\base\inputValidation;
 use \packages\base\views\FormError;
 
@@ -40,11 +41,48 @@ class lyrics extends controller{
 		$lyric->orderby('time', 'asc');
 		$lyric->orderby('id', 'asc');
 		$lyrices = $lyric->get();
+		$parenthesis = new parenthesis();
+		$parenthesis->where("ip", http::$client['ip']);
+		$parenthesis->where("cookie", http::$request['cookies']['like'],'=', "OR");
+		$songLiked = song\like::where($parenthesis)->where("song", $song->id)->getOne();
+		$view->setlikeStatus(($songLiked ? true : false));
 		$view->setSinger($person);
 		$view->setSong($song);
 		$view->setLyrices($lyrices);
 		$view->setLyricsLanguage($songTitle->lang);
 		$this->response->setView($view);
+		return $this->response;
+	}
+	public function likeSong($data){
+		$song = song::where("id", $data['song'])->where("status", song::publish)->getOne();
+		if(!$song){
+			$this->response->setStatus(false);
+			throw new NotFound();
+		}
+		if(!isset(http::$request['cookies']['like'])){
+			$cookie = md5("like".(time()+5756858)."salam".rand(0,100));
+			http::setcookie("like", $cookie, time() + (86400*365), "/");
+			http::$request['cookies']['like'] = $cookie;
+		}
+		$parenthesis = new parenthesis();
+		$parenthesis->where("ip", http::$client['ip']);
+		$parenthesis->where("cookie", http::$request['cookies']['like'],'=', "OR");
+		$hasLike = song\like::where($parenthesis)->where("song", $song->id)->getOne();
+		if($hasLike){
+			$hasLike->delete();
+			$song->likes--;
+			$this->response->setData(false,"liked");
+		}else{
+			$like = new song\like();
+			$like->ip = http::$client['ip'];
+			$like->cookie =  http::$request['cookies']['like'];
+			$like->song = $song->id;
+			$like->save();
+			$song->likes++;
+			$this->response->setData(true, "liked");
+		}
+		$song->save();
+		$this->response->setStatus(true);
 		return $this->response;
 	}
 }
