@@ -324,6 +324,10 @@
 		{
 			"classes":["views\\search\\index"],
 			"file":"views/search/index.php"
+		},
+		{
+			"classes":["views\\panel\\song\\edit"],
+			"file":"views/panel/songs/edit.php"
 		}
 	]
 }

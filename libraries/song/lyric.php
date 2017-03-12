@@ -11,4 +11,10 @@ class lyric extends dbObject{
 		'time' => array('type' => 'int'),
 		'text' => array('type' => 'text', 'required' => true),
 	);
+	protected function is_ltr($lang = null){
+		if($lang == null){
+			$lang = $this->lang;
+		}
+		return !in_array($lang, array('ar','fa','dv','he','ps','sd','ur','yi','ug','ku'));
+	}
 }

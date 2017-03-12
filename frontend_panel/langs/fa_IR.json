@@ -84,7 +84,6 @@
 		"ghafiye.album.delete.warning": "آیا شما از حذف آلبوم به شناسه #{album_id} اطمینان دارید؟ این عملیات بدون بازگشت است",
 		"ghafiye.panel.album.word.key": "عنوان",
 		"ghafiye.panel.person.word.key": "کلمه کلیدی",
-		"songs": "آهنگ ها",
 		"ghafiye.panle.songs.list": "لیست آهنگ ها",
 		"ghafiye.panel.song.title": "عنوان آهنگ",
 		"ghafiye.panel.song.word.key": "کلمه کلیدی",
@@ -111,6 +110,16 @@
 		"ghafiye.panel.genre.translated.titles": "عنوان های ترجمه شده",
 		"ghafiye.panel.genre.translated.title": "عنوان ترجمه شده",
 		"ghafiye.panel.genre.translated.lang": "زبان",
-		"ghafiye.genre.delete.warning": "آیا شما از حذف سبک به شناسه #{genre_id} اطمینان دارید؟ این عملیات بدون بازگشت است."
+		"ghafiye.genre.delete.warning": "آیا شما از حذف سبک به شناسه #{genre_id} اطمینان دارید؟ این عملیات بدون بازگشت است.",
+		"ghafiye.panle.songs": "آهنگ ها",
+		"ghafiye.editSong": "ویرایش آهنگ",
+		"ghafiye.panel.song.musixmatch_id": "شناسه Musixmatch",
+		"ghafiye.panel.song.spotify_id": "شناسه Spotify",
+		"ghafiye.panel.song.duration": "مدت زمان",
+		"ghafiye.editSong.lyric": "ویرایش متن آهنگ",
+		"ghafiye.panel.song.translated.titles": "ترجمه های عنوان آهنگ",
+		"ghafiye.song.addTitle": "افزدون عنوان",
+		"ghafiye.song.changeLang": "تغییر زبان",
+		"ghafiye.song.translate.otherLang": "ترجمه های دیگر"
 	}
 }

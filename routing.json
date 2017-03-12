@@ -137,13 +137,12 @@
 		"method": "get"
 	},
 	{
-		"path": [{"type":"dynamic","name":"artist"},"albums"],
-		"controller": "controllers\\artists@albums",
-		"method":"get"
+		"path": ["userpanel", "songs", "edit", {"type":"dynamic", "name":"song", "regex":"/^(\\d+)$/"}],
+		"controller": "controllers\\panel\\songs@edit"
 	},
 	{
-		"path": [{"type":"dynamic","name":"artist"},"albums",{"type":"dynamic","name":"album"}],
-		"controller": "controllers\\artists@album",
+		"path": [{"type":"dynamic","name":"artist"},"albums"],
+		"controller": "controllers\\artists@albums",
 		"method":"get"
 	},
 	{

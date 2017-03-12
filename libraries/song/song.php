@@ -4,6 +4,7 @@ use packages\base\db;
 use packages\base\db\dbObject;
 use packages\ghafiye\translator\title;
 use packages\ghafiye\song\person as songPerson;
+use packages\ghafiye\song\lyric;
 class song extends dbObject{
 	use title;
 	const publish = 1;
@@ -30,6 +31,7 @@ class song extends dbObject{
 		'persons' => array("hasMany", "packages\\ghafiye\\song\\person", "song"),
 		'like' => array("hasMany", "packages\\ghafiye\\song\\like", "song"),
 		'videoss' => array("hasMany", "packages\\ghafiye\\song\\videos", "song"),
+		'lyrics' => array("hasMany", "packages\\ghafiye\\song\\lyric", "song"),
         'album' => array("hasOne", "packages\\ghafiye\\album", "album"),
         'group' => array("hasOne", "packages\\ghafiye\\group", "group"),
         'genre' => array("hasOne", "packages\\ghafiye\\genre", "genre"),
@@ -48,6 +50,15 @@ class song extends dbObject{
 			}
 		}
 		return null;
+	}
+	public function getLyricByLang($lang = null){
+		if(!$lang){
+			$lang = $this->lang;
+		}
+		$lyric = new lyric();
+		$lyric->where("lang", $lang);
+		$lyric->where("song", $this->id);
+		return $lyric->get();
 	}
 	static function bySingerAndTitle(person $singer, $title){
 		db::join("ghafiye_songs_titles", "ghafiye_songs_titles.song=ghafiye_songs.id", "inner");

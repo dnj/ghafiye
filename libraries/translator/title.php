@@ -64,5 +64,19 @@ trait title{
 		$title->lang = $lang;
 		$title->save();
 	}
+	public function setTitle($titletxt, $lang){
+		$title = new $this->relations['titles'][1]();
+		$title->where("lang", $lang);
+		$title->where("song", $this->id);
+		$title->getOne();
+		if($title->id){
+			$title->title = $titletxt;
+		}else{
+			$title->song = $this->id;
+			$title->lang = $lang;
+			$title->title = $titletxt;
+		}
+		$title->save();
+	}
 }
 class titleRelationException extends \Exception{}

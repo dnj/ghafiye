@@ -103,6 +103,11 @@
 			"name": "\\themes\\clipone\\views\\ghafiye\\genre\\delete",
 			"parent": "\\packages\\ghafiye\\views\\panel\\genre\\delete",
 			"file": "html/genres/delete.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\song\\edit",
+			"parent": "\\packages\\ghafiye\\views\\panel\\song\\edit",
+			"file": "html/songs/edit.php"
 		}
 	],
 	"production": true

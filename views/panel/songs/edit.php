@@ -1,0 +1,82 @@
+<?php
+namespace packages\ghafiye\views\panel\song;
+use \packages\base\http;
+use \packages\base\db\dbObject;
+use \packages\ghafiye\song;
+use \packages\ghafiye\views\form;
+use \packages\ghafiye\views\listview;
+use \packages\base\views\traits\form as formTrait;
+use \packages\ghafiye\song\person;
+use \packages\ghafiye\song\lyric;
+class edit extends listview{
+	use formTrait;
+	public function setSong(song $song){
+		$this->setData($song, 'song');
+		$this->setDataForm($song->toArray());
+		if($song->album){
+			$this->setDataForm($song->album->getTitle(), 'album_name');
+		}
+		if($song->group){
+			$this->setDataForm($song->group->getTitle(), 'group_name');
+		}
+		foreach($song->titles as $title){
+			$this->setDataForm($title->title, 'titles['.$title->lang.']');
+		}
+		$this->setDataForm($song->getLyricByLang()[0]->lang, 'lyric_lang');
+		$i = 0;
+		foreach($song->getLyricByLang() as $lyric){
+			$this->setDataForm($this->formatTime($lyric->time), 'lyric['.$i.'][time]');
+			$this->setDataForm($lyric->text, 'lyric['.$i.'][text]');
+			$this->setDataForm($lyric->id, 'lyric['.$i.'][id]');
+			$i++;
+		}
+	}
+	private function formatTime($time){
+		$min = floor($time / 60);
+		$sec = $time % 60;
+		return sprintf('%02d:%02d', $min, $sec);
+	}
+	protected function getSong(){
+		return $this->getData("song");
+	}
+	public function setAllowLangs($allowlangs){
+		$this->setData($allowlangs, 'allowlangs');
+	}
+	protected function getAllowLangs(){
+		return $this->getData("allowlangs");
+	}
+	public function setGenres($genre){
+		$this->setData($genre, 'genre');
+	}
+	protected function getGenres(){
+		return $this->getData("genre");
+	}
+	public function export(){
+		$export = parent::export();
+		$song = $this->getSong();
+		$item = $song->toArray();
+		$item['title'] = $song->title();
+		$item['singer'] = $song->getPerson(person::singer)->toArray();
+		$item['singer']['name'] = $song->getPerson(person::singer)->name();
+		$lang = http::getData("langLyric") ? http::getData("langLyric") : $song->lang;
+		$item['orginalLyric'] = array();
+		foreach($song->getLyricByLang() as $lyric){
+			$item['orginalLyric'][] = array(
+				'id' => $lyric->id,
+				'time' => $this->formatTime($lyric->time),
+				'text' => $lyric->text,
+			);
+		}
+		$item['orginalLang'] = ($lang == $song->lang);
+		foreach($song->getLyricByLang($lang) as $lyric){
+			$lyricItem = array(
+				'text' => $lyric->text,
+				'id' => $lyric->id,
+				'time' => $this->formatTime($lyric->time)
+			);
+			$item['lyrics'][] = $lyricItem;
+		}
+		$export['data']['song'] = $item;
+		return $export;
+	}
+}

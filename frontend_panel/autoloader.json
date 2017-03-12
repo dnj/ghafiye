@@ -71,6 +71,10 @@
 		{
 			"classes":["views\\ghafiye\\genre\\delete"],
 			"file":"views/genres/delete.php"
+		},
+		{
+			"classes":["views\\ghafiye\\song\\edit"],
+			"file":"views/songs/edit.php"
 		}
 	]
 }
