@@ -328,6 +328,10 @@
 		{
 			"classes":["views\\panel\\song\\edit"],
 			"file":"views/panel/songs/edit.php"
+		},
+		{
+			"classes":["views\\panel\\song\\add"],
+			"file":"views/panel/songs/add.php"
 		}
 	]
 }

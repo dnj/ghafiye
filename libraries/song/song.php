@@ -1,6 +1,7 @@
 <?php
 namespace packages\ghafiye;
 use packages\base\db;
+use packages\userpanel\date;
 use packages\base\db\dbObject;
 use packages\ghafiye\translator\title;
 use packages\ghafiye\song\person as songPerson;
@@ -84,5 +85,11 @@ class song extends dbObject{
 			$songs[] = new song($data);
 		}
 		return $songs;
+	}
+	protected function preLoad($data){
+		if(!isset($data['release_at'])){
+				$data['release_at'] = date::time();
+			}
+		return $data;
 	}
 }

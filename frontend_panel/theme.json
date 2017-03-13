@@ -108,6 +108,11 @@
 			"name": "\\themes\\clipone\\views\\ghafiye\\song\\edit",
 			"parent": "\\packages\\ghafiye\\views\\panel\\song\\edit",
 			"file": "html/songs/edit.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\song\\add",
+			"parent": "\\packages\\ghafiye\\views\\panel\\song\\add",
+			"file": "html/songs/add.php"
 		}
 	],
 	"production": true

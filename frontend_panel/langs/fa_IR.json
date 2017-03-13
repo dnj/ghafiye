@@ -120,6 +120,8 @@
 		"ghafiye.panel.song.translated.titles": "ترجمه های عنوان آهنگ",
 		"ghafiye.song.addTitle": "افزدون عنوان",
 		"ghafiye.song.changeLang": "تغییر زبان",
-		"ghafiye.song.translate.otherLang": "ترجمه های دیگر"
+		"ghafiye.song.translate.otherLang": "ترجمه های دیگر",
+		"ghafiye.addSong": "افزدون آهنگ",
+		"ghafiye.addSong.lyric": "افزودن متن آهنگ"
 	}
 }

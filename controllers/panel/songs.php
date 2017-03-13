@@ -11,6 +11,7 @@ use \packages\base\translator;
 use \packages\base\db\parenthesis;
 use \packages\base\inputValidation;
 use \packages\base\views\FormError;
+use \packages\base\db\duplicateRecord;
 
 use \packages\userpanel;
 use \packages\userpanel\controller;
@@ -21,6 +22,7 @@ use packages\ghafiye\album;
 use packages\ghafiye\group;
 use \packages\ghafiye\genre;
 use packages\ghafiye\song\lyric;
+use packages\ghafiye\song\person;
 use \packages\ghafiye\authorization;
 
 class songs extends controller{
@@ -340,6 +342,170 @@ class songs extends controller{
 				$view->setFormError(FormError::fromException($error));
 			}
 			//$view->setDataForm($this->inputsvalue($inputsRules));
+		}else{
+			$this->response->setStatus(true);
+		}
+		$this->response->setView($view);
+		return $this->response;
+	}
+	public function add(){
+		authorization::haveOrFail('song_add');
+		$view = view::byName("\\packages\\ghafiye\\views\\panel\\song\\add");
+		$allowlangs = translator::$allowlangs;
+		$view->setAllowLangs($allowlangs);
+		$view->setGenres(genre::get());
+		$this->response->setStatus(false);
+		if(http::is_post()){
+			$inputsRules = array(
+				'musixmatch_id' => array(
+					'type' => 'string',
+					'optional' => true,
+					'empty' => true
+				),
+				'spotify_id' => array(
+					'type' => 'string',
+					'optional' => true,
+					'empty' => true
+				),
+				'album' => array(
+					'type' => 'number',
+					'optinal' => true,
+					'empty' => true
+				),
+				'group' => array(
+					'type' => 'number',
+					'optinal' => true,
+					'empty' => true
+				),
+				'person' => array(
+					'type' => 'number',
+					'optinal' => true,
+					'empty' => true
+				),
+				'duration' => array(
+					'type' => 'string',
+					'optinal' => true,
+					'empty' => true
+				),
+				'genre' => array(
+					'type' => 'string',
+					'optinal' => true,
+					'empty' => true
+				),
+				'lang' => array(
+					'type' => 'string',
+					'values' => $allowlangs
+				),
+				'image' => array(
+					'type' => 'file',
+					'optional' => true,
+					'empty' => true
+				),
+				'status' => array(
+					'type' => 'number',
+					'values' => array(song::publish, song::draft)
+				),
+				'title' => array(
+					'type' => 'string',
+				),
+				'lyric' => array()
+			);
+			try{
+				throw new inputValidation("lyric[1][time]");
+				$inputs = $this->checkinputs($inputsRules);
+				if(is_array($inputs['lyric'])){
+					foreach($inputs['lyric'] as $key => $lyric){
+						if(!isset($lyric['time']) or ($time = $this->is_validTime($lyric['time'])) < 0 ){
+							throw new inputValidation("lyric[{$key}][time]");
+						}
+						$inputs['lyric'][$key]['time'] = $time;
+					}
+				}else{
+					throw new inputValidation("lyric");
+				}
+				if(isset($inputs['duration']) and $inputs['duration']){
+					if($inputs['duration'] <= 0){
+						throw new inputValidation('duration');
+					}
+				}
+				if(isset($inputs['album']) and $inputs['album']){
+					$album = album::byId($inputs['album']);
+					if(!$album){
+						throw new inputValidation('album');
+					}
+				}
+				if(isset($inputs['group']) and $inputs['group']){
+					$song = group::byId($inputs['group']);
+					if(!$song){
+						throw new inputValidation('group');
+					}
+				}
+				$person = person::byId($inputs['person']);
+				if(!$person){
+					throw new inputValidation('person');
+				}
+				if(isset($inputs['image'])){
+					if($inputs["image"]['error'] == 0){
+						$type = getimagesize($inputs["image"]['tmp_name']);
+						if(in_array($type[2], array(IMAGETYPE_JPEG ,IMAGETYPE_GIF, IMAGETYPE_PNG))){
+							$title = IO\md5($inputs["image"]['tmp_name']);
+							switch($type[2]){
+								case(IMAGETYPE_JPEG):
+									$type_name = '.jpg';
+									break;
+								case(IMAGETYPE_GIF):
+									$type_name = '.gif';
+									break;
+								case(IMAGETYPE_PNG):
+									$type_name = '.png';
+									break;
+							}
+							$directory = packages::package('ghafiye')->getFilePath("storage/public/songs/".$title.$type_name);
+							if(move_uploaded_file($inputs["image"]['tmp_name'], $directory)){
+								$inputs["image"] = "storage/public/songs/".$title.$type_name;
+							}else{
+								throw new inputValidation($inputs["image"]);
+							}
+						}else{
+							throw new inputValidation($inputs["image"]);
+						}
+					}elseif($inputs["image"]['error'] == 4){
+						unset($inputs["image"]);
+					}else{
+						throw new inputValidation("image");
+					}
+				}
+				$song = new song();
+				foreach(array('lang', 'status', 'duration', 'genre') as $key){
+					$song->$key = $inputs[$key];
+				}
+				foreach(array('musixmatch_id', 'spotify_id', 'group', 'album', 'image') as $key){
+					if(isset($inputs[$key])){
+						$song->$key = $inputs[$key];
+					}
+				}
+				$song->save();
+				$song->setTitle($inputs['title'], $inputs['lang']);
+				$person = new person();
+				$person->song = $song->id;
+				$person->person = $inputs['person'];
+				$person->save();
+				foreach($inputs['lyric'] as $lyr){
+					$lyric = new lyric();
+					$lyric->song = $song->id;
+					$lyric->lang = $song->lang;
+					$lyric->time = $lyr['time'];
+					$lyric->text = $lyr['text'];
+					$lyric->save();
+				}
+				$this->response->setStatus(true);
+				$this->response->Go(userpanel\url("songs/edit/{$song->id}"));
+			}catch(inputValidation $error){
+				$view->setFormError(FormError::fromException($error));
+			}catch(duplicateRecord $error){
+				$view->setFormError(FormError::fromException($error));
+			}
+			$view->setDataForm($this->inputsvalue($inputsRules));
 		}else{
 			$this->response->setStatus(true);
 		}

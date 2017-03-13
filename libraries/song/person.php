@@ -13,4 +13,13 @@ class person extends dbObject{
 		'role' => array('type' => 'int', 'required' => true),
 		'primary' => array('type' => 'int', 'required' => true)
 	);
+	protected function preLoad($data){
+		if(!isset($data['role'])){
+			$data['role'] = 1;
+		}
+		if(!isset($data['primary'])){
+			$data['primary'] = 1;
+		}
+		return $data;
+	}
 }

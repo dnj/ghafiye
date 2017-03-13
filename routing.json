@@ -141,6 +141,10 @@
 		"controller": "controllers\\panel\\songs@edit"
 	},
 	{
+		"path": ["userpanel", "songs", "add"],
+		"controller": "controllers\\panel\\songs@add"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

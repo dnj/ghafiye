@@ -75,6 +75,10 @@
 		{
 			"classes":["views\\ghafiye\\song\\edit"],
 			"file":"views/songs/edit.php"
+		},
+		{
+			"classes":["views\\ghafiye\\song\\add"],
+			"file":"views/songs/add.php"
 		}
 	]
 }
