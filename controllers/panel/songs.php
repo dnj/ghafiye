@@ -158,11 +158,13 @@ class songs extends controller{
 				),
 				'musixmatch_id' => array(
 					'type' => 'string',
-					'optinal' => true
+					'optinal' => true,
+					'empty' => true
 				),
 				'spotify_id' => array(
 					'type' => 'string',
-					'optinal' => true
+					'optinal' => true,
+					'empty' => true
 				),
 				'album' => array(
 					'type' => 'string',
@@ -177,12 +179,10 @@ class songs extends controller{
 				'duration' => array(
 					'type' => 'string',
 					'optinal' => true,
-					'empty' => true
 				),
 				'genre' => array(
 					'type' => 'string',
-					'optinal' => true,
-					'empty' => true
+					'optinal' => true
 				),
 				'lang' => array(
 					'type' => 'string',
@@ -276,16 +276,24 @@ class songs extends controller{
 						throw new inputValidation("lyric");
 					}
 				}
-				if(isset($inputs['album']) and $inputs['album']){
-					$album = album::byId($inputs['album']);
-					if(!$album){
-						throw new inputValidation('album');
+				if(isset($inputs['album'])){
+					if($inputs['album']){
+						$album = album::byId($inputs['album']);
+						if(!$album){
+							throw new inputValidation('album');
+						}
+					}else{
+						unset($inputs['album']);
 					}
 				}
-				if(isset($inputs['group']) and $inputs['group']){
-					$group = group::byId($inputs['group']);
-					if(!$group){
-						throw new inputValidation('group');
+				if(isset($inputs['group'])){
+					if($inputs['group']){
+						$group = group::byId($inputs['group']);
+						if(!$group){
+							throw new inputValidation('group');
+						}
+					}else{
+						unset($inputs['group']);
 					}
 				}
 				if(isset($inputs['image'])){
@@ -320,8 +328,10 @@ class songs extends controller{
 					}
 				}
 				foreach(array('musixmatch_id', 'spotify_id', 'lang', 'status', 'group', 'album', 'image') as $key){
-					if(isset($inputs[$key])){
+					if(isset($inputs[$key]) and $inputs[$key]){
 						$song->$key = $inputs[$key];
+					}else{
+						$song->$key = null;
 					}
 				}
 				$song->save();
@@ -399,7 +409,7 @@ class songs extends controller{
 		if(http::is_post()){
 			$inputsRules = array(
 				'musixmatch_id' => array(
-					'type' => 'string',
+					'type' => 'number',
 					'optional' => true,
 					'empty' => true
 				),
@@ -419,12 +429,10 @@ class songs extends controller{
 					'empty' => true
 				),
 				'duration' => array(
-					'type' => 'string',
-					'optinal' => true,
-					'empty' => true
+					'type' => 'number'
 				),
 				'genre' => array(
-					'type' => 'string',
+					'type' => 'number',
 					'optinal' => true,
 					'empty' => true
 				),
@@ -475,21 +483,29 @@ class songs extends controller{
 				}else{
 					throw new inputValidation("lyric");
 				}
-				if(isset($inputs['duration']) and $inputs['duration']){
+				if(isset($inputs['duration'])){
 					if($inputs['duration'] <= 0){
 						throw new inputValidation('duration');
 					}
 				}
-				if(isset($inputs['album']) and $inputs['album']){
-					$album = album::byId($inputs['album']);
-					if(!$album){
-						throw new inputValidation('album');
+				if(isset($inputs['album'])){
+					if($inputs['album']){
+						$album = album::byId($inputs['album']);
+						if(!$album){
+							throw new inputValidation('album');
+						}
+					}else{
+						unset($inputs['album']);
 					}
 				}
-				if(isset($inputs['group']) and $inputs['group']){
-					$song = group::byId($inputs['group']);
-					if(!$song){
-						throw new inputValidation('group');
+				if(isset($inputs['group'])){
+					if($inputs['group']){
+						$group = group::byId($inputs['group']);
+						if(!$group){
+							throw new inputValidation('group');
+						}
+					}else{
+						unset($inputs['group']);
 					}
 				}
 				if(isset($inputs['image'])){
@@ -524,11 +540,11 @@ class songs extends controller{
 					}
 				}
 				$song = new song();
-				foreach(array('lang', 'status', 'duration', 'genre') as $key){
+				foreach(array('lang', 'status', 'genre', 'duration') as $key){
 					$song->$key = $inputs[$key];
 				}
 				foreach(array('musixmatch_id', 'spotify_id', 'group', 'album', 'image') as $key){
-					if(isset($inputs[$key])){
+					if(isset($inputs[$key]) and $inputs[$key]){
 						$song->$key = $inputs[$key];
 					}
 				}
