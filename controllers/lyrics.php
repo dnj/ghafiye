@@ -31,6 +31,8 @@ class lyrics extends controller{
 		if(!$song){
 			throw new NotFound;
 		}
+		$song->views++;
+		$song->save();
 		$songTitle = new songTitle();
 		$songTitle->where("song", $song->id);
 		$songTitle->where("title", $data['song']);
