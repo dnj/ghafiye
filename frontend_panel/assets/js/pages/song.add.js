@@ -252,15 +252,15 @@ var ADDSong = function () {
 					var val = makeTime($element.val());
 					switch(event.keyCode){
 						case(38):
-							$val++;
+							val++;
 							break;
 						case(40):
-							if($val > 0)
-							$val--;
+							if(val > 0)
+							val--;
 							break;
 					}
 					
-					$element.val(formatTime($val));
+					$element.val(formatTime(val));
 				};
 				var $interval =	setInterval(function(){
 					if($element.data('startloop')){
