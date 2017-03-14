@@ -79,7 +79,7 @@ var ADDSong = function () {
 		};
 	};
 	var runUserListener = function(){
-		$("input[name=person_name]", form).autocomplete({
+		$("#addPersonForm input[name=person_name]").autocomplete({
 			source: function( request, response ) {
 				$.ajax({
 					url: "/fa/userpanel/persons",
@@ -102,12 +102,12 @@ var ADDSong = function () {
 			},
 			select: function( event, ui ) {
 				$(this).val(ui.item.name);
-				$('input[name=person]', form).val(ui.item.id).trigger('change');
+				$('#addPersonForm input[name=person]').val(ui.item.id).trigger('change');
 				return false;
 			},
 			focus: function( event, ui ) {
 				$(this).val(ui.item.name);
-				$('input[name=person]', form).val(ui.item.id);
+				$('#addPersonForm input[name=person]').val(ui.item.id);
 				return false;
 			}
 		}).autocomplete( "instance" )._renderItem = function( ul, item ) {
@@ -440,6 +440,64 @@ var ADDSong = function () {
 			});
 		});
 	}
+	var personDelete = function(e){
+		e.preventDefault();
+		var $person_count = 0;
+		$(".persons tr", form).each(function(){
+			$person_count++;
+		});
+		if($person_count > 1){
+			$(this).parents("tr").remove();
+		}else{
+			$.growl.error({title:"خطا!", message:"باید حداقل یک شخص وجود داشته باشد!"});
+		}
+	}
+	var setPersonsEvents = function(container){
+		var $inputs = $('.person-primary', container ? container : form);
+		if(container){
+			$inputs.iCheck({
+				checkboxClass: 'icheckbox_minimal-grey',
+				increaseArea: '10%' // optional
+			});
+		}
+		$inputs.on("ifChecked", function(event){
+			var $tr = $(this).parents('tr');
+			var $val = $(".person-role", $tr).val();
+			$(".persons .person-role", form).each(function(){
+				var $this = $(this);
+				var $itemTr = $this.parents('tr');
+				if($this.val() == $val && !$itemTr.is($tr)){
+					$('.person-primary', $itemTr).iCheck('uncheck');
+				}
+			});
+		});
+		$(".person-del", container ? container : form).on('click', personDelete);
+		$(".person-role", container ? container : form).on("change", function(){
+			$(".person-primary", $(this).parents('tr')).iCheck('uncheck');
+		});
+	}
+	var createFieldPersons = function(){
+		$("#addPersonForm").submit(function(e){
+			e.preventDefault();
+			var $person = $("input[name='person']", this).val();
+			var $person_name = $("input[name='person_name']", this).val();
+			var $hasPerson = false;
+			if($(".persons tr[data-person='"+$person+"']", form).length){
+				$hasPerson = true;
+				$.growl.error({title:"خطا!", message:"شخص قبلا اضافه شده است"});
+			}
+			if($person.length && $person_name.length && !$hasPerson){
+				var $html = "<tr data-person=\""+$person+"\"><td class=\"column-left\"><input value=\""+$person+"\" name=\"persons["+$person+"][id]\" class=\"form-control\" type=\"hidden\"><a href=\"/fa/userpanel/persons/edit/"+$person+"\" target=\"_blank\">"+$person_name+"</a></td>";
+				$html += '<td><div class="form-group"><select name="persons['+$person+'][role]" class="form-control person-role"><option value="1">خواننده</option><option value="2">نویسنده</option><option value="3">آهنگساز</option></select></div></td>';
+			    $html += '<td class="center"><div class="form-group"><div class="checkbox"><label><input type="checkbox" name="persons['+$person+'][primary]" value="1" class="grey person-primary"></label></div></div>';
+			    $html += "<td class=\"center\"><a href=\"#\" class=\"btn btn-xs btn-bricky tooltips person-del\" title=\"\" data-original-title=\"حذف\"><i class=\"fa fa-times\"></i></a></td></tr>";
+				var $row = $($html).appendTo($('.persons', form));
+				setPersonsEvents($row);
+				$("#addPerson").modal('hide');
+				this.reset();
+			}
+		});
+	};
 	return {
 		init: function() {
 			mouseHover();
@@ -449,6 +507,8 @@ var ADDSong = function () {
 			runUserListener();
 			inputDirection();
 			ValidateLyrics();
+			createFieldPersons();
+			setPersonsEvents();
 		}
 	}
 }();

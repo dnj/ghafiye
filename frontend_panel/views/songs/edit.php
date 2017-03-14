@@ -1,5 +1,6 @@
 <?php
 namespace themes\clipone\views\ghafiye\song;
+use \packages\base\options;
 use \packages\base\packages;
 use \packages\base\translator;
 use \packages\base\frontend\theme;
@@ -7,13 +8,15 @@ use \packages\base\frontend\theme;
 use \themes\clipone\viewTrait;
 use \themes\clipone\navigation;
 use \themes\clipone\views\formTrait;
-use \themes\clipone\views\listTrait;
 
 use \packages\ghafiye\song;
+use \packages\ghafiye\album;
+use \packages\ghafiye\group;
+use \packages\ghafiye\song\person;
 use \packages\ghafiye\views\panel\song\edit as EditSongs;
 
 class edit extends EditSongs{
-	use viewTrait, listTrait, formTrait;
+	use viewTrait, formTrait;
 	protected $song;
 	function __beforeLoad(){
 		$this->song = $this->getSong();
@@ -21,8 +24,8 @@ class edit extends EditSongs{
 		$this->addBodyClass("songs");
 		$this->setNavigation();
 		$this->addAssets();
-		$this->setButtons();
 		$this->handlerErrors();
+		$this->formData();
 	}
 	private function setNavigation(){
 		navigation::active("songs");
@@ -34,23 +37,31 @@ class edit extends EditSongs{
 		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));
 		$this->addJSFile(theme::url('assets/plugins/x-editable/js/bootstrap-editable.min.js'));
 		$this->addCSSFile(theme::url('assets/plugins/x-editable/css/bootstrap-editable.css'));
-		$this->addJSFile(theme::url('assets/plugins/bootstrap-timepicker/js/bootstrap-timepicker.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/bootstrap-timepicker/css/bootstrap-timepicker.min.css'));
 	}
 	public function handlerErrors(){
 		foreach($this->getFormErrors() as $error){
-			if(preg_match("/lyric\[(\d+)\]\[(?:id|parent)\]/i", $error->input, $matches)){
+			if($error->input == 'album'){
+				$error->setInput("album_name");
+			}elseif($error->input == 'group'){
+				$error->setInput("group_name");
+			}elseif(preg_match("/lyric\[(\d+)\]\[(?:id|parent)\]/i", $error->input, $matches)){
 				$error->setInput("lyric[{$matches[1]}][text]");
 			}
 		}
 	}
-	public function setButtons(){
-		$this->canNameDel = true;
-		$this->setButton('delete', true, array(
-			'title' => translator::trans('delete'),
-			'icon' => 'fa fa-times',
-			'classes' => array('btn', 'btn-xs', 'btn-bricky', 'lang-del')
-		));
+	public function formData(){
+		if($album = $this->getDataForm("album")){
+			$albumName = album::byId($album);
+			if($albumName){
+				$this->setDataForm($albumName->title($this->getDataForm("lang")), "album_name");
+			}
+		}
+		if($group = $this->getDataForm("group")){
+			$groupName = group::byId($group);
+			if($groupName){
+				$this->setDataForm($groupName->title($this->getDataForm("lang")), "group_name");
+			}
+		}
 	}
 	protected function getGenreForSelect(){
 		$genres = array();
@@ -73,7 +84,7 @@ class edit extends EditSongs{
 		return $langs;
 	}
 	protected function getSongImage(){
-		return packages::package("ghafiye")->url($this->song->image);
+		return packages::package("ghafiye")->url($this->song->image ? $this->song->image : options::get("packages.ghafiye.persons.deafault_image"));
 	}
 	protected function getStatusForSelect(){
 		return array(
@@ -84,6 +95,22 @@ class edit extends EditSongs{
 			array(
 				'title' => translator::trans("ghafiye.panel.song.status.draft"),
 				'value' => song::draft
+			)
+		);
+	}
+	protected function getRolesForSelect(){
+		return array(
+			array(
+				'title' => translator::trans("ghafiye.panel.song.person.role.singer"),
+				'value' => person::singer
+			),
+			array(
+				'title' => translator::trans("ghafiye.panel.song.person.role.writer"),
+				'value' => person::writer
+			),
+			array(
+				'title' => translator::trans("ghafiye.panel.song.person.role.composer"),
+				'value' => person::composer
 			)
 		);
 	}

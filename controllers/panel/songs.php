@@ -21,8 +21,9 @@ use \packages\ghafiye\song;
 use packages\ghafiye\album;
 use packages\ghafiye\group;
 use \packages\ghafiye\genre;
+use \packages\ghafiye\person;
 use packages\ghafiye\song\lyric;
-use packages\ghafiye\song\person;
+use packages\ghafiye\song\person as songPerson;
 use \packages\ghafiye\authorization;
 
 class songs extends controller{
@@ -152,6 +153,9 @@ class songs extends controller{
 		$this->response->setStatus(false);
 		if(http::is_post()){
 			$inputsRules = array(
+				'persons' => array(
+					'optinal' => true
+				),
 				'musixmatch_id' => array(
 					'type' => 'string',
 					'optinal' => true
@@ -210,6 +214,24 @@ class songs extends controller{
 			try{
 				$lyricIDs = [];
 				$inputs = $this->checkinputs($inputsRules);
+				if(isset($inputs['persons'])){
+					if(is_array($inputs['persons'])){
+						foreach($inputs['persons'] as $key => $person){
+							$personObj = person::byId($person['id']);
+							if(!$personObj){
+								throw new inputValidation("persons[{$key}][id]");
+							}
+							if(!isset($inputs['persons'][$key]['role'])){
+								throw new inputValidation("persons[{$key}][id]");
+							}
+							if(!in_array($inputs['persons'][$key]['role'], array(songPerson::singer, songPerson::writer, songPerson::composer))){
+								throw new inputValidation("persons[{$key}][role]");
+							}
+						}
+					}else{
+						throw new inputValidation("persons");
+					}
+				}
 				if(isset($inputs['titles'])){
 					if(is_array($inputs['titles'])){
 						foreach($inputs['titles'] as $lang => $title){
@@ -261,8 +283,8 @@ class songs extends controller{
 					}
 				}
 				if(isset($inputs['group']) and $inputs['group']){
-					$song = group::byId($inputs['group']);
-					if(!$song){
+					$group = group::byId($inputs['group']);
+					if(!$group){
 						throw new inputValidation('group');
 					}
 				}
@@ -313,6 +335,25 @@ class songs extends controller{
 						$song->setTitle($title, $lang);
 					}
 				}
+				if(isset($inputs['persons'])){
+					foreach($song->persons as $person){
+						if(!isset($inputs['persons'][$person->id])){
+							$person->delete();
+						}else{
+							$person->primary = isset($inputs['persons'][$person->id]['primary']);
+							$person->role = $inputs['persons'][$person->id]['role'];
+							$person->save();
+						}
+					}
+					foreach($inputs['persons'] as $key => $person){
+						$songPerson = new songPerson();
+						$songPerson->song = $song->id;
+						$songPerson->person = $person['id'];
+						$songPerson->primary = isset($inputs['persons'][$key]['primary']);
+						$songPerson->role = $inputs['persons'][$key]['role'];
+						$songPerson->save();
+					}
+				}
 				if(isset($inputs['lyric'])){
 					foreach($song->getLyricByLang($inputs['lyric_lang']) as $lyric){
 						if(!in_array($lyric->id, $lyricIDs)){
@@ -341,7 +382,7 @@ class songs extends controller{
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
 			}
-			//$view->setDataForm($this->inputsvalue($inputsRules));
+			$view->setDataForm($this->inputsvalue($inputsRules));
 		}else{
 			$this->response->setStatus(true);
 		}
@@ -377,11 +418,6 @@ class songs extends controller{
 					'optinal' => true,
 					'empty' => true
 				),
-				'person' => array(
-					'type' => 'number',
-					'optinal' => true,
-					'empty' => true
-				),
 				'duration' => array(
 					'type' => 'string',
 					'optinal' => true,
@@ -408,11 +444,27 @@ class songs extends controller{
 				'title' => array(
 					'type' => 'string',
 				),
-				'lyric' => array()
+				'lyric' => array(),
+				'persons' => array()
 			);
 			try{
-				throw new inputValidation("lyric[1][time]");
 				$inputs = $this->checkinputs($inputsRules);
+				if(is_array($inputs['persons'])){
+					foreach($inputs['persons'] as $key => $person){
+						$personObj = person::byId($person['id']);
+						if(!$personObj){
+							throw new inputValidation("persons[{$key}][id]");
+						}
+						if(!isset($inputs['persons'][$key]['role'])){
+							throw new inputValidation("persons[{$key}][id]");
+						}
+						if(!in_array($inputs['persons'][$key]['role'], array(songPerson::singer, songPerson::writer, songPerson::composer))){
+							throw new inputValidation("persons[{$key}][role]");
+						}
+					}
+				}else{
+					throw new inputValidation("persons");
+				}
 				if(is_array($inputs['lyric'])){
 					foreach($inputs['lyric'] as $key => $lyric){
 						if(!isset($lyric['time']) or ($time = $this->is_validTime($lyric['time'])) < 0 ){
@@ -439,10 +491,6 @@ class songs extends controller{
 					if(!$song){
 						throw new inputValidation('group');
 					}
-				}
-				$person = person::byId($inputs['person']);
-				if(!$person){
-					throw new inputValidation('person');
 				}
 				if(isset($inputs['image'])){
 					if($inputs["image"]['error'] == 0){
@@ -486,10 +534,14 @@ class songs extends controller{
 				}
 				$song->save();
 				$song->setTitle($inputs['title'], $inputs['lang']);
-				$person = new person();
-				$person->song = $song->id;
-				$person->person = $inputs['person'];
-				$person->save();
+				foreach($inputs['persons'] as $key => $person){
+					$songPerson = new songPerson();
+					$songPerson->song = $song->id;
+					$songPerson->person = $person['id'];
+					$songPerson->primary = isset($inputs['persons'][$key]['primary']);
+					$songPerson->role = $inputs['persons'][$key]['role'];
+					$songPerson->save();
+				}
 				foreach($inputs['lyric'] as $lyr){
 					$lyric = new lyric();
 					$lyric->song = $song->id;

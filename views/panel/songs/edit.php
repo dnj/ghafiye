@@ -23,13 +23,24 @@ class edit extends listview{
 			$this->setDataForm($title->title, 'titles['.$title->lang.']');
 		}
 		$this->setDataForm($song->getLyricByLang()[0]->lang, 'lyric_lang');
-		$i = 0;
+		$lyrics = [];
 		foreach($song->getLyricByLang() as $lyric){
-			$this->setDataForm($this->formatTime($lyric->time), 'lyric['.$i.'][time]');
-			$this->setDataForm($lyric->text, 'lyric['.$i.'][text]');
-			$this->setDataForm($lyric->id, 'lyric['.$i.'][id]');
-			$i++;
+			$lyrics[] = array(
+				'time' => $this->formatTime($lyric->time),
+				'text' => $lyric->text,
+				'id' => $lyric->id
+			);
 		}
+		$this->setDataForm($lyrics, 'lyric');
+		$persons = [];
+		foreach($song->persons as $person){
+			$persons[$person->data['person']] = array(
+				"id" => $person->data['person'],
+				"primary" => $person->primary,
+				"role" => $person->role
+			);
+		}
+		$this->setDataForm($persons, "persons");
 	}
 	private function formatTime($time){
 		$min = floor($time / 60);

@@ -40,14 +40,12 @@ class song extends dbObject{
 	public function getPerson($role){
 		foreach($this->persons as $person){
 			if($person->role == $role and $person->primary){
-				$personObj = new person;
-				return $personObj->byId($person->person);
+				return $person->person;
 			}
 		}
 		foreach($this->persons as $person){
 			if($person->role == $role){
-				$personObj = new person;
-				return $personObj->byId($person->person);
+				return $person->person;
 			}
 		}
 		return null;
@@ -88,8 +86,8 @@ class song extends dbObject{
 	}
 	protected function preLoad($data){
 		if(!isset($data['release_at'])){
-				$data['release_at'] = date::time();
-			}
+			$data['release_at'] = date::time();
+		}
 		return $data;
 	}
 }

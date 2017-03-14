@@ -65,14 +65,15 @@ trait title{
 		$title->save();
 	}
 	public function setTitle($titletxt, $lang){
+		$column = $this->relations['titles'][2];
 		$title = new $this->relations['titles'][1]();
 		$title->where("lang", $lang);
-		$title->where("song", $this->id);
+		$title->where($column, $this->id);
 		$title->getOne();
 		if($title->id){
 			$title->title = $titletxt;
 		}else{
-			$title->song = $this->id;
+			$title->$column = $this->id;
 			$title->lang = $lang;
 			$title->title = $titletxt;
 		}

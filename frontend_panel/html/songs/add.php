@@ -1,17 +1,10 @@
 <?php
 use \packages\base;
 use \packages\base\json;
-use \packages\base\http;
 use \packages\base\translator;
-use \packages\base\db\dbObject;
-use \packages\base\views\FormError;
 
 use \packages\userpanel;
-use \packages\userpanel\date;
-
-use \themes\clipone\utility;
-
-use \packages\gamakey\plan;
+use \packages\ghafiye\person;
 
 $this->the_header();
 ?>
@@ -118,16 +111,77 @@ $this->the_header();
 									'label' => translator::trans("ghafiye.panel.song.status"),
 									'options' => $this->getStatusForSelect()
 								));
-								$this->createField(array(
-									'name' => 'person_name',
-									'label' => translator::trans("ghafiye.panel.song.person")
-								));
-								$this->createField(array(
-									'name' => 'person',
-									'type' => 'hidden'
-								));
 								?>
 							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
+							<div class="panel panel-default">
+						        <div class="panel-heading">
+						            <i class="fa fa-users"></i> <?php echo translator::trans("ghafiye.panel.song.persons"); ?>
+						            <div class="panel-tools">
+										<a class="btn btn-xs btn-link tooltips" title="" href="#addPerson" data-toggle="modal" data-original-title=""><i class="fa fa-plus"></i></a>
+						                <a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
+						            </div>
+						        </div>
+						        <div class="panel-body">
+									<table class="table table-bordered table-striped table-names">
+										<thead>
+											<th><?php echo translator::trans("ghafiye.panel.song.person"); ?></th>
+											<th><?php echo translator::trans("ghafiye.panel.song.person.role"); ?></th>
+											<th><?php echo translator::trans("ghafiye.panel.song.person.primary"); ?></th>
+											<th></th>
+										</thead>
+									    <tbody class="persons">
+										<?php
+										$persons = $this->getDataForm("persons");
+										if(!empty($persons)){
+											foreach($persons as $person){
+												$person = person::byId($person['id']);
+										?>
+										<tr data-person="<?php echo $person->id; ?>">
+									            <td class="column-left">
+												<?php
+													$this->createField(array(
+														'type' => 'hidden',
+														'name' => 'persons['.$person->id.'][id]'
+													));
+												?>
+												<a href="<?php echo userpanel\url("persons/edit/{$person->id}"); ?>" target="_blank"><?php echo($person->name()); ?></a>
+												</td>
+												<td>
+												<?php
+												$this->createField(array(
+													'type' => 'select',
+													'name' => 'persons['.$person->id.'][role]',
+													'class' => 'form-control person-role',
+													'options' => $this->getRolesForSelect()
+												));
+												?>
+												</td>
+												<td class="center">
+												<?php
+												$this->createField(array(
+													'type' => 'checkbox',
+													'name' => 'persons['.$person->id.'][primary]',
+													'options' => array(
+														array(
+															'value' => 1,
+															'class' => "grey person-primary"
+														)
+													)
+												));
+												?>
+												</td>
+												<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips person-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
+									        </tr>
+										<?php }
+										} ?>
+									    </tbody>
+									</table>
+								</div>
+						    </div>
 						</div>
 					</div>
 					<div class="row">
@@ -143,7 +197,9 @@ $this->the_header();
 								<div class="panel-body">
 									<div class="lyricFields">
 										<?php
-										for($i=0;$i < $this->getLyricCount(); $i++){ ?>
+										$count = max(3, count($this->getDataForm('lyric')));
+										for($i=0;$i < $count; $i++){
+										?>
 										<div class="row lyrics">
 											<div class="col-xs-3">
 												<?php
@@ -209,6 +265,36 @@ $this->the_header();
 	</div>
 	<div class="modal-footer">
 		<button type="submit" form="addtitleform" class="btn btn-success"><?php echo translator::trans("confrim"); ?></button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
+	</div>
+</div>
+<div class="modal fade" id="addPerson" tabindex="-1" data-show="true" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title"><?php echo translator::trans('ghafiye.panel.group.add.person'); ?></h4>
+	</div>
+	<div class="modal-body">
+		<form id="addPersonForm" class="form-horizontal" action="#" method="post">
+			<?php
+			$this->setHorizontalForm('sm-3','sm-9');
+			$feilds = array(
+				array(
+					'name' => 'person_name',
+					'label' => translator::trans("ghafiye.panel.song.person")
+				),
+				array(
+					'name' => 'person',
+					'type' => 'hidden'
+				)
+			);
+			foreach($feilds as $input){
+				echo $this->createField($input);
+			}
+			?>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" form="addPersonForm" class="btn btn-success"><?php echo translator::trans("confrim"); ?></button>
 		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
 	</div>
 </div>

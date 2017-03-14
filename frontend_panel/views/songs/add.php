@@ -1,5 +1,6 @@
 <?php
 namespace themes\clipone\views\ghafiye\song;
+use \packages\base\options;
 use \packages\base\packages;
 use \packages\base\translator;
 use \packages\base\frontend\theme;
@@ -11,6 +12,7 @@ use \themes\clipone\views\listTrait;
 
 use \packages\ghafiye\song;
 use \packages\ghafiye\person;
+use \packages\ghafiye\song\person as songPerson;
 use \packages\ghafiye\views\panel\song\add as ADDSongs;
 
 class add extends ADDSongs{
@@ -35,18 +37,12 @@ class add extends ADDSongs{
 		$this->addCSSFile(theme::url('assets/plugins/x-editable/css/bootstrap-editable.css'));
 	}
 	public function handlerErrors(){
-		foreach($this->getFormErrors() as $error){
-			if(preg_match("/lyric\[(\d+)\]\[(?:id|parent)\]/i", $error->input, $matches)){
-				$error->setInput("lyric[{$matches[1]}][text]");
-			}
-		}
-	}
-	protected function getLyricCount(){
-		$lyrics = $this->getDataForm("lyric");
-		if(!$lyrics){
-			return 3;
-		}else{
-			return count($lyrics);
+		if($error->input == 'album'){
+			$error->setInput("album_name");
+		}elseif($error->input == 'group'){
+			$error->setInput("group_name");
+		}elseif(preg_match("/lyric\[(\d+)\]\[(?:id|parent)\]/i", $error->input, $matches)){
+			$error->setInput("lyric[{$matches[1]}][text]");
 		}
 	}
 	public function handlerFormData(){
@@ -66,7 +62,9 @@ class add extends ADDSongs{
 		if($person = $this->getDataForm("person")){
 			$personName = person::byId($person);
 			if($personName){
-				$this->setDataForm($personName->name($this->getDataForm("lang")), "person_name");
+				if($personName){
+					$this->setDataForm($personName->name($this->getDataForm("lang")), "person_name");
+				}
 			}
 		}
 	}
@@ -94,7 +92,7 @@ class add extends ADDSongs{
 		if($image = $this->getDataForm("image")){
 			return $image;
 		}
-		return packages::package("ghafiye")->url("storage/public/default-image.png");
+		return packages::package("ghafiye")->url(options::get("packages.ghafiye.persons.deafault_image"));
 	}
 	protected function getStatusForSelect(){
 		return array(
@@ -105,6 +103,22 @@ class add extends ADDSongs{
 			array(
 				'title' => translator::trans("ghafiye.panel.song.status.draft"),
 				'value' => song::draft
+			)
+		);
+	}
+	protected function getRolesForSelect(){
+		return array(
+			array(
+				'title' => translator::trans("ghafiye.panel.song.person.role.singer"),
+				'value' => songPerson::singer
+			),
+			array(
+				'title' => translator::trans("ghafiye.panel.song.person.role.writer"),
+				'value' => songPerson::writer
+			),
+			array(
+				'title' => translator::trans("ghafiye.panel.song.person.role.composer"),
+				'value' => songPerson::composer
 			)
 		);
 	}

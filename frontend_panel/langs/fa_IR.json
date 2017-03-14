@@ -122,6 +122,12 @@
 		"ghafiye.song.changeLang": "تغییر زبان",
 		"ghafiye.song.translate.otherLang": "ترجمه های دیگر",
 		"ghafiye.addSong": "افزدون آهنگ",
-		"ghafiye.addSong.lyric": "افزودن متن آهنگ"
+		"ghafiye.addSong.lyric": "افزودن متن آهنگ",
+		"ghafiye.panel.song.person.primary": "اصلی",
+		"ghafiye.panel.song.person.role": "نقش",
+		"ghafiye.panel.song.person.role.singer": "خواننده",
+		"ghafiye.panel.song.person.role.writer": "نویسنده",
+		"ghafiye.panel.song.person.role.composer": "آهنگساز",
+		"ghafiye.panel.song.persons": "اشخاص"
 	}
 }
