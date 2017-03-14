@@ -37,12 +37,14 @@ class add extends ADDSongs{
 		$this->addCSSFile(theme::url('assets/plugins/x-editable/css/bootstrap-editable.css'));
 	}
 	public function handlerErrors(){
-		if($error->input == 'album'){
-			$error->setInput("album_name");
-		}elseif($error->input == 'group'){
-			$error->setInput("group_name");
-		}elseif(preg_match("/lyric\[(\d+)\]\[(?:id|parent)\]/i", $error->input, $matches)){
-			$error->setInput("lyric[{$matches[1]}][text]");
+		foreach($this->getFormErrors() as $error){
+			if($error->input == 'album'){
+				$error->setInput("album_name");
+			}elseif($error->input == 'group'){
+				$error->setInput("group_name");
+			}elseif(preg_match("/lyric\[(\d+)\]\[(?:id|parent)\]/i", $error->input, $matches)){
+				$error->setInput("lyric[{$matches[1]}][text]");
+			}
 		}
 	}
 	public function handlerFormData(){
