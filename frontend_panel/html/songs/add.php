@@ -280,7 +280,7 @@ $this->the_header();
 			$feilds = array(
 				array(
 					'name' => 'person_name',
-					'label' => translator::trans("ghafiye.panel.song.person")
+					'label' => translator::trans("ghafiye.panel.person")
 				),
 				array(
 					'name' => 'person',
