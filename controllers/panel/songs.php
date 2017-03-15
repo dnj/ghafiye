@@ -277,14 +277,11 @@ class songs extends controller{
 					}
 				}
 				if(isset($inputs['album'])){
-					if($inputs['album']){
-						$album = album::byId($inputs['album']);
-						if(!$album){
-							throw new inputValidation('album');
-						}
-					}else{
-						unset($inputs['album']);
+					$album = album::byId($inputs['album']);
+					if(!$album){
+						throw new inputValidation('album');
 					}
+				
 				}
 				if(isset($inputs['group'])){
 					if($inputs['group']){
@@ -448,8 +445,6 @@ class songs extends controller{
 				),
 				'genre' => array(
 					'type' => 'number',
-					'optinal' => true,
-					'empty' => true
 				),
 				'lang' => array(
 					'type' => 'string',
@@ -503,6 +498,10 @@ class songs extends controller{
 						throw new inputValidation('duration');
 					}
 				}
+				$genre = genre::byId($inputs['genre']);
+				if(!$genre){
+					throw new inputValidation('genre');
+				}
 				if(isset($inputs['album'])){
 					if($inputs['album']){
 						$album = album::byId($inputs['album']);
@@ -521,16 +520,6 @@ class songs extends controller{
 						}
 					}else{
 						unset($inputs['group']);
-					}
-				}
-				if(isset($inputs['genre'])){
-					if($inputs['genre']){
-						$genre = genre::byId($inputs['genre']);
-						if(!$genre){
-							throw new inputValidation('genre');
-						}
-					}else{
-						unset($inputs['genre']);
 					}
 				}
 				if(isset($inputs['image'])){
