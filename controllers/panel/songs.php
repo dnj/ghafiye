@@ -296,6 +296,16 @@ class songs extends controller{
 						unset($inputs['group']);
 					}
 				}
+				if(isset($inputs['genre'])){
+					if($inputs['genre']){
+						$genre = genre::byId($inputs['genre']);
+						if(!$genre){
+							throw new inputValidation('genre');
+						}
+					}else{
+						unset($inputs['genre']);
+					}
+				}
 				if(isset($inputs['image'])){
 					if($inputs["image"]['error'] == 0){
 						$type = getimagesize($inputs["image"]['tmp_name']);
@@ -334,7 +344,7 @@ class songs extends controller{
 						$song->$key = null;
 					}
 				}
-				foreach(array('lang', 'status', 'group', 'album', 'image') as $key){
+				foreach(array('lang', 'status', 'group', 'album', 'image', 'genre') as $key){
 					if(isset($inputs[$key]) and $inputs[$key]){
 						$song->$key = $inputs[$key];
 					}
@@ -511,6 +521,16 @@ class songs extends controller{
 						}
 					}else{
 						unset($inputs['group']);
+					}
+				}
+				if(isset($inputs['genre'])){
+					if($inputs['genre']){
+						$genre = genre::byId($inputs['genre']);
+						if(!$genre){
+							throw new inputValidation('genre');
+						}
+					}else{
+						unset($inputs['genre']);
 					}
 				}
 				if(isset($inputs['image'])){
