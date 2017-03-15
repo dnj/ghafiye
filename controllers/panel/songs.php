@@ -327,11 +327,16 @@ class songs extends controller{
 						throw new inputValidation("image");
 					}
 				}
-				foreach(array('musixmatch_id', 'spotify_id', 'lang', 'status', 'group', 'album', 'image') as $key){
+				foreach(array('musixmatch_id', 'spotify_id') as $key){
 					if(isset($inputs[$key]) and $inputs[$key]){
 						$song->$key = $inputs[$key];
 					}else{
 						$song->$key = null;
+					}
+				}
+				foreach(array('lang', 'status', 'group', 'album', 'image') as $key){
+					if(isset($inputs[$key]) and $inputs[$key]){
+						$song->$key = $inputs[$key];
 					}
 				}
 				$song->save();
