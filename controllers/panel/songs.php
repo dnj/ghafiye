@@ -101,7 +101,7 @@ class songs extends controller{
 		}
 		$view->setDataForm($this->inputsvalue($inputsRules));
 		$song->pageLimit = $this->items_per_page;
-		$songs = $song->paginate($this->page);
+		$songs = $song->paginate($this->page, "ghafiye_songs.*");
 		$this->total_pages = $song->totalPages;
 		$view->setDataList($songs);
 		$view->setPaginate($this->page, $song->totalCount, $this->items_per_page);
