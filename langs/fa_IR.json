@@ -189,6 +189,12 @@
 	    "translations.langs.yi": "ייִדיש ",
 	    "translations.langs.yo": "Yorùbá",
 	    "translations.langs.za": "Saɯ cueŋƅ, Saw cuengh",
-	    "translations.langs.zu": "isiZulu"
+	    "translations.langs.zu": "isiZulu",
+		"ghafiye.search.persons": "{name}",
+		"ghafiye.search.songs": "آهنگ {title}",
+		"ghafiye.search.songs.description": "انتشار در: {release_at}, خواننده: {singer}, سبک: {genre}",
+		"ghafiye.search.groups": "گروه {title}",
+		"ghafiye.search.albums": "آلبوم {title}",
+		"ghafiye.search.genres": "سبک {title}"
 	}
 }

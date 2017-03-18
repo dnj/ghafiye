@@ -101,7 +101,7 @@ class songs extends controller{
 		}
 		$view->setDataForm($this->inputsvalue($inputsRules));
 		$song->pageLimit = $this->items_per_page;
-		$songs = $song->paginate($this->page);
+		$songs = $song->paginate($this->page, "ghafiye_songs.*");
 		$this->total_pages = $song->totalPages;
 		$view->setDataList($songs);
 		$view->setPaginate($this->page, $song->totalCount, $this->items_per_page);
@@ -277,14 +277,11 @@ class songs extends controller{
 					}
 				}
 				if(isset($inputs['album'])){
-					if($inputs['album']){
-						$album = album::byId($inputs['album']);
-						if(!$album){
-							throw new inputValidation('album');
-						}
-					}else{
-						unset($inputs['album']);
+					$album = album::byId($inputs['album']);
+					if(!$album){
+						throw new inputValidation('album');
 					}
+				
 				}
 				if(isset($inputs['group'])){
 					if($inputs['group']){
@@ -294,6 +291,16 @@ class songs extends controller{
 						}
 					}else{
 						unset($inputs['group']);
+					}
+				}
+				if(isset($inputs['genre'])){
+					if($inputs['genre']){
+						$genre = genre::byId($inputs['genre']);
+						if(!$genre){
+							throw new inputValidation('genre');
+						}
+					}else{
+						unset($inputs['genre']);
 					}
 				}
 				if(isset($inputs['image'])){
@@ -327,11 +334,16 @@ class songs extends controller{
 						throw new inputValidation("image");
 					}
 				}
-				foreach(array('musixmatch_id', 'spotify_id', 'lang', 'status', 'group', 'album', 'image') as $key){
+				foreach(array('musixmatch_id', 'spotify_id') as $key){
 					if(isset($inputs[$key]) and $inputs[$key]){
 						$song->$key = $inputs[$key];
 					}else{
 						$song->$key = null;
+					}
+				}
+				foreach(array('lang', 'status', 'group', 'album', 'image', 'genre') as $key){
+					if(isset($inputs[$key]) and $inputs[$key]){
+						$song->$key = $inputs[$key];
 					}
 				}
 				$song->save();
@@ -433,8 +445,6 @@ class songs extends controller{
 				),
 				'genre' => array(
 					'type' => 'number',
-					'optinal' => true,
-					'empty' => true
 				),
 				'lang' => array(
 					'type' => 'string',
@@ -487,6 +497,10 @@ class songs extends controller{
 					if($inputs['duration'] <= 0){
 						throw new inputValidation('duration');
 					}
+				}
+				$genre = genre::byId($inputs['genre']);
+				if(!$genre){
+					throw new inputValidation('genre');
 				}
 				if(isset($inputs['album'])){
 					if($inputs['album']){

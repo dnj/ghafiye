@@ -332,6 +332,10 @@
 		{
 			"classes":["views\\panel\\song\\add"],
 			"file":"views/panel/songs/add.php"
+		},
+		{
+			"classes":["listeners\\search"],
+			"file":"listeners/search.php"
 		}
 	]
 }
