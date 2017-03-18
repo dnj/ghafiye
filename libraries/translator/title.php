@@ -51,7 +51,7 @@ trait title{
 		return false;
 	}
 	public function encodedTitle($lang = null){
-		return strtolower(str_replace(array(' '), '-',$this->title($lang)));
+		return urlencode(strtolower(str_replace(array(' '), '-',$this->title($lang))));
 	}
 	public static function decodeTitle($title){
 		return str_replace('-', ' ',$title);

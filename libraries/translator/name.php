@@ -52,7 +52,7 @@ trait name{
 		return false;
 	}
 	public function encodedName($lang = null){
-		return strtolower(str_replace(array(' '), '-',$this->name($lang)));
+		return urlencode(strtolower(str_replace(array(' '), '-',$this->name($lang))));
 	}
 	public static function decodeName($name){
 		return str_replace('-', ' ',$name);
