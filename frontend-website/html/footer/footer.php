@@ -8,9 +8,7 @@ use \packages\base\translator;
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3 text-center">
-				<a href="<?php echo base\url(); ?>">
-					<img src="<?php echo theme::url('dest/images/android-chrome-192x192.png'); ?>" width="180">
-				</a>
+				<img id='wlaofukznbqejxlzjzpe' style='cursor:pointer' onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=46217&p=aodsgvkauiwkrfthjyoe", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt='logo-samandehi' src='https://logo.samandehi.ir/logo.aspx?id=46217&p=shwlwlbqodrfnbpdyndt'/>
 			</div>
 			<div class="col-md-3">
 				<h4><?php echo translator::trans('footer.overview'); ?></h4>
