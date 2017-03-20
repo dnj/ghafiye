@@ -15,6 +15,7 @@ class tag extends postTags{
 			translator::trans("blog.list.title.tag", array("tag" => $this->getTag()->title))
 		));
 		$this->addBodyClass('article');
+		$this->addBodyClass('list');
 		$this->addBodyClass('blog');
 	}
 }

@@ -10,23 +10,11 @@
 	"assets": [
 		{
 			"type": "js",
-			"file": "assets/plugins/jquery/jquery-2.2.4.min.js"
-		},
-		{
-			"type": "js",
-			"file": "assets/plugins/bootstrap/js/bootstrap.min.js"
-		},
-		{
-			"type": "js",
-			"file": "assets/plugins/jquery-ui/jquery-ui.min.js"
-		},
-		{
-			"type": "js",
-			"file": "assets/js/pages/search.js"
+			"file": "dest/js/scripts.js"
 		},
 		{
 			"type": "css",
-			"file": "assets/css/main.css"
+			"file": "dest/css/style.css"
 		},
 		{
 			"type":"js",

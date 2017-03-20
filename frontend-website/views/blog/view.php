@@ -24,12 +24,6 @@ class view extends postView{
 		));
 		$this->addBodyClass('article');
 		$this->addBodyClass('blog');
-		$this->addAsseste();
-	}
-	private function addAsseste(){
-		$this->addJSFile(theme::url("assets/js/pages/blog.view.js"));
-		$this->addJSFile(theme::url("assets/plugins/jquery.growl/javascripts/jquery.growl.js"));
-		$this->addCSSFile(theme::url("assets/plugins/jquery.growl/stylesheets/jquery.growl.css"));
 	}
 	protected function revertReply($reply = null){
 		$html = "";

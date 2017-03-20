@@ -25,11 +25,6 @@ class view extends lyricsView{
 			$this->song->title($this->getLyricsLanguage())
 		));
 		$this->addBodyClass('lyric');
-		$this->addAssets();
-	}
-	private function addAssets(){
-		$this->addJSFile(theme::url('assets/plugins/bootstrap-select/dist/js/bootstrap-select.min.js'));
-		$this->addJSFile(theme::url('assets/js/pages/lyric.js'));
 	}
 	function getGenres(){
 		return genre::getActives(6);

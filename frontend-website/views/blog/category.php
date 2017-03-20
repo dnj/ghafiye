@@ -15,6 +15,7 @@ class category extends blogCategories{
 			translator::trans("blog.list.title.category", array("category" => $this->getCategory()->title))
 		));
 		$this->addBodyClass('article');
+		$this->addBodyClass('list');
 		$this->addBodyClass('blog');
 	}
 }

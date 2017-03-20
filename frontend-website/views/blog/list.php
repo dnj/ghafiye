@@ -12,6 +12,7 @@ class listview extends blogList{
 	function __beforeLoad(){
 		$this->setTitle(translator::trans("blog.list.title"));
 		$this->addBodyClass('article');
+		$this->addBodyClass('list');
 		$this->addBodyClass('blog');
 	}
 }

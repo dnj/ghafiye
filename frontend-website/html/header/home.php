@@ -28,7 +28,7 @@ use \packages\base\frontend\theme;
 		<div class="container">
 			<nav>
 				<a class="logo" href="<?php echo base\url(); ?>">
-					<img src="<?php echo theme::url('assets/images/logo-70x70.png'); ?>" alt="Logo">
+					<img src="<?php echo theme::url('dest/images/logo-70x70.png'); ?>" alt="Logo">
 					<span>قــا</span>
 					<span>فــ&zwj;</span>
 					<span>یـه</span>

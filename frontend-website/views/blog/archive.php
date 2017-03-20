@@ -17,6 +17,7 @@ class archive extends postArchive{
 			translator::trans("blog.list.title.archive", array("date" => date::format("F Y", $this->getPosts()[0]->date)))
 		));
 		$this->addBodyClass('article');
+		$this->addBodyClass('list');
 		$this->addBodyClass('blog');
 	}
 }

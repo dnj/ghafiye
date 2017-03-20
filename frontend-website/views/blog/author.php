@@ -15,6 +15,7 @@ class author extends blogAuthor{
 			translator::trans("blog.list.title.author", array("author" => $this->getPosts()[0]->author->getFullName()))
 		));
 		$this->addBodyClass('article');
+		$this->addBodyClass('list');
 		$this->addBodyClass('blog');
 	}
 }

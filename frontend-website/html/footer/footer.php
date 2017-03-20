@@ -9,7 +9,7 @@ use \packages\base\translator;
 		<div class="row">
 			<div class="col-md-3 text-center">
 				<a href="<?php echo base\url(); ?>">
-					<img src="<?php echo theme::url('assets/images/android-chrome-192x192.png'); ?>" width="180">
+					<img src="<?php echo theme::url('dest/images/android-chrome-192x192.png'); ?>" width="180">
 				</a>
 			</div>
 			<div class="col-md-3">
