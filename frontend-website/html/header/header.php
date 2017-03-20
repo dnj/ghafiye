@@ -11,8 +11,8 @@ use \packages\base\frontend\theme;
 	<title><?php echo $this->getTitle(); ?></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="icon" href="<?php echo theme::url('assets/images/favicon.ico'); ?>" type="image/x-icon" />
-	<link rel="shortcut icon" href="<?php echo theme::url('assets/images/favicon.ico'); ?>" type="image/x-icon">
+	<link rel="icon" href="<?php echo theme::url('dest/images/favicon.ico'); ?>" type="image/x-icon" />
+	<link rel="shortcut icon" href="<?php echo theme::url('dest/images/favicon.ico'); ?>" type="image/x-icon">
 	<?php
 	$description = $this->getDescription();
 	if($description){

@@ -27,7 +27,7 @@ class album extends albumView{
 		if($this->album->image){
 			return packages::package('ghafiye')->url($this->album->image);
 		}
-		return theme::url('assets/images/album.jpg');
+		return theme::url('dest/images/album.jpg');
 	}
 	protected function getAlbumReleaseDate(){
 		db::where("album", $this->album->id);

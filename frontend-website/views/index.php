@@ -36,7 +36,7 @@ class index extends homepage{
 		if($song->image){
 			return packages::package('ghafiye')->url($song->image);
 		}
-		return theme::url('assets/images/song.jpg');
+		return theme::url('dest/images/song.jpg');
 	}
 	protected function numberOfLangs(song $song){
 		db::where("song", $song->id);

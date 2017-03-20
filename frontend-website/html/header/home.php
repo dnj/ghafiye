@@ -12,8 +12,8 @@ use \packages\base\frontend\theme;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="google-site-verification" content="QJ5ExDHPeGh0ibENsXRe_tFwfKzEPMz8yNEXNSYSzWs" />
-	<link rel="icon" href="<?php echo theme::url('assets/images/favicon.ico'); ?>" type="image/x-icon" />
-	<link rel="shortcut icon" href="<?php echo theme::url('assets/images/favicon.ico'); ?>" type="image/x-icon">
+	<link rel="icon" href="<?php echo theme::url('dest/images/favicon.ico'); ?>" type="image/x-icon" />
+	<link rel="shortcut icon" href="<?php echo theme::url('dest/images/favicon.ico'); ?>" type="image/x-icon">
 	<?php
 	$description = $this->getDescription();
 	if($description){

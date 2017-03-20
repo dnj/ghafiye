@@ -38,13 +38,13 @@ class view extends artistsView{
 		if($song->image){
 			return packages::package('ghafiye')->url($song->image);
 		}
-		return theme::url('assets/images/song.jpg');
+		return theme::url('dest/images/song.jpg');
 	}
 	protected function albumImage(album $album){
 		if($album->image){
 			return packages::package('ghafiye')->url($album->image);
 		}
-		return theme::url('assets/images/album.jpg');
+		return theme::url('dest/images/album.jpg');
 	}
 	protected function getAlbumReleaseDate(album $album){
 		db::where("album", $album->id);
@@ -73,7 +73,7 @@ class view extends artistsView{
 		return packages::package('ghafiye')->url($this->artist->cover);
 	}
 	protected function getAvatarURL(){
-		return $this->artist->avatar ? packages::package('ghafiye')->url($this->artist->avatar) : theme::url("assets/images/avatar-placeholder.png");
+		return $this->artist->avatar ? packages::package('ghafiye')->url($this->artist->avatar) : theme::url("dest/images/avatar-placeholder.png");
 	}
 	protected function getAristGenres(){
 		$genres = array();
