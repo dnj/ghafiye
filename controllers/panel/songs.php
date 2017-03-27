@@ -351,6 +351,9 @@ class songs extends controller{
 					foreach($song->titles as $title){
 						if(!isset($inputs['titles'][$title->lang])){
 							$title->delete();
+						}else{
+							$title->title = $inputs['titles'][$title->lang];
+							$title->save();
 						}
 					}
 					foreach($inputs['titles'] as $lang => $title){

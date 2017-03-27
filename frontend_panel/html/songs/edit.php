@@ -205,7 +205,7 @@ $this->the_header();
 												echo translator::trans("translations.langs.{$title->lang}");
 												?></td>
 												<td class="column-right"><a href="#" data-lang="<?php echo $title->lang; ?>" data-type="text" data-pk="1" data-original-title="<?php echo $title->title; ?>" class="editable editable-click title" style="display: inline;"><?php echo $title->title; ?></a></td>
-												<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips person-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
+												<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips lang-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
 											</tr>
 											<?php } ?>
 										</tbody>
@@ -270,8 +270,8 @@ $this->the_header();
 					</div>
 					<div class="col-xs-12">
 						<p>
-							<a href="<?php echo userpanel\url('songs'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('return'); ?></a>
-							<button type="submit" class="btn btn-yellow"><i class="fa fa-check-square-o"></i> <?php echo translator::trans("update") ?></button>
+							<a href="<?php echo userpanel\url('songs'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('ghafiye.return'); ?></a>
+							<button type="submit" class="btn btn-yellow"><i class="fa fa-check-square-o"></i> <?php echo translator::trans("ghafiye.update") ?></button>
 						</p>
 					</div>
 				</form>

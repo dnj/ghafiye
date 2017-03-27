@@ -1,6 +1,6 @@
 var songEdit = function () {
 	var form = $('.create_form');
-	var langs = $("tbody", form).data("langs");
+	var langs = $("tbody.langs", form).data("langs");
 	var $lyricFields = $(".lyricFields", form);
 	var runAlbumListener = function(){
 		$("input[name=album_name]", form).autocomplete({
@@ -433,26 +433,30 @@ var songEdit = function () {
 			var $lang_title = '';
 			$hasLang = ($(".langs tr", form).data("lang") == $lang);
 			$hasTitle = ($(".title", form).text().toLowerCase() == $title.toLowerCase());
-			$(langs).each(function(){
-				if(this.value == $lang){
-					$lang_title = this.title;
+			for(var i = 0; i < langs.length && $lang_title == ''; i++){
+				if(langs[i].value == $lang){
+					$lang_title = langs[i].title;
 				}
-			});
+			}
 			if($hasLang || $hasTitle){
 				$.growl.error({title:"خطا!", message:"زبان و یا نامی با این مشخصات وجود دارد!"});
+				return;
 			}
 			if(!$lang.length || !$title.length){
 				$.growl.error({title:"خطا!", message:"داده وارد شده معتبر نیست!"});
+				return;
 			}
-			if($lang.length && $title.length && $lang_title.length && !$hasLang && !$hasTitle){
-				var $html = "<tr data-lang=\""+$lang+"\"><td class=\"column-left\"><input value=\""+$title+"\" title=\"titles["+$lang+"]\" class=\"form-control\" type=\"hidden\">"+$lang_title+"</td>";
-			    $html += "<td class=\"column-right\"><a href=\"#\" data-lang=\""+$lang+"\" data-type=\"text\" data-pk=\"1\" data-original-title=\""+$title+"\" class=\"editable editable-click title\" style=\"display: inline;\">"+$title+"</a></td>";
-			    $html += "<td class=\"center\"><a href=\"#\" class=\"btn btn-xs btn-bricky tooltips lang-del\" title=\"\" data-original-title=\"حذف\"><i class=\"fa fa-times\"></i></a></td></tr>";
-				var $row = $($html).appendTo($('.langs', form));
-				setTitlesEvents($row);
-				$("#addtitle").modal('hide');
-				this.reset();
+			if(!$lang_title.length){
+				$.growl.error({title:"خطا!", message:"زبان انتخاب شده معتبر نیست!"});
+				return;
 			}
+			var $html = '<tr data-lang="'+$lang+'"><td class="column-left"><input value="'+$title+'" name="titles['+$lang+']" class="form-control" type="hidden">'+$lang_title+'</td>';
+			$html += '<td class="column-right"><a href="#" data-lang="'+$lang+'" data-type="text" data-pk="1" data-original-title="'+$title+'" class="editable editable-click title" style="display: inline;">'+$title+'</a></td>';
+			$html += '<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips lang-del" title="" data-original-title="حذف"><i class="fa fa-times"></i></a></td></tr>';
+			var $row = $($html).appendTo($('.langs', form));
+			setTitlesEvents($row);
+			$("#addtitle").modal('hide');
+			this.reset();
 		});
 	}
 	var getRowByID = function(id){
@@ -544,7 +548,6 @@ var songEdit = function () {
 								var action = form.attr('action');
 								action = action.replace(/langLyric=[a-z]{2}/i, "langLyric="+$lang);
 								form.attr('action', action);
-								console.log(action);
 							}
 						}else{
 							if(data.hasOwnProperty('error')){
