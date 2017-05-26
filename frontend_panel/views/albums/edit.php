@@ -24,12 +24,11 @@ class edit extends albumEdit{
 			$this->album->getTitle(),
 			translator::trans('edit')
 		));
+		$this->addBodyClass('album_edit');
 		$this->addAssests();
 		$this->setNavigation();
 	}
 	private function addAssests(){
-		$this->addCSSFile(theme::url("assets/css/album.image.css"));
-		$this->addCSSFile(theme::url("assets/css/album.edit.css"));
 		$this->addJSFile(theme::url("assets/js/pages/album.edit.js"));
 		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
 		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));

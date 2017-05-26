@@ -25,12 +25,11 @@ class edit extends groupEdit{
 			$this->group->first_name,
 			translator::trans('edit')
 		));
+		$this->addBodyClass("group_edit");
 		$this->addAssests();
 		$this->setNavigation();
 	}
 	private function addAssests(){
-		$this->addCSSFile(theme::url("assets/css/group.image.css"));
-		$this->addCSSFile(theme::url("assets/css/group.edit.css"));
 		$this->addJSFile(theme::url("assets/js/pages/group.edit.js"));
 		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
 		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));

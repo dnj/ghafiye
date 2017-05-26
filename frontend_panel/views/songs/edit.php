@@ -31,7 +31,6 @@ class edit extends EditSongs{
 		navigation::active("songs");
 	}
 	private function addAssets(){
-		$this->addCSSFile(theme::url("assets/css/songs.css"));
 		$this->addJSFile(theme::url("assets/js/pages/song.edit.js"));
 		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
 		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));

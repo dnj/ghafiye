@@ -21,11 +21,11 @@ class add extends albumADD{
 			translator::trans('albums'),
 			translator::trans('add')
 		));
+		$this->addBodyClass('album_add');
 		$this->addAssests();
 		$this->setNavigation();
 	}
 	private function addAssests(){
-		$this->addCSSFile(theme::url("assets/css/album.image.css"));
 		$this->addJSFile(theme::url("assets/js/pages/album.add.js"));
 		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
 		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));

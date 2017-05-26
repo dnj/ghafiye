@@ -1,0 +1,52 @@
+body.group_add, body.group_edit{
+    form .cke_reset_all {
+        &, & *{
+            font: normal normal normal 12px Tahoma,Arial,Helvetica,Verdana,Sans-Serif;
+        }
+    }
+    .btn-file2{
+        position: relative;
+        overflow: hidden;
+        background: #569099 !important;
+        border-color: #4d8189 !important;
+        color: #ffffff !important;
+        cursor: pointer;
+        input[type="file"] {
+            position: absolute;
+            top: 0;
+            right: 0;
+            min-width: 100%;
+            min-height: 100%;
+            opacity: 0;
+            outline: none;
+            cursor: pointer !important;
+        }
+    }
+    .group-image{
+        position: relative;
+        display: inline-block;
+        img{
+            width: 100%;
+            height: 200px;
+        }
+        .group-image-buttons {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            display: none;
+        }
+    }
+    .cover img{
+        width: 100%;
+    }
+    .group-image-box{
+        padding: 19px;
+        border: 1px solid #ddd;
+        .thumbnail{
+            border: 0;
+        }
+        .fileupload{
+            margin-bottom: 0;
+        }
+    }
+}

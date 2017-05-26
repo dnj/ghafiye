@@ -25,12 +25,12 @@ class edit extends personEdit{
 			$this->person->first_name,
 			translator::trans('edit')
 		));
+		$this->addBodyClass("person_edit");
 		$this->addAssests();
 		$this->setButtons();
 		$this->setNavigation();
 	}
 	private function addAssests(){
-		$this->addCSSFile(theme::url("assets/css/person.image.css"));
 		$this->addJSFile(theme::url("assets/js/pages/person.edit.js"));
 		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
 		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));

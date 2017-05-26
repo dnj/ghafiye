@@ -22,11 +22,11 @@ class add extends groupADD{
 			translator::trans('groups'),
 			translator::trans('add')
 		));
+		$this->addBodyClass("group_add");
 		$this->addAssests();
 		$this->setNavigation();
 	}
 	private function addAssests(){
-		$this->addCSSFile(theme::url("assets/css/group.image.css"));
 		$this->addJSFile(theme::url("assets/js/pages/group.add.js"));
 		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
 		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));

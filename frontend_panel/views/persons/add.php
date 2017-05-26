@@ -22,6 +22,7 @@ class add extends personADD{
 			translator::trans('persons'),
 			translator::trans('add')
 		));
+		$this->addBodyClass("person_add");
 		$this->addAssests();
 		$this->setNavigation();
 	}
@@ -34,7 +35,6 @@ class add extends personADD{
 		navigation::active("persons");
 	}
 	private function addAssests(){
-		$this->addCSSFile(theme::url("assets/css/person.image.css"));
 		$this->addJSFile(theme::url("assets/js/pages/person.edit.js"));
 		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
 		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));
