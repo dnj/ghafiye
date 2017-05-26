@@ -1,4 +1,4 @@
-import {Router} from "Router";
+import {Router} from "webuilder";
 
 export class viewLyric{
 	public static runLikelistener():void{

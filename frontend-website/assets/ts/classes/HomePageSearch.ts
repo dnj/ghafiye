@@ -1,4 +1,6 @@
-import {Router} from "Router";
+import * as $ from "jquery";
+import "jquery-ui/ui/widgets/autocomplete";
+import {Router} from "webuilder";
 
 export class HomePageSearch{
 	private static $form = $(".searchbox");
@@ -46,7 +48,7 @@ export class HomePageSearch{
 			}
 		})
 		let $instance :{_renderItem:any, _renderMenu:any, _resizeMenu:any} = this.$input.data( "ui-autocomplete" );
-		$instance._renderItem = function( ul, item ) {
+		$instance._renderItem = function( ul:any, item:any ) {
 			let html:string;
 			switch(item.type){
 				case("person"):
@@ -60,7 +62,7 @@ export class HomePageSearch{
 				.append( html )
 				.appendTo( ul );
 		};
-		$instance._renderMenu = function( ul, items ) {
+		$instance._renderMenu = function( ul:any, items:any[] ) {
 			$.each( items, (key,item) => {
 				this._renderItemData( ul, item );
 			});
@@ -72,7 +74,7 @@ export class HomePageSearch{
 			}
 
 		}
-		$instance._resizeMenu= function( ul, items ) {
+		$instance._resizeMenu= function( ul:any, items:any[] ) {
 			this.menu.element.outerWidth( HomePageSearch.getInput().outerWidth() );
 		}
 	}

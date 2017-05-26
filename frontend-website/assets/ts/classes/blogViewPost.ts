@@ -1,3 +1,5 @@
+import * as $ from "jquery";
+import "jquery.growl";
 export class blogViewPost{
 	public static runReplyComment(): void{
 		$(".reply").on('click',function(e){

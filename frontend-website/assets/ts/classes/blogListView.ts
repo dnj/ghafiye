@@ -1,3 +1,4 @@
+import * as $ from "jquery";
 export class blogListView {
 	public static mouseEventPosts():void{
 		$(".image").mouseover(function(){
