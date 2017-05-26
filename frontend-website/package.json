@@ -4,6 +4,7 @@
   },
   "dependencies": {
     "bootstrap": "^3.3.7",
+    "bootstrap-inputmsg": "^1.0.0",
     "bootstrap-rtl": "^3.3.4",
     "bootstrap-select": "^1.12.2",
     "font-awesome": "^4.7.0",
