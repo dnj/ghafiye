@@ -25,19 +25,8 @@ class edit extends groupEdit{
 			$this->group->first_name,
 			translator::trans('edit')
 		));
-		$this->addAssests();
+		$this->addBodyClass("group_edit");
 		$this->setNavigation();
-	}
-	private function addAssests(){
-		$this->addCSSFile(theme::url("assets/css/group.image.css"));
-		$this->addCSSFile(theme::url("assets/css/group.edit.css"));
-		$this->addJSFile(theme::url("assets/js/pages/group.edit.js"));
-		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));
-		$this->addJSFile(theme::url('assets/plugins/x-editable/js/bootstrap-editable.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/x-editable/css/bootstrap-editable.css'));
-		$this->addJSFile(theme::url("assets/plugins/jquery.growl/javascripts/jquery.growl.js"));
-		$this->addCSSFile(theme::url("assets/plugins/jquery.growl/stylesheets/jquery.growl.css"));
 	}
 	private function setNavigation(){
 		breadcrumb::addItem(navigation::getByName('groups'));

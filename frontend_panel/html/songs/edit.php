@@ -19,7 +19,7 @@ $this->the_header();
 				</div>
 	        </div>
 	        <div class="panel-body">
-				<form id="editsong" class="create_form" action="<?php echo userpanel\url('songs/edit/'.$this->song->id, array('langLyric' => $this->getDataForm('lyric_lang'))); ?>" method="post" enctype="multipart/form-data">
+				<form id="editsong" class="song_edit_form" action="<?php echo userpanel\url('songs/edit/'.$this->song->id, array('langLyric' => $this->getDataForm('lyric_lang'))); ?>" method="post" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-xs-3">
 							<div class="form-group">

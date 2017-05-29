@@ -21,16 +21,8 @@ class add extends albumADD{
 			translator::trans('albums'),
 			translator::trans('add')
 		));
-		$this->addAssests();
+		$this->addBodyClass('album_add');
 		$this->setNavigation();
-	}
-	private function addAssests(){
-		$this->addCSSFile(theme::url("assets/css/album.image.css"));
-		$this->addJSFile(theme::url("assets/js/pages/album.add.js"));
-		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));
-		$this->addJSFile(theme::url("assets/plugins/jquery.growl/javascripts/jquery.growl.js"));
-		$this->addCSSFile(theme::url("assets/plugins/jquery.growl/stylesheets/jquery.growl.css"));
 	}
 	private function setNavigation(){
 		breadcrumb::addItem(navigation::getByName('albums'));

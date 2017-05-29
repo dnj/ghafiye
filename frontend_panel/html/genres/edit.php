@@ -28,7 +28,7 @@ $genre = $this->getgenre();
 	        </div>
 	        <div class="panel-body">
 	            <div class="table-responsive">
-	                <form id="editgenre" class="create_form" action="<?php echo userpanel\url('genres/edit/'.$genre->id); ?>" method="post" enctype="multipart/form-data">
+	                <form id="editgenre" class="genre_edit_form" action="<?php echo userpanel\url('genres/edit/'.$genre->id); ?>" method="post" enctype="multipart/form-data">
 	                    <div class="col-md-6">
 	                        <?php $this->createField(array(
 								'name' => 'musixmatch_id',

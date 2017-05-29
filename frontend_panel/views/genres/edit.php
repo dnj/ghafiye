@@ -19,15 +19,8 @@ class edit extends genreEdit{
 			translator::trans('genres'),
 			translator::trans('edit')
 		));
-		$this->addAssets();
+		$this->addBodyClass('genre_edit');
 		$this->setNavigation();
-	}
-	private function addAssets(){
-		$this->addJSFile(theme::url('assets/js/pages/genre.edit.js'));
-		$this->addJSFile(theme::url('assets/plugins/x-editable/js/bootstrap-editable.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/x-editable/css/bootstrap-editable.css'));
-		$this->addJSFile(theme::url("assets/plugins/jquery.growl/javascripts/jquery.growl.js"));
-		$this->addCSSFile(theme::url("assets/plugins/jquery.growl/stylesheets/jquery.growl.css"));
 	}
 
 	private function setNavigation(){

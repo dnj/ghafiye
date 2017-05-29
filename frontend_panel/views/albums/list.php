@@ -22,11 +22,8 @@ class listview extends albumsList{
 			translator::trans('list')
 		));
 		$this->setButtons();
-		$this->addAssets();
+		$this->addBodyClass('album_list');
 		navigation::active("albums");
-	}
-	private function addAssets(){
-		$this->addJSFile(theme::url("assets/js/pages/album.list.js"));
 	}
 	public function setButtons(){
 		$this->setButton('edit', $this->canEdit, array(

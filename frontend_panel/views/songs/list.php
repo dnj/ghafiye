@@ -19,11 +19,8 @@ class listview extends songsList{
 	function __beforeLoad(){
 		$this->setTitle(translator::trans('ghafiye.panle.songs'));
 		$this->setButtons();
-		$this->addAssets();
+		$this->addBodyClass('song_list');
 		navigation::active("songs");
-	}
-	private function addAssets(){
-		$this->addJSFile(theme::url("assets/js/pages/song.list.js"));
 	}
 	public function setButtons(){
 		$this->setButton('edit', $this->canEdit, array(

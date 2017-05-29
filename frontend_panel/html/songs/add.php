@@ -19,7 +19,7 @@ $this->the_header();
 				</div>
 	        </div>
 	        <div class="panel-body">
-				<form class="create_form" action="<?php echo userpanel\url('songs/add'); ?>" method="post" enctype="multipart/form-data">
+				<form class="song_add_form" action="<?php echo userpanel\url('songs/add'); ?>" method="post" enctype="multipart/form-data">
 					<div class="row">
 						<div class="col-xs-3">
 							<div class="form-group">

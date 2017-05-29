@@ -8,14 +8,21 @@
 	},
 	"homepage": "https://www.musixmatch.com/",
 	"assets": [
-		{
-			"type": "js",
-			"file": "dest/js/scripts.js"
-		},
-		{
-			"type": "css",
-			"file": "dest/css/style.css"
-		},
+		{"type": "package","name": "jquery"},
+		{"type": "package","name": "bootstrap"},
+		{"type": "package","name": "bootstrap-rtl"},
+		{"type": "package","name": "bootstrap-select"},
+		{"type": "package","name": "bootstrap-inputmsg"},
+		{"type": "package","name": "font-awesome"},
+		{"type": "package","name": "jquery-ui"},
+		{"type": "package","name": "jquery.growl"},
+		{"type": "package","name": "webuilder"},
+		{"type": "less","file": "node_modules/bootstrap/less/bootstrap.less"},
+		{"type": "less","file": "node_modules/bootstrap-rtl/less/bootstrap-rtl.less"},
+		{"type": "less","file": "node_modules/font-awesome/less/font-awesome.less"},
+		{"type": "css","file": "node_modules/jquery.growl/stylesheets/jquery.growl.css"},
+		{"type": "less","file": "assets/less/main.less"},
+		{"type": "ts","file": "assets/ts/events/main.ts"},
 		{
 			"type":"js",
 			"inline":"(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');ga('create', 'UA-89566880-1', 'auto');ga('send', 'pageview');"

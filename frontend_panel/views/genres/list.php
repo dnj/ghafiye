@@ -22,11 +22,8 @@ class listview extends genresList{
 			translator::trans('list')
 		));
 		$this->setButtons();
-		$this->addAssets();
+		$this->addBodyClass('genre_list');
 		navigation::active("genres");
-	}
-	private function addAssets(){
-		$this->addJSFile(theme::url("assets/js/pages/genre.list.js"));
 	}
 	public function setButtons(){
 		$this->setButton('edit', $this->canEdit, array(

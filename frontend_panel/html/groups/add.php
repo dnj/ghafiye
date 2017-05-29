@@ -27,7 +27,7 @@ $this->the_header();
 	        </div>
 	        <div class="panel-body">
 	            <div class="table-responsive">
-	                <form class="create_form" action="<?php echo userpanel\url('groups/add'); ?>" method="post" enctype="multipart/form-data">
+	                <form class="group_add_form" action="<?php echo userpanel\url('groups/add'); ?>" method="post" enctype="multipart/form-data">
 						<div class="col-md-5">
 							<div class="form-group">
 								<label class="control-label"><?php echo translator::trans("ghafiye.panel.group.avatar"); ?></label>

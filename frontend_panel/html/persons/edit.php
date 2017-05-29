@@ -28,7 +28,7 @@ $person = $this->getperson();
 	        </div>
 	        <div class="panel-body">
 	            <div class="table-responsive">
-	                <form id="editPerson" class="create_form" action="<?php echo userpanel\url('persons/edit/'.$person->id); ?>" method="post" enctype="multipart/form-data">
+	                <form id="editPerson" class="person_edit_form" action="<?php echo userpanel\url('persons/edit/'.$person->id); ?>" method="post" enctype="multipart/form-data">
 	                    <div class="col-md-6">
 	                        <?php $this->createField(array(
 								'name' => 'musixmatch_id',

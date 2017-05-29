@@ -24,19 +24,8 @@ class edit extends albumEdit{
 			$this->album->getTitle(),
 			translator::trans('edit')
 		));
-		$this->addAssests();
+		$this->addBodyClass('album_edit');
 		$this->setNavigation();
-	}
-	private function addAssests(){
-		$this->addCSSFile(theme::url("assets/css/album.image.css"));
-		$this->addCSSFile(theme::url("assets/css/album.edit.css"));
-		$this->addJSFile(theme::url("assets/js/pages/album.edit.js"));
-		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));
-		$this->addJSFile(theme::url('assets/plugins/x-editable/js/bootstrap-editable.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/x-editable/css/bootstrap-editable.css'));
-		$this->addJSFile(theme::url("assets/plugins/jquery.growl/javascripts/jquery.growl.js"));
-		$this->addCSSFile(theme::url("assets/plugins/jquery.growl/stylesheets/jquery.growl.css"));
 	}
 	private function setNavigation(){
 		breadcrumb::addItem(navigation::getByName('albums'));

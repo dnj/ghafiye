@@ -19,17 +19,9 @@ class add extends genreADD{
 			translator::trans('genres'),
 			translator::trans('add')
 		));
-		$this->addAssets();
+		$this->addBodyClass('genre_add');
 		$this->setNavigation();
 	}
-	private function addAssets(){
-		$this->addJSFile(theme::url('assets/js/pages/genre.add.js'));
-		$this->addJSFile(theme::url('assets/plugins/x-editable/js/bootstrap-editable.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/x-editable/css/bootstrap-editable.css'));
-		$this->addJSFile(theme::url("assets/plugins/jquery.growl/javascripts/jquery.growl.js"));
-		$this->addCSSFile(theme::url("assets/plugins/jquery.growl/stylesheets/jquery.growl.css"));
-	}
-
 	private function setNavigation(){
 		breadcrumb::addItem(navigation::getByName('genres'));
 		$item = new menuItem("add");
