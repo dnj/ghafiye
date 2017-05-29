@@ -401,7 +401,7 @@ class songs extends controller{
 							$lyric['obj']->lang = $inputs['lyric_lang'];
 						}
 						if(isset($lyric['obj'])){
-							$lyric['obj']->time = $isOriginalLyric ?? $lyric['time'];
+							$lyric['obj']->time = $isOriginalLyric ? $lyric['time'] : 0;
 							$lyric['obj']->text = $lyric['text'];
 							$lyric['obj']->save();
 						}
