@@ -1,5 +1,5 @@
 import * as $ from "jquery";
-import "jquery-ui";
+import "jquery-ui/ui/widgets/autocomplete";
 import { AjaxRequest } from "webuilder";
 export default class AutoComplete{
 	private $element:JQuery;
