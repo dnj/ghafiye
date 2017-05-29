@@ -627,6 +627,7 @@ export default class Song{
 			Song.runPersonAutoComplete($('#addPersonForm'));
 			Song.runSongImage();
 			Song.setTitlesEvents();
+			Song.ValidateLyrics();
 			Song.createFieldTranslatedLang();
 			Song.changeLyricLang();
 			Song.runLyricLangListerner();
