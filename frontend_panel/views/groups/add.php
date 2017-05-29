@@ -23,15 +23,7 @@ class add extends groupADD{
 			translator::trans('add')
 		));
 		$this->addBodyClass("group_add");
-		$this->addAssests();
 		$this->setNavigation();
-	}
-	private function addAssests(){
-		$this->addJSFile(theme::url("assets/js/pages/group.add.js"));
-		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));
-		$this->addJSFile(theme::url("assets/plugins/jquery.growl/javascripts/jquery.growl.js"));
-		$this->addCSSFile(theme::url("assets/plugins/jquery.growl/stylesheets/jquery.growl.css"));
 	}
 	private function setNavigation(){
 		breadcrumb::addItem(navigation::getByName('groups'));

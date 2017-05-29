@@ -20,20 +20,13 @@ class add extends ADDSongs{
 	function __beforeLoad(){
 		$this->setTitle(translator::trans('ghafiye.addSong'));
 		$this->addBodyClass("songs");
+		$this->addBodyClass("song_add");
 		$this->setNavigation();
-		$this->addAssets();
 		$this->handlerErrors();
 		$this->handlerFormData();
 	}
 	private function setNavigation(){
 		navigation::active("songs");
-	}
-	private function addAssets(){
-		$this->addJSFile(theme::url("assets/js/pages/song.add.js"));
-		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));
-		$this->addJSFile(theme::url('assets/plugins/x-editable/js/bootstrap-editable.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/x-editable/css/bootstrap-editable.css'));
 	}
 	public function handlerErrors(){
 		foreach($this->getFormErrors() as $error){

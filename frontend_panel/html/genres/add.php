@@ -27,7 +27,7 @@ $this->the_header();
 	        </div>
 	        <div class="panel-body">
 	            <div class="table-responsive">
-	                <form id="addgenre" class="create_form" action="<?php echo userpanel\url('genres/add'); ?>" method="post" enctype="multipart/form-data">
+	                <form id="addgenre" class="genre_add_form" action="<?php echo userpanel\url('genres/add'); ?>" method="post" enctype="multipart/form-data">
 	                    <div class="col-md-6">
 	                        <?php $this->createField(array(
 								'name' => 'musixmatch_id',

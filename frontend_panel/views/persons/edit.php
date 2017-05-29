@@ -26,18 +26,8 @@ class edit extends personEdit{
 			translator::trans('edit')
 		));
 		$this->addBodyClass("person_edit");
-		$this->addAssests();
 		$this->setButtons();
 		$this->setNavigation();
-	}
-	private function addAssests(){
-		$this->addJSFile(theme::url("assets/js/pages/person.edit.js"));
-		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));
-		$this->addJSFile(theme::url('assets/plugins/x-editable/js/bootstrap-editable.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/x-editable/css/bootstrap-editable.css'));
-		$this->addJSFile(theme::url("assets/plugins/jquery.growl/javascripts/jquery.growl.js"));
-		$this->addCSSFile(theme::url("assets/plugins/jquery.growl/stylesheets/jquery.growl.css"));
 	}
 	public function setButtons(){
 		$this->setButton('delete', $this->canNameDel, array(

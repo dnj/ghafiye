@@ -23,7 +23,6 @@ class add extends personADD{
 			translator::trans('add')
 		));
 		$this->addBodyClass("person_add");
-		$this->addAssests();
 		$this->setNavigation();
 	}
 	private function setNavigation(){
@@ -33,11 +32,6 @@ class add extends personADD{
 		$item->setIcon('fa fa-plus');
 		breadcrumb::addItem($item);
 		navigation::active("persons");
-	}
-	private function addAssests(){
-		$this->addJSFile(theme::url("assets/js/pages/person.edit.js"));
-		$this->addJSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.js'));
-		$this->addCSSFile(theme::url('assets/plugins/bootstrap-fileupload/bootstrap-fileupload.min.css'));
 	}
 	protected function getImage(){
 		return packages::package('ghafiye')->url(options::get("packages.ghafiye.persons.deafault_image"));

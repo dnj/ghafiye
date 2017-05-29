@@ -28,7 +28,7 @@ $group = $this->getGroup();
 	        </div>
 	        <div class="panel-body">
 	            <div class="table-responsive">
-	                <form class="create_form" action="<?php echo userpanel\url('groups/edit/'.$group->id); ?>" method="post" enctype="multipart/form-data">
+	                <form class="group_edit_form" action="<?php echo userpanel\url('groups/edit/'.$group->id); ?>" method="post" enctype="multipart/form-data">
 						<div class="col-md-3">
 							<div class="form-group">
 								<label class="control-label"><?php echo translator::trans("ghafiye.panel.group.avatar"); ?></label>
