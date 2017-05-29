@@ -277,9 +277,13 @@ class songs extends controller{
 					}
 				}
 				if(isset($inputs['album'])){
-					$album = album::byId($inputs['album']);
-					if(!$album){
-						throw new inputValidation('album');
+					if($inputs['album']){
+						$album = album::byId($inputs['album']);
+						if(!$album){
+							throw new inputValidation('album');
+						}
+					}else{
+						unset($inputs['album']);
 					}
 				
 				}
