@@ -40,9 +40,13 @@ use \packages\base\frontend\theme;
 			<form class="searchbox">
 				<h1><?php echo translator::trans('home.title'); ?></h1>
 				<p><?php echo translator::trans('home.title.description'); ?></p>
-				<div class="form-group has-icon">
-					<i class="fa fa-search form-control-icon"></i>
-					<input type="text" name="word" placeholder="<?php echo translator::trans('home.searchbox.placeholder'); ?>">
+				<div class="row">
+					<div class="col-sm-8 col-sm-offset-2">
+						<div class="form-group has-icon">
+							<i class="fa fa-search form-control-icon"></i>
+							<input type="text" name="word" placeholder="<?php echo translator::trans('home.searchbox.placeholder'); ?>">
+						</div>
+					</div>
 				</div>
 			</form>
 		</div>
