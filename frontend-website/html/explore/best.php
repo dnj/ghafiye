@@ -5,8 +5,7 @@ use \packages\ghafiye\song\person;
 $this->the_header();
 ?>
 <div class="row">
-	<?php $this->the_sidebar('explore'); ?>
-	<div class="col-md-9">
+	<div class="col-md-9 col-md-push-3">
 		<section class="songs">
 			<h2><?php echo translator::trans('explore.best.title'); ?></h2>
 			<p><?php echo translator::trans('explore.best.description'); ?></p>
@@ -32,6 +31,7 @@ $this->the_header();
 			<?php echo $this->pager(); ?>
 		</section>
 	</div>
+	<?php $this->the_sidebar('explore'); ?>
 </div>
 <?php
 $this->the_footer();
