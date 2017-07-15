@@ -7,10 +7,7 @@ use \packages\ghafiye\genre;
 
 trait musicTrait{
 	protected function songImage(song $song){
-		if($song->image){
-			return packages::package('ghafiye')->url($song->image);
-		}
-		return theme::url('assets/images/song.jpg');
+		return packages::package('ghafiye')->url($song->image ? $song->image : "storage/public/songs/default-image.png");
 	}
 	function getGenres($num = null){
 		return genre::getActives($num);

@@ -5,7 +5,7 @@ use \themes\musixmatch\views\explore\best;
 use \themes\musixmatch\views\explore\lastest;
 use \themes\musixmatch\views\explore\genre;
 ?>
- <div class="col-md-3 sidebar">
+ <div class="col-md-3 col-md-pull-9 sidebar">
 	 <div class="list-group">
 		 <a href="<?php echo base\url('explore'); ?>" class="list-group-item<?php if($this instanceof best)echo(' active'); ?>"><i class="fa fa-free-code-camp"></i> <?php echo translator::trans('explore.best'); ?></a>
 		 <a href="<?php echo base\url('explore/lastest'); ?>" class="list-group-item<?php if($this instanceof lastest)echo(' active'); ?>"> <?php echo translator::trans('explore.lastest'); ?></a>
