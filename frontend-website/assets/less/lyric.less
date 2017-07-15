@@ -3,6 +3,10 @@ body.lyric{
 		img.song-image{
 			width: 255px;
 			height: 255px;
+			@media (max-width: 767px){
+				margin: 0 auto;
+				display: block;
+			}
 		}
 		> .row:first-child{
 			border-bottom: 2px solid #f5f7f8;
@@ -26,7 +30,10 @@ body.lyric{
 				box-shadow: 0 3px 15px 0 rgba(0,0,0,0.1);
 			}
 			> .title{
-				padding:64px 0 0;
+				padding-top:64px;
+				@media (max-width: 767px){
+					text-align: center;
+				}
 				.translations{
 					margin-top: 35px;
 					font-family: yekan;

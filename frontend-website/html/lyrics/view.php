@@ -7,10 +7,10 @@ $numberOfLangs = $this->numberOfLangs();
 $lang = $this->getLyricsLanguage();
 ?>
 <header class="row">
-	<div class="col-xs-3">
+	<div class="col-sm-3">
 		<img src="<?php echo $this->songImage($this->song); ?>" class="song-image">
 	</div>
-	<div class="col-xs-9 title">
+	<div class="col-sm-9 title">
 		<h1><?php echo $this->song->title($lang); ?></h1>
 		<h2><a href="<?php echo(base\url($this->singer->encodedName($lang))); ?>"><?php echo $this->singer->name($lang); ?></a></h2>
 		<div class="translations">
