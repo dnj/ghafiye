@@ -15,10 +15,14 @@ $this->the_header();
 				foreach($this->getSongs() as $song){
 					$singer = $song->getPerson(person::singer);
 				?>
-				<li>
-					<span><?php echo ++$x; ?></span>
-					<img src="<?php echo $this->songImage($song); ?>" alt="<?php echo $song->title(); ?>">
-					<div>
+				<li class="row">
+					<div class="col-sm-1 col-xs-2">
+						<span><?php echo ++$x; ?></span>
+					</div>
+					<div class="col-sm-1 col-xs-2">
+						<img src="<?php echo $this->songImage($song); ?>" alt="<?php echo $song->title(); ?>">
+					</div>
+					<div class="col-sm-10 col-xs-8">
 						<a href="<?php echo(base\url($singer->encodedName().'/'.$song->encodedTitle())); ?>"><strong><?php echo $song->title(); ?></strong></a>
 						<a href="<?php echo(base\url($singer->encodedName())); ?>"><?php if($singer)echo $singer->name(); ?></a>
 					</div>
