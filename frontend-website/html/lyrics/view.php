@@ -1,7 +1,9 @@
 <?php
 use \packages\base;
+use \packages\userpanel\date;
 use \packages\base\translator;
 use \packages\ghafiye\song\lyric;
+use \packages\ghafiye\song\person;
 $this->the_header();
 $numberOfLangs = $this->numberOfLangs();
 $lang = $this->getLyricsLanguage();
@@ -34,23 +36,7 @@ $lang = $this->getLyricsLanguage();
 	</div>
 </header>
 <div class="row">
-	<div class="col-sm-3 tools">
-		<ul class="list-group">
-			<a href="#" id="like" class="list-group-item" data-song="<?php echo($this->song->id); ?>">
-				<span class="float-xs-right"><i class="fa like-icon <?php echo(($this->getlikeStatus() ? "fa-heart" : "fa-heart-o")); ?>"></i></span>
-				<?php echo(translator::trans("songs.likes.number", array('number' => $this->song->likes))); ?>
-			</a>
-			<li class="list-group-item">
-				<span class="float-xs-right"><i class="fa fa-language"></i></span>
-				<?php echo(translator::trans("songs.translations.number", array('number' => $numberOfLangs))); ?>
-			</li>
-			<li class="list-group-item">
-				<span class="float-xs-right"><i class="fa fa-tag"></i></span>
-				<a href="<?php echo base\url('explore/genre/'.$this->song->genre->encodedTitle()); ?>"><?php echo($this->song->genre->title()); ?></a>
-			</li>
-		</ul>
-	</div>
-	<div class="col-md-7 col-sm-9 col-md-offset-1">
+	<div class="col-md-7 col-sm-9 col-md-offset-1 col-md-push-3">
 		<section class="text">
 			<?php foreach($this->getLyrices() as $lyric){ ?>
 			<p>
@@ -78,6 +64,59 @@ $lang = $this->getLyricsLanguage();
 				</ul>
 			</div>
 		</div>
+	</div>
+	<div class="col-sm-3 tools col-md-pull-8">
+		<ul class="list-group">
+			<a href="#" id="like" class="list-group-item" data-song="<?php echo($this->song->id); ?>">
+				<span class="float-xs-right"><i class="fa like-icon <?php echo(($this->getlikeStatus() ? "fa-heart" : "fa-heart-o")); ?>"></i></span>
+				<?php echo(translator::trans("songs.likes.number", array('number' => $this->song->likes))); ?>
+			</a>
+			<li class="list-group-item">
+				<span class="float-xs-right"><i class="fa fa-language"></i></span>
+				<?php echo(translator::trans("songs.translations.number", array('number' => $numberOfLangs))); ?>
+			</li>
+			<li class="list-group-item">
+				<span class="float-xs-right"><i class="fa fa-tag"></i></span>
+				<a href="<?php echo base\url('explore/genre/'.$this->song->genre->encodedTitle()); ?>"><?php echo($this->song->genre->title()); ?></a>
+			</li>
+		</ul>
+		<?php if($songs = $this->getSongs()){ ?>
+		<div class="panel">
+			<div class="panel-heading">
+				<a href="<?php echo $this->getAlbumImage(); ?>" class="">
+					<div class="col-sm-5 col-xs-6">
+						<img src="<?php echo $this->getAlbumImage(); ?>" alt="25 Adele - cover art">
+					</div>
+					<div class="col-sm-7 col-xs-6">
+						<p class=title><?php echo $this->song->album->title($lang); ?></p>
+						<span><?php echo date::format('F Y', $this->song->release_at); ?></span>
+					</div>
+				</a>
+			</div>
+			<div class="panel-body">
+				<ul>
+					<?php
+					$i = 0;
+					foreach($songs as $song){
+						$singer = $song->getPerson(person::singer);
+					?>
+					<li class="row">
+						<div class="col-sm-2 col-xs-2">
+							<span><?php echo ++$i; ?></span>
+						</div>
+						<div class="col-sm-2 col-xs-2">
+							<img src="<?php echo $this->songImage($song); ?>" alt="<?php echo $song->title(); ?>">
+						</div>
+						<div class="col-sm-8 col-xs-8">
+							<a href="<?php echo(base\url($singer->encodedName($lang).'/'.$song->encodedTitle($lang))); ?>"><strong><?php echo $song->title($lang); ?></strong></a>						</div>
+					</li>
+					<?php
+					}
+					?>
+				</ul>
+			</div>
+		</div>
+		<?php } ?>
 	</div>
 </div>
 <?php

@@ -43,10 +43,7 @@ class view extends lyricsView{
 		return $song->get(6);
 	}
 	protected function songImage(song $song){
-		if($song->image){
-			return packages::package('ghafiye')->url($song->image);
-		}
-		return theme::url('dest/images/song.jpg');
+		return packages::package('ghafiye')->url($song->image ? $song->image : base\options::get('packages.ghafiye.song.default-image'));
 	}
 	protected function numberOfLangs(){
 		db::where("song", $this->song->id);
@@ -65,11 +62,14 @@ class view extends lyricsView{
 	protected function is_ltr($lang){
 		return !in_array($lang, array('ar','fa','dv','he','ps','sd','ur','yi','ug','ku'));
 	}
-	protected function getLastSongs(){
+	protected function getSongs(){
+		$album = $this->song->album->id;
 		$song = new song();
-		$song->where("status", song::publish);
-		$song->orderBy("release_at", "desc");
-		return $song->get(4);
+		$song->where("ghafiye_songs.status", song::publish);
+		$song->where('ghafiye_songs.id', $this->song->id, '!=');
+		$song->where('ghafiye_songs.album', $album);
+		$song->orderBy("ghafiye_songs.release_at", "desc");
+		return $song->get(4, 'ghafiye_songs.*');
 	}
 	protected function getShareSocial(){
 		$lang = $this->getLyricsLanguage();
@@ -117,5 +117,8 @@ class view extends lyricsView{
 				"link"=> "mailto:?subject={$this->song->title($lang)}&body={$this->song->title($lang)}\n".$url
 			]
 		];
+	}
+	protected function getAlbumImage():string{
+		return base\packages::package('ghafiye')->url($this->song->album->image ? $this->song->album->image : base\options::get('packages.ghafiye.album.default-image'));
 	}
 }
