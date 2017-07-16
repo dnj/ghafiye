@@ -8,10 +8,10 @@ $lang = $this->getSongLanguage();
 ?>
 <header class="row">
 	<div class="cover<?php if(!$this->artist->cover){echo(" no-cover");} ?>"<?php if($this->artist->cover){echo(" style=\"background-image:url('".$this->getCoverURL()."');\"");} ?>></div>
-	<div class="col-sm-2">
+	<div class="col-md-2 col-sm-3 hidden-xs">
 		<img src="<?php echo $this->getAvatarURL(); ?>" class="avatar">
 	</div>
-	<div class="col-sm-10 info">
+	<div class="col-md-10 col-sm-9 info">
 		<span><?php echo translator::trans('artist.lyrics'); ?></span>
 		<h1><?php echo $this->artist->name($lang); ?></h1>
 		<ul class="genres"><?php
