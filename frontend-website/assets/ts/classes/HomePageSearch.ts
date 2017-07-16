@@ -52,10 +52,14 @@ export class HomePageSearch{
 			let html:string;
 			switch(item.type){
 				case("person"):
-					html = `<div class="col-md-2 avatar"><img src="/packages/ghafiye/${item.avatar}"/></div><div class="col-md-10 title"><strong>${item.name}</strong></div>`;
-					break;
+					const avatar = item.avatar != null ? item.avatar : 'storage/public/songs/default-image.png';
+					const defaultClass = item.avatar == null ? "default" : "";
+					html = `<div class="col-xs-4 col-sm-3 col-md-2 avatar ${defaultClass}"><img src="/packages/ghafiye/${avatar}"/></div><div class="col-xs-8 col-sm-9 col-md-10 title"><strong>${item.name}</strong></div>`;
+					break;i
 				case("song"):
-					html = `<div class="col-md-2 avatar"><img src="/packages/ghafiye/${item.image}"/></div><div class="col-md-10 title"><strong>${item.title}</strong><small>${item.singer.name}</small></div>`;
+					const image = item.image != null ? item.image : 'storage/public/songs/default-image.png';
+					const defaultClass = item.image == null ? "default" : "";
+					html = `<div class="col-xs-4 col-sm-3 col-md-2 avatar ${defaultClass}"><img src="/packages/ghafiye/${image}"/></div><div class="col-xs-8 col-sm-9 col-md-10 title"><strong>${item.title}</strong><small>${item.singer.name}</small></div>`;
 					break;
 			}
 			return $( "<li>" )
