@@ -102,7 +102,7 @@
 		"all-result-search": "تمام نتایج",
 		"songs.likes.number": "<span class=\"like-number\">{number}</span> پسند",
 		"songs.translations.number": "{number} زبان ترجمه شده",
-		"ghafiye.homepage.title": "قافیه مجموعه ی آثار موسیقیایی"
-
+		"ghafiye.homepage.title": "قافیه مجموعه ی آثار موسیقیایی",
+		"more.albums.for": "آلبوم هاي بیشتر از <span><a href=\"{url}\">{name}</a></span>"
 	}
 }

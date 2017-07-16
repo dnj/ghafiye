@@ -1,7 +1,7 @@
 <?php
 namespace themes\musixmatch\views\artists;
-use \packages\base;
 use \packages\base\db;
+use \packages\base\options;
 use \packages\base\translator;
 use \packages\base\frontend\theme;
 use \packages\base\packages;
@@ -23,10 +23,7 @@ class albums extends albumsView{
 		$this->addBodyClass('albums');
 	}
 	protected function albumImage(album $album){
-		if($album->image){
-			return packages::package('ghafiye')->url($album->image);
-		}
-		return theme::url('dest/images/album.jpg');
+		return packages::package('ghafiye')->url($album->image ? $album->image : options::get('packages.ghafiye.album.default-image'));
 	}
 	protected function getAlbumReleaseDate(album $album){
 		db::where("album", $album->id);

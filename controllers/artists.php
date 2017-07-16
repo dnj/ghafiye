@@ -66,11 +66,13 @@ class artists extends controller{
 		}
 		$person = person::byId($personName->person);
 		$album = album::where("ghafiye_songs.status", song::publish)->bySingerAndTitle($person, $data['album']);
+		$albums = album::where("ghafiye_songs.status", song::publish)->bySinger($person, 5);
 		if(!$album){
 			throw new NotFound;
 		}
 		$view->setArtist($person);
 		$view->setAlbum($album);
+		$view->setAlbums($albums);
 		$view->setSongLanguage($personName->lang);
 		$this->response->setStatus(true);
 		$this->response->setView($view);

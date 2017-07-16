@@ -58,6 +58,11 @@ body.album{
 							font-family: koodak;
 							font-weight: normal;
 							font-size: 17px;
+							display: block;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+
 						}
 					}
 					&:hover{
@@ -69,6 +74,74 @@ body.album{
 				}
 			}
 		}
-
+		.more-albums{
+			padding-top: 30px;
+			span.more-albums-title{
+				display: block;
+				font-size: 30px;
+				font-family: yekan;
+				padding: 10px 0;
+				span{
+					a{
+						color: #f63;
+					}
+				}
+			}
+			.album{
+				display: block;
+				box-shadow: 0 2px 7px rgba(0,0,0,.1);
+				border-radius: 3px;
+				transition: all .3s ease-in-out;
+				margin-bottom: 40px;
+				background: #fff;
+				.image{
+					position: relative;
+					background-size: cover;
+					background-position: 50%;
+					background-repeat: no-repeat;
+					height: 240px;
+					width: 100%;
+				}
+				.description{
+					overflow: hidden;
+					color: #4e5860;
+					padding: 15px;
+					ul{
+						list-style: none;
+						padding: 0;
+					}
+					ul.info{
+						width: 85%;
+						li{
+							display: block;
+							overflow: hidden;
+							text-overflow: ellipsis;
+							white-space: nowrap;
+						}
+						.title{
+							font-weight: 700;
+							font-size: 18px;
+							font-family: yekan;
+						}
+					}
+				}
+				&:hover{
+					transform: translateY(-3px);
+					box-shadow: 0 2px 17px rgba(0,0,0,.1);
+					.description{
+						.title{
+							color:#f63;
+						}
+					}
+				}
+			}
+		}
+		.more{
+			display: block;
+			text-align: center;
+			color: #f60;
+			font-family: yekan;
+			font-size: 15px;
+		}
 	}
 }

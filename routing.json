@@ -150,6 +150,11 @@
 		"method":"get"
 	},
 	{
+		"path": [{"type":"dynamic","name":"artist"},"albums",{"type":"dynamic","name":"album"}],
+		"controller": "controllers\\artists@album",
+		"method":"get"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},{"type":"dynamic","name":"song"}],
 		"controller": "controllers\\lyrics@view",
 		"method":"get"

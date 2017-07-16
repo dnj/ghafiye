@@ -30,6 +30,12 @@ class album extends view{
 	public function getSongs(){
 		return $this->getData('songs');
 	}
+	public function setAlbums(array $albums){
+		$this->setData($albums, 'albums');
+	}
+	protected function getAlbums():array{
+		return $this->getData('albums');
+	}
 	public function export(){
 		return array(
 			'data' => array(
