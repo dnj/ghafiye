@@ -11,7 +11,7 @@ $lang = $this->getSongLanguage();
 	<div class="col-md-2 col-sm-3 hidden-xs">
 		<img src="<?php echo $this->getAvatarURL(); ?>" class="avatar">
 	</div>
-	<div class="col-md-10 col-sm-9 info">
+	<div class="col-md-10 col-sm-9 col-xs-12 info">
 		<span><?php echo translator::trans('artist.lyrics'); ?></span>
 		<h1><?php echo $this->artist->name($lang); ?></h1>
 		<ul class="genres"><?php
