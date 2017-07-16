@@ -16,7 +16,7 @@ $lang = $this->getLyricsLanguage();
 		<div class="translations">
 			<span><i class="fa fa-language"></i> <?php echo translator::trans('translations'); ?></span>
 			<a <?php if($this->getLyricsLanguage() == $this->song->lang)echo('class="active"'); ?> href="<?php echo(base\url($this->singer->encodedName($this->song->lang)).'/'.$this->song->encodedTitle($this->song->lang)); ?>"><?php echo translator::trans('translations.langs.original'); ?></a>
-			<?php if($this->song->lang != 'fa'){ ?>
+			<?php if($this->song->lang != 'fa' and $this->isLang('fa')){ ?>
 			<a <?php if($this->getLyricsLanguage() == 'fa')echo('class="active"'); ?> href="<?php echo(base\url($this->singer->encodedName('fa')).'/'.$this->song->encodedTitle('fa')); ?>"><?php echo translator::trans('translations.langs.fa'); ?></a>
 			<?php
 			}
@@ -24,12 +24,9 @@ $lang = $this->getLyricsLanguage();
 			?>
 			<select class="selectpicker"  data-width="fit"  title="<?php echo translator::trans('translations.langs.more', array('number' => $numberOfLangs -2)); ?>">
 				<?php
-				foreach($this->langs() as $lang){
-					if(in_array($lang, array($this->song->lang, 'fa'))){
-						continue;
-					}
+				foreach($this->getLangs() as $lang){
 				?>
-					<option value="<?php echo $lang; ?>" <?php if($this->is_ltr($lang))echo('class="ltr"'); ?> data-link="<?php echo(base\url($this->singer->encodedName($lang)).'/'.$this->song->encodedTitle($lang)); ?>"><?php echo translator::trans('translations.langs.'.$lang); ?></option>
+				<option value="<?php echo $lang; ?>" <?php if($this->is_ltr($lang))echo('class="ltr"'); ?> data-link="<?php echo(base\url($this->singer->encodedName($lang)).'/'.$this->song->encodedTitle($lang)); ?>"><?php echo translator::trans('translations.langs.'.$lang); ?></option>
 				<?php } ?>
 			</select>
 			<?php } ?>
@@ -49,23 +46,39 @@ $lang = $this->getLyricsLanguage();
 			</li>
 			<li class="list-group-item">
 				<span class="float-xs-right"><i class="fa fa-tag"></i></span>
-				<?php echo($this->song->genre->title()); ?>
+				<a href="<?php echo base\url('explore/genre/'.$this->song->genre->encodedTitle()); ?>"><?php echo($this->song->genre->title()); ?></a>
 			</li>
 		</ul>
 	</div>
-	<section class="col-sm-9 col-md-7 text col-md-offset-1">
-		<?php foreach($this->getLyrices() as $lyric){ ?>
-		<p>
-			<?php
-			if($lyric->parent){
-				$lyric->parent = lyric::byId($lyric->parent);
-			?>
-			<span <?php if($this->is_ltr($lyric->parent->lang))echo('class="ltr"'); ?>><?php echo $lyric->parent->text; ?></span>
+	<div class="col-md-7 col-sm-9 col-md-offset-1">
+		<section class="text">
+			<?php foreach($this->getLyrices() as $lyric){ ?>
+			<p>
+				<?php
+				if($lyric->parent){
+					$lyric->parent = lyric::byId($lyric->parent);
+				?>
+				<span <?php if($this->is_ltr($lyric->parent->lang))echo('class="ltr"'); ?>><?php echo $lyric->parent->text; ?></span>
+				<?php } ?>
+				<span <?php if($this->is_ltr($lyric->lang))echo('class="ltr"'); ?>><?php echo $lyric->text; ?></span>
+			</p>
 			<?php } ?>
-			<span <?php if($this->is_ltr($lyric->lang))echo('class="ltr"'); ?>><?php echo $lyric->text; ?></span>
-		</p>
-		<?php } ?>
-	</section>
+		</section>
+		<div class="row">
+			<div class="col-sm-12 share-box">
+				<h3><?php echo translator::trans("share.song"); ?></h3>
+				<ul class="share-box-list">
+					<?php foreach($this->getShareSocial() as $social){ ?>
+					<li class="share-linksocial link-<?php echo $social['name']; ?>">
+						<a class="tooltips" target="_blank" href="<?php echo $social['link']; ?>" title="<?php echo translator::trans("share.song.on.{$social['name']}"); ?>">
+							<i class="fa fa-<?php echo ($social['name'] == "mail" ? "envelope-o" : $social['name']); ?>"></i>
+						</a>
+					</li>
+					<?php } ?>
+				</ul>
+			</div>
+		</div>
+	</div>
 </div>
 <?php
 $this->the_footer();

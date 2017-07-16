@@ -103,6 +103,18 @@
 		"songs.likes.number": "<span class=\"like-number\">{number}</span> پسند",
 		"songs.translations.number": "{number} زبان ترجمه شده",
 		"ghafiye.homepage.title": "قافیه مجموعه ی آثار موسیقیایی",
-		"more.albums.for": "آلبوم هاي بیشتر از <span><a href=\"{url}\">{name}</a></span>"
+		"more.albums.for": "آلبوم هاي بیشتر از <span><a href=\"{url}\">{name}</a></span>",
+		"share.song": "اشتراک آهنگ",
+		"share.song.on.facebook": "اشتراک در فیسبوک",
+		"share.song.on.telegram": "اشتراک در تلگرام",
+		"share.song.on.telegram.text": "{title} از {artist}",
+		"share.song.on.twitter": "اشتراک در توییتر",
+		"share.song.on.google-plus": "اشتراک در گوگل+",
+		"share.song.on.pinterest": "اشتراک در pinterest",
+		"share.song.on.linkedin": "اشتراک در linkedin",
+		"share.song.on.tumblr": "اشتراک در tumblr",
+		"share.song.on.vk": "اشتراک در vk",
+		"share.song.on.reddit": "اشتراک در reddit",
+		"share.song.on.mail": "اشتراک با ایمیل"
 	}
 }

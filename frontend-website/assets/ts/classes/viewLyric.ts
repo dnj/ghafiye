@@ -1,5 +1,5 @@
 import {Router} from "webuilder";
-
+import "bootstrap/js/tooltip";
 export class viewLyric{
 	public static runLikelistener():void{
 		$("#like").on('click', function(e){
@@ -29,5 +29,8 @@ export class viewLyric{
 	}
 	public static init():void {
 		this.runLikelistener();
+		$(function () {
+			$('.tooltips').tooltip()
+		})
 	}
 }

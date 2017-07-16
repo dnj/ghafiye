@@ -52,9 +52,15 @@ class view extends lyricsView{
 		db::where("song", $this->song->id);
 		return db::getValue("ghafiye_songs_lyrices", "count(DISTINCT `lang`)");
 	}
-	protected function langs(){
+	protected function getLangs(){
 		db::where("song", $this->song->id);
-		return array_column(db::get("ghafiye_songs_lyrices",null, "DISTINCT `lang`"), 'lang');
+		db::where('lang', [$this->song->lang, 'fa'], 'in');
+		return array_column(db::get("ghafiye_songs_titles",null, "ghafiye_songs_titles.*"), 'lang');
+	}
+	protected function isLang(string $language):bool{
+		db::where("song", $this->song->id);
+		db::where('lang', $language);
+		return db::has("ghafiye_songs_titles");
 	}
 	protected function is_ltr($lang){
 		return !in_array($lang, array('ar','fa','dv','he','ps','sd','ur','yi','ug','ku'));
@@ -64,5 +70,52 @@ class view extends lyricsView{
 		$song->where("status", song::publish);
 		$song->orderBy("release_at", "desc");
 		return $song->get(4);
+	}
+	protected function getShareSocial(){
+		$lang = $this->getLyricsLanguage();
+		$singer = $this->song->getPerson(person::singer);
+		$url = base\url($this->singer->encodedName().'/'.$this->song->encodedTitle(), [], true);
+		return [
+			[
+				"name"=> "facebook",
+				"link"=> "http://www.facebook.com/sharer.php?u=".$url
+			],
+			[
+				"name"=> "telegram",
+				"link"=> "tg://msg_url?text=".translator::trans('share.song.on.telegram.text', ['title'=>$this->song->title($lang), 'artist'=>$this->singer->name($lang)])."&url=".$url
+			],
+			[
+				"name"=> "twitter",
+				"link"=> "http://www.twitter.com/share?url=".$url
+			],
+			[
+				"name"=> "google-plus",
+				"link"=> "http://www.plus.google.com/share?url=".$url
+			],
+			[
+				"name"=> "pinterest",
+				"link"=> "http://www.pinterest.com/pin/create/button/?url=".$url
+			],
+			[
+				"name"=> "linkedin",
+				"link"=> "https://www.linkedin.com/cws/share?url=".$url
+			],
+			[
+				"name"=> "tumblr",
+				"link"=> "http://www.tumblr.com/share/link?url=".$url
+			],
+			[
+				"name"=> "vk",
+				"link"=> "http://www.vk.com/share.php?url=".$url
+			],
+			[
+				"name"=> "reddit",
+				"link"=> "http://www.reddit.com/submit?url=".$url
+			],
+			[
+				"name"=> "mail",
+				"link"=> "mailto:?subject={$this->song->title($lang)}&body={$this->song->title($lang)}\n".$url
+			]
+		];
 	}
 }
