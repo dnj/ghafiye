@@ -1,7 +1,7 @@
 <?php
 namespace themes\musixmatch\views\artists;
-use \packages\base;
 use \packages\base\db;
+use \packages\base\options;
 use \packages\base\translator;
 use \packages\base\frontend\theme;
 use \packages\base\packages;
@@ -35,16 +35,10 @@ class view extends artistsView{
 		return $song->get(6);
 	}
 	protected function songImage(song $song){
-		if($song->image){
-			return packages::package('ghafiye')->url($song->image);
-		}
-		return theme::url('dest/images/song.jpg');
+		return packages::package('ghafiye')->url($song->image ? $song->image : options::get('packages.ghafiye.song.default-image'));
 	}
 	protected function albumImage(album $album){
-		if($album->image){
-			return packages::package('ghafiye')->url($album->image);
-		}
-		return theme::url('dest/images/album.jpg');
+		return packages::package('ghafiye')->url($album->image ? $album->image: options::get('packages.ghafiye.album.default-image'));
 	}
 	protected function getAlbumReleaseDate(album $album){
 		db::where("album", $album->id);
@@ -73,7 +67,7 @@ class view extends artistsView{
 		return packages::package('ghafiye')->url($this->artist->cover);
 	}
 	protected function getAvatarURL(){
-		return $this->artist->avatar ? packages::package('ghafiye')->url($this->artist->avatar) : theme::url("dest/images/avatar-placeholder.png");
+		return $this->artist->avatar ? packages::package('ghafiye')->url($this->artist->avatar) : theme::url("packages.ghafiye.persons.deafault_image");
 	}
 	protected function getAristGenres(){
 		$genres = array();

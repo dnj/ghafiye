@@ -7,7 +7,7 @@ $this->the_header('artists');
 $lang = $this->getSongLanguage();
 ?>
 <div class="row main-row">
-	<section class="songs col-md-8">
+	<section class="songs col-sm-8">
 		<h3><?php echo translator::trans('lyrics.top.byArtist', array('artist' => $this->artist->name($lang))); ?></h3>
 		<ul>
 			<?php
@@ -15,10 +15,14 @@ $lang = $this->getSongLanguage();
 			foreach($this->getSongs() as $song){
 				$singer = $song->getPerson(person::singer);
 			?>
-			<li>
-				<span><?php echo ++$x; ?></span>
-				<img src="<?php echo $this->songImage($song); ?>" alt="<?php echo $song->title($lang); ?>">
-				<div>
+			<li class="row">
+				<div class="col-sm-1 col-xs-2">
+					<span><?php echo ++$x; ?></span>
+				</div>
+				<div class="col-sm-1 col-xs-2">
+					<img <?php echo !$song->image ? 'class="default"' : ''; ?> src="<?php echo $this->songImage($song); ?>" alt="<?php echo $song->title($lang); ?>">
+				</div>
+				<div class="col-sm-10 col-xs-8">
 					<a href="<?php echo(base\url($singer->encodedName($lang).'/'.$song->encodedTitle($lang))); ?>"><strong><?php echo $song->title($lang); ?></strong></a>
 					<a href="<?php echo(base\url($singer->encodedName($lang))); ?>"><?php if($singer)echo $singer->name($lang); ?></a>
 				</div>
@@ -27,7 +31,7 @@ $lang = $this->getSongLanguage();
 		</ul>
 
 	</section>
-	<aside class="col-md-4">
+	<aside class="col-sm-4">
 		<div class="panel panel-albums">
 			<div class="panel-heading">
 				<?php echo translator::trans('artist.albums'); ?>
