@@ -13,11 +13,22 @@
 			img{
 				width: 50px;
 				height: 50px;
-			    border-radius: 50%;
+				border-radius: 50%;
+			}
+			&.default{
+				img{
+					opacity: 0.5;
+				}
 			}
 		}
 		div.title{
 			top: 15px;
+			strong{
+				overflow: hidden;
+				text-overflow: ellipsis;
+				white-space: nowrap;
+				height: 18px;
+			}
 		}
 		&.ui-menu-item, &.ui-state-focus{
 			padding: 10px 20px;
@@ -133,6 +144,8 @@ body.search{
 						list-style: none;
 						padding-right: 0;
 						min-height: 700px;
+						padding-right: 15px;
+						padding-left: 15px;
 						li{
 							border-bottom: 1px solid #f2f2f2;
 							overflow: hidden;
@@ -155,6 +168,11 @@ body.search{
 								float: right;
 								padding: 3.5px 0;
 								a{
+									&:first-child{
+										overflow: hidden;
+										text-overflow: ellipsis;
+										white-space: nowrap;
+									}
 									display: block;
 									&:first-child{
 									    color: #4e5860;
@@ -184,6 +202,9 @@ body.search{
 								}
 							}
 						}
+						@media (max-width: 767px){
+							min-height: auto;
+						}
 					}
 				}
 				&.tabs{
@@ -201,6 +222,8 @@ body.search{
 									color: #4e5860;
 									&:hover{
 										color: #f63;
+										background-color: transparent;
+										border-color: transparent;
 									}
 								}
 							}
