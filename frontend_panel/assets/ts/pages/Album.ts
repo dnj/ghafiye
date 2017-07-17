@@ -7,14 +7,6 @@ import AutoComplete from "../classes/AutoComplete";
 import {AvatarPreview} from 'bootstrap-avatar-preview/AvatarPreview';
 export default class Album{
 	private static $form:JQuery;
-	private static runAlbumImage(){
-		$(".album-image", Album.$form).mouseover(function(){
-			$(this).find(".album-image-buttons").css("display", "block");
-		});
-		$(".album-image", Album.$form).mouseout(function(){
-			$(this).find(".album-image-buttons").css("display", "none");
-		});
-	}
 	private static runPersonListener(){
 		let ac = new AutoComplete("#addSongForm input[name=person_name]");
 		ac.persons();
@@ -147,7 +139,6 @@ export default class Album{
 				Album.$form = $('.album_add_form');
 				Album.runAvatarPreview();
 			}
-			Album.runAlbumImage();
 		}else if($body.hasClass('album_list')){
 			Album.runSongAutoComplete();
 		}
