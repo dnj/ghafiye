@@ -33,8 +33,17 @@ class edit extends genreEdit{
 		navigation::active("genres");
 	}
 	protected function getLangsForSelect(){
-		$langs = array();
+		$langs = [];
+		foreach(['en', 'fa'] as $lang){
+			$langs[] = array(
+				'title' => translator::trans("translations.langs.{$lang}"),
+				'value' => $lang
+			);
+		}
 		foreach(translator::$allowlangs as $lang){
+			if(in_array($lang, ['en', 'fa'])){
+				continue;
+			}
 			$langs[] = array(
 				'title' => translator::trans("translations.langs.{$lang}"),
 				'value' => $lang
