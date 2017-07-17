@@ -44,7 +44,7 @@ $group = $this->getGroup();
 							?>
 						</div>
 						<div class="col-md-12">
-							<div class="panel panel-default">
+							<div class="panel panel-white">
 						        <div class="panel-heading">
 						            <i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.group.translated.titles"); ?>
 						            <div class="panel-tools">
@@ -82,7 +82,7 @@ $group = $this->getGroup();
 						    </div>
 						</div>
 						<div class="col-md-12">
-							<div class="panel panel-default">
+							<div class="panel panel-white">
 						        <div class="panel-heading">
 						            <i class="fa fa-users"></i> <?php echo translator::trans("ghafiye.panel.group.persons"); ?>
 						            <div class="panel-tools">
