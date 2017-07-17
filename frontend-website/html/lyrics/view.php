@@ -83,7 +83,7 @@ $lang = $this->getLyricsLanguage();
 		<?php if($songs = $this->getSongs()){ ?>
 		<div class="panel">
 			<div class="panel-heading">
-				<a href="<?php echo $this->getAlbumImage(); ?>" class="">
+				<a href="<?php echo(base\url($this->singer->encodedName($lang).'/albums/'.$this->song->album->encodedTitle($lang))); ?>">
 					<div class="col-sm-5 col-xs-6">
 						<img src="<?php echo $this->getAlbumImage(); ?>" alt="25 Adele - cover art">
 					</div>
@@ -114,6 +114,7 @@ $lang = $this->getLyricsLanguage();
 					}
 					?>
 				</ul>
+				<a href="<?php echo base\url($this->singer->encodedName($lang).'/albums/'.$this->song->album->encodedTitle($lang)); ?>" class="more"><?php echo translator::trans('home.section.toplyrics.more'); ?></a>
 			</div>
 		</div>
 		<?php } ?>

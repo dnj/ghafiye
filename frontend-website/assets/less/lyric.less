@@ -131,71 +131,80 @@ body.lyric{
 							}
 						}
 					}
-					ul{
-						list-style: none;
-						padding-right: 0;
-						li{
-							border-bottom: 1px solid #f2f2f2;
-							overflow: hidden;
-							span{
-								display: block;
-								text-align: center;
-								color: #bcbcbc;
-								padding-top: 18.5px;
-								font-family: yekan;
-							}
-							img{
-								height: 32px;
-								float:right;
-								margin-top: 12.5px;
-								margin-bottom: 12.5px;
-								margin-left: 16px;
-								&.img-default{
-									opacity: 0.5;
-								}
-							}
-							div{
-								padding: 3.5px 0;
-								a{
+					.panel-body{
+						ul{
+							list-style: none;
+							padding-right: 0;
+							li{
+								border-bottom: 1px solid #f2f2f2;
+								overflow: hidden;
+								span{
 									display: block;
-									&:first-child{
-										color: #4e5860;
-										font-family: nazanin;
-										font-size: 20px;
-										&:hover{
-											color: #f63;
-											text-decoration: underline;
-										}
-										overflow: hidden;
-										text-overflow: ellipsis;
-										white-space: nowrap;
-									}
-									&:last-child{
-										color: #8d9aa5;
-										font-family: koodak;
-										font-size: 15px;
-										vertical-align: middle;
-										display: block;
-										line-height: 57px;
-										&:hover{
-											text-decoration: underline;
-										}
+									text-align: center;
+									color: #bcbcbc;
+									padding-top: 18.5px;
+									font-family: yekan;
+								}
+								img{
+									height: 32px;
+									float:right;
+									margin-top: 12.5px;
+									margin-bottom: 12.5px;
+									margin-left: 16px;
+									&.img-default{
+										opacity: 0.5;
 									}
 								}
-							}
-							&:hover{
-								background: #f7f7f7;
 								div{
+									padding: 3.5px 0;
 									a{
+										display: block;
 										&:first-child{
-											color: #f63;
+											color: #4e5860;
+											font-family: nazanin;
+											font-size: 20px;
+											&:hover{
+												color: #f63;
+												text-decoration: underline;
+											}
+											overflow: hidden;
+											text-overflow: ellipsis;
+											white-space: nowrap;
+										}
+										&:last-child{
+											color: #8d9aa5;
+											font-family: koodak;
+											font-size: 15px;
+											vertical-align: middle;
+											display: block;
+											line-height: 57px;
+											&:hover{
+												text-decoration: underline;
+											}
 										}
 									}
 								}
+								&:hover{
+									background: #f7f7f7;
+									div{
+										a{
+											&:first-child{
+												color: #f63;
+											}
+										}
+									}
+								}
+								&:last-child{
+									border-bottom: 0;
+								}
 							}
-							&:last-child{
-								border-bottom: 0;
-							}
+						}
+						a.more{
+							display: block;
+							font-family: yekan;
+							font-size: 15px;
+							color: #f63;
+							text-align: center;
 						}
 					}
 				}
