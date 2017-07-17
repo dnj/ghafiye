@@ -73,8 +73,17 @@ class add extends ADDSongs{
 		return $genres;
 	}
 	protected function getLangForSelect(){
-		$langs = array();
-		foreach($this->getAllowLangs() as $lang){
+		$langs = [];
+		foreach(['en', 'fa'] as $lang){
+			$langs[] = array(
+				'title' => translator::trans("translations.langs.{$lang}"),
+				'value' => $lang
+			);
+		}
+		foreach(translator::$allowlangs as $lang){
+			if(in_array($lang, ['en', 'fa'])){
+				continue;
+			}
 			$langs[] = array(
 				'title' => translator::trans("translations.langs.{$lang}"),
 				'value' => $lang
