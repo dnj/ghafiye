@@ -3,17 +3,13 @@ namespace themes\clipone\views\ghafiye\album;
 use \packages\base\options;
 use \packages\base\packages;
 use \packages\base\translator;
-use \packages\base\frontend\theme;
-
 use \themes\clipone\viewTrait;
 use \themes\clipone\navigation;
 use \themes\clipone\breadcrumb;
 use \themes\clipone\views\formTrait;
 use \themes\clipone\navigation\menuItem;
-
 use \packages\ghafiye\album;
 use \packages\ghafiye\views\panel\album\edit as albumEdit;
-
 class edit extends albumEdit{
 	use viewTrait, formTrait;
 	protected $album;
@@ -36,7 +32,7 @@ class edit extends albumEdit{
 		navigation::active("albums");
 	}
 	protected function getImage($image){
-		return packages::package('ghafiye')->url($image ? $image : options::get('packages.ghafiye.albums.deafault_image'));
+		return packages::package('ghafiye')->url($image ? $image : options::get('packages.ghafiye.album.default-image'));
 	}
 	protected function getLangsForSelect(){
 		$langs = array();

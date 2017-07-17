@@ -4,6 +4,7 @@ import "bootstrap";
 import "x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js";
 import { Router } from "webuilder";
 import AutoComplete from "../classes/AutoComplete";
+import {AvatarPreview} from 'bootstrap-avatar-preview/AvatarPreview';
 export default class Album{
 	private static $form:JQuery;
 	private static runAlbumImage(){
@@ -127,6 +128,9 @@ export default class Album{
 			}
 		});
 	}
+	private static runAvatarPreview(){
+		new AvatarPreview($('.user-image', Album.$form));
+	}
 	public static init(){
 		let $body = $('body');
 		if($body.hasClass('album_edit') || $body.hasClass('album_add')){
@@ -138,8 +142,10 @@ export default class Album{
 				Album.createFieldTranslatedLang();
 				Album.createFieldSongs();
 				Album.selectLangValidate();
+				Album.runAvatarPreview();
 			}else{
 				Album.$form = $('.album_add_form');
+				Album.runAvatarPreview();
 			}
 			Album.runAlbumImage();
 		}else if($body.hasClass('album_list')){

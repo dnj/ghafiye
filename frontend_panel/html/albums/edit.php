@@ -1,23 +1,14 @@
 <?php
-use \packages\base;
 use \packages\base\json;
-use \packages\base\http;
+use \packages\base\frontend\theme;
 use \packages\base\translator;
-use \packages\base\db\dbObject;
-use \packages\base\views\FormError;
-
 use \packages\userpanel;
-use \packages\userpanel\date;
-
-use \themes\clipone\utility;
-
-use \packages\gamakey\plan;
 
 $this->the_header();
 $album = $this->getAlbum();
 ?>
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-sm-12">
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
 	            <i class="fa fa-edit"></i>
@@ -29,36 +20,22 @@ $album = $this->getAlbum();
 	        <div class="panel-body">
 	            <div class="table-responsive">
 	                <form class="album_edit_form" action="<?php echo userpanel\url('albums/edit/'.$album->id); ?>" method="post" enctype="multipart/form-data">
-						<div class="col-md-3">
-							<div class="form-group">
-								<label class="control-label"><?php echo translator::trans("ghafiye.panel.album.avatar"); ?></label>
-								<div class="center album-image-box">
-									<div class="fileupload fileupload-new" data-provides="fileupload">
-										<div class="album-image">
-											<div class="fileupload-new thumbnail">
-										        <img src="<?php echo $this->getImage($album->image); ?>" alt="albumImage">
-										    </div>
-											<div class="fileupload-preview fileupload-exists thumbnail"></div>
-										    <div class="album-image-buttons">
-										        <span class="btn btn-teal btn-file btn-sm">
-											        <span class="fileupload-new">
-											        	<i class="fa fa-pencil"></i>
-										            </span>
-											        <span class="fileupload-exists">
-											            <i class="fa fa-pencil"></i>
-								                  	</span>
-											        <input name="avatar" type="file">
-										        </span>
-										        <a href="#" class="btn fileupload-exists btn-bricky btn-sm" data-dismiss="fileupload">
-										            <i class="fa fa-times"></i>
-										        </a>
-										    </div>
+						<div class="col-sm-3">
+							<label class="control-label"><?php echo translator::trans("ghafiye.panel.album.avatar"); ?></label>
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+								<div class="form-group">
+									<div class="user-image avatarPreview">
+										<img src="<?php echo $this->getImage($album->image); ?>" class="preview img-responsive">
+										<input name="avatar" type="file">
+										<div class="button-group">
+											<button type="button" class="btn btn-teal btn-sm btn-upload"><i class="fa fa-pencil"></i></button>
+											<button type="button" class="btn btn-bricky btn-sm btn-remove" data-default="<?php echo theme::url('assets/images/defaultavatar.jpg'); ?>"><i class="fa fa-times"></i></button>
 										</div>
 									</div>
 								</div>
 							</div>
 	                    </div>
-						<div class="col-md-9">
+						<div class="col-sm-9">
 							<?php $this->createField(array(
 								'name' => 'musixmatch_id',
 								'label' => translator::trans("ghafiye.panel.album.musixmatch_id"),
@@ -73,9 +50,8 @@ $album = $this->getAlbum();
 							));
 							?>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 							<div class="panel panel-default">
-								<!-- start: TAGS PANEL -->
 						        <div class="panel-heading">
 						            <i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.album.translated.titles"); ?>
 						            <div class="panel-tools">
@@ -84,36 +60,36 @@ $album = $this->getAlbum();
 						            </div>
 						        </div>
 						        <div class="panel-body">
-									<table class="table table-bordered table-striped table-names">
-										<thead>
-											<th><?php echo translator::trans("ghafiye.panel.album.title.lang"); ?></th>
-											<th><?php echo translator::trans("ghafiye.panel.album.translated.title"); ?></th>
-											<th></th>
-										</thead>
-									    <tbody class="titles" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
-											<?php foreach($album->titles as $title){ ?>
-									        <tr data-lang="<?php echo $title->lang; ?>">
-									            <td class="column-left"><?php
-												$this->createField(array(
-													'type' => 'hidden',
-													'name' => 'titles['.$title->lang.']',
-													'value' => $title->title
-												));
-												echo translator::trans("translations.langs.{$title->lang}");
-												?></td>
-									            <td class="column-right"><a href="#" data-lang="<?php echo $title->lang; ?>" data-type="text" data-pk="1" data-original-title="<?php echo $title->title; ?>" class="editable editable-click title" style="display: inline;"><?php echo $title->title; ?></a></td>
-												<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips title-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
-									        </tr>
-											<?php } ?>
-									    </tbody>
-									</table>
+						       		<div class="table-responsive">
+										<table class="table table-bordered table-striped table-names">
+											<thead>
+												<th><?php echo translator::trans("ghafiye.panel.album.title.lang"); ?></th>
+												<th><?php echo translator::trans("ghafiye.panel.album.translated.title"); ?></th>
+												<th></th>
+											</thead>
+											<tbody class="titles" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
+												<?php foreach($album->titles as $title){ ?>
+												<tr data-lang="<?php echo $title->lang; ?>">
+													<td class="column-left"><?php
+													$this->createField(array(
+														'type' => 'hidden',
+														'name' => 'titles['.$title->lang.']',
+														'value' => $title->title
+													));
+													echo translator::trans("translations.langs.{$title->lang}");
+													?></td>
+													<td class="column-right"><a href="#" data-lang="<?php echo $title->lang; ?>" data-type="text" data-pk="1" data-original-title="<?php echo $title->title; ?>" class="editable editable-click title" style="display: inline;"><?php echo $title->title; ?></a></td>
+													<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips title-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
+												</tr>
+												<?php } ?>
+											</tbody>
+										</table>
+									</div>
 								</div>
-								<!-- end: TAGS PANEL -->
 						    </div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 							<div class="panel panel-default">
-								<!-- start: TAGS PANEL -->
 						        <div class="panel-heading">
 						            <i class="fa fa-music"></i> <?php echo translator::trans("ghafiye.panel.album.songs"); ?>
 						            <div class="panel-tools">
@@ -122,39 +98,40 @@ $album = $this->getAlbum();
 						            </div>
 						        </div>
 						        <div class="panel-body">
-									<table class="table table-bordered table-striped table-names">
-										<thead>
-											<th><?php echo translator::trans("ghafiye.panel.album.song.name"); ?></th>
-											<th></th>
-										</thead>
-									    <tbody class="songs">
-											<?php
-											foreach($album->songs as $song){
-											?>
-									        <tr data-song="<?php echo $song->id; ?>">
-									            <td class="column-left">
+						       		<div class="table-responsive">
+										<table class="table table-bordered table-striped table-names">
+											<thead>
+												<th><?php echo translator::trans("ghafiye.panel.album.song.name"); ?></th>
+												<th></th>
+											</thead>
+											<tbody class="songs">
 												<?php
-													$this->createField(array(
-														'type' => 'hidden',
-														'name' => 'songs[]',
-														'value' => $song->id
-													));
+												foreach($album->songs as $song){
 												?>
-												<a href="<?php echo userpanel\url("songs/edit/{$song->id}"); ?>"><?php echo($song->title($song->lang)); ?></a>
-												</td>
-												<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips song-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
-									        </tr>
-											<?php } ?>
-									    </tbody>
-									</table>
+												<tr data-song="<?php echo $song->id; ?>">
+													<td class="column-left">
+													<?php
+														$this->createField(array(
+															'type' => 'hidden',
+															'name' => 'songs[]',
+															'value' => $song->id
+														));
+													?>
+													<a href="<?php echo userpanel\url("songs/edit/{$song->id}"); ?>"><?php echo($song->title($song->lang)); ?></a>
+													</td>
+													<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips song-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
+												</tr>
+												<?php } ?>
+											</tbody>
+										</table>
+									</div>
 								</div>
-								<!-- end: TAGS PANEL -->
 						    </div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 			                <p>
-			                    <a href="<?php echo userpanel\url('albums'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('return'); ?></a>
-			                    <button type="submit" class="btn btn-yellow"><i class="fa fa-check-square-o"></i> <?php echo translator::trans("update") ?></button>
+			                    <a href="<?php echo userpanel\url('albums'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('ghafiye.return'); ?></a>
+			                    <button type="submit" class="btn btn-teal"><i class="fa fa-check-square-o"></i> <?php echo translator::trans("ghafiye.update") ?></button>
 			                </p>
 						</div>
 					</form>
@@ -186,7 +163,7 @@ $album = $this->getAlbum();
 				)
 			);
 			foreach($feilds as $input){
-				echo $this->createField($input);
+				$this->createField($input);
 			}
 			?>
 		</form>
@@ -216,7 +193,7 @@ $album = $this->getAlbum();
 				)
 			);
 			foreach($feilds as $input){
-				echo $this->createField($input);
+				$this->createField($input);
 			}
 			?>
 		</form>
@@ -226,6 +203,5 @@ $album = $this->getAlbum();
 		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
 	</div>
 </div>
-<!-- end: BASIC album EDIT -->
 <?php
 	$this->the_footer();

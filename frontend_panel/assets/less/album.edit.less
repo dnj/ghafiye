@@ -1,5 +1,24 @@
 body.album_edit{
-	.songs tr td:nth-child(1){
-		width: 95%;
+	.titles{
+		tr{
+			td{
+				&:nth-child(2){
+					min-width: 200px;
+				}
+				&:last-child{
+					width: 5%;
+				}
+			}
+		}
+	}
+	.songs{
+		tr{
+			td{
+				&:first-child{
+					min-width: 200px;
+					width: 95%;
+				}
+			}
+		}
 	}
 }
