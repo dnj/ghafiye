@@ -35,8 +35,17 @@ class edit extends albumEdit{
 		return packages::package('ghafiye')->url($image ? $image : options::get('packages.ghafiye.album.default-image'));
 	}
 	protected function getLangsForSelect(){
-		$langs = array();
+		$langs = [];
+		foreach(['en', 'fa'] as $lang){
+			$langs[] = array(
+				'title' => translator::trans("translations.langs.{$lang}"),
+				'value' => $lang
+			);
+		}
 		foreach(translator::$allowlangs as $lang){
+			if(in_array($lang, ['en', 'fa'])){
+				continue;
+			}
 			$langs[] = array(
 				'title' => translator::trans("translations.langs.{$lang}"),
 				'value' => $lang
