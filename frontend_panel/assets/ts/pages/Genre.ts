@@ -1,8 +1,9 @@
 import * as $ from "jquery";
 import "jquery.growl";
 import "x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js";
-import { Router } from "webuilder";
+import { Router, webuilder } from "webuilder";
 import AutoComplete from "../classes/AutoComplete";
+import "bootstrap-inputmsg";
 export default class Genre{
 	private static $form:JQuery;
 	private static runSongAutoComplete(){
@@ -74,6 +75,50 @@ export default class Genre{
 			}
 		});
 	}
+	private static runSubmitFormListener(){
+		Genre.$form.on('submit', function(e){
+			e.preventDefault();
+			$(this).formAjax({
+				data: new FormData(this as HTMLFormElement),
+				contentType: false,
+				processData: false,
+				success: (data: webuilder.AjaxResponse) => {
+					$.growl.notice({
+						title:"موفق",
+						message:"انجام شد ."
+					});
+					if(data.redirect){
+						window.location.href = data.redirect;
+					}
+				},
+				error: function(error:webuilder.AjaxError){
+					if(error.error == 'data_duplicate' || error.error == 'data_validation'){
+						let $input = $('[name='+error.input+']');
+						let $params = {
+							title: 'خطا',
+							message:''
+						};
+						if(error.error == 'data_validation'){
+							$params.message = 'داده وارد شده معتبر نیست';
+						}
+						if(error.error == 'data_duplicate'){
+							$params.message = 'داده وارد شده تکراری میباشد';
+						}
+						if($input.length){
+							$input.inputMsg($params);
+						}else{
+							$.growl.error($params);
+						}
+					}else{
+						$.growl.error({
+							title:"خطا",
+							message:'درخواست شما توسط سرور قبول نشد'
+						});
+					}
+				}
+			});
+		});
+	}
 	public static init(){
 		let $body = $('body');
 		if($body.hasClass('genre_edit') || $body.hasClass('genre_add')){
@@ -84,6 +129,7 @@ export default class Genre{
 			}
 			Genre.setTitlesEvents();
 			Genre.createFieldTranslatedLang();
+			Genre.runSubmitFormListener();
 		}else if($body.hasClass('genre_list')){
 			Genre.runSongAutoComplete();
 		}

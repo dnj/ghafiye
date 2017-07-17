@@ -145,7 +145,6 @@ class genres extends controller{
 				}
 				$genre->save();
 				$this->response->setStatus(true);
-				$this->response->Go(userpanel\url("genres/edit/{$genre->id}"));
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
 			}
