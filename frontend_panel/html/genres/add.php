@@ -27,7 +27,7 @@ $this->the_header();
 							?>
 						</div>
 						<div class="col-sm-12">
-							<div class="panel panel-default">
+							<div class="panel panel-white">
 						        <div class="panel-heading">
 						            <i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.genre.translated.titles"); ?>
 						            <div class="panel-tools">
