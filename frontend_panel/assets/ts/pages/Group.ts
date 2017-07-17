@@ -1,25 +1,19 @@
 import * as $ from "jquery";
+import "jquery-ui";
 import "jquery.growl";
 import "x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js";
 import { Router } from "webuilder";
 import AutoComplete from "../classes/AutoComplete";
+import {AvatarPreview} from 'bootstrap-avatar-preview/AvatarPreview';
 export default class Group{
 	private static $form:JQuery;
-	private static runGroupImage(){
-		$(".group-image", Group.$form).mouseover(function(){
-			$(this).find(".group-image-buttons").css("display", "block");
-		});
-		$(".group-image", Group.$form).mouseout(function(){
-			$(this).find(".group-image-buttons").css("display", "none");
-		});
-	}
 	private static runPersonListener(){
 		let ac = new AutoComplete("#groupSearch input[name=person_name]");
 		ac.persons();
 	}
-	private static runSongAutoComplete(){
-		let ac = new AutoComplete("#addSongForm input[name=song_name]");
-		ac.songs();
+	private static runPersonAutoComplete(){
+		let ac = new AutoComplete("#addPersonForm input[name=person_name]");
+		ac.persons();
 	}
 	private static setTitlesEvents(container?:JQuery){
 		if(typeof container == 'undefined'){
@@ -27,7 +21,8 @@ export default class Group{
 		}
 		$(".title-del", container).on('click', function(e){
 			e.preventDefault();
-			if($(".langs tr", Group.$form).length > 1){
+			console.log($(".titles tr", Group.$form).length);
+			if($(".titles tr", Group.$form).length > 1){
 				$(this).parents("tr").remove();
 			}else{
 				$.growl.error({title:"خطا!", message:"باید حداقل یک عنوان وجود داشته باشد!"});
@@ -52,8 +47,8 @@ export default class Group{
 	private static createFieldTranslatedLang(){
 		$("#addTitleform").submit(function(e){
 			e.preventDefault();
-			let lang:string = $("#selectLang option:selected", this).val();
-			let title:string = $("input[name=title]", this).val();
+			let lang:string = $("#selectLang option:selected", this).val() as string;
+			let title:string = $("input[name=title]", this).val() as string;
 			let hasLang = false;
 			let hastitle = false;
 			let lang_title:string;
@@ -97,9 +92,10 @@ export default class Group{
 	}
 	private static createFieldPersons(){
 		$("#addPersonForm").submit(function(e){
+			console.log('salam');
 			e.preventDefault();
-			let person:string = $("input[name='person']", this).val();
-			let person_name:string = $("input[name='person_name']", this).val();
+			let person:string = $("input[name='person']", this).val() as string;
+			let person_name:string = $("input[name='person_name']", this).val() as string;
 			let hasPerson = false;
 			if($(`.persons tr[data-person='${person}']`, Group.$form).length){
 				hasPerson = true;
@@ -119,28 +115,32 @@ export default class Group{
 	}
 	private static selectLangValidate(){
 		$("select[name='group-lang']").change(function(){
-			let selected:string = $("option:selected", this).val();
+			let selected:string = $("option:selected", this).val() as string;
 			let lang:string = $("option:selected", this).text()
 			if(!$(`.titles tr[data-lang=${lang}]`, Group.$form).length){
 				$.growl.error({title:"خطا!", message:"باید حتما ترجمه ای با زبان "+lang+" وجود داشته باشد!"});
 			}
 		});
 	}
+	private static runAvatarPreview(){
+		new AvatarPreview($('.user-image', Group.$form));
+	}
 	public static init(){
 		let $body = $('body');
 		if($body.hasClass('group_edit') || $body.hasClass('group_add')){
 			if($body.hasClass('group_edit')){
 				Group.$form = $('.group_edit_form');
-				Group.runSongAutoComplete();
+				Group.runPersonAutoComplete();
 				Group.setPersonsEvents();
 				Group.setTitlesEvents();
 				Group.createFieldTranslatedLang();
 				Group.createFieldPersons();
 				Group.selectLangValidate();
+				Group.runAvatarPreview();
 			}else{
 				Group.$form = $('.group_add_form');
+				Group.runAvatarPreview();
 			}
-			Group.runGroupImage();
 		}else if($body.hasClass('group_list')){
 			Group.runPersonListener();
 		}

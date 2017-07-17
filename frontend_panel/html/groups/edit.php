@@ -1,18 +1,8 @@
 <?php
-use \packages\base;
 use \packages\base\json;
-use \packages\base\http;
 use \packages\base\translator;
-use \packages\base\db\dbObject;
-use \packages\base\views\FormError;
-
+use \packages\base\frontend\theme;
 use \packages\userpanel;
-use \packages\userpanel\date;
-
-use \themes\clipone\utility;
-
-use \packages\gamakey\plan;
-
 $this->the_header();
 $group = $this->getGroup();
 ?>
@@ -30,29 +20,15 @@ $group = $this->getGroup();
 	            <div class="table-responsive">
 	                <form class="group_edit_form" action="<?php echo userpanel\url('groups/edit/'.$group->id); ?>" method="post" enctype="multipart/form-data">
 						<div class="col-md-3">
-							<div class="form-group">
-								<label class="control-label"><?php echo translator::trans("ghafiye.panel.group.avatar"); ?></label>
-								<div class="center group-image-box">
-									<div class="fileupload fileupload-new" data-provides="fileupload">
-										<div class="group-image">
-											<div class="fileupload-new thumbnail">
-										        <img src="<?php echo $this->getImage($group->avatar); ?>" alt="groupImage">
-										    </div>
-											<div class="fileupload-preview fileupload-exists thumbnail"></div>
-										    <div class="group-image-buttons">
-										        <span class="btn btn-teal btn-file btn-sm">
-											        <span class="fileupload-new">
-											        	<i class="fa fa-pencil"></i>
-										            </span>
-											        <span class="fileupload-exists">
-											            <i class="fa fa-pencil"></i>
-								                  	</span>
-											        <input name="avatar" type="file">
-										        </span>
-										        <a href="#" class="btn fileupload-exists btn-bricky btn-sm" data-dismiss="fileupload">
-										            <i class="fa fa-times"></i>
-										        </a>
-										    </div>
+							<label class="control-label"><?php echo translator::trans("ghafiye.panel.group.avatar"); ?></label>
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+								<div class="form-group">
+									<div class="user-image avatarPreview">
+										<img src="<?php echo $this->getImage($group->avatar); ?>" class="preview img-responsive">
+										<input name="avatar" type="file">
+										<div class="button-group">
+											<button type="button" class="btn btn-teal btn-sm btn-upload"><i class="fa fa-pencil"></i></button>
+											<button type="button" class="btn btn-bricky btn-sm btn-remove" data-default="<?php echo theme::url('assets/images/defaultavatar.jpg'); ?>"><i class="fa fa-times"></i></button>
 										</div>
 									</div>
 								</div>
@@ -69,7 +45,6 @@ $group = $this->getGroup();
 						</div>
 						<div class="col-md-12">
 							<div class="panel panel-default">
-								<!-- start: TAGS PANEL -->
 						        <div class="panel-heading">
 						            <i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.group.translated.titles"); ?>
 						            <div class="panel-tools">
@@ -78,36 +53,36 @@ $group = $this->getGroup();
 						            </div>
 						        </div>
 						        <div class="panel-body">
-									<table class="table table-bordered table-striped table-names">
-										<thead>
-											<th><?php echo translator::trans("ghafiye.panel.group.title.lang"); ?></th>
-											<th><?php echo translator::trans("ghafiye.panel.group.translated.title"); ?></th>
-											<th></th>
-										</thead>
-									    <tbody class="titles" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
-											<?php foreach($group->titles as $title){ ?>
-									        <tr data-lang="<?php echo $title->lang; ?>">
-									            <td class="column-left"><?php
-												$this->createField(array(
-													'type' => 'hidden',
-													'name' => 'titles['.$title->lang.']',
-													'value' => $title->title
-												));
-												echo translator::trans("translations.langs.{$title->lang}");
-												?></td>
-									            <td class="column-right"><a href="#" data-lang="<?php echo $title->lang; ?>" data-type="text" data-pk="1" data-original-title="<?php echo $title->title; ?>" class="editable editable-click title" style="display: inline;"><?php echo $title->title; ?></a></td>
-												<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips title-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
-									        </tr>
-											<?php } ?>
-									    </tbody>
-									</table>
+						      	  <div class="table-responsive">
+										<table class="table table-bordered table-striped table-names">
+											<thead>
+												<th><?php echo translator::trans("ghafiye.panel.group.title.lang"); ?></th>
+												<th><?php echo translator::trans("ghafiye.panel.group.translated.title"); ?></th>
+												<th></th>
+											</thead>
+											<tbody class="titles" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
+												<?php foreach($group->titles as $title){ ?>
+												<tr data-lang="<?php echo $title->lang; ?>">
+													<td class="column-left"><?php
+													$this->createField(array(
+														'type' => 'hidden',
+														'name' => 'titles['.$title->lang.']',
+														'value' => $title->title
+													));
+													echo translator::trans("translations.langs.{$title->lang}");
+													?></td>
+													<td class="column-right"><a href="#" data-lang="<?php echo $title->lang; ?>" data-type="text" data-pk="1" data-original-title="<?php echo $title->title; ?>" class="editable editable-click title" style="display: inline;"><?php echo $title->title; ?></a></td>
+													<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips title-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
+												</tr>
+												<?php } ?>
+											</tbody>
+										</table>
+									</div>
 								</div>
-								<!-- end: TAGS PANEL -->
 						    </div>
 						</div>
 						<div class="col-md-12">
 							<div class="panel panel-default">
-								<!-- start: TAGS PANEL -->
 						        <div class="panel-heading">
 						            <i class="fa fa-users"></i> <?php echo translator::trans("ghafiye.panel.group.persons"); ?>
 						            <div class="panel-tools">
@@ -143,13 +118,12 @@ $group = $this->getGroup();
 									    </tbody>
 									</table>
 								</div>
-								<!-- end: TAGS PANEL -->
 						    </div>
 						</div>
 						<div class="col-md-12">
 			                <p>
-			                    <a href="<?php echo userpanel\url('groups'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('return'); ?></a>
-			                    <button type="submit" class="btn btn-yellow"><i class="fa fa-check-square-o"></i> <?php echo translator::trans("update") ?></button>
+			                    <a href="<?php echo userpanel\url('groups'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('ghafiye.return'); ?></a>
+			                    <button type="submit" class="btn btn-teal"><i class="fa fa-edit"></i> <?php echo translator::trans("ghafiye.update") ?></button>
 			                </p>
 						</div>
 					</form>
@@ -221,6 +195,5 @@ $group = $this->getGroup();
 		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
 	</div>
 </div>
-<!-- end: BASIC group EDIT -->
 <?php
 	$this->the_footer();

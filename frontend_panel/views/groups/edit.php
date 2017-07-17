@@ -3,18 +3,14 @@ namespace themes\clipone\views\ghafiye\group;
 use \packages\base\options;
 use \packages\base\packages;
 use \packages\base\translator;
-use \packages\base\frontend\theme;
-
 use \themes\clipone\viewTrait;
 use \themes\clipone\navigation;
 use \themes\clipone\breadcrumb;
 use \themes\clipone\views\formTrait;
 use \themes\clipone\views\listTrait;
 use \themes\clipone\navigation\menuItem;
-
 use \packages\ghafiye\group;
 use \packages\ghafiye\views\panel\group\edit as groupEdit;
-
 class edit extends groupEdit{
 	use viewTrait, listTrait, formTrait;
 	protected $group;
@@ -22,7 +18,6 @@ class edit extends groupEdit{
 		$this->group = $this->getgroup();
 		$this->setTitle(array(
 			translator::trans('groups'),
-			$this->group->first_name,
 			translator::trans('edit')
 		));
 		$this->addBodyClass("group_edit");
