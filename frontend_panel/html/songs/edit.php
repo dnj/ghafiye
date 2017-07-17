@@ -98,7 +98,7 @@ $this->the_header();
 					</div>
 					<div class="row">
 						<div class="col-sm-6">
-							<div class="panel panel-default">
+							<div class="panel panel-white">
 						        <div class="panel-heading">
 						            <i class="fa fa-users"></i> <?php echo translator::trans("ghafiye.panel.song.persons"); ?>
 						            <div class="panel-tools">
@@ -165,7 +165,7 @@ $this->the_header();
 						    </div>
 						</div>
 						<div class="col-sm-6">
-							<div class="panel panel-default">
+							<div class="panel panel-white">
 								<div class="panel-heading">
 									<i class="fa fa-external-link-square"></i> <?php echo translator::trans("ghafiye.panel.song.translated.titles"); ?>
 									<div class="panel-tools">
@@ -205,7 +205,7 @@ $this->the_header();
 					</div>
 					<div class="row">
 						<div class="col-xs-12">
-							<div class="panel panel-default">
+							<div class="panel panel-white">
 								<div class="panel-heading">
 									<i class="fa fa-music"></i>
 									<span><?php echo translator::trans("ghafiye.editSong.lyric"); ?></span>
