@@ -51,7 +51,7 @@ $album = $this->getAlbum();
 							?>
 						</div>
 						<div class="col-sm-12">
-							<div class="panel panel-default">
+							<div class="panel panel-white">
 						        <div class="panel-heading">
 						            <i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.album.translated.titles"); ?>
 						            <div class="panel-tools">
@@ -89,7 +89,7 @@ $album = $this->getAlbum();
 						    </div>
 						</div>
 						<div class="col-sm-12">
-							<div class="panel panel-default">
+							<div class="panel panel-white">
 						        <div class="panel-heading">
 						            <i class="fa fa-music"></i> <?php echo translator::trans("ghafiye.panel.album.songs"); ?>
 						            <div class="panel-tools">
