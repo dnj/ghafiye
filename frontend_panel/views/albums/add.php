@@ -33,7 +33,7 @@ class add extends albumADD{
 		navigation::active("albums");
 	}
 	protected function getImage(){
-		return packages::package('ghafiye')->url(options::get('packages.ghafiye.albums.deafault_image'));
+		return packages::package('ghafiye')->url(options::get('packages.ghafiye.album.default-image'));
 	}
 	protected function getLangsForSelect(){
 		$langs = array();
