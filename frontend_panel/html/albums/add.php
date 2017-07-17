@@ -19,8 +19,7 @@ $this->the_header();
 	            <div class="table-responsive">
 	                <form class="album_add_form" action="<?php echo userpanel\url('albums/add'); ?>" method="post" enctype="multipart/form-data">
 						<div class="col-sm-3">
-							<div class="form-group">
-								<label class="control-label"><?php echo translator::trans("ghafiye.panel.album.avatar"); ?></label>
+							<label class="control-label"><?php echo translator::trans("ghafiye.panel.album.avatar"); ?></label>
 							<div class="fileupload fileupload-new" data-provides="fileupload">
 								<div class="form-group">
 									<div class="user-image avatarPreview">
@@ -32,7 +31,6 @@ $this->the_header();
 										</div>
 									</div>
 								</div>
-							</div>
 							</div>
 	                    </div>
 						<div class="col-sm-9">
