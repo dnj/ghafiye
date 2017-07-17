@@ -2,7 +2,7 @@ import * as $ from "jquery";
 import "jquery-ui";
 import "jquery.growl";
 import "x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js";
-import { Router } from "webuilder";
+import { Router, webuilder } from "webuilder";
 import AutoComplete from "../classes/AutoComplete";
 import {AvatarPreview} from 'bootstrap-avatar-preview/AvatarPreview';
 export default class Group{
@@ -125,6 +125,50 @@ export default class Group{
 	private static runAvatarPreview(){
 		new AvatarPreview($('.user-image', Group.$form));
 	}
+	private static runSubmitFormListener(){
+		Group.$form.on('submit', function(e){
+			e.preventDefault();
+			$(this).formAjax({
+				data: new FormData(this as HTMLFormElement),
+				contentType: false,
+				processData: false,
+				success: (data: webuilder.AjaxResponse) => {
+					$.growl.notice({
+						title:"موفق",
+						message:"انجام شد ."
+					});
+					if(data.redirect){
+						window.location.href = data.redirect;
+					}
+				},
+				error: function(error:webuilder.AjaxError){
+					if(error.error == 'data_duplicate' || error.error == 'data_validation'){
+						let $input = $('[name='+error.input+']');
+						let $params = {
+							title: 'خطا',
+							message:''
+						};
+						if(error.error == 'data_validation'){
+							$params.message = 'داده وارد شده معتبر نیست';
+						}
+						if(error.error == 'data_duplicate'){
+							$params.message = 'داده وارد شده تکراری میباشد';
+						}
+						if($input.length){
+							$input.inputMsg($params);
+						}else{
+							$.growl.error($params);
+						}
+					}else{
+						$.growl.error({
+							title:"خطا",
+							message:'درخواست شما توسط سرور قبول نشد'
+						});
+					}
+				}
+			});
+		});
+	}
 	public static init(){
 		let $body = $('body');
 		if($body.hasClass('group_edit') || $body.hasClass('group_add')){
@@ -141,6 +185,7 @@ export default class Group{
 				Group.$form = $('.group_add_form');
 				Group.runAvatarPreview();
 			}
+			Group.runSubmitFormListener();
 		}else if($body.hasClass('group_list')){
 			Group.runPersonListener();
 		}
