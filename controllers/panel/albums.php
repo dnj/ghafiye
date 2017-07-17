@@ -220,7 +220,6 @@ class albums extends controller{
 				}
 				$album->save();
 				$this->response->setStatus(true);
-				$this->response->Go(userpanel\url("albums/edit/".$album->id));
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
 			}catch(translatedAlbumLang $e){

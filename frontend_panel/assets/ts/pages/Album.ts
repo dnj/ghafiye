@@ -2,7 +2,7 @@ import * as $ from "jquery";
 import "jquery.growl";
 import "bootstrap";
 import "x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js";
-import { Router } from "webuilder";
+import { Router, webuilder } from "webuilder";
 import AutoComplete from "../classes/AutoComplete";
 import {AvatarPreview} from 'bootstrap-avatar-preview/AvatarPreview';
 export default class Album{
@@ -46,8 +46,8 @@ export default class Album{
 	private static createFieldTranslatedLang(){
 		$("#addTitleform").submit(function(e){
 			e.preventDefault();
-			let lang:string = $("#selectLang option:selected", this).val();
-			let title:string = $("input[name=title]", this).val();
+			let lang:string = $("#selectLang option:selected", this).val() as string;
+			let title:string = $("input[name=title]", this).val() as string;
 			let hasLang = false;
 			let hastitle = false;
 			let lang_title:string;
@@ -92,8 +92,8 @@ export default class Album{
 	private static createFieldSongs(){
 		$("#addSongForm").submit(function(e){
 			e.preventDefault();
-			let song:string = $("input[name='song']", this).val();
-			let song_name:string = $("input[name='song_name']", this).val();
+			let song:string = $("input[name='song']", this).val() as string;
+			let song_name:string = $("input[name='song_name']", this).val() as string;
 			let hassong = false;
 			if($(`.songs tr[data-song='${song}']`, Album.$form).length){
 				hassong = true;
@@ -113,7 +113,7 @@ export default class Album{
 	}
 	private static selectLangValidate(){
 		$("select[name='album-lang']").change(function(){
-			let selected:string = $("option:selected", this).val();
+			let selected:string = $("option:selected", this).val() as string;
 			let lang:string = $("option:selected", this).text()
 			if(!$(`.titles tr[data-lang=${lang}]`, Album.$form).length){
 				$.growl.error({title:"خطا!", message:"باید حتما ترجمه ای با زبان "+lang+" وجود داشته باشد!"});
@@ -122,6 +122,50 @@ export default class Album{
 	}
 	private static runAvatarPreview(){
 		new AvatarPreview($('.user-image', Album.$form));
+	}
+	private static runSubmitFormListener(){
+		Album.$form.on('submit', function(e){
+			e.preventDefault();
+			$(this).formAjax({
+				data: new FormData(this as HTMLFormElement),
+				contentType: false,
+				processData: false,
+				success: (data: webuilder.AjaxResponse) => {
+					$.growl.notice({
+						title:"موفق",
+						message:"انجام شد ."
+					});
+					if(data.redirect){
+						window.location.href = data.redirect;
+					}
+				},
+				error: function(error:webuilder.AjaxError){
+					if(error.error == 'data_duplicate' || error.error == 'data_validation'){
+						let $input = $('[name='+error.input+']');
+						let $params = {
+							title: 'خطا',
+							message:''
+						};
+						if(error.error == 'data_validation'){
+							$params.message = 'داده وارد شده معتبر نیست';
+						}
+						if(error.error == 'data_duplicate'){
+							$params.message = 'داده وارد شده تکراری میباشد';
+						}
+						if($input.length){
+							$input.inputMsg($params);
+						}else{
+							$.growl.error($params);
+						}
+					}else{
+						$.growl.error({
+							title:"خطا",
+							message:'درخواست شما توسط سرور قبول نشد'
+						});
+					}
+				}
+			});
+		});
 	}
 	public static init(){
 		let $body = $('body');
@@ -139,6 +183,7 @@ export default class Album{
 				Album.$form = $('.album_add_form');
 				Album.runAvatarPreview();
 			}
+			Album.runSubmitFormListener();
 		}else if($body.hasClass('album_list')){
 			Album.runSongAutoComplete();
 		}
