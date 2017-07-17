@@ -19,6 +19,7 @@ class add extends genreADD{
 			translator::trans('genres'),
 			translator::trans('add')
 		));
+		$this->addBodyClass('genres');
 		$this->addBodyClass('genre_add');
 		$this->setNavigation();
 	}

@@ -29,10 +29,10 @@ export default class Genre{
 		})
 	}
 	private static createFieldTranslatedLang(){
-		$("#addTitleform").submit(function(e){
+		$("#addTitleform").on('submit', function(e){
 			e.preventDefault();
-			let lang:string = $("#selectLang option:selected", this).val();
-			let title:string = $("input[name=title]", this).val();
+			let lang:string = $("#selectLang option:selected", this).val() as string;
+			let title:string = $("input[name=title]", this).val() as string;
 			let hasLang = false;
 			let hastitle = false;
 			let lang_title:string;

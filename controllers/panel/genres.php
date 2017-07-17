@@ -83,6 +83,7 @@ class genres extends controller{
 			$this->response->setStatus(false);
 		}
 		$view->setDataForm($this->inputsvalue($inputsRules));
+		$genre->orderBy('id', 'ASC');
 		$genre->pageLimit = $this->items_per_page;
 		$genres = $genre->paginate($this->page, array("ghafiye_genres.*"));
 		$this->total_pages = $genre->totalPages;

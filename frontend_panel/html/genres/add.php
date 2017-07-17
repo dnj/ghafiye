@@ -1,22 +1,12 @@
 <?php
-use \packages\base;
 use \packages\base\json;
-use \packages\base\http;
 use \packages\base\translator;
-use \packages\base\db\dbObject;
-use \packages\base\views\FormError;
-
 use \packages\userpanel;
-use \packages\userpanel\date;
-
-use \themes\clipone\utility;
-
-use \packages\gamakey\plan;
 
 $this->the_header();
 ?>
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-xs-12">
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
 	            <i class="fa fa-plus"></i>
@@ -28,7 +18,7 @@ $this->the_header();
 	        <div class="panel-body">
 	            <div class="table-responsive">
 	                <form id="addgenre" class="genre_add_form" action="<?php echo userpanel\url('genres/add'); ?>" method="post" enctype="multipart/form-data">
-	                    <div class="col-md-6">
+	                    <div class="col-sm-6">
 	                        <?php $this->createField(array(
 								'name' => 'musixmatch_id',
 								'label' => translator::trans("ghafiye.panel.genre.musixmatch_id"),
@@ -36,9 +26,8 @@ $this->the_header();
 							));
 							?>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 							<div class="panel panel-default">
-								<!-- start: TAGS PANEL -->
 						        <div class="panel-heading">
 						            <i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.genre.translated.titles"); ?>
 						            <div class="panel-tools">
@@ -47,20 +36,21 @@ $this->the_header();
 						            </div>
 						        </div>
 						        <div class="panel-body">
-									<table class="table table-bordered table-striped table-titles">
-										<thead>
-											<th><?php echo translator::trans("ghafiye.panel.genre.translated.lang"); ?></th>
-											<th><?php echo translator::trans("ghafiye.panel.genre.translated.title"); ?></th>
-											<th></th>
-										</thead>
-									    <tbody class="langs" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
-									    </tbody>
-									</table>
+									<div class="table-responsive">
+										<table class="table table-bordered table-striped table-titles">
+											<thead>
+												<th><?php echo translator::trans("ghafiye.panel.genre.translated.lang"); ?></th>
+												<th><?php echo translator::trans("ghafiye.panel.genre.translated.title"); ?></th>
+												<th></th>
+											</thead>
+											<tbody class="langs" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
+											</tbody>
+										</table>
+									</div>
 								</div>
-								<!-- end: TAGS PANEL -->
 						    </div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 			                <p>
 			                    <a href="<?php echo userpanel\url('genres'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('return'); ?></a>
 			                    <button form="addgenre" type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> <?php echo translator::trans("confrim") ?></button>
@@ -95,7 +85,7 @@ $this->the_header();
 				)
 			);
 			foreach($feilds as $input){
-				echo $this->createField($input);
+				$this->createField($input);
 			}
 			?>
 		</form>
@@ -105,6 +95,5 @@ $this->the_header();
 		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
 	</div>
 </div>
-<!-- end: BASIC genre add -->
 <?php
 	$this->the_footer();

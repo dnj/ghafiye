@@ -1,23 +1,12 @@
 <?php
-use \packages\base;
 use \packages\base\json;
-use \packages\base\http;
 use \packages\base\translator;
-use \packages\base\db\dbObject;
-use \packages\base\views\FormError;
-
 use \packages\userpanel;
-use \packages\userpanel\date;
-
-use \themes\clipone\utility;
-
-use \packages\gamakey\plan;
-
 $this->the_header();
 $genre = $this->getgenre();
 ?>
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-xs-12">
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
 	            <i class="fa fa-edit"></i>
@@ -29,7 +18,7 @@ $genre = $this->getgenre();
 	        <div class="panel-body">
 	            <div class="table-responsive">
 	                <form id="editgenre" class="genre_edit_form" action="<?php echo userpanel\url('genres/edit/'.$genre->id); ?>" method="post" enctype="multipart/form-data">
-	                    <div class="col-md-6">
+	                    <div class="col-sm-6">
 	                        <?php $this->createField(array(
 								'name' => 'musixmatch_id',
 								'label' => translator::trans("ghafiye.panel.genre.musixmatch_id"),
@@ -37,9 +26,8 @@ $genre = $this->getgenre();
 							));
 							?>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 							<div class="panel panel-default">
-								<!-- start: TAGS PANEL -->
 						        <div class="panel-heading">
 						            <i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.genre.translated.titles"); ?>
 						            <div class="panel-tools">
@@ -48,37 +36,38 @@ $genre = $this->getgenre();
 						            </div>
 						        </div>
 						        <div class="panel-body">
-									<table class="table table-bordered table-striped table-titles">
-										<thead>
-											<th><?php echo translator::trans("ghafiye.panel.genre.translated.lang"); ?></th>
-											<th><?php echo translator::trans("ghafiye.panel.genre.translated.title"); ?></th>
-											<th></th>
-										</thead>
-									    <tbody class="langs" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
-											<?php foreach($genre->titles as $title){ ?>
-									        <tr data-lang="<?php echo $title->lang; ?>">
-									            <td class="column-left"><?php
-												$this->createField(array(
-													'type' => 'hidden',
-													'name' => 'titles['.$title->lang.']',
-													'value' => $title->title
-												));
-												echo translator::trans("translations.langs.{$title->lang}");
-												?></td>
-									            <td class="column-right"><a href="#" data-lang="<?php echo $title->lang; ?>" data-type="text" data-pk="1" data-original-title="<?php echo $title->title; ?>" class="editable editable-click title" style="display: inline;"><?php echo $title->title; ?></a></td>
-												<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips title-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
-									        </tr>
-											<?php } ?>
-									    </tbody>
-									</table>
+						      		<div class="table-responsive">
+										<table class="table table-bordered table-striped table-titles">
+											<thead>
+												<th><?php echo translator::trans("ghafiye.panel.genre.translated.lang"); ?></th>
+												<th><?php echo translator::trans("ghafiye.panel.genre.translated.title"); ?></th>
+												<th></th>
+											</thead>
+											<tbody class="langs" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
+												<?php foreach($genre->titles as $title){ ?>
+												<tr data-lang="<?php echo $title->lang; ?>">
+													<td class="column-left"><?php
+													$this->createField(array(
+														'type' => 'hidden',
+														'name' => 'titles['.$title->lang.']',
+														'value' => $title->title
+													));
+													echo translator::trans("translations.langs.{$title->lang}");
+													?></td>
+													<td class="column-right"><a href="#" data-lang="<?php echo $title->lang; ?>" data-type="text" data-pk="1" data-original-title="<?php echo $title->title; ?>" class="editable editable-click title" style="display: inline;"><?php echo $title->title; ?></a></td>
+													<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips title-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
+												</tr>
+												<?php } ?>
+											</tbody>
+										</table>
+									</div>
 								</div>
-								<!-- end: TAGS PANEL -->
 						    </div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 			                <p>
 			                    <a href="<?php echo userpanel\url('genres'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('return'); ?></a>
-			                    <button form="editgenre" type="submit" class="btn btn-yellow"><i class="fa fa-check-square-o"></i> <?php echo translator::trans("update") ?></button>
+			                    <button form="editgenre" type="submit" class="btn btn-teal"><i class="fa fa-edit"></i> <?php echo translator::trans("ghafiye.update") ?></button>
 			                </p>
 						</div>
 					</form>
@@ -120,6 +109,5 @@ $genre = $this->getgenre();
 		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
 	</div>
 </div>
-<!-- end: BASIC genre EDIT -->
 <?php
 	$this->the_footer();

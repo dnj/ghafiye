@@ -19,6 +19,7 @@ class edit extends genreEdit{
 			translator::trans('genres'),
 			translator::trans('edit')
 		));
+		$this->addBodyClass('genres');
 		$this->addBodyClass('genre_edit');
 		$this->setNavigation();
 	}
