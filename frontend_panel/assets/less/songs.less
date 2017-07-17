@@ -1,47 +1,38 @@
 body.songs{
-    .btn-file{
-        position: relative;
-        overflow: hidden;
-        background: #569099 !important;
-        border-color: #4d8189 !important;
-        color: #ffffff !important;
-        cursor: pointer;
-        input[type="file"] {
-            position: absolute;
-            top: 0;
-            right: 0;
-            min-width: 100%;
-            min-height: 100%;
-            opacity: 0;
-            outline: none;
-            cursor: pointer !important;
+    .persons{
+        tr{
+            td{
+                &:nth-child(3){
+                    width: 5%;
+                    min-width: auto;
+                    .checkbox{
+                        padding-left: 0;
+                    }
+                }
+                &:last-child{
+                    width: 5%;
+                }
+                @media (max-width: 767px){
+                    &:not(:last-child){
+                        min-width: 200px;
+                    }
+                    &:nth-child(3){
+                        min-width: auto;
+                    }
+                }
+            }
         }
     }
-    .song-image{
-        position: relative;
-        display: inline-block;
-        img{
-            width: 100%;
-            height: 200px;
-        }
-        .song-image-buttons {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            display: none;
-        }
-    }
-    .cover img{
-        width: 100%;
-    }
-    .song-image-box{
-        padding: 19px;
-        border: 1px solid #ddd;
-        .thumbnail{
-            border: 0;
-        }
-        .fileupload{
-            margin-bottom: 0;
+    .table-titles{
+        tr{
+            td{
+                &:nth-child(2){
+                    min-width: 200px;
+                }
+                &:last-child{
+                    width: 5%;
+                }
+            }
         }
     }
 }

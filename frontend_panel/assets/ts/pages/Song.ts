@@ -5,18 +5,11 @@ import "jquery-bootstrap-checkbox";
 import "x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js";
 import { Router, AjaxRequest, webuilder } from "webuilder";
 import AutoComplete from "../classes/AutoComplete";
+import {AvatarPreview} from 'bootstrap-avatar-preview/AvatarPreview';
 export default class Song{
 	private static $form:JQuery;
 	private static $lyricFields:JQuery;
 	private static langs:any;
-	private static runSongImage(){
-		$(".song-image", Song.$form).mouseover(function(){
-			$(this).find(".song-image-buttons").css("display", "block");
-		});
-		$(".song-image", Song.$form).mouseout(function(){
-			$(this).find(".song-image-buttons").css("display", "none");
-		});
-	}
 	private static runAlbumAutoComplete(){
 		let ac = new AutoComplete($("input[name=album_name]",Song.$form));
 		ac.albums();
@@ -125,12 +118,12 @@ export default class Song{
 			let ltr = $("input.lyric_text").hasClass("ltr") ? 'ltr' : "";
 			let lang:string = $row.data('lyriclang');
 			let html = `<div class="row lyrics" data-lyriclang="${lang}">
-				<div class="col-xs-3">
+				<div class="col-sm-3 col-xs-4">
 					<div class="form-group">
 						<input value="${Song.formatTime(time)}" name="lyric[][time]" class="form-control lyric_time ltr" type="text">
 					</div>
 				</div>
-				<div class="col-xs-8">
+				<div class="col-sm-9 col-xs-8">
 					<div class="form-group">
 						<input value="" name="lyric[][text]" class="form-control lyric_text ${ltr}" type="text">
 					</div>
@@ -143,7 +136,7 @@ export default class Song{
 		}
 		function addInputListener(){
 			$("input.lyric_text:last", $row).on("keyup", function(e){
-				let val:string = $(this).val();
+				let val:string = $(this).val() as string;
 				let ltr = $(this).hasClass("ltr") ? 'ltr' : "";
 				let lang:string = $(this).data("lyriclang");
 				if(val){
@@ -361,8 +354,8 @@ export default class Song{
 	private static createFieldPerson(){
 		$("#addPersonForm").submit(function(e){
 			e.preventDefault();
-			let person:string = $("input[name=person]", this).val();
-			let person_name:string = $("input[name=person_name]", this).val();
+			let person:string = $("input[name=person]", this).val() as string;
+			let person_name:string = $("input[name=person_name]", this).val() as string;
 			let hasPerson = false;
 			if($(`.persons tr[data-person=${person}]`, Song.$form).length){
 				hasPerson = true;
@@ -602,6 +595,53 @@ export default class Song{
 			$("#changeLyricForm").trigger('submit');
 		}
 	}
+	private static runAvatarPreview(){
+		new AvatarPreview($('.user-image', Song.$form));
+	}
+	private static runSubmitFormListener(){
+		Song.$form.on('submit', function(e){
+			e.preventDefault();
+			$(this).formAjax({
+				data: new FormData(this as HTMLFormElement),
+				contentType: false,
+				processData: false,
+				success: (data: webuilder.AjaxResponse) => {
+					$.growl.notice({
+						title:"موفق",
+						message:"انجام شد ."
+					});
+					if(data.redirect){
+						window.location.href = data.redirect;
+					}
+				},
+				error: function(error:webuilder.AjaxError){
+					if(error.error == 'data_duplicate' || error.error == 'data_validation'){
+						let $input = $('[name='+error.input+']');
+						let $params = {
+							title: 'خطا',
+							message:''
+						};
+						if(error.error == 'data_validation'){
+							$params.message = 'داده وارد شده معتبر نیست';
+						}
+						if(error.error == 'data_duplicate'){
+							$params.message = 'داده وارد شده تکراری میباشد';
+						}
+						if($input.length){
+							$input.inputMsg($params);
+						}else{
+							$.growl.error($params);
+						}
+					}else{
+						$.growl.error({
+							title:"خطا",
+							message:'درخواست شما توسط سرور قبول نشد'
+						});
+					}
+				}
+			});
+		});
+	}
 	public static init(){
 		let $body = $('body');
 		if($body.hasClass('song_add')){
@@ -609,7 +649,7 @@ export default class Song{
 			Song.$form = $('.song_add_form');
 			Song.$lyricFields = $(".lyricFields", Song.$form)
 			Song.setEvents(Song.$form);
-			Song.runSongImage();
+			Song.runAvatarPreview();
 			Song.runAlbumAutoComplete();
 			Song.runGroupAutoComplete();
 			Song.runPersonAutoComplete($('#addPersonForm'));
@@ -617,6 +657,7 @@ export default class Song{
 			Song.ValidateLyrics();
 			Song.createFieldPerson();
 			Song.setPersonsEvents();
+			Song.runSubmitFormListener();
 		}else if($body.hasClass('song_edit')){
 			Song.$form = $('.song_edit_form');
 			Song.$lyricFields = $(".lyricFields", Song.$form)
@@ -625,12 +666,14 @@ export default class Song{
 			Song.runAlbumAutoComplete();
 			Song.runGroupAutoComplete();
 			Song.runPersonAutoComplete($('#addPersonForm'));
-			Song.runSongImage();
+			Song.runAvatarPreview();
 			Song.setTitlesEvents();
 			Song.ValidateLyrics();
 			Song.createFieldTranslatedLang();
 			Song.changeLyricLang();
 			Song.runLyricLangListerner();
+			Song.createFieldPerson();
+			Song.runSubmitFormListener();
 		}else if($body.hasClass('song_list')){
 			Song.$form = $('#songsLists');
 			Song.runAlbumAutoComplete();

@@ -1,11 +1,9 @@
 <?php
-use \packages\base;
 use \packages\base\json;
+use \packages\base\frontend\theme;
 use \packages\base\translator;
-
 use \packages\userpanel;
 use \packages\ghafiye\person;
-
 $this->the_header();
 ?>
 <div class="row">
@@ -21,37 +19,23 @@ $this->the_header();
 	        <div class="panel-body">
 				<form class="song_add_form" action="<?php echo userpanel\url('songs/add'); ?>" method="post" enctype="multipart/form-data">
 					<div class="row">
-						<div class="col-xs-3">
-							<div class="form-group">
-								<label class="control-label"><?php echo translator::trans("ghafiye.panel.song.image"); ?></label>
-								<div class="center song-image-box">
-									<div class="fileupload fileupload-new" data-provides="fileupload">
-										<div class="song-image">
-											<div class="fileupload-new thumbnail">
-												<img src="<?php echo $this->getSongImage(); ?>" alt="songImage">
-											</div>
-											<div class="fileupload-preview fileupload-exists thumbnail"></div>
-											<div class="song-image-buttons">
-												<span class="btn btn-teal btn-file btn-sm">
-													<span class="fileupload-new">
-														<i class="fa fa-pencil"></i>
-													</span>
-													<span class="fileupload-exists">
-														<i class="fa fa-pencil"></i>
-													</span>
-													<input name="image" type="file">
-												</span>
-												<a href="#" class="btn fileupload-exists btn-bricky btn-sm" data-dismiss="fileupload">
-													<i class="fa fa-times"></i>
-												</a>
-											</div>
+						<div class="col-sm-3">
+							<label class="control-label"><?php echo translator::trans("ghafiye.panel.song.image"); ?></label>
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+								<div class="form-group">
+									<div class="user-image avatarPreview">
+										<img src="<?php echo $this->getSongImage(); ?>" class="preview img-responsive">
+										<input name="image" type="file">
+										<div class="button-group">
+											<button type="button" class="btn btn-teal btn-sm btn-upload"><i class="fa fa-pencil"></i></button>
+											<button type="button" class="btn btn-bricky btn-sm btn-remove" data-default="<?php echo theme::url('assets/images/defaultavatar.jpg'); ?>"><i class="fa fa-times"></i></button>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
-						<div class="col-xs-9">
-							<div class="col-xs-6">
+						<div class="col-sm-9">
+							<div class="col-sm-6">
 								<?php 
 								$this->createField(array(
 									'name' => 'title',
@@ -85,7 +69,7 @@ $this->the_header();
 								));
 								?>
 							</div>
-							<div class="col-xs-6">
+							<div class="col-sm-6">
 								<?php
 								$this->createField(array(
 									'name' => 'duration',
@@ -126,60 +110,62 @@ $this->the_header();
 						            </div>
 						        </div>
 						        <div class="panel-body">
-									<table class="table table-bordered table-striped table-names">
-										<thead>
-											<th><?php echo translator::trans("ghafiye.panel.song.person"); ?></th>
-											<th><?php echo translator::trans("ghafiye.panel.song.person.role"); ?></th>
-											<th><?php echo translator::trans("ghafiye.panel.song.person.primary"); ?></th>
-											<th></th>
-										</thead>
-									    <tbody class="persons">
-										<?php
-										$persons = $this->getDataForm("persons");
-										if(!empty($persons)){
-											foreach($persons as $person){
-												$person = person::byId($person['id']);
-										?>
-										<tr data-person="<?php echo $person->id; ?>">
-									            <td class="column-left">
-												<?php
+						     	   <div class="table-responsive">
+										<table class="table table-bordered table-striped table-names">
+											<thead>
+												<th><?php echo translator::trans("ghafiye.panel.song.person"); ?></th>
+												<th><?php echo translator::trans("ghafiye.panel.song.person.role"); ?></th>
+												<th><?php echo translator::trans("ghafiye.panel.song.person.primary"); ?></th>
+												<th></th>
+											</thead>
+											<tbody class="persons">
+											<?php
+											$persons = $this->getDataForm("persons");
+											if(!empty($persons)){
+												foreach($persons as $person){
+													$person = person::byId($person['id']);
+											?>
+											<tr data-person="<?php echo $person->id; ?>">
+													<td class="column-left">
+													<?php
+														$this->createField(array(
+															'type' => 'hidden',
+															'name' => 'persons['.$person->id.'][id]'
+														));
+													?>
+													<a href="<?php echo userpanel\url("persons/edit/{$person->id}"); ?>" target="_blank"><?php echo($person->name()); ?></a>
+													</td>
+													<td>
+													<?php
 													$this->createField(array(
-														'type' => 'hidden',
-														'name' => 'persons['.$person->id.'][id]'
+														'type' => 'select',
+														'name' => 'persons['.$person->id.'][role]',
+														'class' => 'form-control person-role',
+														'options' => $this->getRolesForSelect()
 													));
-												?>
-												<a href="<?php echo userpanel\url("persons/edit/{$person->id}"); ?>" target="_blank"><?php echo($person->name()); ?></a>
-												</td>
-												<td>
-												<?php
-												$this->createField(array(
-													'type' => 'select',
-													'name' => 'persons['.$person->id.'][role]',
-													'class' => 'form-control person-role',
-													'options' => $this->getRolesForSelect()
-												));
-												?>
-												</td>
-												<td class="center">
-												<?php
-												$this->createField(array(
-													'type' => 'checkbox',
-													'name' => 'persons['.$person->id.'][primary]',
-													'options' => array(
-														array(
-															'value' => 1,
-															'class' => "grey person-primary"
+													?>
+													</td>
+													<td class="center">
+													<?php
+													$this->createField(array(
+														'type' => 'checkbox',
+														'name' => 'persons['.$person->id.'][primary]',
+														'options' => array(
+															array(
+																'value' => 1,
+																'class' => "grey person-primary"
+															)
 														)
-													)
-												));
-												?>
-												</td>
-												<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips person-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
-									        </tr>
-										<?php }
-										} ?>
-									    </tbody>
-									</table>
+													));
+													?>
+													</td>
+													<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips person-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
+												</tr>
+											<?php }
+											} ?>
+											</tbody>
+										</table>
+									</div>
 								</div>
 						    </div>
 						</div>
@@ -201,7 +187,7 @@ $this->the_header();
 										for($i=0;$i < $count; $i++){
 										?>
 										<div class="row lyrics">
-											<div class="col-xs-3">
+											<div class="col-sm-3 col-xs-4">
 												<?php
 												$this->createField(array(
 													'name' => 'lyric['.$i.'][time]',
@@ -209,7 +195,7 @@ $this->the_header();
 													'ltr' => true
 												)); ?>
 											</div>
-											<div class="col-xs-8">
+											<div class="col-sm-9 col-xs-8">
 												<?php
 													$this->createField(array(
 														'name' => 'lyric['.$i.'][text]',
