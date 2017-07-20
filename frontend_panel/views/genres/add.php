@@ -1,23 +1,18 @@
 <?php
 namespace themes\clipone\views\ghafiye\genre;
-use \packages\base;
 use \packages\base\translator;
-use \packages\base\frontend\theme;
-
 use \themes\clipone\viewTrait;
 use \themes\clipone\navigation;
 use \themes\clipone\breadcrumb;
 use \themes\clipone\views\formTrait;
 use \themes\clipone\navigation\menuItem;
-
 use \packages\ghafiye\views\panel\genre\add as genreADD;
-
 class add extends genreADD{
 	use viewTrait, formTrait;
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans('genres'),
-			translator::trans('add')
+			translator::trans('ghafiye.panle.genres.add')
 		));
 		$this->addBodyClass('genres');
 		$this->addBodyClass('genre_add');

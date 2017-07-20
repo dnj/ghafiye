@@ -55,7 +55,7 @@ $genre = $this->getgenre();
 													echo translator::trans("translations.langs.{$title->lang}");
 													?></td>
 													<td class="column-right"><a href="#" data-lang="<?php echo $title->lang; ?>" data-type="text" data-pk="1" data-original-title="<?php echo $title->title; ?>" class="editable editable-click title" style="display: inline;"><?php echo $title->title; ?></a></td>
-													<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips title-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
+													<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips title-del" title="" data-original-title="<?php echo translator::trans("ghafiye.delete"); ?>"><i class="fa fa-times"></i></a></td>
 												</tr>
 												<?php } ?>
 											</tbody>

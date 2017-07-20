@@ -19,7 +19,7 @@ class listview extends genresList{
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans('genres'),
-			translator::trans('list')
+			translator::trans('ghafiye.panle.genres.list')
 		));
 		$this->setButtons();
 		$this->addBodyClass('genre_list');

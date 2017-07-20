@@ -102,6 +102,9 @@
 		"ghafiye.song.delete.warning": "آیا از حذف آهنگ به شناسه #{song_id} اطمینان دارید؟ این عملیات بدون بازگشت است.",
 		"genres": "سبک ها",
 		"ghafiye.panle.genres.list": "لیست سبک ها",
+		"ghafiye.panle.genres.add": "افزودن سبک",
+		"ghafiye.panle.genres.edit": "ویرایش سبک",
+		"ghafiye.panle.genres.delete": "حذف سبک",
 		"ghafiye.panel.genre.id": "شناسه",
 		"ghafiye.panel.genre.musixmatch_id": "شناسه musixmatch",
 		"ghafiye.panel.genre.title": "عنوان سبک",
@@ -131,6 +134,7 @@
 		"ghafiye.panel.song.persons": "اشخاص",
 		"ghafiye.panel.person": "شخص",
 		"ghafiye.update": "بروزرسانی",
-		"ghafiye.return": "بازگشت"
+		"ghafiye.return": "بازگشت",
+		"ghafiye.delete": "حذف"
 	}
 }
