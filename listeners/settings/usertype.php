@@ -29,7 +29,12 @@ class usertype{
 			'genres_list',
 			'genre_add',
 			'genre_edit',
-			'genre_delete'
+			'genre_delete',
+
+			'crawler_search',
+			'crawler_add',
+			'crawler_edit',
+			'crawler_delete'
 		);
 		foreach($permissions as $permission){
 			permissions::add('ghafiye_'.$permission);

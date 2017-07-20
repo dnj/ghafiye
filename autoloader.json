@@ -336,6 +336,30 @@
 		{
 			"classes":["listeners\\search"],
 			"file":"listeners/search.php"
+		},
+		{
+			"classes":["controllers\\panel\\crawler"],
+			"file":"controllers/panel/crawler.php"
+		},
+		{
+			"classes":["crawler\\queue"],
+			"file":"libraries/crawler/queue.php"
+		},
+		{
+			"classes":["crawler\\queue\\param"],
+			"file":"libraries/crawler/param.php"
+		},
+		{
+			"classes":["views\\panel\\crawler\\search"],
+			"file":"views/panel/crawler/search.php"
+		},
+		{
+			"classes":["views\\panel\\crawler\\add"],
+			"file":"views/panel/crawler/add.php"
+		},
+		{
+			"classes":["views\\panel\\crawler\\delete"],
+			"file":"views/panel/crawler/delete.php"
 		}
 	]
 }
