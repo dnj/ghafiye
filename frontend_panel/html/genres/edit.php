@@ -66,7 +66,7 @@ $genre = $this->getgenre();
 						</div>
 						<div class="col-sm-12">
 			                <p>
-			                    <a href="<?php echo userpanel\url('genres'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('return'); ?></a>
+			                    <a href="<?php echo userpanel\url('genres'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('ghafiye.return'); ?></a>
 			                    <button form="editgenre" type="submit" class="btn btn-teal"><i class="fa fa-edit"></i> <?php echo translator::trans("ghafiye.update") ?></button>
 			                </p>
 						</div>
