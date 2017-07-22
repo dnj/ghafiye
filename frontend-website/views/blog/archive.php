@@ -5,9 +5,10 @@ use \packages\userpanel\date;
 use \themes\musixmatch\viewTrait;
 use \themes\musixmatch\views\blogTrait;
 use \themes\musixmatch\views\formTrait;
+use \themes\musixmatch\views\listTrait;
 use \packages\blog\views\post\archive as postArchive;
 class archive extends postArchive{
-	use viewTrait, blogTrait, formTrait;
+	use viewTrait, blogTrait, formTrait, listTrait;
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans("blog.list.title"),

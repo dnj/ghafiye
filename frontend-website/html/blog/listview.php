@@ -46,6 +46,7 @@ $this->the_header();
 				</article>
 				<?php
 				}
+				$this->paginator();
 				?>
 		</section>
 		<?php } ?>
