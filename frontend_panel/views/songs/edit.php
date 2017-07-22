@@ -85,7 +85,7 @@ class edit extends EditSongs{
 		return $langs;
 	}
 	protected function getSongImage(){
-		return packages::package("ghafiye")->url($this->song->image ? $this->song->image : options::get("packages.ghafiye.persons.deafault_image"));
+		return packages::package("ghafiye")->url($this->song->image ? $this->song->image : "storage/public/default-image.png");
 	}
 	protected function getStatusForSelect(){
 		return array(

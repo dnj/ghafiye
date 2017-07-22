@@ -19,7 +19,7 @@ class add extends albumADD{
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans('albums'),
-			translator::trans('add')
+			translator::trans('ghafiye.panle.albums.add')
 		));
 		$this->addBodyClass('album_add');
 		$this->setNavigation();
@@ -33,7 +33,7 @@ class add extends albumADD{
 		navigation::active("albums");
 	}
 	protected function getImage(){
-		return packages::package('ghafiye')->url(options::get('packages.ghafiye.album.default-image'));
+		return packages::package('ghafiye')->url("storage/public/default-image.png");
 	}
 	protected function getLangsForSelect(){
 		$langs = [];

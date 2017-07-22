@@ -95,7 +95,7 @@ class add extends ADDSongs{
 		if($image = $this->getDataForm("image")){
 			return $image;
 		}
-		return packages::package("ghafiye")->url(options::get("packages.ghafiye.persons.deafault_image"));
+		return packages::package("ghafiye")->url('storage/public/default-image.png');
 	}
 	protected function getStatusForSelect(){
 		return array(

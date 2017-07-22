@@ -17,8 +17,7 @@ class edit extends albumEdit{
 		$this->album = $this->getAlbum();
 		$this->setTitle(array(
 			translator::trans('albums'),
-			$this->album->getTitle(),
-			translator::trans('edit')
+			translator::trans('ghafiye.panle.albums.edit')
 		));
 		$this->addBodyClass('album_edit');
 		$this->setNavigation();
@@ -32,7 +31,7 @@ class edit extends albumEdit{
 		navigation::active("albums");
 	}
 	protected function getImage($image){
-		return packages::package('ghafiye')->url($image ? $image : options::get('packages.ghafiye.album.default-image'));
+		return packages::package('ghafiye')->url($image ? $image : "storage/public/default-image.png");
 	}
 	protected function getLangsForSelect(){
 		$langs = [];

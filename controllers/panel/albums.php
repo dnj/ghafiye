@@ -225,6 +225,7 @@ class albums extends controller{
 			}catch(translatedAlbumLang $e){
 				$error = new error();
 				$error->setCode('translated.album.lang.empty');
+				$error->setMessage(translator::trans('error.translated.album.lang.empty'));
 				$view->addError($error);
 			}
 			$view->setDataForm($this->inputsvalue($inputsRules));
@@ -237,67 +238,96 @@ class albums extends controller{
 	public function add(){
 		authorization::haveOrFail('album_add');
 		$view = view::byName("\\packages\\ghafiye\\views\\panel\\album\\add");
-		$inputsRules = array(
-			'avatar' => array(
+		$inputsRules = [
+			'avatar' => [
 				'type' => 'file',
 				'empty' => true
-			),
-			'musixmatch_id' => array(
+			],
+			'musixmatch_id' => [
 				'type' => 'number',
 				'empty' => true
-			),
-			'album-lang' => array(
-				'type' => 'string'
-			),
-			'title' => array(
-				'type' => 'string'
-			)
-		);
+			],
+			'album-lang' => [
+				'type' => 'string',
+				'values' => translator::$allowlangs
+			],
+			'titles' => [],
+			'songs' => []
+		];
 		if(http::is_post()){
 			try{
 				$inputs = $this->checkinputs($inputsRules);
-				if(!in_array($inputs['album-lang'], translator::$allowlangs)){
-					throw new inputValidation("album-lang");
+				if(!is_array($inputs['titles'])){
+					throw new inputValidation("titles");
+				}
+				if(!is_array($inputs['songs'])){
+					throw new inputValidation("songs");
+				}
+				if(!isset($inputs['titles'][$inputs['album-lang']])){
+					throw new translatedAlbumLang();
+				}
+				foreach($inputs['titles'] as $lang => $title){
+					if(!$title){
+						throw new inputValidation("titles[{$lang}]");
+					}
+				}
+				$songs = [];
+				foreach($inputs['songs'] as $key => $song){
+					if(!$song = song::byId($song)){
+						throw new inputValidation("songs[{$key}]");
+					}
+					$songs[] = $song;
+				}
+				if($inputs["avatar"]['error'] == 0){
+					if(!in_array(getimagesize($inputs["avatar"]['tmp_name'])[2], array(IMAGETYPE_JPEG ,IMAGETYPE_GIF, IMAGETYPE_PNG))){
+						throw new inputValidation($inputs["avatar"]);
+					}
+				}elseif($inputs["avatar"]['error'] == 4){
+					unset($inputs["avatar"]);
+				}else{
+					throw new inputValidation("avatar");
 				}
 				$album = new album();
 				$album->lang = $inputs['album-lang'];
 				if(isset($inputs['musixmatch_id']) and $inputs['musixmatch_id']){
 					$album->musixmatch_id = $inputs['musixmatch_id'];
 				}
-				$album->lang = $inputs['album-lang'];
-				if($inputs["avatar"]['error'] == 0){
-					$type = getimagesize($inputs["avatar"]['tmp_name']);
-					if(in_array($type[2], array(IMAGETYPE_JPEG ,IMAGETYPE_GIF, IMAGETYPE_PNG))){
-						$title = IO\md5($inputs["avatar"]['tmp_name']);
-						switch($type[2]){
-							case(IMAGETYPE_JPEG):
-								$type_name = '.jpg';
-								break;
-							case(IMAGETYPE_GIF):
-								$type_name = '.gif';
-								break;
-							case(IMAGETYPE_PNG):
-								$type_name = '.png';
-								break;
-						}
-						$directory = packages::package('ghafiye')->getFilePath("storage/public/albums/".$title.$type_name);
-						if(move_uploaded_file($inputs["avatar"]['tmp_name'], $directory)){
-							$album->image = "storage/public/albums/".$title.$type_name;
-						}else{
-							throw new inputValidation($inputs["avatar"]);
-						}
-					}else{
+				if(isset($inputs["avatar"])){
+					$title = IO\md5($inputs["avatar"]['tmp_name']);
+					switch(getimagesize($inputs["avatar"]['tmp_name'])[2]){
+						case(IMAGETYPE_JPEG):
+							$type_name = '.jpg';
+							break;
+						case(IMAGETYPE_GIF):
+							$type_name = '.gif';
+							break;
+						case(IMAGETYPE_PNG):
+							$type_name = '.png';
+							break;
+					}
+					$directory = packages::package('ghafiye')->getFilePath("storage/public/albums/".$title.$type_name);
+					if(!move_uploaded_file($inputs["avatar"]['tmp_name'], $directory)){
 						throw new inputValidation($inputs["avatar"]);
 					}
-				}elseif($inputs["avatar"]['error'] != 4){
-					throw new inputValidation("avatar");
+					$album->image = "storage/public/albums/".$title.$type_name;
 				}
 				$album->save();
-				$album->addTitle($inputs['title'], $inputs['album-lang']);
+				foreach($inputs['titles'] as $lang => $title){
+					$album->addTitle($title, $lang);
+				}
+				foreach($songs as $song){
+					$song->album = $album->id;
+					$song->save();
+				}
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("albums/edit/{$album->id}"));
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
+			}catch(translatedAlbumLang $e){
+				$error = new error();
+				$error->setCode('translated.album.lang.empty');
+				$error->setMessage(translator::trans('error.translated.album.lang.empty'));
+				$view->addError($error);
 			}
 			$view->setDataForm($this->inputsvalue($inputsRules));
 		}else{

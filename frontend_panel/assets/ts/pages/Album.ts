@@ -5,6 +5,8 @@ import "x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js";
 import { Router, webuilder } from "webuilder";
 import AutoComplete from "../classes/AutoComplete";
 import {AvatarPreview} from 'bootstrap-avatar-preview/AvatarPreview';
+import viewError from '../classes/viewError';
+import {Mian} from '../Main';
 export default class Album{
 	private static $form:JQuery;
 	private static runPersonListener(){
@@ -162,6 +164,15 @@ export default class Album{
 							title:"خطا",
 							message:'درخواست شما توسط سرور قبول نشد'
 						});
+						const $error:any = error;
+						const $viewError = new viewError();
+						$viewError.setType($error.setType);
+						$viewError.setCode($error.code);
+						$viewError.setMessage($error.message);
+						$viewError.setData($error.data);
+						const view = new Mian();
+						view.addError($viewError);
+						view.getErrorHTML();
 					}
 				}
 			});
@@ -172,17 +183,16 @@ export default class Album{
 		if($body.hasClass('album_edit') || $body.hasClass('album_add')){
 			if($body.hasClass('album_edit')){
 				Album.$form = $('.album_edit_form');
-				Album.runSongAutoComplete();
-				Album.setSongsEvents();
-				Album.setTitlesEvents();
-				Album.createFieldTranslatedLang();
-				Album.createFieldSongs();
-				Album.selectLangValidate();
-				Album.runAvatarPreview();
 			}else{
 				Album.$form = $('.album_add_form');
-				Album.runAvatarPreview();
 			}
+			Album.runSongAutoComplete();
+			Album.setSongsEvents();
+			Album.setTitlesEvents();
+			Album.createFieldTranslatedLang();
+			Album.createFieldSongs();
+			Album.selectLangValidate();
+			Album.runAvatarPreview();
 			Album.runSubmitFormListener();
 		}else if($body.hasClass('album_list')){
 			Album.runSongAutoComplete();

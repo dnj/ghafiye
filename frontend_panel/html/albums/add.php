@@ -10,7 +10,7 @@ $this->the_header();
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
 	            <i class="fa fa-plus"></i>
-	            <span><?php echo translator::trans("add").' '.translator::trans("album"); ?></span>
+	            <span><?php echo translator::trans("ghafiye.panle.albums.add"); ?></span>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
 				</div>
@@ -47,11 +47,54 @@ $this->the_header();
 								'options' => $this->getLangsForSelect()
 							));
 							?>
-							<?php $this->createField(array(
-								'name' => 'title',
-								'label' => translator::trans("ghafiye.panel.album.title")
-							));
-							?>
+						</div>
+						<div class="col-sm-12">
+							<div class="panel panel-white">
+						        <div class="panel-heading">
+						            <i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.album.translated.titles"); ?>
+						            <div class="panel-tools">
+										<a class="btn btn-xs btn-link tooltips" title="" href="#addTitle" data-toggle="modal" data-original-title=""><i class="fa fa-plus"></i></a>
+						                <a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
+						            </div>
+						        </div>
+						        <div class="panel-body">
+						       		<div class="table-responsive">
+										<table class="table table-bordered table-striped table-names">
+											<thead>
+												<th><?php echo translator::trans("ghafiye.panel.album.title.lang"); ?></th>
+												<th><?php echo translator::trans("ghafiye.panel.album.translated.title"); ?></th>
+												<th></th>
+											</thead>
+											<tbody class="titles" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
+											</tbody>
+										</table>
+									</div>
+								</div>
+						    </div>
+						</div>
+						<div class="col-sm-12">
+							<div class="panel panel-white">
+						        <div class="panel-heading">
+						            <i class="fa fa-music"></i> <?php echo translator::trans("ghafiye.panel.album.songs"); ?>
+						            <div class="panel-tools">
+										<a class="btn btn-xs btn-link tooltips" title="" href="#addSong" data-toggle="modal" data-original-title=""><i class="fa fa-plus"></i></a>
+						                <a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
+						            </div>
+						        </div>
+						        <div class="panel-body">
+						       		<div class="table-responsive">
+										<table class="table table-bordered table-striped table-names">
+											<thead>
+												<th><?php echo translator::trans("ghafiye.panel.album.song.name"); ?></th>
+												<th></th>
+											</thead>
+											<tbody class="songs">
+												
+											</tbody>
+										</table>
+									</div>
+								</div>
+						    </div>
 						</div>
 						<div class="col-sm-12">
 			                <p>
@@ -63,6 +106,69 @@ $this->the_header();
 	            </div>
 	        </div>
 	    </div>
+	</div>
+</div>
+<div class="modal fade" id="addTitle" tabindex="-1" data-show="true" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title"><?php echo translator::trans('ghafiye.add_new.name'); ?></h4>
+	</div>
+	<div class="modal-body">
+		<form id="addTitleform" class="form-horizontal" action="#" method="post">
+			<?php
+			$this->setHorizontalForm('sm-3','sm-9');
+			$feilds = array(
+				array(
+					'name' => 'lang',
+					'type' => 'select',
+					'id' => "selectLang",
+					'label' => translator::trans("ghafiye.panel.album.title.lang"),
+					'options' => $this->getLangsForSelect()
+				),
+				array(
+					'name' => 'title',
+					'label' => translator::trans('ghafiye.panel.album.translated.title')
+				)
+			);
+			foreach($feilds as $input){
+				$this->createField($input);
+			}
+			?>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" form="addTitleform" class="btn btn-success"><?php echo translator::trans("confrim"); ?></button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
+	</div>
+</div>
+<div class="modal fade" id="addSong" tabindex="-1" data-show="true" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title"><?php echo translator::trans('ghafiye.panel.album.add.song'); ?></h4>
+	</div>
+	<div class="modal-body">
+		<form id="addSongForm" class="form-horizontal" action="#" method="post">
+			<?php
+			$this->setHorizontalForm('sm-3','sm-9');
+			$feilds = array(
+				array(
+					'name' => 'song_name',
+					'label' => translator::trans("ghafiye.panel.album.song.name")
+				),
+				array(
+					'name' => 'song',
+					'type' => 'hidden'
+				)
+			);
+			foreach($feilds as $input){
+				$this->createField($input);
+			}
+			?>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" form="addSongForm" class="btn btn-success"><?php echo translator::trans("confrim"); ?></button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
 	</div>
 </div>
 <?php
