@@ -45,7 +45,10 @@ class edit extends personEdit{
 		navigation::active("persons");
 	}
 	protected function getImage($image){
-		return packages::package('ghafiye')->url($image ? $image : options::get('packages.ghafiye.persons.deafault_image'));
+		return $image ? packages::package('ghafiye')->url($image) : theme::url("assets/images/avatar-placeholder.png");
+	}
+	protected function defaultAvatar():string{
+		return theme::url("assets/images/avatar-placeholder.png");
 	}
 	protected function getLangsForSelect(){
 		$langs = array();
@@ -59,6 +62,10 @@ class edit extends personEdit{
 	}
 	protected function getGenderForSelect(){
 		return array(
+			array(
+				'title' => translator::trans("ghafiye.panel.person.gender.unknown"),
+				'value' => ''
+			),
 			array(
 				'title' => translator::trans("ghafiye.panel.person.gender.men"),
 				'value' => person::men
