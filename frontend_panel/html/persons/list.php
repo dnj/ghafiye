@@ -1,18 +1,13 @@
 <?php
 use \packages\base;
 use \packages\base\translator;
-
 use \packages\userpanel;
-use \packages\userpanel\user;
 use \packages\userpanel\date;
-
-use \themes\clipone\utility;
-
+use \packages\ghafiye\person;
 $this->the_header();
 ?>
 <div class="row">
-	<div class="col-md-12">
-		<!-- start: BASIC TABLE PANEL -->
+	<div class="col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				<i class="clip-users"></i> <?php echo(translator::trans("ghafiye.panle.persons.list")); ?>
@@ -33,7 +28,10 @@ $this->the_header();
 						<thead>
 							<tr>
 								<th class="center">#</th>
+								<th class="center"></th>
 								<th><?php echo translator::trans('ghafiye.panel.person.name'); ?></th>
+								<th class="center"><?php echo translator::trans('ghafiye.panel.person.gender'); ?></th>
+								<th class="center"><?php echo translator::trans('ghafiye.persons.songs'); ?></th>
 								<?php if($hasButtons){ ?><th></th><?php } ?>
 							</tr>
 						</thead>
@@ -42,10 +40,39 @@ $this->the_header();
 							foreach($this->getPersonsLists() as $person){
 								$this->setButtonParam('edit', 'link', userpanel\url("persons/edit/".$person->id));
 								$this->setButtonParam('delete', 'link', userpanel\url("persons/delete/".$person->id));
+								$this->setButtonParam('delete', 'link', userpanel\url("persons/delete/".$person->id));
 							?>
 							<tr>
 								<td class="center"><?php echo $person->id; ?></td>
+								<td class="center" style="width:50px"><img src="<?php echo $this->getAvatar($person); ?>" width="50" heigth="50" alt="<?php echo $person->name(); ?>" /></td>
 								<td><?php echo $person->name(); ?></td>
+								<td class="center"><?php 
+								switch($person->gender){
+									case(person::men):
+										echo('<i class="fa fa-male"></i>');
+										break;
+									case(person::women):
+										echo('<i class="fa fa-female"></i>');
+										break;
+									default:
+										echo('-');
+										break;
+								}
+								 ?></td>
+								<td class="center">
+								<?php
+								$songs = $this->songsCountByPerson($person);
+								if($songs){
+								?>
+								<a href="<?php echo userpanel\url('songs', array('person' => $person->id)); ?>">
+									<span class="badge badge-success"><?php echo $songs; ?></span>
+								</a>
+								<?php
+								}else{
+								?>
+								<span class="badge badge-inverse"><?php echo $songs; ?></span>
+								<?php } ?>
+								</td>
 								<?php
 								if($hasButtons){
 									echo("<td class=\"center\">".$this->genButtons()."</td>");
@@ -61,7 +88,6 @@ $this->the_header();
 				<?php $this->paginator(); ?>
 			</div>
 		</div>
-		<!-- end: BASIC TABLE PANEL -->
 	</div>
 </div>
 <div class="modal fade" id="search" tabindex="-1" data-show="true" role="dialog">
@@ -124,6 +150,21 @@ $this->the_header();
 	</div>
 	<div class="modal-footer">
 		<button type="submit" form="personSearch" class="btn btn-success"><?php echo translator::trans("search"); ?></button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
+	</div>
+</div>
+<div class="modal fade" id="person_delete_modal" tabindex="-1" data-show="true" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title"><?php echo translator::trans('search'); ?></h4>
+	</div>
+	<div class="modal-body">
+		<form id="person_delete_form" class="form-horizontal" action="" method="POST">
+			<p class="text-danger"></p>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" form="person_delete_form" class="btn btn-danger"><?php echo translator::trans("delete"); ?></button>
 		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
 	</div>
 </div>

@@ -1,18 +1,20 @@
 <?php
 namespace themes\clipone\views\ghafiye\person;
-use \packages\base;
+use \packages\base\db;
 use \packages\base\translator;
+use \packages\base\packages;
 use \packages\base\frontend\theme;
 
 use \packages\userpanel;
+
+use \packages\ghafiye\person;
+use \packages\ghafiye\views\panel\person\listview as personsList;
 
 use \themes\clipone\viewTrait;
 use \themes\clipone\navigation;
 use \themes\clipone\views\listTrait;
 use \themes\clipone\views\formTrait;
 use \themes\clipone\navigation\menuItem;
-
-use \packages\ghafiye\views\panel\person\listview as personsList;
 
 class listview extends personsList{
 	use viewTrait,listTrait,formTrait;
@@ -28,7 +30,7 @@ class listview extends personsList{
 		$this->setButton('edit', $this->canEdit, array(
 			'title' => translator::trans('edit'),
 			'icon' => 'fa fa-edit',
-			'classes' => array('btn', 'btn-xs', 'btn-warning')
+			'classes' => array('btn', 'btn-xs', 'btn-info')
 		));
 		$this->setButton('delete', $this->canDel, array(
 			'title' => translator::trans('delete'),
@@ -61,5 +63,13 @@ class listview extends personsList{
 				'value' => 'startswith'
 			)
 		);
+	}
+	protected function getAvatar(person $person):string{
+		return $person->avatar ? packages::package('ghafiye')->url($person->avatar) : theme::url("assets/images/avatar-placeholder.png");
+	}
+	protected function songsCountByPerson(person $person):int{
+		db::join("ghafiye_songs_persons", "ghafiye_songs_persons.song=ghafiye_songs.id", "inner");
+		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.person", $person->id);
+		return db::getValue("ghafiye_songs", "count(*)");
 	}
 }

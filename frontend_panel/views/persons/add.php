@@ -33,20 +33,8 @@ class add extends personADD{
 		breadcrumb::addItem($item);
 		navigation::active("persons");
 	}
-	protected function getImage(){
-		return packages::package('ghafiye')->url(options::get("packages.ghafiye.persons.deafault_image"));
-	}
-	protected function getGenderForSelect(){
-		return array(
-			array(
-				'title' => translator::trans("ghafiye.panel.person.gender.men"),
-				'value' => person::men
-			),
-			array(
-				'title' => translator::trans("ghafiye.panel.person.gender.women"),
-				'value' => person::women
-			)
-		);
+	protected function defaultAvatar():string{
+		return theme::url("assets/images/avatar-placeholder.png");
 	}
 	protected function getLangsForSelect(){
 		$langs = array();
@@ -57,5 +45,21 @@ class add extends personADD{
 			);
 		}
 		return $langs;
+	}
+	protected function getGenderForSelect(){
+		return array(
+			array(
+				'title' => translator::trans("ghafiye.panel.person.gender.unknown"),
+				'value' => ''
+			),
+			array(
+				'title' => translator::trans("ghafiye.panel.person.gender.men"),
+				'value' => person::men
+			),
+			array(
+				'title' => translator::trans("ghafiye.panel.person.gender.women"),
+				'value' => person::women
+			)
+		);
 	}
 }
