@@ -30,7 +30,7 @@ $this->the_header();
 							<p class="h3 title"><?php echo translator::trans("blog.post.tags"); ?></p>
 							<section class="col-sm-11 col-md-11">
 								<?php foreach($this->getTags() as $tag){ ?>
-								<a class="btn btn-default" href="<?php echo base\url("blog/tag/".$tag->title); ?>"><span><?php echo $tag->title; ?></span></a>
+								<a class="btn btn-default" href="<?php echo blog\url("tag/".$tag->title); ?>"><span><?php echo $tag->title; ?></span></a>
 								<?php } ?>
 							</section>
 						</div>
@@ -63,26 +63,35 @@ $this->the_header();
 						'type' => 'hidden'
 					));
 					?>
-					<div class="col-md-6">
+					<div class="col-sm-4">
 						<?php $this->createField(array(
 							'name' => "name",
 							'placeholder' => translator::trans("blog.post.comment.name")
 						));
 						?>
 					</div>
-					<div class="col-md-6">
+					<div class="col-sm-4">
 						<?php $this->createField(array(
 							'name' => "email",
 							'type' => "email",
-							'placeholder' => translator::trans("blog.post.comment.email")
+							'placeholder' => translator::trans("blog.post.comment.email"),
+							'ltr' => true
 						));
 						?>
 					</div>
-					<div class="col-md-12">
+					<div class="col-sm-4">
+						<?php $this->createField(array(
+							'name' => "site",
+							'placeholder' => translator::trans("blog.post.comment.site"),
+							'ltr' => true
+						));
+						?>
+					</div>
+					<div class="col-sm-12">
 						<?php $this->createField(array(
 							'name' => "text",
 							'type' => "textarea",
-							'rows' => 8,
+							'rows' => 4,
 							'placeholder' => translator::trans("blog.post.comment.text")
 						));
 						?>

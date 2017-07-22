@@ -39,7 +39,11 @@ class view extends postView{
 				$html .= "<div class=\"row\"><div class=\"col-md-1\">";
 				$html .= "<img src=\"{$gravatar}\"></div>";
 				$html .= "<div class=\"col-md-11\">";
-				$html .= "<header><h2>{$comment->name}</a></h2>";
+				if($comment->site){
+					$html .= '<header><p class="h3"><a target="_blank" href="http://'.($comment->site ? $comment->site : '#').'">'.$comment->name.'</a></p>';
+				}else{
+					$html .= '<header><p class="h3">'.$comment->name.'</p>';
+				}
 				$html .= "<ul class=\"post-meta\">";
 				$html .= "<li><i class=\"fa fa-clock-o\"></i>{$date}</li>";
 				$html .= "<li><a class=\"artist reply\" data-comment=\"{$comment->id}\" href=\"#\"><i class=\"fa fa-undo\"></i>{$replyText}</a></li>";

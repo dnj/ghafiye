@@ -78,9 +78,9 @@
 		"blog.post.wrightby": "نوشته شده توسط {author}",
 		"blog.post.sendin": "ارسال شده در {category}",
 		"blog.post.tags": "برچسب ها",
-		"blog.post.comment.name": "نام شما",
-		"blog.post.comment.email": "ایمیل شما",
-		"blog.post.comment.text": "متن نظر",
+		"blog.post.comment.name": "نام شما*",
+		"blog.post.comment.email": "ایمیل شما*",
+		"blog.post.comment.text": "متن نظر*",
 		"blog.post.comment.send": "ارسال نظر",
 		"blog.post.comment.reply": "پاسخ دادن",
 		"blog.post.cancel.comment.reply": "انصراف",
@@ -121,6 +121,7 @@
 		"blog.search.title": "نتایج جستجوی {word}",
 		"blog.sidebar.subjects": "موضوعات",
 		"pagination.previousPage": "قبلی",
-		"pagination.nextPage": "بعدی"
+		"pagination.nextPage": "بعدی",
+		"blog.post.comment.site": "سایت شما"
 	}
 }
