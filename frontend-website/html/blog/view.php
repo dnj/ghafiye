@@ -19,11 +19,10 @@ $this->the_header();
 								<li><i class="fa fa-clock-o"></i><?php echo date::format("l، j F", $this->post->date) ?></li>
 								<li><i class="fa fa-eye"></i><?php echo translator::trans("blog.post.view.number", array("view" => $this->post->view)); ?></li>
 								<li><i class="fa fa-user"></i><a href="<?php echo base\url("blog/author/".$this->post->author->id); ?>" class="artist"><?php echo $this->post->author->getFullName(); ?></a></li>
-								<li><i class="fa fa-comments"></i> <?php echo translator::trans("blog.post.comments.number", array("count" => count($this->post->comments))); ?></li>
+								<li><i class="fa fa-comments"></i> <?php echo translator::trans("blog.post.comments.number", array("count" => $this->post->getCountPostCommnets())); ?></li>
 							</ul>
 						</header>
 						<div class="post-content">
-							<img src="<?php echo $this->blogImage($this->post); ?>" alt="<?php echo $this->post->title; ?>">
 							<?php echo $this->post->content; ?>
 						</div>
 						<?php if($this->getTags()){ ?>
@@ -58,7 +57,7 @@ $this->the_header();
 						<button type="button" class="btn btn-info btn-block cancel-reply"><?php echo translator::trans("blog.post.cancel.comment.reply"); ?></button>
 					</div>
 				</div>
-				<form  action="<?php echo base\url("blog/view/".$this->post->id); ?>" method="post">
+				<form  action="<?php echo $this->post->getURL(); ?>" method="post">
 					<?php $this->createField(array(
 						'name' => "reply",
 						'type' => 'hidden'
