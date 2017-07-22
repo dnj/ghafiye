@@ -127,6 +127,16 @@
 			"name": "\\themes\\musixmatch\\views\\search\\index",
 			"parent": "\\packages\\ghafiye\\views\\search\\index",
 			"file": "html/search/index.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\blog\\notfound",
+			"parent": "\\packages\\blog\\views\\post\\notfound",
+			"file": "html/blog/notfound.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\blog\\search",
+			"parent": "\\packages\\blog\\views\\post\\search",
+			"file": "html/blog/listview.php"
 		}
 	]
 }

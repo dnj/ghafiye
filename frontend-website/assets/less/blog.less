@@ -105,6 +105,20 @@ body.blog{
 		}
 	}
 	.sidebar{
+		ul:not(.categories):not(.child){
+			list-style: none;
+		}
+		.categories{
+			padding-right: 8px;
+			a{
+				background: 0 0;
+				color: #404040;
+				transition: all .2s ease-out;
+			}
+			ul.child{
+				padding-right: 8pt;
+			}
+		}
 		.panel{
 			background:#fff;
 			border-radius: 3px;
@@ -117,4 +131,10 @@ body.blog{
 			}
 		}
 	}
+}
+
+.btn.btn-teal{
+	background-color: #569099;
+	border-color: #4d8189;
+	color: #ffffff;
 }

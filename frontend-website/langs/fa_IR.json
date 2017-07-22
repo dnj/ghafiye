@@ -115,6 +115,10 @@
 		"share.song.on.tumblr": "اشتراک در tumblr",
 		"share.song.on.vk": "اشتراک در vk",
 		"share.song.on.reddit": "اشتراک در reddit",
-		"share.song.on.mail": "اشتراک با ایمیل"
+		"share.song.on.mail": "اشتراک با ایمیل",
+		"blog.notfound.description":"گشتیم ولی چیزی که مد نظر شما بود را برای ارائه نیافتیم، وبلاگ را با جستجو گر پایین کامل بگردید شاید آن را پیدا کنید، یا به <a href=\"{blog.home}\">صفحه اصلی</a> بگردید آن جا شانس یک شروع نو برای شماست!",
+		"blog.search": "جستجو",
+		"blog.search.title": "نتایج جستجوی {word}",
+		"blog.sidebar.subjects": "موضوعات"
 	}
 }

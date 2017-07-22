@@ -103,6 +103,14 @@
 		{
 			"classes":["views\\search\\index"],
 			"file":"views/search/index.php"
+		},
+		{
+			"classes":["views\\blog\\notfound"],
+			"file":"views/blog/notfound.php"
+		},
+		{
+			"classes":["views\\blog\\search"],
+			"file":"views/blog/search.php"
 		}
 	]
 }
