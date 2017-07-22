@@ -1,5 +1,5 @@
 <?php
-use \packages\base;
+use \packages\blog;
 use \packages\base\translator;
 use \packages\userpanel\date;
 $this->the_header();
@@ -27,9 +27,9 @@ $this->the_header();
 							<header>
 								<h2><a href="<?php echo $post->getURL(); ?>"><?php echo($post->title); ?></a></h2>
 								<ul class="post-meta">
-									<li><i class="fa fa-clock-o"></i><?php echo date::format("l، j F", $post->date) ?></li>
+									<li><i class="fa fa-clock-o"></i><a href="<?php echo blog\url('archive/'.date::format('Y/m', $post->date)); ?>"><?php echo date::format("l، j F Y", $post->date) ?></a></li>
 									<li><i class="fa fa-eye"></i><?php echo translator::trans("blog.post.view.number", array("view" => $post->view)); ?></li>
-									<li><i class="fa fa-user"></i><a href="<?php echo base\url("blog/author/".$post->author->id); ?>" class="artist"><?php echo $post->author->getFullName(); ?></a></li>
+									<li><i class="fa fa-user"></i><a href="<?php echo blog\url("author/".$post->author->id); ?>" class="artist"><?php echo $post->author->getFullName(); ?></a></li>
 									<li><i class="fa fa-comments"></i> <?php echo translator::trans("blog.post.comments.number", array("count" => $post->getCountPostCommnets())); ?></li>
 								</ul>
 							</header>

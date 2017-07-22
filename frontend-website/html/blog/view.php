@@ -1,5 +1,5 @@
 <?php
-use \packages\base;
+use \packages\blog;
 use \packages\base\http;
 use \packages\base\translator;
 use \packages\userpanel\date;
@@ -16,9 +16,9 @@ $this->the_header();
 							<h2><?php echo($this->post->title); ?></h2>
 							<p><?php echo translator::trans("blog.post.sendin", array("category" => $this->showCategories())); ?></p>
 							<ul class="post-meta">
-								<li><i class="fa fa-clock-o"></i><?php echo date::format("l، j F", $this->post->date) ?></li>
+								<li><i class="fa fa-clock-o"></i><a href="<?php echo blog\url('archive/'.date::format('Y/m', $this->post->date)); ?>"><?php echo date::format("l، j F Y", $this->post->date) ?></a></li>
 								<li><i class="fa fa-eye"></i><?php echo translator::trans("blog.post.view.number", array("view" => $this->post->view)); ?></li>
-								<li><i class="fa fa-user"></i><a href="<?php echo base\url("blog/author/".$this->post->author->id); ?>" class="artist"><?php echo $this->post->author->getFullName(); ?></a></li>
+								<li><i class="fa fa-user"></i><a href="<?php echo blog\url("author/".$this->post->author->id); ?>" class="artist"><?php echo $this->post->author->getFullName(); ?></a></li>
 								<li><i class="fa fa-comments"></i> <?php echo translator::trans("blog.post.comments.number", array("count" => $this->post->getCountPostCommnets())); ?></li>
 							</ul>
 						</header>
@@ -27,7 +27,7 @@ $this->the_header();
 						</div>
 						<?php if($this->getTags()){ ?>
 						<div class="row tags">
-							<h3 class="title"><?php echo translator::trans("blog.post.tags"); ?></h3>
+							<p class="h3 title"><?php echo translator::trans("blog.post.tags"); ?></p>
 							<section class="col-sm-11 col-md-11">
 								<?php foreach($this->getTags() as $tag){ ?>
 								<a class="btn btn-default" href="<?php echo base\url("blog/tag/".$tag->title); ?>"><span><?php echo $tag->title; ?></span></a>
