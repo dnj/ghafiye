@@ -5,13 +5,13 @@ import Genre from "./pages/Genre";
 import Person from "./pages/Person";
 import Song from "./pages/Song";
 import viewError from "./classes/viewError";
-export default class Main{
-	private static error:viewError[] = [];
-	public static addError(error:viewError):void{
-		Main.error.push(error);
+export class Main{
+	public errors:viewError[] = [];
+	public addError(error:viewError):void{
+		this.errors.push(error);
 	}
-	public static getErrorHTML():void{
-		for(const error of Main.error){
+	public getErrorHTML():void{
+		for(const error of this.errors){
 			let alert:any = [];
 			let data = error.getData();
 			if(!(data instanceof Array)){
@@ -48,7 +48,10 @@ export default class Main{
 					</div>
 				</div>
 			`;
-			$('.panel.panel-default').parents('.row').before(html);
+			if(!$('.errors').length){
+				$('.panel.panel-default').parents('.row').before('<div class="errors"></div>');
+			}
+			$('.errors').html(html);
 		}
 	}
 }
