@@ -1,23 +1,18 @@
 <?php
 namespace themes\clipone\views\ghafiye\genre;
-use \packages\base;
 use \packages\base\translator;
-use \packages\base\frontend\theme;
-
 use \themes\clipone\viewTrait;
 use \themes\clipone\navigation;
 use \themes\clipone\breadcrumb;
 use \themes\clipone\views\formTrait;
 use \themes\clipone\navigation\menuItem;
-
 use \packages\ghafiye\views\panel\genre\delete as genreDelete;
-
 class delete extends genreDelete{
 	use viewTrait, formTrait;
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans('genres'),
-			translator::trans('delete')
+			translator::trans('ghafiye.panle.genres.delete')
 		));
 		$this->setNavigation();
 	}

@@ -20,7 +20,7 @@ class add extends groupADD{
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans('groups'),
-			translator::trans('add')
+			translator::trans('ghafiye.panle.groups.add')
 		));
 		$this->addBodyClass("group_add");
 		$this->setNavigation();

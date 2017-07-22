@@ -19,7 +19,7 @@ class listview extends groupsList{
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans('groups'),
-			translator::trans('list')
+			translator::trans('ghafiye.panle.groups.list')
 		));
 		$this->setButtons();
 		$this->addBodyClass('group_list');

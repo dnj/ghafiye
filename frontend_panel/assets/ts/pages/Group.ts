@@ -5,6 +5,8 @@ import "x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js";
 import { Router, webuilder } from "webuilder";
 import AutoComplete from "../classes/AutoComplete";
 import {AvatarPreview} from 'bootstrap-avatar-preview/AvatarPreview';
+import viewError from '../classes/viewError';
+import Main from '../Main';
 export default class Group{
 	private static $form:JQuery;
 	private static runPersonListener(){
@@ -21,7 +23,6 @@ export default class Group{
 		}
 		$(".title-del", container).on('click', function(e){
 			e.preventDefault();
-			console.log($(".titles tr", Group.$form).length);
 			if($(".titles tr", Group.$form).length > 1){
 				$(this).parents("tr").remove();
 			}else{
@@ -92,7 +93,6 @@ export default class Group{
 	}
 	private static createFieldPersons(){
 		$("#addPersonForm").submit(function(e){
-			console.log('salam');
 			e.preventDefault();
 			let person:string = $("input[name='person']", this).val() as string;
 			let person_name:string = $("input[name='person_name']", this).val() as string;
@@ -164,6 +164,14 @@ export default class Group{
 							title:"خطا",
 							message:'درخواست شما توسط سرور قبول نشد'
 						});
+						const $error:any = error;
+						const $viewError = new viewError();
+						$viewError.setType($error.setType);
+						$viewError.setCode($error.code);
+						$viewError.setMessage($error.message);
+						$viewError.setData($error.data);
+						Main.addError($viewError);
+						Main.getErrorHTML();
 					}
 				}
 			});
@@ -174,18 +182,17 @@ export default class Group{
 		if($body.hasClass('group_edit') || $body.hasClass('group_add')){
 			if($body.hasClass('group_edit')){
 				Group.$form = $('.group_edit_form');
-				Group.runPersonAutoComplete();
-				Group.setPersonsEvents();
-				Group.setTitlesEvents();
-				Group.createFieldTranslatedLang();
-				Group.createFieldPersons();
-				Group.selectLangValidate();
-				Group.runAvatarPreview();
 			}else{
 				Group.$form = $('.group_add_form');
-				Group.runAvatarPreview();
 			}
 			Group.runSubmitFormListener();
+			Group.runPersonAutoComplete();
+			Group.setPersonsEvents();
+			Group.setTitlesEvents();
+			Group.createFieldTranslatedLang();
+			Group.createFieldPersons();
+			Group.selectLangValidate();
+			Group.runAvatarPreview();
 		}else if($body.hasClass('group_list')){
 			Group.runPersonListener();
 		}

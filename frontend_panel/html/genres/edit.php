@@ -10,7 +10,7 @@ $genre = $this->getgenre();
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
 	            <i class="fa fa-edit"></i>
-	            <span><?php echo translator::trans("edit").' '.translator::trans("genre").' #'.$genre->id; ?></span>
+	            <span><?php echo translator::trans("ghafiye.panle.genres.edit").' #'.$genre->id; ?></span>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
 				</div>

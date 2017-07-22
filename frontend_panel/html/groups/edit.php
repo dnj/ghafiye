@@ -7,11 +7,11 @@ $this->the_header();
 $group = $this->getGroup();
 ?>
 <div class="row">
-	<div class="col-md-12">
+	<div class="col-xs-12">
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
 	            <i class="fa fa-edit"></i>
-	            <span><?php echo translator::trans("edit").' '.translator::trans("group").' #'.$group->id; ?></span>
+	            <span><?php echo translator::trans("ghafiye.panle.groups.edit").' #'.$group->id; ?></span>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
 				</div>
@@ -19,7 +19,7 @@ $group = $this->getGroup();
 	        <div class="panel-body">
 	            <div class="table-responsive">
 	                <form class="group_edit_form" action="<?php echo userpanel\url('groups/edit/'.$group->id); ?>" method="post" enctype="multipart/form-data">
-						<div class="col-md-3">
+						<div class="col-sm-3">
 							<label class="control-label"><?php echo translator::trans("ghafiye.panel.group.avatar"); ?></label>
 							<div class="fileupload fileupload-new" data-provides="fileupload">
 								<div class="form-group">
@@ -34,7 +34,7 @@ $group = $this->getGroup();
 								</div>
 							</div>
 	                    </div>
-						<div class="col-md-9">
+						<div class="col-sm-9">
 							<?php $this->createField(array(
 								'name' => 'group-lang',
 								'type' => 'select',
@@ -43,7 +43,7 @@ $group = $this->getGroup();
 							));
 							?>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 							<div class="panel panel-white">
 						        <div class="panel-heading">
 						            <i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.group.translated.titles"); ?>
@@ -81,7 +81,7 @@ $group = $this->getGroup();
 								</div>
 						    </div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 							<div class="panel panel-white">
 						        <div class="panel-heading">
 						            <i class="fa fa-users"></i> <?php echo translator::trans("ghafiye.panel.group.persons"); ?>
@@ -120,7 +120,7 @@ $group = $this->getGroup();
 								</div>
 						    </div>
 						</div>
-						<div class="col-md-12">
+						<div class="col-sm-12">
 			                <p>
 			                    <a href="<?php echo userpanel\url('groups'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('ghafiye.return'); ?></a>
 			                    <button type="submit" class="btn btn-teal"><i class="fa fa-edit"></i> <?php echo translator::trans("ghafiye.update") ?></button>

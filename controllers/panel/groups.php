@@ -216,7 +216,7 @@ class groups extends controller{
 				$view->setFormError(FormError::fromException($error));
 			}catch(translatedGroupLang $e){
 				$error = new error();
-				$error->setCode('translated.group.lang.empty');
+				$error->setMessage(translator::trans('error.translated.group.lang.empty'));
 				$view->addError($error);
 			}
 		}else{
@@ -235,53 +235,99 @@ class groups extends controller{
 				'empty' => true
 			),
 			'group-lang' => array(
-				'type' => 'string'
+				'type' => 'string',
+				'values' => translator::$allowlangs
 			),
-			'title' => array(
-				'type' => 'string'
+			'titles' => array(),
+			'persons' => array(
+				'empty' => true,
+				'optional' => true
 			)
 		);
-		$this->response->setStatus(false);
 		if(http::is_post()){
+			$this->response->setStatus(false);
 			try{
 				$inputs = $this->checkinputs($inputsRules);
-				if(!in_array($inputs['group-lang'], translator::$allowlangs))
-					throw new inputValidation("lang");
 				$group = new group();
-				$group->lang = $inputs['group-lang'];
+				if(is_array($inputs['titles'])){
+					foreach($inputs['titles'] as $key => $title){
+						if(!in_array($key, translator::$allowlangs) or !$title){
+							throw new inputValidation("titles[{$key}]");
+						}
+					}
+				}else{
+					throw new inputValidation("titles");
+				}
+
 				if($inputs["avatar"]['error'] == 0){
 					$type = getimagesize($inputs["avatar"]['tmp_name']);
-					if(in_array($type[2], array(IMAGETYPE_JPEG ,IMAGETYPE_GIF, IMAGETYPE_PNG))){
-						$title = IO\md5($inputs["avatar"]['tmp_name']);
-						switch($type[2]){
-							case(IMAGETYPE_JPEG):
-								$type_name = '.jpg';
-								break;
-							case(IMAGETYPE_GIF):
-								$type_name = '.gif';
-								break;
-							case(IMAGETYPE_PNG):
-								$type_name = '.png';
-								break;
-						}
-						$directory = packages::package('ghafiye')->getFilePath("storage/public/groups/".$title.$type_name);
-						if(move_uploaded_file($inputs["avatar"]['tmp_name'], $directory)){
-							$group->avatar = "storage/public/groups/".$title.$type_name;
-						}else{
-							throw new inputValidation($inputs["avatar"]);
-						}
+					if(!in_array($type[2], array(IMAGETYPE_JPEG ,IMAGETYPE_GIF, IMAGETYPE_PNG))){
+						throw new inputValidation($inputs["avatar"]);
+					}
+				}elseif($inputs["avatar"]['error'] == 4){
+					unset($inputs['avatar']);
+				}else{
+					throw new inputValidation("avatar");
+				}
+				if(!isset($inputs["persons"]) or !is_array($inputs['persons'])){
+					$inputs['persons'] = [];
+				}
+				foreach($inputs['persons'] as $key => $person){
+					$person = person::byId($person);
+					if(!$person){
+						throw new inputValidation("persons[{$key}]");
+					}
+				}
+				if(!isset($inputs['titles'][$inputs['group-lang']])){
+					throw new translatedGroupLang();
+				}
+				$group->lang = $inputs['group-lang'];
+				if(isset($inputs['avatar'])){
+					$title = IO\md5($inputs["avatar"]['tmp_name']);
+					switch($type[2]){
+						case(IMAGETYPE_JPEG):
+							$type_name = '.jpg';
+							break;
+						case(IMAGETYPE_GIF):
+							$type_name = '.gif';
+							break;
+						case(IMAGETYPE_PNG):
+							$type_name = '.png';
+							break;
+					}
+					$directory = packages::package('ghafiye')->getFilePath("storage/public/groups/".$title.$type_name);
+					if(move_uploaded_file($inputs["avatar"]['tmp_name'], $directory)){
+						$inputs["avatar"] = "storage/public/groups/".$title.$type_name;
 					}else{
 						throw new inputValidation($inputs["avatar"]);
 					}
-				}elseif($inputs["avatar"]['error'] != 4){
-					throw new inputValidation("avatar");
+					$group->avatar = $inputs["avatar"];
 				}
 				$group->save();
-				$group->addTitle($inputs['title'], $inputs['group-lang']);
+				foreach($inputs['persons'] as $person){
+					$person = new group\person(array(
+						'group_id' => $group->id,
+						'person' => $person
+					));
+					$person->save();
+				}
+
+				foreach($inputs['titles'] as $lang => $title){
+					if($title){
+						$group->addTitle($title, $lang);
+					}else{
+						throw new inputValidation("titles[{$lang}]");
+					}
+				}
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("groups/edit/".$group->id));
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
+			}catch(translatedGroupLang $e){
+				$error = new error();
+				$error->setCode('translated.group.lang.empty');
+				$error->setMessage(translator::trans('error.translated.group.lang.empty'));
+				$view->addError($error);
 			}
 		}else{
 			$this->response->setStatus(true);
