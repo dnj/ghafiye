@@ -255,7 +255,6 @@ class persons extends controller{
 				}
 				$person->save();
 				$this->response->setStatus(true);
-				$this->response->Go(userpanel\url("persons/edit/".$person->id));
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
 			}catch(InvalidPersoName $e){
@@ -319,12 +318,7 @@ class persons extends controller{
 				'optional' => true,
 				'empty' => true
 			),
-			'name' => array(
-				'type' => 'string'
-			),
-			'lang' => array(
-				'type' => 'string'
-			)
+			'names' => array()
 		);
 		$this->response->setStatus(false);
 		if(http::is_post()){
@@ -341,8 +335,12 @@ class persons extends controller{
 				if(!$hasName){
 					throw new InvalidPersoName();
 				}
-				if(!in_array($inputs['lang'], translator::$allowlangs))
-					throw new inputValidation("lang");
+
+				foreach($inputs['names'] as $lang => $name){
+					if(!$name){
+						throw new inputValidation("names[{$lang}]");
+					}
+				}
 				$person = new person();
 				foreach(array('name_prefix', 'first_name', 'middle_name', 'last_name', 'name_suffix', 'gender', 'musixmatch_id') as $item){
 					if(array_key_exists($item, $inputs) and $inputs[$item]){
@@ -357,7 +355,9 @@ class persons extends controller{
 					}
 				}
 				$person->save();
-				$person->addName($inputs['name'], $inputs['lang']);
+				foreach($inputs['names'] as $lang => $name){
+					$person->addName($name, $lang);
+				}
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("persons/edit/".$person->id));
 			}catch(inputValidation $error){
