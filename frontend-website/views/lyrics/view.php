@@ -63,13 +63,14 @@ class view extends lyricsView{
 		return !in_array($lang, array('ar','fa','dv','he','ps','sd','ur','yi','ug','ku'));
 	}
 	protected function getSongs(){
-		$album = $this->song->album->id;
-		$song = new song();
-		$song->where("ghafiye_songs.status", song::publish);
-		$song->where('ghafiye_songs.id', $this->song->id, '!=');
-		$song->where('ghafiye_songs.album', $album);
-		$song->orderBy("ghafiye_songs.release_at", "desc");
-		return $song->get(4, 'ghafiye_songs.*');
+		if($album = $this->song->album){
+			$song = new song();
+			$song->where("ghafiye_songs.status", song::publish);
+			$song->where('ghafiye_songs.id', $this->song->id, '!=');
+			$song->where('ghafiye_songs.album', $album->id);
+			$song->orderBy("ghafiye_songs.release_at", "desc");
+			return $song->get(4, 'ghafiye_songs.*');
+		}
 	}
 	protected function getShareSocial(){
 		$lang = $this->getLyricsLanguage();
