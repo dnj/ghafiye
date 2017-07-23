@@ -114,7 +114,9 @@ $lang = $this->getLyricsLanguage();
 					}
 					?>
 				</ul>
+				<?php if($this->isMoreSong()){ ?>
 				<a href="<?php echo base\url($this->singer->encodedName($lang).'/albums/'.$this->song->album->encodedTitle($lang)); ?>" class="more"><?php echo translator::trans('home.section.toplyrics.more'); ?></a>
+				<?php } ?>
 			</div>
 		</div>
 		<?php } ?>

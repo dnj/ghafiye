@@ -72,6 +72,14 @@ class view extends lyricsView{
 			return $song->get(4, 'ghafiye_songs.*');
 		}
 	}
+	protected function isMoreSong():bool{
+		$album = $this->song->album;
+		$song = new song();
+		$song->where("ghafiye_songs.status", song::publish);
+		$song->where('ghafiye_songs.id', $this->song->id, '!=');
+		$song->where('ghafiye_songs.album', $album->id);
+		return $song->count() > 4;
+	}
 	protected function getShareSocial(){
 		$lang = $this->getLyricsLanguage();
 		$singer = $this->song->getPerson(person::singer);
