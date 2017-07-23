@@ -379,7 +379,7 @@ export default class Song{
 					<td class="center">
 						<div class="form-group">
 							<div class="checkbox">
-								<label><input type="checkbox" name="persons[${person}][primary]" value="1" class="grey person-primary"></label>
+								<label><input type="checkbox" checked="" name="persons[${person}][primary]" value="1" class="grey person-primary"></label>
 							</div>
 						</div>
 					</td>
@@ -407,14 +407,15 @@ export default class Song{
 	private static inputDirection(){
 		let langSelector = $("select[name=lang]", Song.$form);
 		langSelector.on("change", function(){
-			let lang = $('option:selected', this).val();
-			let ltr = Song.is_ltr(lang);
-			if(ltr){
+			let lang:string = $('option:selected', this).val() as string;
+			if(Song.is_ltr(lang)){
 				$(".lyric_text", Song.$lyricFields).addClass("ltr");
 				$("input[name=title]").addClass("ltr");
+				$("textarea[name=lyrics]").addClass("ltr").prop('placeholder', 'Enter lyrics here...');
 			}else{
 				$(".lyric_text", Song.$lyricFields).removeClass("ltr");
 				$("input[name=title]").removeClass("ltr");
+				$("textarea[name=lyrics]").removeClass("ltr").prop('placeholder', 'متون را اینجا وارد کنید...');
 			}
 		});
 		langSelector.trigger("change");
@@ -579,6 +580,18 @@ export default class Song{
 					action = action.replace(/langLyric=[a-z]{2}/i, "langLyric="+lang);
 					Song.$form.attr('action', action);
 
+					let importLyrics:string = '';
+					$('.lyric_text').each(function(){
+						if($(this).val()){
+							importLyrics += $(this).val() + '\n';
+						}
+					});
+					$('textarea[name=lyrics]').val(importLyrics);
+					if($('.lyric_text').hasClass('ltr')){
+						$('textarea[name=lyrics]').addClass('ltr').prop('placeholder', 'Enter lyrics here...');
+					}else{
+						$('textarea[name=lyrics]').removeClass('ltr').prop('placeholder', 'متون را اینجا وارد کنید...');
+					}
 				},
 				error: function(){
 					$btn.prop("disabled", false).html($btn.data("html"));
@@ -642,10 +655,99 @@ export default class Song{
 			});
 		});
 	}
+	private static importLyrics():void{
+		$('#importForm').on('submit', function(e){
+			e.preventDefault();
+			const lyrics = $('textarea[name=lyrics]').val() as string;
+			if(lyrics){
+				$('.lyricFields').html('');
+				let time = 0;
+				let index = 0;
+				const lang = $('select[name=lang] option:selected').val() as string;
+				for(const lyric of lyrics.split('\n')){
+					if(lyric != ''){
+						const html = `<div class="row lyrics" data-lyriclang="${$('select[name=lang] option:selected').val()}">
+							<div class="col-sm-3 col-xs-4">
+								<div class="form-group">
+									<input value="${Song.formatTime(++time)}" name="lyric[${index}][time]" class="form-control lyric_time ltr" type="text">
+								</div>
+							</div>
+							<div class="col-sm-9 col-xs-8">
+								<div class="form-group">
+									<input value="${lyric}" name="lyric[${index}][text]" class="form-control lyric_text ${Song.is_ltr(lang) ? 'ltr' : ''}" type="text">
+								</div>
+							</div>
+						</div>`;
+						let $newRow = $(html).appendTo($('.lyricFields'));
+						Song.setEvents($newRow);
+						$(this).parents(".modal").modal('hide');
+						index++;
+					}
+				}
+			}
+		});
+	}
+	private static editImportLyrics():void{
+		let lyrics:string = '';
+		$('.lyric_text').each(function(){
+			lyrics += $(this).val() + '\n';
+		});
+		$('textarea[name=lyrics]').val(lyrics);
+
+		function makeTime(strTime:string):number{
+			let $val = strTime.split(":");
+			if($val.length != 2)return -1;
+			let $min = parseInt($val[0]);
+			let $sec = parseInt($val[1]);
+			if(isNaN($min) || isNaN($sec)){
+				return -1;
+			}
+			return $min * 60 + $sec;
+		}
+		$('#importForm').on('submit', function(e){
+			e.preventDefault();
+			const lyrics = $('textarea[name=lyrics]').val() as string;
+			if(lyrics){
+				let time = 0;
+				let index = 0;
+				const lang = $('select[name=lang] option:selected').val() as string;
+				for(const lyric of lyrics.split('\n')){
+					if(lyric != ''){
+						const input = $(`input[name='lyric[${index}][text]']`);
+						if(input.length){
+							if(input.val() != lyric){
+								$(`input.lyric_text[name='lyric[${index}][text]']`).val(lyric);
+							}
+						}else if($("input.lyric_time").parents('.lyrics').data('lyriclang') == $('select[name=lang] option:selected').val()){
+							const $lastInput = $("input.lyric_time").last();
+							let time = makeTime($lastInput.val() as string) + 2;
+							let ltr = $("input.lyric_text").hasClass("ltr") ? 'ltr' : "";
+							let lang = $lastInput.parents('.lyrics').data('lyriclang');
+							const html = `<div class="row lyrics" data-lyriclang="${lang}">
+								<div class="col-sm-3 col-xs-4">
+									<div class="form-group">
+										<input value="${Song.formatTime(time)}" name="lyric[${index}][time]" class="form-control lyric_time ltr" type="text">
+									</div>
+								</div>
+								<div class="col-sm-9 col-xs-8">
+									<div class="form-group">
+										<input value="${lyric}" name="lyric[${index}][text]" class="form-control lyric_text ${Song.is_ltr(lang) ? 'ltr' : ''}" type="text">
+									</div>
+								</div>
+							</div>`;
+							let $newRow = $(html).appendTo($('.lyricFields'));
+							Song.setEvents($newRow);
+						}
+						index++;
+						$(this).parents(".modal").modal('hide');
+					}
+				}
+			}
+		});
+	}
 	public static init(){
 		let $body = $('body');
 		if($body.hasClass('song_add')){
-			
 			Song.$form = $('.song_add_form');
 			Song.$lyricFields = $(".lyricFields", Song.$form)
 			Song.setEvents(Song.$form);
@@ -658,6 +760,7 @@ export default class Song{
 			Song.createFieldPerson();
 			Song.setPersonsEvents();
 			Song.runSubmitFormListener();
+			Song.importLyrics();
 		}else if($body.hasClass('song_edit')){
 			Song.$form = $('.song_edit_form');
 			Song.$lyricFields = $(".lyricFields", Song.$form)
@@ -674,6 +777,8 @@ export default class Song{
 			Song.runLyricLangListerner();
 			Song.createFieldPerson();
 			Song.runSubmitFormListener();
+			Song.inputDirection();
+			Song.editImportLyrics();
 		}else if($body.hasClass('song_list')){
 			Song.$form = $('#songsLists');
 			Song.runAlbumAutoComplete();

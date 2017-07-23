@@ -144,6 +144,7 @@
 		"ghafiye.return": "بازگشت",
 		"ghafiye.delete": "حذف",
 		"ghafiye.panle.albums.add": "افزودن آلبوم",
-		"ghafiye.panle.albums.edit": "ویرایش آلبوم"
+		"ghafiye.panle.albums.edit": "ویرایش آلبوم",
+		"ghafiye.panel.song.add.importLyrics": "درون ریزی متون"
 	}
 }

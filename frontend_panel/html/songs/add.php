@@ -177,6 +177,7 @@ $this->the_header();
 									<i class="fa fa-music"></i>
 									<span><?php echo translator::trans("ghafiye.addSong.lyric"); ?></span>
 									<div class="panel-tools">
+										<a class="btn btn-xs btn-link tooltips" title="" href="#importLyrics" data-toggle="modal" data-title="<?php echo translator::trans('ghafiye.panel.song.add.importLyrics'); ?>"><i class="fa fa-cloud-download"></i></a>
 										<a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
 									</div>
 								</div>
@@ -244,7 +245,7 @@ $this->the_header();
 				)
 			);
 			foreach($feilds as $input){
-				echo $this->createField($input);
+				$this->createField($input);
 			}
 			?>
 		</form>
@@ -274,13 +275,35 @@ $this->the_header();
 				)
 			);
 			foreach($feilds as $input){
-				echo $this->createField($input);
+				$this->createField($input);
 			}
 			?>
 		</form>
 	</div>
 	<div class="modal-footer">
 		<button type="submit" form="addPersonForm" class="btn btn-success"><?php echo translator::trans("confrim"); ?></button>
+		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
+	</div>
+</div>
+<div class="modal fade modal-lg" id="importLyrics" tabindex="-1" data-show="true" role="dialog">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+		<h4 class="modal-title"><?php echo translator::trans('ghafiye.panel.song.add.importLyrics'); ?></h4>
+	</div>
+	<div class="modal-body">
+		<form id="importForm" class="form-horizontal" action="#" method="post">
+			<?php
+			$this->setHorizontalForm('sm-0','sm-12');
+			$this->createField([
+				'name' => 'lyrics',
+				'type' => 'textarea',
+				'rows' => 8
+			]);
+			?>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<button type="submit" form="importForm" class="btn btn-success"><?php echo translator::trans("confrim"); ?></button>
 		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans('cancel'); ?></button>
 	</div>
 </div>
