@@ -345,7 +345,14 @@ class songs extends controller{
 						$song->$key = null;
 					}
 				}
-				foreach(array('lang', 'status', 'group', 'album', 'image', 'genre') as $key){
+				foreach(['group', 'album'] as $item){
+					if(isset($inputs[$item]) and $inputs[$item]){
+						$song->$item = $inputs[$item];
+					}else{
+						$song->$item = null;
+					}
+				}
+				foreach(array('lang', 'status', 'image', 'genre') as $key){
 					if(isset($inputs[$key]) and $inputs[$key]){
 						$song->$key = $inputs[$key];
 					}
