@@ -556,10 +556,9 @@ export default class Song{
 						if(song.orginalLang){
 							html += `<div class="form-group"><input value="${lyrics[i].text}" name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text"></div></div></div>`;
 						}else{
-							let $formGroup = $('.form-group', $oldRow).eq(1);
-							let className = $formGroup.attr('class');
+							let $formGroup = $('.form-group', $oldRow).eq(0);
 							let ltrOrginal = Song.is_ltr(song.lang) ? "ltr" : "";
-							html += `<div class="${className}">
+							html += `<div class="form-group">
 								<input value="${song.orginalLyric[i].text}" name="" disabled="" class="form-control ${ltrOrginal}" type="text">
 								<input value="${song.orginalLyric[i].id}" name="lyric[${i}][parent]" class="form-control" type="hidden">
 								<input value="${isset ? lyrics[i].text : ""}" name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
@@ -592,6 +591,7 @@ export default class Song{
 					}else{
 						$('textarea[name=lyrics]').removeClass('ltr').prop('placeholder', 'متون را اینجا وارد کنید...');
 					}
+					Song.similarLyricAutoComplete();
 				},
 				error: function(){
 					$btn.prop("disabled", false).html($btn.data("html"));
@@ -742,6 +742,39 @@ export default class Song{
 						$(this).parents(".modal").modal('hide');
 					}
 				}
+			}
+		});
+	}
+	private static similarLyricAutoComplete(){
+		$('.lyric_text', Song.$form).on('change', function(){
+			const $row = $(this).parents('.lyrics');
+			const lang = $('select[name=lang] option:selected');
+			if($row.data('lyriclang') != lang.val()){
+				const $changedOriginal = $(this).parents('.form-group').find('input:first');
+				const $similars = $('.lyric_text', Song.$form).parents('.form-group').find('input:first[value="'+$changedOriginal.val()+'"]');
+				const taht = $(this);
+				$similars.each(function(){
+					const $parent = $(this).parent();
+					if(!$('.lyric_text', $parent).val()){
+						$('.lyric_text', $parent).val(taht.val());
+					}
+				});
+				/*$('.lyric_text', Song.$form).each(function(){
+					const $thatOriginal = taht.parents('.form-group').find('input:first');
+					const $original = $(this).parents('.form-group').find('input:first');
+					if(!$thatOriginal.is($original) && $original.val() == $thatOriginal.val()){
+
+						console.log($original);
+						if(!$(this).val()){
+							$(this).val(taht.val());
+						}
+					}
+				});*/
+			}else{
+				console.log('salam');
+				console.log($row.data('lyriclang'));
+				console.log(lang.val());
+				console.log($row.data('lyriclang') != lang.val());
 			}
 		});
 	}
