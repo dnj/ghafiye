@@ -137,6 +137,11 @@
 			"name": "\\themes\\musixmatch\\views\\blog\\search",
 			"parent": "\\packages\\blog\\views\\post\\search",
 			"file": "html/blog/listview.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\pages\\view",
+			"parent": "\\packages\\pages\\views\\page\\view",
+			"file": "html/pages/view.php"
 		}
 	]
 }

@@ -111,6 +111,10 @@
 		{
 			"classes":["views\\blog\\search"],
 			"file":"views/blog/search.php"
+		},
+		{
+			"classes":["views\\pages\\view"],
+			"file":"views/pages/view.php"
 		}
 	]
 }
