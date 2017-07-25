@@ -14,7 +14,7 @@ class song extends dbObject{
 	protected $primaryKey = "id";
 	protected $dbFields = array(
 		'musixmatch_id' => array('type' => 'int', 'unique' => true),
-		'spotify_id' => array('type' => 'text', 'unique' => true),
+		'spotify_id' => array('type' => 'text'),
 		'album' => array('type' => 'int'),
 		'group' => array('type' => 'int'),
         'release_at' => array('type' => 'int', 'required' => true),
