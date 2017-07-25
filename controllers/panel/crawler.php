@@ -14,6 +14,7 @@ use \packages\userpanel\controller;
 
 use \packages\musixmatch\api as musixmatch;
 use \packages\musixmatch\NoSizeSelectedException;
+use \packages\musixmatch\image;
 
 use \packages\ghafiye\person;
 use \packages\ghafiye\song;
@@ -180,21 +181,36 @@ class crawler extends controller{
 		}
 		return $this->musixmatch;
 	}
+	private function downloadImage($image):string{
+		static $package;
+		if(!$package){
+			$package = packages::package('ghafiye');
+		}
+		$path = 'storage/public/default-image.png';
+		if($image instanceof image){
+			$storage = new directory\local($package->getFilePath('storage/public/musixmatch'));
+			if(!$storage->exists()){
+				$storage->make(true);
+			}
+			try{
+				
+				
+				$image->size(array([350,350], [500,500], [250,250], [100,100]));
+				$file = $storage->file(md5('musixmatch-'.$image->id).'.'.substr($image->selectedSize['url'], strrpos($image->selectedSize['url'], '.')+1));
+				if(!$file->exists()){
+					$image->storeAs($file);
+				}
+				$path = 'storage/public/musixmatch/'.$file->basename;
+			}catch(NoSizeSelectedException $e){
+
+			}
+		}
+		return $package->url($path);
+	}
 	private function searchArtists(array $inputs){
 		$artists = [];
-		$artistStorage = new directory\local(packages::package('ghafiye')->getFilePath('storage/public/artist/'));
-		if(!$artistStorage->exists()){
-			$artistStorage->make(true);
-		}
+		
 		foreach($this->getAPI()->artist()->searchByName($inputs['name']) as $artist){
-			$avatar = 'storage/public/default-image.png';
-			if($artist->image and $artist->image){
-				$file = $artistStorage->file(md5('musixmatch-'.$artist->image->id).'.jpg');
-				if(!$file->exists()){
-					$artist->image->size(array([350,350], [250,250]))->storeAs($file);
-				}
-				$avatar = 'storage/public/artist/'.$file->basename;
-			}
 			$isExist = person::where("musixmatch_id", $artist->id)->has();
 			$isQueued = queue::where("type", queue::artist)->where("MMID", $artist->id)->has();
 			$artists[] = array(
@@ -202,7 +218,7 @@ class crawler extends controller{
 				'rating' => $artist->rating,
 				'name' => $artist->name,
 				'country' => $artist->country,
-				'avatar' => packages::package('ghafiye')->url($avatar),
+				'avatar' => $this->downloadImage($artist->image),
 				'isQueued' => $isQueued,
 				'isExist' => $isExist,
 			);
@@ -221,23 +237,7 @@ class crawler extends controller{
 		}else{
 			throw new \Exception("artist or name or album should passed");
 		}
-		$trackStorage = new directory\local(packages::package('ghafiye')->getFilePath('storage/public/track/'));
-		if(!$trackStorage->exists()){
-			$trackStorage->make(true);
-		}
 		foreach($tracks->orderBy('rate', 'desc')->paginate($this->page, $this->items_per_page) as $track){
-			$image = 'storage/public/default-image.png';
-			try{
-				if($track->album_cover){
-					$file = $trackStorage->file(md5('musixmatch-'.$track->album_cover->id).'.jpg');
-					if(!$file->exists()){
-						$size = $track->album_cover->size(array([350,350], [500,500], [250,250], [100,100]))->storeAs($file);
-					}
-					$image = 'storage/public/track/'.$file->basename;
-				}
-			}catch(NoSizeSelectedException $e){
-				$image = 'storage/public/default-image.png';
-			}
 			$isExist = song::where("musixmatch_id", $track->id)->has();
 			$isQueued = queue::where("type", queue::track)->where("MMID", $track->id)->has();
 			$outTrack = array(
@@ -250,7 +250,7 @@ class crawler extends controller{
 				'genres' => [],
 				'isQueued' => $isQueued,
 				'isExist' => $isExist,
-				'image' => packages::package('ghafiye')->url($image),
+				'image' => $this->downloadImage($track->album_cover),
 				'rating' => $track->rating
 			);
 			foreach($track->genres as $genre){
@@ -282,23 +282,7 @@ class crawler extends controller{
 					->searchByArtist($inputs['artist'])
 					->orderBy('released_at', 'desc')
 					->paginate($this->page, $this->items_per_page);
-		$storage = new directory\local(packages::package('ghafiye')->getFilePath('storage/public/album/'));
-		if(!$storage->exists()){
-			$storage->make(true);
-		}
 		foreach($albums as $album){
-			$image = 'storage/public/default-image.png';
-			try{
-				if($album->cover){
-					$file = $storage->file(md5('musixmatch-'.$album->cover->id).'.jpg');
-					if(!$file->exists()){
-						$size = $album->cover->size(array([350,350], [500,500], [250,250], [100,100]))->storeAs($file);
-					}
-					$image = 'storage/public/album/'.$file->basename;
-				}
-			}catch(NoSizeSelectedException $e){
-				$image = 'storage/public/default-image.png';
-			}
 			$isExist = album::where("musixmatch_id", $album->id)->has();
 			$isQueued = queue::where("type", queue::album)->where("MMID", $album->id)->has();
 			$outAlbum = array(
@@ -311,7 +295,7 @@ class crawler extends controller{
 				'genres' => [],
 				'isQueued' => $isQueued,
 				'isExist' => $isExist,
-				'image' => packages::package('ghafiye')->url($image),
+				'image' => $this->downloadImage($album->cover),
 				'rating' => $album->rating
 			);
 			foreach($album->genres as $genre){
