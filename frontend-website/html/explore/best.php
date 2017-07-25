@@ -11,8 +11,11 @@ $this->the_header();
 			<p><?php echo translator::trans('explore.best.description'); ?></p>
 			<ul>
 				<?php
-				$x=0;
-				foreach($this->getSongs() as $song){
+				$songs = $this->getSongs();
+				$page = base\http::getData('page') ? base\http::getData('page') : 1;
+				$pageLimit = $songs[0]->pageLimit;
+				$x= (($page - 1) * $pageLimit);
+				foreach($songs as $song){
 					$singer = $song->getPerson(person::singer);
 				?>
 				<li class="row">
