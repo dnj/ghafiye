@@ -1,16 +1,26 @@
 <?php
 namespace packages\ghafiye\controllers\panel;
+
 use \packages\base\packages;
 use \packages\base\NotFound;
 use \packages\base\translator;
 use \packages\base\db\parenthesis;
+use \packages\base\IO\file;
+use \packages\base\IO\directory;
+
 use \packages\userpanel;
 use \packages\userpanel\view;
 use \packages\userpanel\controller;
+
+use \packages\musixmatch\api as musixmatch;
+
+use \packages\ghafiye\person;
 use \packages\ghafiye\crawler\queue;
 use \packages\ghafiye\authorization;
+
 class crawler extends controller{
 	protected $authentication = true;
+	private $musixmatch;
 	public function queue(){
 		authorization::haveOrFail('crawler_search');
 		$view = view::byName("\\packages\\ghafiye\\views\\panel\\crawler\\search");
@@ -143,7 +153,7 @@ class crawler extends controller{
 			$data = [];
 			switch($inputs['type']){
 				case(queue::artist):
-					$this->searchByPerson($inputs);
+					$this->response->setData($this->searchArtists($inputs), 'artists');
 					break;
 				case(queue::track):
 					$this->searchByTrack($inputs);
@@ -160,56 +170,40 @@ class crawler extends controller{
 		}
 		return $this->response;
 	}
-	private function searchByPerson(array $inputs){
-		$artists = [
-			[
-				'id' => 13774235,
-				'rating' => rand(1, 100),
-				"name" => "Prodigy",
-				"country" => "GB",
-				'avatar' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'isQueued' => false,
-				'isExist' => true
-			],
-			[
-				'id' => 16439,
-				'rating' => rand(1, 100),
-				"name" => "The Prodigy",
-				"country" => "GB",
-				'avatar' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'isQueued' => true,
-				'isExist' => false
-
-			],
-			[
-				'id' => 13872981,
-				'rating' => rand(1, 100),
-				"name" => "Tony Touch feat. Prodigy ",
-				"country" => '',
-				'avatar' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'isQueued' => false,
-				'isExist' => false
-			],
-			[
-				'id' => 13770774,
-				'rating' => rand(1, 100),
-				"name" => "Raekwon, Prodigy & Ghostface Killah",
-				"country" => "US",
-				'avatar' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'isQueued' => true,
-				'isExist' => false
-			],
-			[
-				'id' => 13869023,
-				'rating' => rand(1, 100),
-				"name" => "Lloyd Banks feat. 50 Cent & Prodigy  ",
-				"country" => "US",
-				'avatar' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'isQueued' => false,
-				'isExist' => false
-			]
-		];
-		$this->response->setData($artists, 'artists');
+	private function getAPI(){
+		if(!$this->musixmatch){
+			$this->musixmatch = new musixmatch();
+		}
+		return $this->musixmatch;
+	}
+	private function searchArtists(array $inputs){
+		$artists = [];
+		$artistStorage = new directory\local(packages::package('ghafiye')->getFilePath('storage/public/artist/'));
+		if(!$artistStorage->exists()){
+			$artistStorage->make(true);
+		}
+		foreach($this->getAPI()->artist()->searchByName($inputs['name']) as $artist){
+			$avatar = 'storage/public/default-image.png';
+			if($artist->image and $artist->image){
+				$file = $artistStorage->file(md5('musixmatch-'.$artist->image->id).'.jpg');
+				if(!$file->exists()){
+					$artist->image->size(array([350,350], [250,250]))->storeAs($file);
+				}
+				$avatar = 'storage/public/artist/'.$file->basename;
+			}
+			$isExist = person::where("musixmatch_id", $artist->id)->has();
+			$isQueued = queue::where("type", queue::artist)->where("MMID", $artist->id)->has();
+			$artists[] = array(
+				'id' => $artist->id,
+				'rating' => $artist->rating,
+				'name' => $artist->name,
+				'country' => $artist->country,
+				'avatar' => packages::package('ghafiye')->url($avatar),
+				'isQueued' => $isQueued,
+				'isExist' => $isExist,
+			);
+		}
+		return $artists;
 	}
 	private function searchByTrack(array $inputs){
 		$tracks = [
