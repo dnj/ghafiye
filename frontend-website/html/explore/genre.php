@@ -12,8 +12,11 @@ $lang = $this->getSongLanguage();
 			<p><?php echo translator::trans('explore.genre.description',array('genre' => $this->genre->title($lang))); ?></p>
 			<ul>
 				<?php
-				$x=0;
-				foreach($this->getSongs() as $song){
+				$songs = $this->getSongs();
+				$page = base\http::getData('page') ? base\http::getData('page') : 1;
+				$pageLimit = $songs[0]->pageLimit;
+				$x= (($page - 1) * $pageLimit);
+				foreach($songs as $song){
 					$singer = $song->getPerson(person::singer);
 				?>
 				<li>
