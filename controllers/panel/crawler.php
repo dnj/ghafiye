@@ -17,6 +17,7 @@ use \packages\musixmatch\NoSizeSelectedException;
 
 use \packages\ghafiye\person;
 use \packages\ghafiye\song;
+use \packages\ghafiye\album;
 use \packages\ghafiye\crawler\queue;
 use \packages\ghafiye\authorization;
 
@@ -162,7 +163,7 @@ class crawler extends controller{
 					$this->response->setData($this->searchTrack($inputs), 'tracks');
 					break;
 				case(queue::album):
-					$this->searchByAlbum($inputs);
+					$this->response->setData($this->searchAlbum($inputs), 'albums');
 					break;
 			}
 			$this->response->setData($inputs['type'], 'type');
@@ -271,66 +272,57 @@ class crawler extends controller{
 	private function searchTrackByName(string $name){
 		return $this->getAPI()->track()->searchByName($name);
 	}
-	public function searchByAlbum(array $inputs){
-		$albums = [
-			[
-				"id" => 11339785,
-				"mbid" => null,
-				"name" => "Atlas (From \"The Hunger Games => Catching Fire\" Soundtrack)",
-				"rating" => 0,
-				"track_count" => 1,
-				"release_date" => "2013-09-06",
-				"release_type" => "Single",
-				"artist_id" => 1039,
-				"artist_name" => "Coldplay",
-				'image' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'isQueued' => true,
-				'isExist' => false
-			],
-			[
-				"id" => 11331552,
-				"mbid" => "262de19d-4ed6-4f6f-aa7a-61dc50a34bce",
-				"name" => "Atlas (From \"The Hunger Games => Catching Fire\")",
-				"rating" => 100,
-				"track_count" => 1,
-				"release_date" => "2013-09-06",
-				"release_type" => "Single",
-				"artist_id" => 1039,
-				"artist_name" => "Coldplay",
-				'image' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'isQueued' => false,
-				'isExist' => true
-			],
-			[
-				"id" => 11339769,
-				"mbid" => null,
-				"name" => "Live 2012",
-				"rating" => 97,
-				"track_count" => 15,
-				"release_date" => "2012-11-19",
-				"release_type" => "Album",
-				"artist_id" => 1039,
-				"artist_name" => "Coldplay",
-				'image' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'isQueued' => false,
-				'isExist' => false
-			],
-			[
-				"id" => 11306150,
-				"mbid" => "6250e17a-57d8-4e4e-af7c-ba95e59078e9",
-				"name" => "Charlie Brown (Jacques Lu Cont Remix)",
-				"rating" => 63,
-				"track_count" => 1,
-				"release_date" => "2012-08-07",
-				"release_type" => "Remix",
-				"artist_id" => 1039,
-				"artist_name" => "Coldplay",
-				'image' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'isQueued' => false,
-				'isExist' => false
-			]
-		];
-		$this->response->setData($albums, 'albums');
+	public function searchAlbum(array $inputs):array{
+		$outAlbums = [];
+		if(!isset($inputs['artist'])){
+			throw new \Exception("artist should passed");
+		}
+		$albums = $this->getAPI()
+					->album()
+					->searchByArtist($inputs['artist'])
+					->orderBy('released_at', 'desc')
+					->paginate($this->page, $this->items_per_page);
+		$storage = new directory\local(packages::package('ghafiye')->getFilePath('storage/public/album/'));
+		if(!$storage->exists()){
+			$storage->make(true);
+		}
+		foreach($albums as $album){
+			$image = 'storage/public/default-image.png';
+			try{
+				if($album->cover){
+					$file = $storage->file(md5('musixmatch-'.$album->cover->id).'.jpg');
+					if(!$file->exists()){
+						$size = $album->cover->size(array([350,350], [500,500], [250,250], [100,100]))->storeAs($file);
+					}
+					$image = 'storage/public/album/'.$file->basename;
+				}
+			}catch(NoSizeSelectedException $e){
+				$image = 'storage/public/default-image.png';
+			}
+			$isExist = album::where("musixmatch_id", $album->id)->has();
+			$isQueued = queue::where("type", queue::album)->where("MMID", $album->id)->has();
+			$outAlbum = array(
+				'id' => $album->id,
+				'name' => $album->name,
+				'length' => $album->length,
+				'album_id' => $album->album_id,
+				'album_name' => $album->album_name,
+				'artist_name' => $album->artist_name,
+				'genres' => [],
+				'isQueued' => $isQueued,
+				'isExist' => $isExist,
+				'image' => packages::package('ghafiye')->url($image),
+				'rating' => $album->rating
+			);
+			foreach($album->genres as $genre){
+				$outAlbum['genres'][] = array(
+					'id' => $genre->id,
+					'name' => $genre->fullName
+				);
+			}
+			$outAlbums[] = $outAlbum;
+		}
+		return $outAlbums;
 	}
 	public function store(){
 		authorization::haveOrFail('crawler_add');
