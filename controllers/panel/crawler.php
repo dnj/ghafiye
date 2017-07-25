@@ -13,8 +13,10 @@ use \packages\userpanel\view;
 use \packages\userpanel\controller;
 
 use \packages\musixmatch\api as musixmatch;
+use \packages\musixmatch\NoSizeSelectedException;
 
 use \packages\ghafiye\person;
+use \packages\ghafiye\song;
 use \packages\ghafiye\crawler\queue;
 use \packages\ghafiye\authorization;
 
@@ -122,6 +124,7 @@ class crawler extends controller{
 	}
 	public function search(){
 		authorization::haveOrFail('crawler_add');
+		$this->items_per_page =  16;
 		$inputRules = [
 			'type' => [
 				'type' => 'number',
@@ -156,7 +159,7 @@ class crawler extends controller{
 					$this->response->setData($this->searchArtists($inputs), 'artists');
 					break;
 				case(queue::track):
-					$this->searchByTrack($inputs);
+					$this->response->setData($this->searchTrack($inputs), 'tracks');
 					break;
 				case(queue::album):
 					$this->searchByAlbum($inputs);
@@ -205,85 +208,68 @@ class crawler extends controller{
 		}
 		return $artists;
 	}
-	private function searchByTrack(array $inputs){
-		$tracks = [
-			[
-				"id" =>  113673904,
-				"name" =>  "Let Me Love You",
-				"length" =>  206,
-				"album_id" =>  23853614,
-				"album_name" =>  "Encore",
-				"artist_name" => "DJ Snake feat. Justin Bieber",
-				"genres" => [
-					[
-						"pop"
-					]
-				],
-				'isQueued' => true,
-				'isExist' => false,
-				'image' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'rating' => rand(1, 100)
-			],
-			[
-				"id" =>  113810442,
-				"name" =>  "Cold Water",
-				"length" =>  185,
-				"album_id" =>  23866648,
-				"album_name" =>  "Cold Water",
-				"artist_name" => "DJ Snake feat. Justin Bieber",
-				"genres" => [
-					[
-						"name" => "Electronic-Electronica",
-						"id" => "1058"
-					],
-					[
-						"name" => "Pop",
-						"id" => 14
-					]
-				],
-				'isQueued' => false,
-				'isExist' => false,
-				'image' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'rating' => rand(1, 100)
-			],
-			[
-				"id" =>  84207136,
-				"name" =>  "Love Yourself",
-				"length" =>  234,
-				"album_id" =>  20882700,
-				"album_name" =>  "Purpose",
-				"artist_name" => "DJ Snake feat. Justin Bieber",
-				"genres" => [
-					[
-						"name" => "Pop",
-						"id" => 14
-					]
-				],
-				'isQueued' => false,
-				'isExist' => true,
-				'image' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'rating' => rand(1, 100)
-			],
-			[
-				"id" =>  84207135,
-				"name" =>  "Sorry",
-				"length" =>  201,
-				"album_id" =>  20882700,
-				"album_name" =>  "Purpose",
-				"artist_name" => "DJ Snake feat. Justin Bieber",
-				"genres" => [
-					[
-						"name" => "Pop",
-						"id" => 14
-					]
-				],
-				'isQueued' => false,
-				'isExist' => false,
-				'image' => packages::package('ghafiye')->url('storage/public/default-image.png'),
-				'rating' => rand(1, 100)
-			]
-		];
-		$this->response->setData($tracks, 'tracks');
+	private function searchTrack(array $inputs):array{
+		$tracks = [];
+		$outTracks = [];
+		if(isset($inputs['artist'])){
+			$tracks = $this->searchTrackByArtist($inputs['artist']);
+		}elseif(isset($inputs['album'])){
+			$tracks = $this->searchTrackByAlbum($inputs['album']);
+		}elseif(isset($inputs['name'])){
+			$tracks =  $this->searchTrackByName($inputs['name']);
+		}else{
+			throw new \Exception("artist or name or album should passed");
+		}
+		$trackStorage = new directory\local(packages::package('ghafiye')->getFilePath('storage/public/track/'));
+		if(!$trackStorage->exists()){
+			$trackStorage->make(true);
+		}
+		foreach($tracks->orderBy('rate', 'desc')->paginate($this->page, $this->items_per_page) as $track){
+			$image = 'storage/public/default-image.png';
+			try{
+				if($track->album_cover){
+					$file = $trackStorage->file(md5('musixmatch-'.$track->album_cover->id).'.jpg');
+					if(!$file->exists()){
+						$size = $track->album_cover->size(array([350,350], [500,500], [250,250], [100,100]))->storeAs($file);
+					}
+					$image = 'storage/public/track/'.$file->basename;
+				}
+			}catch(NoSizeSelectedException $e){
+				$image = 'storage/public/default-image.png';
+			}
+			$isExist = song::where("musixmatch_id", $track->id)->has();
+			$isQueued = queue::where("type", queue::track)->where("MMID", $track->id)->has();
+			$outTrack = array(
+				'id' => $track->id,
+				'name' => $track->name,
+				'length' => $track->length,
+				'album_id' => $track->album_id,
+				'album_name' => $track->album_name,
+				'artist_name' => $track->artist_name,
+				'genres' => [],
+				'isQueued' => $isQueued,
+				'isExist' => $isExist,
+				'image' => packages::package('ghafiye')->url($image),
+				'rating' => $track->rating
+			);
+			foreach($track->genres as $genre){
+				$outTrack['genres'][] = array(
+					'id' => $genre->id,
+					'name' => $genre->fullName
+				);
+			}
+			$outTracks[] = $outTrack;
+		}
+		return $outTracks;
+	}
+	private function searchTrackByArtist(int $artist){
+		return $this->getAPI()->track()->searchByArtist($artist);
+	}
+	private function searchTrackByAlbum(int $album){
+		return $this->getAPI()->track()->searchByAlbum($album);
+	}
+	private function searchTrackByName(string $name){
+		return $this->getAPI()->track()->searchByName($name);
 	}
 	public function searchByAlbum(array $inputs){
 		$albums = [
