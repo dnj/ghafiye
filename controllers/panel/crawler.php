@@ -194,7 +194,7 @@ class crawler extends controller{
 			}
 			try{
 				$image->size(array([350,350], [500,500], [250,250], [100,100]));
-				$file = $storage->file(md5('musixmatch-'.$image->id).'.'.substr($image->selectedSize['url'], strrpos($image->selectedSize['url'], '.')+1));
+				$file = $storage->file(md5('musixmatch-'.$image->id.'-'.$image->selectedSize['width'].'x'.$image->selectedSize['height']).'.'.substr($image->selectedSize['url'], strrpos($image->selectedSize['url'], '.')+1));
 				if(!$file->exists()){
 					$image->storeAs($file);
 				}
