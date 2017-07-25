@@ -150,56 +150,12 @@
 			"file":"views/copyright.php"
 		},
 		{
-			"classes":["musixmatch\\api"],
-			"file":"libraries/musixmatch/api.php"
-		},
-		{
-			"classes":["musixmatch\\artist"],
-			"file":"libraries/musixmatch/artist.php"
-		},
-		{
-			"classes":["musixmatch\\album"],
-			"file":"libraries/musixmatch/album.php"
-		},
-		{
-			"classes":["musixmatch\\track"],
-			"file":"libraries/musixmatch/track.php"
-		},
-		{
-			"classes":["musixmatch\\track\\cover"],
-			"file":"libraries/musixmatch/track_cover.php"
-		},
-		{
-			"classes":["musixmatch\\track\\translation"],
-			"file":"libraries/musixmatch/translation.php"
-		},
-		{
-			"classes":["musixmatch\\lyric"],
-			"file":"libraries/musixmatch/lyric.php"
-		},
-		{
-			"classes":["musixmatch\\lyric\\translation"],
-			"file":"libraries/musixmatch/lyric_translation.php"
-		},
-		{
-			"classes":["musixmatch\\genre"],
-			"file":"libraries/musixmatch/genre.php"
-		},
-		{
-			"classes":["musixmatch\\video"],
-			"file":"libraries/musixmatch/video.php"
-		},
-		{
 			"classes":["processes\\musixmatch"],
 			"file":"processes/musixmatch.php"
 		},
 		{
 			"classes":["listeners\\settings\\usertype"],
 			"file":"listeners/settings/usertype.php"
-		},
-		{
-			"classes":["jsonrpc"],
-			"file":"libraries/musixmatch/jsonrpc.php"
 		},
 		{
 			"classes":["authorization"],
