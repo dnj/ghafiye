@@ -193,8 +193,6 @@ class crawler extends controller{
 				$storage->make(true);
 			}
 			try{
-				
-				
 				$image->size(array([350,350], [500,500], [250,250], [100,100]));
 				$file = $storage->file(md5('musixmatch-'.$image->id).'.'.substr($image->selectedSize['url'], strrpos($image->selectedSize['url'], '.')+1));
 				if(!$file->exists()){
@@ -208,12 +206,16 @@ class crawler extends controller{
 		return $package->url($path);
 	}
 	private function searchArtists(array $inputs){
-		$artists = [];
-		
-		foreach($this->getAPI()->artist()->searchByName($inputs['name']) as $artist){
+		$outArtists = [];
+		$artists = $this->getAPI()
+					->artist()
+					->searchByName($inputs['name'])
+					->orderBy('rate', 'desc')
+					->paginate($this->page, $this->items_per_page);
+		foreach($artists as $artist){
 			$isExist = person::where("musixmatch_id", $artist->id)->has();
 			$isQueued = queue::where("type", queue::artist)->where("MMID", $artist->id)->has();
-			$artists[] = array(
+			$outArtists[] = array(
 				'id' => $artist->id,
 				'rating' => $artist->rating,
 				'name' => $artist->name,
@@ -223,7 +225,7 @@ class crawler extends controller{
 				'isExist' => $isExist,
 			);
 		}
-		return $artists;
+		return $outArtists;
 	}
 	private function searchTrack(array $inputs):array{
 		$tracks = [];
