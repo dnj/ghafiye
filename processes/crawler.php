@@ -7,6 +7,7 @@ use \packages\base\db;
 use \packages\base\process;
 use \packages\base\log;
 use \packages\base\packages;
+use \packages\base\response;
 use \packages\base\IO\file;
 use \packages\base\IO\directory;
 
@@ -78,6 +79,7 @@ class crawler extends process{
 			$data['job']->status = queue::faild;
 			$data['job']->save();
 		}
+		return new response(true);
 	}
 
 	private function runArtistJob(queue $job){
@@ -285,9 +287,12 @@ class crawler extends process{
 		
 		$log->info("looking for track's album");
 		$album = $this->findAlbumOrImport($track->album_id);
-
-		$log->info("looking for track's genre");
-		$genre = $this->findGenreOrImport($track->genres[0]);
+		if($track->genres){
+			$log->info("looking for track's genre");
+			$genre = $this->findGenreOrImport($track->genres[0]);
+		}else{
+			$genre = null;
+		}
 
 		$song = new song();
 		$song->musixmatch_id = $track->id;

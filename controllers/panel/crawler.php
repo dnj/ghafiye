@@ -1,6 +1,7 @@
 <?php
 namespace packages\ghafiye\controllers\panel;
 
+use \packages\base\process;
 use \packages\base\packages;
 use \packages\base\NotFound;
 use \packages\base\translator;
@@ -21,6 +22,7 @@ use \packages\ghafiye\song;
 use \packages\ghafiye\album;
 use \packages\ghafiye\crawler\queue;
 use \packages\ghafiye\authorization;
+use \packages\ghafiye\processes\crawler as CrawlerProcess;
 
 class crawler extends controller{
 	protected $authentication = true;
@@ -330,6 +332,14 @@ class crawler extends controller{
 			$queue->type = $inputs['type'];
 			$queue->status = queue::queued;
 			$queue->save();
+
+			$process = new process();
+			$process->name = '\\'.CrawlerProcess::class.'@runJob';
+			$process->parameters = array(
+				'job' => $queue->id
+			);
+			$process->save();
+			$process->runAndWaitFor(30);
 		}catch(inputValidation $error){
 			$view->setFormError(FormError::fromException($error));;
 			$this->response->setStatus(false);
