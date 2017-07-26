@@ -22,6 +22,7 @@ use \packages\ghafiye\song;
 use \packages\ghafiye\album;
 use \packages\ghafiye\crawler\queue;
 use \packages\ghafiye\authorization;
+use \packages\ghafiye\views\listview;
 use \packages\ghafiye\processes\crawler as CrawlerProcess;
 
 class crawler extends controller{
@@ -128,6 +129,7 @@ class crawler extends controller{
 	}
 	public function search(){
 		authorization::haveOrFail('crawler_add');
+		$view = new listview();
 		$this->items_per_page =  16;
 		$inputRules = [
 			'type' => [
@@ -160,21 +162,21 @@ class crawler extends controller{
 			$data = [];
 			switch($inputs['type']){
 				case(queue::artist):
-					$this->response->setData($this->searchArtists($inputs), 'artists');
+					$this->searchArtists($inputs, $view);
 					break;
 				case(queue::track):
-					$this->response->setData($this->searchTrack($inputs), 'tracks');
+					$this->searchTrack($inputs, $view);
 					break;
 				case(queue::album):
-					$this->response->setData($this->searchAlbum($inputs), 'albums');
+					$this->searchAlbum($inputs, $view);
 					break;
 			}
-			$this->response->setData($inputs['type'], 'type');
 			$this->response->setStatus(true);
 		}catch(inputValidation $error){
 			$this->response->setFormError(FormError::fromException($error));;
 			$this->response->setStatus(false);
 		}
+		$this->response->setView($view);
 		return $this->response;
 	}
 	private function getAPI(){
@@ -207,14 +209,13 @@ class crawler extends controller{
 		}
 		return $package->url($path);
 	}
-	private function searchArtists(array $inputs){
+	private function searchArtists(array $inputs, listview $view){
 		$outArtists = [];
 		$artists = $this->getAPI()
 					->artist()
 					->searchByName($inputs['name'])
-					->orderBy('rate', 'desc')
-					->paginate($this->page, $this->items_per_page);
-		foreach($artists as $artist){
+					->orderBy('rate', 'desc');
+		foreach($artists->paginate($this->page, $this->items_per_page) as $artist){
 			$isExist = person::where("musixmatch_id", $artist->id)->has();
 			$isQueued = queue::where("type", queue::artist)->where("MMID", $artist->id)->has();
 			$outArtists[] = array(
@@ -227,9 +228,10 @@ class crawler extends controller{
 				'isExist' => $isExist,
 			);
 		}
-		return $outArtists;
+		$view->setPaginate($this->page, $artists->totalCount, $this->items_per_page);
+		$view->setDataList($outArtists);
 	}
-	private function searchTrack(array $inputs):array{
+	private function searchTrack(array $inputs, listview $view){
 		$tracks = [];
 		$outTracks = [];
 		if(isset($inputs['artist'])){
@@ -241,7 +243,8 @@ class crawler extends controller{
 		}else{
 			throw new \Exception("artist or name or album should passed");
 		}
-		foreach($tracks->orderBy('rate', 'desc')->paginate($this->page, $this->items_per_page) as $track){
+		$tracks->orderBy('rate', 'desc');
+		foreach($tracks->paginate($this->page, $this->items_per_page) as $track){
 			$isExist = song::where("musixmatch_id", $track->id)->has();
 			$isQueued = queue::where("type", queue::track)->where("MMID", $track->id)->has();
 			$outTrack = array(
@@ -265,7 +268,8 @@ class crawler extends controller{
 			}
 			$outTracks[] = $outTrack;
 		}
-		return $outTracks;
+		$view->setPaginate($this->page, $tracks->totalCount, $this->items_per_page);
+		$view->setDataList($outTracks);
 	}
 	private function searchTrackByArtist(int $artist){
 		return $this->getAPI()->track()->searchByArtist($artist);
@@ -276,7 +280,7 @@ class crawler extends controller{
 	private function searchTrackByName(string $name){
 		return $this->getAPI()->track()->searchByName($name);
 	}
-	public function searchAlbum(array $inputs):array{
+	public function searchAlbum(array $inputs, listview $view){
 		$outAlbums = [];
 		if(!isset($inputs['artist'])){
 			throw new \Exception("artist should passed");
@@ -284,9 +288,8 @@ class crawler extends controller{
 		$albums = $this->getAPI()
 					->album()
 					->searchByArtist($inputs['artist'])
-					->orderBy('released_at', 'desc')
-					->paginate($this->page, $this->items_per_page);
-		foreach($albums as $album){
+					->orderBy('released_at', 'desc');
+		foreach($albums->paginate($this->page, $this->items_per_page) as $album){
 			$isExist = album::where("musixmatch_id", $album->id)->has();
 			$isQueued = queue::where("type", queue::album)->where("MMID", $album->id)->has();
 			$outAlbum = array(
@@ -310,7 +313,8 @@ class crawler extends controller{
 			}
 			$outAlbums[] = $outAlbum;
 		}
-		return $outAlbums;
+		$view->setPaginate($this->page, $albums->totalCount, $this->items_per_page);
+		$view->setDataList($outAlbums);
 	}
 	public function store(){
 		authorization::haveOrFail('crawler_add');

@@ -104,7 +104,7 @@ export class Crawler{
 			$(this).formAjax({
 				success: (data: webuilder.AjaxResponse) => {
 					let results:Result[];
-					switch(data.type){
+					switch(type){
 						case('1'):
 							results = Crawler.sources.artist.search(data);
 							break;

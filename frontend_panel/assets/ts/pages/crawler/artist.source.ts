@@ -5,7 +5,8 @@ import {Source, Result as IResult, Crawler} from "../Crawler";
 export class artist implements Source{
 	public search(data:any):Result[]{
 		let results:Result[] = [];
-		for(const artist of data.artists){
+		console.log(data);
+		for(const artist of data.items){
 			let result = new Result();
 			result.id = artist.id;
 			result.title = artist.name;

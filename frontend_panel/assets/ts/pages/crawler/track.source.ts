@@ -5,7 +5,7 @@ import {Source, Result as IResult, Crawler} from "../Crawler";
 export class track implements Source{
 	public search(data:any):Result[]{
 		let results:Result[] = [];
-		for(const track of data.tracks){
+		for(const track of data.items){
 			let result = new Result();
 			result.id = track.id;
 			result.title = track.name;
