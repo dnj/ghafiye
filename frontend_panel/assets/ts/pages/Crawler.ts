@@ -7,11 +7,12 @@ import "jquery-bootstrap-checkbox";
 import {artist} from "./crawler/artist.source";
 import {album} from "./crawler/album.source";
 import {track} from "./crawler/track.source";
+import {paginate} from "../classes/paginate";
 export interface Result{
 	type: "artist" | "track" | "album";
 	id:number;
 	title:string;
-	select():void;
+	select(btn:JQuery, html:string):void;
 	isQueued:boolean;
 	isExist:boolean;
 	image?:string;
@@ -51,9 +52,11 @@ export class Crawler{
 				Crawler.showResultInformation(result);
 			});
 			$('.btn-select', $card).on('click', function(){
+				const html = $(this).html();
+				$(this).html('<i class="fa fa-spinner fa-pulse fa-fw"></i>').prop('disabled', true);
 				Crawler.goToStep('import');
 				const result = $(this).parents('.card').data('result');
-				result.select();
+				result.select($(this), html);
 			});
 		}
 		let i = 0;
@@ -87,7 +90,75 @@ export class Crawler{
 		}
 		setEventsForCards($results);
 	}
-
+	public static runPaginate(current_page:number, items_per_page:number, total_items:number, type:string){
+		function setEventsForPage(type:string){
+			const $pagination = $('.pagination');
+			$('li:not(.disabled) a', $pagination).on('click', function(e){
+				e.preventDefault();
+				const page = $(this).data('page');
+				if(!page){
+					return;
+				}
+				$(this).html('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+				$(this).prop('disabled', true);
+				let data = {};
+				const paging = $pagination.parent('.paging');
+				switch(type){
+					case('1'):
+						data = {
+							name: paging.data('name'),
+							ajax: 1
+						};
+						Crawler.sources.artist.goTo(page, data);
+						break;
+					case('3'):
+						console.log(paging.data('searchBy'));
+						switch(paging.data('searchBy')){
+							case('name'):
+								data = {
+									name: paging.data('name'),
+									type: 3,
+									ajax: 1
+								};
+								break;
+							case('artist'):
+								const result = paging.data('result');
+								data = {
+									artist: result.id,
+									type: 3,
+									ajax: 1
+								};
+								break;
+							case('album'):
+								const result = paging.data('result');
+								data = {
+									album: result.id,
+									type: 3,
+									ajax: 1
+								};
+								break;
+						}
+						Crawler.sources.track.goTo(page, data);
+						break;
+					case('4'):
+						const result = paging.data('result');
+						data = {
+							artist: result.id,
+							type: 4
+						};
+						Crawler.sources.album.goTo(page, data);
+						break;
+				}
+			});
+		}
+		const $paginate = new paginate();
+		$paginate.setCurrentPage(current_page);
+		$paginate.setItemsPage(items_per_page);
+		$paginate.setTotalItems(total_items);
+		$paginate.setTotalPages(Math.ceil(total_items / items_per_page));
+		$paginate.paginator();
+		setEventsForPage(type);
+	}
 	private static showResultInformation(result:Result){
 		Crawler.goToStep('result-info');
 		const html = result.show();
@@ -99,6 +170,7 @@ export class Crawler{
 	private static searchForSubmitListener():void{
 		Crawler.$form.on('submit', function(e){
 			Crawler.goToStep('results');
+			const name = $('input[name=name]', this).val();
 			const type = $('input[name=type]', this).val();
 			e.preventDefault();
 			$(this).formAjax({
@@ -113,7 +185,12 @@ export class Crawler{
 							break;
 					}
 					Crawler.showResultForSearch(results);
+					Crawler.runPaginate(data.current_page, data.items_per_page, data.total_items, type as string);
 					$('.results-search').show();
+					$('.container .step.search.paging').data({
+						name: name,
+						searchBy: 'name'
+					});
 				},
 				error: function(error:webuilder.AjaxError){
 					if(error.error == 'data_duplicate' || error.error == 'data_validation'){

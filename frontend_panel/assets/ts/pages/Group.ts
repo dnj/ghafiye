@@ -192,6 +192,7 @@ export default class Group{
 	}
 	public static initIfNeeded(){
 		if($('body').hasClass('group_edit') || $('body').hasClass('group_add') || $('body').hasClass('group_list')){
+			console.log(decodeURIComponent(window.location.search.substring(1)));
 			Group.init();
 		}
 	}

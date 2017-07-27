@@ -4,6 +4,7 @@ import { Router, AjaxRequest, webuilder } from "webuilder";
 import {Source, Result as IResult, Crawler} from "../Crawler";
 export class album implements Source{
 	public search(data:any):Result[]{
+		console.log(data);
 		let results:Result[] = [];
 		for(const album of data.items){
 			let result = new Result();
@@ -17,6 +18,25 @@ export class album implements Source{
 			results.push(result);
 		}
 		return results;
+	}
+	public goTo(page:number, data:any){
+		const name = $('.crawler-add-form input[name=name]').val();
+		AjaxRequest({
+			url: Router.url(`userpanel/crawler/queue/search?ajax=1&page=${page}`),
+			type: 'post',
+			data: data,
+			success: (data: webuilder.AjaxResponse) => {
+				const results = this.search(data);
+				Crawler.showResultForSearch(results);
+				Crawler.runPaginate(data.current_page, data.items_per_page, data.total_items, '4');
+			},
+			error: function(error:webuilder.AjaxError){
+				$.growl.error({
+					title:"خطا",
+					message:'متاسفانه خطایی بوجود آمده'
+				});
+			}
+		});
 	}
 }
 class Result implements IResult{
@@ -36,7 +56,7 @@ class Result implements IResult{
 			}
 		});
 	}
-	public select():void{
+	public select(btn:JQuery, html:string):void{
 		AjaxRequest({
 			url: Router.url('userpanel/crawler/queue/add?ajax=1'),
 			type: 'post',
@@ -49,13 +69,17 @@ class Result implements IResult{
 					title: "!موفق",
 					message: "درخواست شما با موفقیت ثبت شد ."
 				});
-				setTimeout(window.location.href = window.location.href, 2000);
+				btn.html(html)
+				btn.prop('disabled', true);
+				setTimeout(Crawler.goToStep('search'), 2000);
 			},
 			error: function(error:webuilder.AjaxError){
 				$.growl.error({
 					title:"خطا",
 					message:'متاسفانه خطایی بوجود آمده'
 				});
+				btn.html(html);
+				btn.prop('disabled', false);
 			}
 		});
 	}
@@ -105,32 +129,44 @@ class Result implements IResult{
 		return html;
 	}
 	public setEventForResultInfo(){
-		$('.step.result-info .btn-tracks').on('click', (e) => {
+		const result = this;
+		$('.step.result-info .btn-tracks').on('click', function(e) {
 			e.preventDefault();
+			const html = $(this).html();
+			$(this).html('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+			$(this).prop('disabled', true);
+			const that = $(this);
 			AjaxRequest({
 				url: Router.url('userpanel/crawler/queue/search?ajax=1'),
 				type: 'post',
 				data: {
-					album: this.id,
+					album: result.id,
 					type: 3
 				},
 				success: (data: webuilder.AjaxResponse) => {
 					const results = Crawler.sources.track.search(data);
 					Crawler.showResultForSearch(results);
+					Crawler.runPaginate(data.current_page, data.items_per_page, data.total_items, '3');
+					$('.container .step.search.paging').data({
+						result: result,
+						searchBy: 'album'
+					});
 				},
 				error: function(error:webuilder.AjaxError){
 					$.growl.error({
 						title:"خطا",
 						message:'متاسفانه خطایی بوجود آمده'
 					});
+					that.html(html);
 				}
 			});
 		});
-		const that = this;
 		$('.step.result-info .btn-select').on('click', function(e){
 			e.preventDefault();
-			that.select();
+			const html = $(this).html()
+			$(this).html('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
 			$(this).prop('disabled', true);
+			result.select($(this), html);
 		});
 	}
 	public getStatus():string{

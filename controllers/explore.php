@@ -11,7 +11,7 @@ use \packages\ghafiye\genre;
 use \packages\ghafiye\genre\title as genreTitle;
 
 class explore extends controller{
-	protected $items_per_page = 40;
+	protected $items_per_page = 10;
 	public function best(){
 		$view = view::byName("\\packages\\ghafiye\\views\\explore\\best");
 		$song = new song();

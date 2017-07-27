@@ -2,6 +2,7 @@ import * as $ from "jquery";
 import "jquery.growl";
 import { Router, AjaxRequest, webuilder } from "webuilder";
 import {Source, Result as IResult, Crawler} from "../Crawler";
+import {paginate} from "../../classes/paginate";
 export class artist implements Source{
 	public search(data:any):Result[]{
 		let results:Result[] = [];
@@ -18,6 +19,28 @@ export class artist implements Source{
 			results.push(result);
 		}
 		return results;
+	}
+	public goTo(page:number){
+		const name = $('.crawler-add-form input[name=name]').val();
+		AjaxRequest({
+			url: Router.url(`userpanel/crawler/queue/search?ajax=1&page=${page}`),
+			type: 'post',
+			data: {
+				type: 1,
+				name: name
+			},
+			success: (data: webuilder.AjaxResponse) => {
+				const results = this.search(data);
+				Crawler.showResultForSearch(results);
+				Crawler.runPaginate(data.current_page, data.items_per_page, data.total_items, '1');
+			},
+			error: function(error:webuilder.AjaxError){
+				$.growl.error({
+					title:"خطا",
+					message:'متاسفانه خطایی بوجود آمده'
+				});
+			}
+		});
 	}
 }
 class Result implements IResult{
@@ -37,7 +60,7 @@ class Result implements IResult{
 			}
 		});
 	}
-	public select():void{
+	public select(btn:JQuery, html:string):void{
 		AjaxRequest({
 			url: Router.url('userpanel/crawler/queue/add?ajax=1'),
 			type: 'post',
@@ -50,13 +73,17 @@ class Result implements IResult{
 					title: "!موفق",
 					message: "درخواست شما با موفقیت ثبت شد ."
 				});
-				setTimeout(window.location.href = window.location.href, 2000);
+				btn.html(html)
+				btn.prop('disabled', true);
+				setTimeout(Crawler.goToStep('search'), 2000);
 			},
 			error: function(error:webuilder.AjaxError){
 				$.growl.error({
 					title:"خطا",
 					message:'متاسفانه خطایی بوجود آمده'
 				});
+				btn.html(html);
+				btn.prop('disabled', false);
 			}
 		});
 	}
@@ -74,6 +101,13 @@ class Result implements IResult{
 	}
 	public show():string{
 		const html = `
+		<div class="row">
+			<div class="col-sm-3 pull-right">
+				<a class="btn btn-sm btn-warning btn-return" title="بازگشت">
+					<i class="fa fa-hand-o-right"></i> بازگشت
+				</a>
+			</div>
+		</div>
 		<div class="row">
 			<div class="col-sm-3">
 				<img class="img-responsive img-thumbnail result-image" src="${this.image}"/>
@@ -109,53 +143,76 @@ class Result implements IResult{
 		return html;
 	}
 	public setEventForResultInfo(){
-		$('.step.result-info .btn-albums').on('click', (e) => {
+		const result = this;
+		$('.step.result-info .btn-albums').on('click', function(e) {
 			e.preventDefault();
+			const html = $(this).html();
+			$(this).html('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+			$(this).prop('disabled', true);
+			const that = $(this);
 			AjaxRequest({
 				url: Router.url('userpanel/crawler/queue/search?ajax=1'),
 				type: 'post',
 				data: {
-					artist: this.id,
+					artist: result.id,
 					type: 4
 				},
 				success: (data: webuilder.AjaxResponse) => {
 					const results = Crawler.sources.album.search(data);
 					Crawler.showResultForSearch(results);
+					Crawler.runPaginate(data.current_page, data.items_per_page, data.total_items, '4');
+					$('.container .step.search.paging').data('result', result);
 				},
 				error: function(error:webuilder.AjaxError){
 					$.growl.error({
 						title:"خطا",
 						message:'متاسفانه خطایی بوجود آمده'
 					});
+					that.html(html);
+					that.prop('disabled', false);
 				}
 			});
 		});
-		$('.step.result-info .btn-tracks').on('click', (e) => {
+		$('.step.result-info .btn-tracks').on('click', function(e) {
 			e.preventDefault();
+			const html = $(this).html();
+			$(this).html('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+			$(this).prop('disabled', true);
+			const that = $(this);
 			AjaxRequest({
 				url: Router.url('userpanel/crawler/queue/search?ajax=1'),
 				type: 'post',
 				data: {
-					artist: this.id,
+					artist: result.id,
 					type: 3
 				},
 				success: (data: webuilder.AjaxResponse) => {
 					const results = Crawler.sources.track.search(data);
 					Crawler.showResultForSearch(results);
+					Crawler.runPaginate(data.current_page, data.items_per_page, data.total_items, '3');
+					$('.container .step.search.paging').data({
+						result: result,
+						searchBy: 'artist'
+					});
 				},
 				error: function(error:webuilder.AjaxError){
 					$.growl.error({
 						title:"خطا",
 						message:'متاسفانه خطایی بوجود آمده'
 					});
+					that.html(html);
 				}
 			});
 		});
-		const that = this;
 		$('.step.result-info .btn-select').on('click', function(e){
 			e.preventDefault();
-			that.select();
+			const html = $(this).html();
+			$(this).html('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
 			$(this).prop('disabled', true);
+			result.select($(this), html);
+		});
+		$('.step.result-info .btn-return').on('click', (e) => {
+			Crawler.goToStep('search');
 		});
 	}
 	public getStatus():string{
