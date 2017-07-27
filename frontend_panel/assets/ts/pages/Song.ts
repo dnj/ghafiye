@@ -529,9 +529,16 @@ export default class Song{
 								}
 							});
 						}
-						
 					}
 					let lyrics = song.lyrics;
+					function getTranslateOf(parent:number){
+						for(const lyric of lyrics){
+							if(lyric.parent == parent){
+								return lyric.text;
+							}
+						}
+						return null;
+					}
 					let ltr = Song.is_ltr(lang) ? "ltr" : "";
 					let html = `<input class="lyrics" type="hidden" name="lyric_lang" value="${lang}"/>`;
 					for(let i=0;i < song.orginalLyric.length;i++){
@@ -558,10 +565,11 @@ export default class Song{
 						}else{
 							let $formGroup = $('.form-group', $oldRow).eq(0);
 							let ltrOrginal = Song.is_ltr(song.lang) ? "ltr" : "";
+							const isTranslated = getTranslateOf(song.orginalLyric[i].id);
 							html += `<div class="form-group">
 								<input value="${song.orginalLyric[i].text}" name="" disabled="" class="form-control ${ltrOrginal}" type="text">
 								<input value="${song.orginalLyric[i].id}" name="lyric[${i}][parent]" class="form-control" type="hidden">
-								<input value="${isset ? lyrics[i].text : ""}" name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
+								<input value="${isTranslated ? isTranslated : ""}" name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
 							let $help_block = $formGroup.find('.help-block');
 							if($help_block.length){
 								html += $help_block[0].outerHTML;

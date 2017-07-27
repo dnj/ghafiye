@@ -6,7 +6,7 @@ import { Router, webuilder } from "webuilder";
 import AutoComplete from "../classes/AutoComplete";
 import {AvatarPreview} from 'bootstrap-avatar-preview/AvatarPreview';
 import viewError from '../classes/viewError';
-import {Main} from '../Main';
+import View from '../classes/view';
 export default class Group{
 	private static $form:JQuery;
 	private static runPersonListener(){
@@ -170,7 +170,7 @@ export default class Group{
 						$viewError.setCode($error.code);
 						$viewError.setMessage($error.message);
 						$viewError.setData($error.data);
-						const view = new Main();
+						const view = new View();
 						view.addError($viewError);
 						view.getErrorHTML();
 					}

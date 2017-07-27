@@ -83,7 +83,8 @@ class edit extends listview{
 			$lyricItem = array(
 				'text' => $lyric->text,
 				'id' => $lyric->id,
-				'time' => $this->formatTime($lyric->time)
+				'time' => $this->formatTime($lyric->time),
+				'parent' => $lyric->parent ? $lyric->getParent()->id : ''
 			);
 			$item['lyrics'][] = $lyricItem;
 		}

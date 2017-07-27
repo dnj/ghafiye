@@ -145,6 +145,36 @@
 		"controller": "controllers\\panel\\songs@add"
 	},
 	{
+		"path": ["userpanel", "crawler", "queue"],
+		"controller": "controllers\\panel\\crawler@queue",
+		"method":"get"
+	},
+	{
+		"path": ["userpanel", "crawler", "queue", "search"],
+		"controller": "controllers\\panel\\crawler@search",
+		"method":"post"
+	},
+	{
+		"path": ["userpanel", "crawler", "queue", "add"],
+		"controller": "controllers\\panel\\crawler@add",
+		"method":"get"
+	},
+	{
+		"path": ["userpanel", "crawler", "queue", "add"],
+		"controller": "controllers\\panel\\crawler@store",
+		"method":"post"
+	},
+	{
+		"path": ["userpanel", "crawler", "queue", "delete", {"type" : "dynamic", "name" : "queue", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\crawler@delete",
+		"method":"get"
+	},
+	{
+		"path": ["userpanel", "crawler", "queue", "delete", {"type" : "dynamic", "name" : "queue", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\crawler@terminate",
+		"method":"post"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

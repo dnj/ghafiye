@@ -125,6 +125,21 @@
 			"name": "\\themes\\clipone\\views\\ghafiye\\song\\add",
 			"parent": "\\packages\\ghafiye\\views\\panel\\song\\add",
 			"file": "html/songs/add.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\crawler\\search",
+			"parent": "\\packages\\ghafiye\\views\\panel\\crawler\\search",
+			"file": "html/crawler/search.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\crawler\\add",
+			"parent": "\\packages\\ghafiye\\views\\panel\\crawler\\add",
+			"file": "html/crawler/add.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\crawler\\delete",
+			"parent": "\\packages\\ghafiye\\views\\panel\\crawler\\delete",
+			"file": "html/crawler/delete.php"
 		}
 	]
 }

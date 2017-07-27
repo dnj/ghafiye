@@ -79,6 +79,18 @@
 		{
 			"classes":["views\\ghafiye\\song\\add"],
 			"file":"views/songs/add.php"
+		},
+		{
+			"classes":["views\\ghafiye\\crawler\\search"],
+			"file":"views/crawler/search.php"
+		},
+		{
+			"classes":["views\\ghafiye\\crawler\\add"],
+			"file":"views/crawler/add.php"
+		},
+		{
+			"classes":["views\\ghafiye\\crawler\\delete"],
+			"file":"views/crawler/delete.php"
 		}
 	]
 }

@@ -17,4 +17,10 @@ class lyric extends dbObject{
 		}
 		return !in_array($lang, array('ar','fa','dv','he','ps','sd','ur','yi','ug','ku'));
 	}
+	public function getParent(){
+		if(!$this->parent){
+			return null;
+		}
+		return lyric::byId($this->parent);
+	}
 }
