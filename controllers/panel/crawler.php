@@ -327,7 +327,7 @@ class crawler extends controller{
 				],
 				'type' => [
 					'type' => 'number',
-					'values' => [queue::artist ,queue::track]
+					'values' => [queue::artist, queue::album, queue::track]
 				]
 			];
 			$inputs = $this->checkinputs($inputRules);
