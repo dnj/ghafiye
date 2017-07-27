@@ -4,7 +4,6 @@ import { Router, AjaxRequest, webuilder } from "webuilder";
 import {Source, Result as IResult, Crawler} from "../Crawler";
 export class album implements Source{
 	public search(data:any):Result[]{
-		console.log(data);
 		let results:Result[] = [];
 		for(const album of data.items){
 			let result = new Result();

@@ -21,7 +21,6 @@ export default class Group{
 		}
 		$(".title-del", container).on('click', function(e){
 			e.preventDefault();
-			console.log($(".titles tr", Group.$form).length);
 			if($(".titles tr", Group.$form).length > 1){
 				$(this).parents("tr").remove();
 			}else{
@@ -92,7 +91,6 @@ export default class Group{
 	}
 	private static createFieldPersons(){
 		$("#addPersonForm").submit(function(e){
-			console.log('salam');
 			e.preventDefault();
 			let person:string = $("input[name='person']", this).val() as string;
 			let person_name:string = $("input[name='person_name']", this).val() as string;
@@ -192,7 +190,6 @@ export default class Group{
 	}
 	public static initIfNeeded(){
 		if($('body').hasClass('group_edit') || $('body').hasClass('group_add') || $('body').hasClass('group_list')){
-			console.log(decodeURIComponent(window.location.search.substring(1)));
 			Group.init();
 		}
 	}

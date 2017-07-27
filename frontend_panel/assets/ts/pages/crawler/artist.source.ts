@@ -6,7 +6,6 @@ import {paginate} from "../../classes/paginate";
 export class artist implements Source{
 	public search(data:any):Result[]{
 		let results:Result[] = [];
-		console.log(data);
 		for(const artist of data.items){
 			let result = new Result();
 			result.id = artist.id;
