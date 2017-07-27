@@ -53,7 +53,8 @@ export class Crawler{
 			});
 			$('.btn-select', $card).on('click', function(){
 				const html = $(this).html();
-				$(this).html('<i class="fa fa-spinner fa-pulse fa-fw"></i>').prop('disabled', true);
+				$(this).html('<i class="fa fa-spinner fa-pulse fa-fw"></i>');
+				$(this).prop('disabled', true);
 				Crawler.goToStep('import');
 				const result = $(this).parents('.card').data('result');
 				result.select($(this), html);
@@ -70,7 +71,7 @@ export class Crawler{
 				<div class="card">
 					<div class="card-image">
 						<img class="img-responsive" src="${result.image}">
-						<a class="btn btn-lg ${result.canSelect() ? 'btn-select' : ''}" ${result.canSelect() ? '' : 'disabled=""'}><i class="fa fa-plus"></i></a>
+						<button class="btn btn-lg ${result.canSelect() ? 'btn-select' : ''}" ${result.canSelect() ? '' : 'disabled="disabled"'}><i class="fa fa-plus"></i></button>
 						${result.getRate()}
 						${result.getStatus()}
 					</div>
@@ -112,7 +113,6 @@ export class Crawler{
 						Crawler.sources.artist.goTo(page, data);
 						break;
 					case('3'):
-						console.log(paging.data('searchBy'));
 						switch(paging.data('searchBy')){
 							case('name'):
 								data = {
@@ -171,7 +171,7 @@ export class Crawler{
 		Crawler.$form.on('submit', function(e){
 			Crawler.goToStep('results');
 			const name = $('input[name=name]', this).val();
-			const type = $('input[name=type]', this).val();
+			const type = $('input[name=type]', this).val() as string;
 			e.preventDefault();
 			$(this).formAjax({
 				success: (data: webuilder.AjaxResponse) => {
@@ -185,7 +185,7 @@ export class Crawler{
 							break;
 					}
 					Crawler.showResultForSearch(results);
-					Crawler.runPaginate(data.current_page, data.items_per_page, data.total_items, type as string);
+					Crawler.runPaginate(data.current_page, data.items_per_page, data.total_items, type);
 					$('.results-search').show();
 					$('.container .step.search.paging').data({
 						name: name,
