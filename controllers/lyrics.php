@@ -36,10 +36,10 @@ class lyrics extends controller{
 		$songTitle = new songTitle();
 		$songTitle->where("song", $song->id);
 		$songTitle->where("title", $data['song']);
-		$songTitle->getOne();
+		$songTitle = $songTitle->getOne();
 		$lyric = new lyric();
 		$lyric->where("song", $song->id);
-		$lyric->where("lang", array_unique(array($songTitle->lang)), 'in');
+		$lyric->where("lang", array_unique(array($songTitle->lang, $song->lang)), 'in');
 		$lyric->orderby('time', 'asc');
 		$lyric->orderby('id', 'asc');
 		$lyrices = $lyric->get();

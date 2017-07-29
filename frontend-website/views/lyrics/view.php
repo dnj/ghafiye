@@ -130,4 +130,26 @@ class view extends lyricsView{
 	protected function getAlbumImage():string{
 		return base\packages::package('ghafiye')->url($this->song->album->image ? $this->song->album->image : base\options::get('packages.ghafiye.album.default-image'));
 	}
+	protected function getOrginalLyrices():array{
+		$orginalLyrics = [];
+		$lang = $this->song->lang;
+		foreach($this->getLyrices() as $lyric){
+			if(!$lyric->parent){
+				$orginalLyrics[] = $lyric;
+			}
+		}
+		return $orginalLyrics;
+	}
+	protected function getTranslateLyricById(int $parent){
+		static $parents;
+		if(!$parents){
+			$parents = array_column($this->getLyrices(), 'parent');
+		}
+		$lang = $this->getLyricsLanguage();
+		$translate_index = array_search($parent, $parents);
+		if($translate_index !== false){
+			return $this->getLyrices()[$translate_index];
+		}
+		return null;
+	}
 }

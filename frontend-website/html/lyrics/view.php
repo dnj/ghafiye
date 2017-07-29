@@ -38,15 +38,15 @@ $lang = $this->getLyricsLanguage();
 <div class="row">
 	<div class="col-md-7 col-sm-9 col-md-offset-1 col-md-push-3">
 		<section class="text">
-			<?php foreach($this->getLyrices() as $lyric){ ?>
+			<?php foreach($this->getOrginalLyrices() as $lyric){ ?>
 			<p>
-				<?php
-				if($lyric->parent){
-					$lyric->parent = lyric::byId($lyric->parent);
-				?>
-				<span <?php if($this->is_ltr($lyric->parent->lang))echo('class="ltr"'); ?>><?php echo $lyric->parent->text; ?></span>
-				<?php } ?>
 				<span <?php if($this->is_ltr($lyric->lang))echo('class="ltr"'); ?>><?php echo $lyric->text; ?></span>
+				<?php
+				$translate = $this->getTranslateLyricById($lyric->id);
+				if($translate and $lang != $this->song->lang){
+				?>
+				<span <?php if($this->is_ltr($translate->lang))echo('class="ltr"'); ?>><?php echo $translate->text; ?></span>
+				<?php } ?>
 			</p>
 			<?php } ?>
 		</section>
