@@ -33,7 +33,6 @@ class usertype{
 
 			'crawler_search',
 			'crawler_add',
-			'crawler_edit',
 			'crawler_delete'
 		);
 		foreach($permissions as $permission){
