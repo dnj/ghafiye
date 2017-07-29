@@ -30,7 +30,7 @@
 		"usertype.permissions.ghafiye_genre_delete": "حذف سبک",
 		"persons": "اشخاص",
 		"ghafiye.panel.persons.add":"افزودن شخصیت",
-		"ghafiye.panel.persons.edit.byName":"افزودن شخصیت #{id}",
+		"ghafiye.panel.persons.edit.byName":"ویرایش شخصیت {name}",
 		"ghafiye.panel.person.name": "نام",
 		"ghafiye.panel.person.id": "شناسه",
 		"ghafiye.panel.person.musixmatch_id": "شناسه musixmatch",

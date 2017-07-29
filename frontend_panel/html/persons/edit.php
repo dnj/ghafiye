@@ -11,7 +11,7 @@ $person = $this->getperson();
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
 	            <i class="fa fa-edit"></i>
-	            <span><?php echo translator::trans("ghafiye.panel.persons.edit.byName", ['id' => $person->id]); ?></span>
+	            <span><?php echo translator::trans("ghafiye.panel.persons.edit.byName", ['name' => $person->name()]); ?></span>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
 				</div>
