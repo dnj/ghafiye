@@ -9,8 +9,8 @@ $this->the_header();
 	<div class="col-xs-12">
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
-	            <i class="fa fa-edit"></i>
-	            <span><?php echo translator::trans("ghafiye.panle.persons.add"); ?></span>
+	            <i class="fa fa-plus"></i>
+	            <span><?php echo translator::trans("ghafiye.panel.persons.add"); ?></span>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
 				</div>
