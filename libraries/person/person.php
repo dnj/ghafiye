@@ -3,7 +3,7 @@ namespace packages\ghafiye;
 use packages\base\db\dbObject;
 use packages\ghafiye\translator\name;
 class person extends dbObject{
-	use name;
+	use name, imageTrait;
 	const men = 1;
 	const women = -1;
 	protected $dbTable = "ghafiye_persons";
@@ -24,4 +24,10 @@ class person extends dbObject{
 		'user' => array("hasOne", "packages\\userpanel\\user", "user"),
         'names' => array("hasMany", "packages\\ghafiye\\person\\name", "person")
     );
+	public function getAvatar(int $width, int $height){
+		return $this->getImage($width, $height, 'avatar');
+	}
+	public function getCover(int $width, int $height){
+		return $this->getImage($width, $height, 'cover');
+	}
 }

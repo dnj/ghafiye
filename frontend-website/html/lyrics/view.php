@@ -11,7 +11,7 @@ $lang = $this->getLyricsLanguage();
 ?>
 <header class="row">
 	<div class="col-sm-3">
-		<img src="<?php echo $this->songImage($this->song); ?>" class="song-image">
+		<img src="<?php echo $this->song->getImage(255, 255); ?>" class="song-image">
 	</div>
 	<div class="col-sm-9 title">
 		<h1><?php echo $this->song->title($lang); ?></h1>
@@ -86,7 +86,7 @@ $lang = $this->getLyricsLanguage();
 			<div class="panel-heading">
 				<a class="album-name" href="<?php echo(base\url($this->singer->encodedName($lang).'/albums/'.$this->song->album->encodedTitle($lang))); ?>">
 					<div class="col-sm-5 col-xs-6">
-						<img src="<?php echo $this->getAlbumImage(); ?>" alt="<?php echo $this->song->album->encodedTitle(); ?> <?php echo $this->singer->encodedName(); ?> - cover art">
+						<img src="<?php echo $this->song->album->getImage(50, 50); ?>" alt="<?php echo $this->song->album->encodedTitle(); ?> <?php echo $this->singer->encodedName(); ?> - cover art">
 					</div>
 					<div class="col-sm-7 col-xs-6">
 						<p class=title><?php echo $this->song->album->title($lang); ?></p>
@@ -105,7 +105,7 @@ $lang = $this->getLyricsLanguage();
 							<span class="text-center"><?php echo ++$i; ?></span>
 						</div>
 						<div class="col-sm-2 col-xs-2">
-							<img src="<?php echo $this->songImage($song); ?>" alt="<?php echo $song->title(); ?>">
+							<img src="<?php echo $song->getImage(32, 32); ?>" alt="<?php echo $song->title(); ?>">
 						</div>
 						<div class="col-sm-8 col-xs-8">
 							<a href="<?php echo(base\url($this->singer->encodedName($lang).'/'.$song->encodedTitle($lang))); ?>"><strong><?php echo $song->title($lang); ?></strong></a>
@@ -141,7 +141,7 @@ $lang = $this->getLyricsLanguage();
 							<span class="text-center"><?php ++$i; echo $isCurrentSong ? '<i class="fa fa-play-circle"></i>': $i; ?></span>
 						</div>
 						<div class="col-sm-2 col-xs-2">
-							<img src="<?php echo $this->songImage($song); ?>" alt="<?php echo $song->title(); ?>">
+							<img src="<?php echo $song->getImage(32, 32); ?>" alt="<?php echo $song->title(); ?>">
 						</div>
 						<div class="col-sm-8 col-xs-8">
 							<a <?php if(!$isCurrentSong){ ?> href="<?php echo(base\url($this->singer->encodedName($lang).'/'.$song->encodedTitle($lang))); ?>"<?php } ?>><strong><?php echo $song->title($lang);?></strong></a>
@@ -165,7 +165,7 @@ $lang = $this->getLyricsLanguage();
 				<?php foreach($albums as $album){ ?>
 				<div class="col-sm-3">
 					<a class="album" href="<?php echo(base\url($this->singer->encodedName($lang).'/albums/'.$album->encodedTitle($lang))); ?>">
-						<div class="image" style="background-image: url(<?php echo $this->albumImage($album); ?>);"></div>
+						<div class="image" style="background-image: url(<?php echo $album->getImage(262.5, 240); ?>);"></div>
 						<div class="description">
 							<ul class="info pull-right">
 								<li class="title"><?php echo $album->title(); ?></li>

@@ -24,7 +24,7 @@ $this->the_header('home');
 				?>
 				<div class="col-md-4 col-sm-6">
 					<a class="song" href="<?php echo(base\url($singer->encodedName().'/'.$song->encodedTitle())); ?>">
-						<div class="image" style="background-image: url(<?php echo $this->songImage($song); ?>);">
+						<div class="image" style="background-image: url(<?php echo $song->getImage(347, 260); ?>);">
 
 						</div>
 						<div class="description">
@@ -51,7 +51,7 @@ $this->the_header('home');
 				?>
 					<div class="col-md-4 col-sm-6">
 						<a class="song" href="<?php echo(base\url($singer->encodedName().'/'.$song->encodedTitle())); ?>">
-							<div class="image" style="background-image: url(<?php echo $this->songImage($song); ?>);">
+							<div class="image" style="background-image: url(<?php echo $song->getImage(347, 260); ?>);">
 
 							</div>
 							<div class="description">
@@ -83,7 +83,7 @@ $this->the_header('home');
 		?>
 		<div class="col-md-3 col-sm-6">
 			<a class="song" href="<?php echo(base\url($singer->encodedName().'/'.$song->encodedTitle())); ?>">
-				<div class="image" style="background-image: url(<?php echo $this->songImage($song); ?>);">
+				<div class="image" style="background-image: url(<?php echo $song->getImage(263, 260); ?>);">
 
 				</div>
 				<div class="description">

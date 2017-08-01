@@ -20,7 +20,7 @@ $lang = $this->getSongLanguage();
 					<span><?php echo ++$x; ?></span>
 				</div>
 				<div class="col-sm-1 col-xs-2">
-					<img <?php echo !$song->image ? 'class="default"' : ''; ?> src="<?php echo $this->songImage($song); ?>" alt="<?php echo $song->title($lang); ?>">
+					<img <?php echo !$song->image ? 'class="default"' : ''; ?> src="<?php echo $song->getImage(32, 32); ?>" alt="<?php echo $song->title($lang); ?>">
 				</div>
 				<div class="col-sm-10 col-xs-8">
 					<a href="<?php echo(base\url($singer->encodedName($lang).'/'.$song->encodedTitle($lang))); ?>"><strong><?php echo $song->title($lang); ?></strong></a>
@@ -43,7 +43,7 @@ $lang = $this->getSongLanguage();
 	  	  			foreach($this->getAlbums() as $album){
 	  	  			?>
 	  	  			<li>
-	  	  				<img src="<?php echo $this->albumImage($album); ?>" alt="<?php echo $album->title($lang); ?>">
+	  	  				<img src="<?php echo $album->getImage(42, 42); ?>" alt="<?php echo $album->title($lang); ?>">
 	  	  				<div>
 	  	  					<a href="<?php echo(base\url($this->artist->encodedName($lang).'/albums/'.$album->encodedTitle($lang))); ?>"><strong><?php echo $album->title($lang); ?></strong></a>
 	  	  					<span><?php echo date::format('Y', $this->getAlbumReleaseDate($album)); ?></span>

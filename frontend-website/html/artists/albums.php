@@ -12,7 +12,7 @@ $lang = $this->getSongLanguage();
 	?>
 	<div class="col-md-3 col-sm-6">
 		<a class="album" href="<?php echo(base\url($this->artist->encodedName($lang).'/albums/'.$album->encodedTitle($lang))); ?>">
-			<div class="image" style="background-image: url(<?php echo $this->albumImage($album); ?>);"></div>
+			<div class="image" style="background-image: url(<?php echo $album->getImage(263, 240); ?>);"></div>
 			<div class="description">
 				<ul class="info pull-right">
 					<li class="title"><?php echo $album->title(); ?></li>

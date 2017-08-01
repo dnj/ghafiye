@@ -320,6 +320,10 @@
 		{
 			"classes":["views\\panel\\crawler\\delete"],
 			"file":"views/panel/crawler/delete.php"
+		},
+		{
+			"classes":["imageTrait"],
+			"file":"libraries/image/imageTrait.php"
 		}
 	]
 }

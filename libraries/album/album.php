@@ -5,7 +5,7 @@ use packages\base\db\dbObject;
 use packages\ghafiye\translator\title;
 use packages\ghafiye\song\person as songPerson;
 class album extends dbObject{
-	use title;
+	use title, imageTrait;
 	protected $dbTable = "ghafiye_albums";
 	protected $primaryKey = "id";
 	protected $dbFields = array(

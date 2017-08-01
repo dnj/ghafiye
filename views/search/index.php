@@ -45,18 +45,22 @@ class index extends list_view{
 				$item['type'] = 'person';
 				$item["name"] = $person->name($person->showing_lang);
 				$item["encodedName"] = $person->encodedName($person->showing_lang);
+				$item["avatar"] = $person->getAvatar(32, 32);
 				$export['data']['items'][] = $item;
 			}
 		}
 		if($this->getSongs()){
 			foreach($this->getSongs() as $song){
+				$person = $song->getPerson(songPerson::singer);
 				$item = $song->toArray();
 				$item['type'] = 'song';
 				$item['title'] = $song->title($song->showing_lang);
 				$item['encodedTitle'] = $song->encodedTitle($song->showing_lang);
-				$item['singer'] = $song->getPerson(songPerson::singer)->toArray();
-				$item['singer']['name'] = $song->getPerson(songPerson::singer)->name($song->showing_lang);
-				$item['singer']['encodedName'] = $song->getPerson(songPerson::singer)->encodedName($song->showing_lang);
+				$item['singer'] = $person->toArray();
+				$item['singer']['name'] = $person->name($song->showing_lang);
+				$item['singer']['encodedName'] = $person->encodedName($song->showing_lang);
+				$item['singer']['avatar'] = $person->getAvatar(32, 32);
+				$item["image"] = $song->getImage(32, 32);
 				$export['data']['items'][] = $item;
 			}
 		}

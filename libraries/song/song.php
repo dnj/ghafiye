@@ -7,7 +7,7 @@ use packages\ghafiye\translator\title;
 use packages\ghafiye\song\person as songPerson;
 use packages\ghafiye\song\lyric;
 class song extends dbObject{
-	use title;
+	use title, imageTrait;
 	const publish = 1;
 	const draft = 2;
 	protected $dbTable = "ghafiye_songs";

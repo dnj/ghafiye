@@ -9,7 +9,7 @@ $lang = $this->getSongLanguage();
 ?>
 <div class="row">
 	<div class="col-sm-5 col-lg-4">
-		<img src="<?php echo $this->albumImage(); ?>" class="album-image">
+		<img src="<?php echo $this->album->getImage(300, 350); ?>" class="album-image">
 	</div>
 	<div class="col-sm-7 col-lg-8 album">
 		<h1><?php echo $this->album->title($lang); ?></h1>
@@ -47,7 +47,7 @@ $lang = $this->getSongLanguage();
 				<?php foreach($this->getMoreAlbums() as $album){ ?>
 				<div class="col-md-3 col-sm-6">
 					<a class="album" href="<?php echo(base\url($this->artist->encodedName($lang).'/albums/'.$album->encodedTitle($lang))); ?>">
-						<div class="image" style="background-image: url(<?php echo $this->albumImage($album); ?>);"></div>
+						<div class="image" style="background-image: url(<?php echo $album->getImage(263, 240); ?>);"></div>
 						<div class="description">
 							<ul class="info pull-right">
 								<li class="title"><?php echo $album->title(); ?></li>

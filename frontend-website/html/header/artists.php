@@ -7,9 +7,9 @@ $this->the_header();
 $lang = $this->getSongLanguage();
 ?>
 <header class="row">
-	<div class="cover<?php if(!$this->artist->cover){echo(" no-cover");} ?>"<?php if($this->artist->cover){echo(" style=\"background-image:url('".$this->getCoverURL()."');\"");} ?>></div>
+	<div class="cover<?php if(!$this->artist->cover){echo(" no-cover");} ?>"<?php if($this->artist->cover){echo(" style=\"background-image:url('".$this->artist->getCover(1170, 370)."');\"");} ?>></div>
 	<div class="col-md-2 col-sm-3 hidden-xs">
-		<img src="<?php echo $this->getAvatarURL(); ?>" class="avatar">
+		<img src="<?php echo $this->artist->getAvatar(130, 130); ?>" class="avatar">
 	</div>
 	<div class="col-md-10 col-sm-9 col-xs-12 info">
 		<span><?php echo translator::trans('artist.lyrics'); ?></span>

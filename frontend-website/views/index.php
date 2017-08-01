@@ -3,7 +3,6 @@ namespace themes\musixmatch\views;
 use \packages\base;
 use \packages\base\db;
 use \packages\base\translator;
-use \packages\base\frontend\theme;
 use \packages\base\packages;
 use \packages\ghafiye\genre;
 use \packages\ghafiye\song;
@@ -31,12 +30,6 @@ class index extends homepage{
 		$song->where("genre", $genre->id);
 		$song->orderBy("views", "desc");
 		return $song->get(6);
-	}
-	protected function songImage(song $song){
-		if($song->image){
-			return packages::package('ghafiye')->url($song->image);
-		}
-		return theme::url('dest/images/song.jpg');
 	}
 	protected function numberOfLangs(song $song){
 		db::where("song", $song->id);

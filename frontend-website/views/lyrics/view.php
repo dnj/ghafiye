@@ -3,8 +3,6 @@ namespace themes\musixmatch\views\lyrics;
 use \packages\base;
 use \packages\base\db;
 use \packages\base\translator;
-use \packages\base\frontend\theme;
-use \packages\base\packages;
 use \packages\ghafiye\genre;
 use \packages\ghafiye\album;
 use \packages\ghafiye\song;
@@ -12,7 +10,6 @@ use \packages\ghafiye\song\person;
 
 use \packages\ghafiye\views\lyrics\view as lyricsView;
 use \themes\musixmatch\viewTrait;
-use \themes\musixmatch\views\formTrait;
 class view extends lyricsView{
 	use viewTrait;
 	protected $song;
@@ -42,9 +39,6 @@ class view extends lyricsView{
 		$song->where("genre", $genre->id);
 		$song->orderBy("views", "desc");
 		return $song->get(6);
-	}
-	protected function songImage(song $song){
-		return packages::package('ghafiye')->url($song->image ? $song->image : base\options::get('packages.ghafiye.song.default-image'));
 	}
 	protected function numberOfLangs(){
 		db::where("song", $this->song->id);
@@ -128,9 +122,6 @@ class view extends lyricsView{
 			]
 		];
 	}
-	protected function getAlbumImage():string{
-		return base\packages::package('ghafiye')->url($this->song->album->image ? $this->song->album->image : base\options::get('packages.ghafiye.album.default-image'));
-	}
 	protected function getOrginalLyrices():array{
 		$orginalLyrics = [];
 		foreach($this->getLyrices() as $lyric){
@@ -154,9 +145,6 @@ class view extends lyricsView{
 			return $this->getLyrices()[$translate_index];
 		}
 		return null;
-	}
-	protected function albumImage(album $album){
-		return packages::package('ghafiye')->url($album->image ? $album->image: base\options::get('packages.ghafiye.album.default-image'));
 	}
 	protected function getAlbumReleaseDate(album $album){
 		db::where("album", $album->id);

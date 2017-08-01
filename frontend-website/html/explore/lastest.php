@@ -23,7 +23,7 @@ $this->the_header();
 						<span><?php echo ++$x; ?></span>
 					</div>
 					<div class="col-sm-1 col-xs-2">
-						<img <?php echo !$song->image ? 'class="img-default"' : ''; ?> src="<?php echo $this->songImage($song); ?>" alt="<?php echo $song->title(); ?>">
+						<img <?php echo !$song->image ? 'class="img-default"' : ''; ?> src="<?php echo $song->getImage(32, 32); ?>" alt="<?php echo $song->title(); ?>">
 					</div>
 					<div class="col-sm-10 col-xs-8">
 						<a href="<?php echo(base\url($singer->encodedName().'/'.$song->encodedTitle())); ?>"><strong><?php echo $song->title(); ?></strong></a>
