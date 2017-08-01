@@ -1,13 +1,23 @@
 <?php
 use \packages\base;
-use \packages\base\frontend\theme;
+use \packages\geoip\api as geoip;
+use \packages\base\http;
 use \packages\base\translator;
+use \packages\base\frontend\theme;
 ?>
 <footer>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-3 text-center">
+				<?php
+				$geoip = new geoip();
+				$country_code = $geoip->country_code_by_addr(http::$client['ip']);
+				if($country_code and $country_code != 'IR'){
+				?>
+				<img alt="<?php echo translator::trans("ghafiye.homepage.title"); ?>" src="<?php echo theme::url('assets/images/android-chrome-192x192.png'); ?>" title="<?php echo translator::trans("ghafiye.homepage.title"); ?>" />
+				<?php }else{ ?>
 				<img id='wlaofukznbqejxlzjzpe' style='cursor:pointer' onclick='window.open("https://logo.samandehi.ir/Verify.aspx?id=46217&p=aodsgvkauiwkrfthjyoe", "Popup","toolbar=no, scrollbars=no, location=no, statusbar=no, menubar=no, resizable=0, width=450, height=630, top=30")' alt='logo-samandehi' src='https://logo.samandehi.ir/logo.aspx?id=46217&p=shwlwlbqodrfnbpdyndt'/>
+				<?php } ?>
 			</div>
 			<div class="col-md-3">
 				<h4><?php echo translator::trans('footer.overview'); ?></h4>
@@ -39,7 +49,7 @@ use \packages\base\translator;
 		</div>
 		<div class="note">
 			<p><?php echo translator::trans('footer.notelove'); ?></p>
-			<div class="copyright"><?php echo translator::trans('footer.copyright'); ?></p>
+			<p class="copyright"><?php echo translator::trans('footer.copyright'); ?></p>
 		</div>
 	</div>
 </footer>
