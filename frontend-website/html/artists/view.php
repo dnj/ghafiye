@@ -53,7 +53,6 @@ $lang = $this->getSongLanguage();
 	  	  		</ul>
 			</div>
 		</div>
-
 	</aside>
 </div>
 <?php

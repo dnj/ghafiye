@@ -6,6 +6,7 @@ use \packages\base\translator;
 use \packages\base\frontend\theme;
 use \packages\base\packages;
 use \packages\ghafiye\genre;
+use \packages\ghafiye\album;
 use \packages\ghafiye\song;
 use \packages\ghafiye\song\person;
 
@@ -132,7 +133,6 @@ class view extends lyricsView{
 	}
 	protected function getOrginalLyrices():array{
 		$orginalLyrics = [];
-		$lang = $this->song->lang;
 		foreach($this->getLyrices() as $lyric){
 			if(!$lyric->parent){
 				$orginalLyrics[] = $lyric;
@@ -143,13 +143,37 @@ class view extends lyricsView{
 	protected function getTranslateLyricById(int $parent){
 		static $parents;
 		if(!$parents){
-			$parents = array_column($this->getLyrices(), 'parent');
+			$parents = array();
+			foreach($this->getLyrices() as $key => $lyric){
+				$parents[$key] = $lyric->parent;
+			}
 		}
 		$lang = $this->getLyricsLanguage();
-		$translate_index = array_search($parent, $parents);
+		$translate_index = array_search($parent, $parents, true);
 		if($translate_index !== false){
 			return $this->getLyrices()[$translate_index];
 		}
 		return null;
+	}
+	protected function albumImage(album $album){
+		return packages::package('ghafiye')->url($album->image ? $album->image: base\options::get('packages.ghafiye.album.default-image'));
+	}
+	protected function getAlbumReleaseDate(album $album){
+		db::where("album", $album->id);
+		db::where("status", song::publish);
+		db::orderby('release_at', 'desc');
+		return db::getValue('ghafiye_songs', 'release_at');
+	}
+	protected function getAlbums():array{
+		return album::where("ghafiye_songs.status", song::publish)::where('ghafiye_songs.id', $this->song->id, '!=')->bySinger($this->singer, 4);
+	}
+	protected function isMoreAlbum():bool{
+		return count(album::where("ghafiye_songs.status", song::publish)::where('ghafiye_songs.id', $this->song->id, '!=')->bySinger($this->singer)) > 4;
+	}
+	protected function getPopularSongs():array{
+		return song::where("status", song::publish)->orderBy("views", "DESC")->bySinger($this->singer, 5);
+	}
+	protected function isMorePopularSong():bool{
+		return count(song::where("status", song::publish)->bySinger($this->singer)) > 5;
 	}
 }

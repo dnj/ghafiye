@@ -4,6 +4,7 @@ use \packages\userpanel\date;
 use \packages\base\translator;
 use \packages\ghafiye\song\lyric;
 use \packages\ghafiye\song\person;
+use \packages\ghafiye\person\name as personName;
 $this->the_header();
 $numberOfLangs = $this->numberOfLangs();
 $lang = $this->getLyricsLanguage();
@@ -83,9 +84,9 @@ $lang = $this->getLyricsLanguage();
 		<?php if($songs = $this->getSongs()){ ?>
 		<div class="panel">
 			<div class="panel-heading">
-				<a href="<?php echo(base\url($this->singer->encodedName($lang).'/albums/'.$this->song->album->encodedTitle($lang))); ?>">
+				<a class="album-name" href="<?php echo(base\url($this->singer->encodedName($lang).'/albums/'.$this->song->album->encodedTitle($lang))); ?>">
 					<div class="col-sm-5 col-xs-6">
-						<img src="<?php echo $this->getAlbumImage(); ?>" alt="25 Adele - cover art">
+						<img src="<?php echo $this->getAlbumImage(); ?>" alt="<?php echo $this->song->album->encodedTitle(); ?> <?php echo $this->singer->encodedName(); ?> - cover art">
 					</div>
 					<div class="col-sm-7 col-xs-6">
 						<p class=title><?php echo $this->song->album->title($lang); ?></p>
@@ -98,17 +99,17 @@ $lang = $this->getLyricsLanguage();
 					<?php
 					$i = 0;
 					foreach($songs as $song){
-						$singer = $song->getPerson(person::singer);
 					?>
 					<li class="row">
 						<div class="col-sm-2 col-xs-2">
-							<span><?php echo ++$i; ?></span>
+							<span class="text-center"><?php echo ++$i; ?></span>
 						</div>
 						<div class="col-sm-2 col-xs-2">
 							<img src="<?php echo $this->songImage($song); ?>" alt="<?php echo $song->title(); ?>">
 						</div>
 						<div class="col-sm-8 col-xs-8">
-							<a href="<?php echo(base\url($singer->encodedName($lang).'/'.$song->encodedTitle($lang))); ?>"><strong><?php echo $song->title($lang); ?></strong></a>						</div>
+							<a href="<?php echo(base\url($this->singer->encodedName($lang).'/'.$song->encodedTitle($lang))); ?>"><strong><?php echo $song->title($lang); ?></strong></a>
+						</div>
 					</li>
 					<?php
 					}
@@ -120,7 +121,67 @@ $lang = $this->getLyricsLanguage();
 			</div>
 		</div>
 		<?php } ?>
+		<?php if($songs = $this->getPopularSongs()){ ?>
+		<div class="panel panel-songs">
+			<div class="panel-heading">
+				<?php echo translator::trans('lyrics.top'); ?>
+				<?php if($this->isMorePopularSong()){ ?>
+				<a class="pull-left" href="<?php echo base\url($this->singer->encodedName($lang)); ?>"><?php echo translator::trans('home.section.toplyrics.more'); ?> <i class="fa fa-angle-left"></i></a>
+				<?php } ?>
+			</div>
+			<div class="panel-body">
+				<ul>
+					<?php
+					$i = 0;
+					foreach($songs as $song){
+						$isCurrentSong = $this->song->id == $song->id;
+					?>
+					<li class="row<?php echo $isCurrentSong ? ' active' : ''; ?>">
+						<div class="col-sm-2 col-xs-2">
+							<span class="text-center"><?php ++$i; echo $isCurrentSong ? '<i class="fa fa-play-circle"></i>': $i; ?></span>
+						</div>
+						<div class="col-sm-2 col-xs-2">
+							<img src="<?php echo $this->songImage($song); ?>" alt="<?php echo $song->title(); ?>">
+						</div>
+						<div class="col-sm-8 col-xs-8">
+							<a <?php if(!$isCurrentSong){ ?> href="<?php echo(base\url($this->singer->encodedName($lang).'/'.$song->encodedTitle($lang))); ?>"<?php } ?>><strong><?php echo $song->title($lang);?></strong></a>
+						</div>
+					</li>
+					<?php
+					}
+					?>
+				</ul>
+			</div>
+		</div>
+		<?php } ?>
 	</div>
 </div>
+<?php if($albums = $this->getAlbums()){ ?>
+<div class="row">
+	<div class="col-sm-12">
+		<div class="more-albums">
+			<span class="more-albums-title"><?php echo translator::trans('more.albums.for', ['url'=>base\url($this->singer->encodedName($lang)), 'name'=>$this->singer->name($lang)]); ?></span>
+			<div class="row">
+				<?php foreach($albums as $album){ ?>
+				<div class="col-sm-3">
+					<a class="album" href="<?php echo(base\url($this->singer->encodedName($lang).'/albums/'.$album->encodedTitle($lang))); ?>">
+						<div class="image" style="background-image: url(<?php echo $this->albumImage($album); ?>);"></div>
+						<div class="description">
+							<ul class="info pull-right">
+								<li class="title"><?php echo $album->title(); ?></li>
+								<li class="year"><?php echo date::format('Y', $this->getAlbumReleaseDate($album)); ?></li>
+							</ul>
+						</div>
+					</a>
+				</div>
+				<?php } ?>
+			</div>
+			<?php if($this->isMoreAlbum()){ ?>
+			<a href="<?php echo base\url($this->singer->encodedName($lang).'/albums'); ?>" class="more"><?php echo translator::trans('home.section.toplyrics.more'); ?></a>
+			<?php } ?>
+		</div>
+	</div>
+</div>
+<?php } ?>
 <?php
 $this->the_footer();

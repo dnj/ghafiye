@@ -73,13 +73,13 @@ class song extends dbObject{
 		}
 		return new song($data);
 	}
-	static function bySinger(person $singer){
+	static function bySinger(person $singer, $limit = null){
 		$songs = array();
 		db::join("ghafiye_songs_persons", "ghafiye_songs_persons.song=ghafiye_songs.id", "inner");
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.person", $singer->id);
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.role", songPerson::singer);
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.primary", true);
-		foreach(db::get("ghafiye_songs", null,"ghafiye_songs.*") as $data){
+		foreach(db::get("ghafiye_songs", $limit,"ghafiye_songs.*") as $data){
 			$songs[] = new song($data);
 		}
 		return $songs;
