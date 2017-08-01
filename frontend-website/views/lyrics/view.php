@@ -153,10 +153,10 @@ class view extends lyricsView{
 		return db::getValue('ghafiye_songs', 'release_at');
 	}
 	protected function getAlbums():array{
-		return album::where("ghafiye_songs.status", song::publish)::where('ghafiye_songs.id', $this->song->id, '!=')->bySinger($this->singer, 4);
+		return album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer, 4);
 	}
 	protected function isMoreAlbum():bool{
-		return count(album::where("ghafiye_songs.status", song::publish)::where('ghafiye_songs.id', $this->song->id, '!=')->bySinger($this->singer)) > 4;
+		return count(album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer)) > 4;
 	}
 	protected function getPopularSongs():array{
 		return song::where("status", song::publish)->orderBy("views", "DESC")->bySinger($this->singer, 5);
