@@ -16,13 +16,14 @@ use \packages\ghafiye\musixmatch\track;
 use \packages\ghafiye\musixmatch\track\cover;
 use \packages\ghafiye\musixmatch\genre as MMgenre;
 use \packages\ghafiye\musixmatch\lyric\translation as MMLTranslation;
+use \packages\musixmatch\api;
 use \packages\ghafiye\genre;
 
 class musixmatch extends process{
 	public function getAdele(){
-		$artist = new artist();
-		$artist = $artist->get(346898);
-		return $artist[0];
+		$api = new api();
+		$track = $api->track()->getByID(78059644);
+		print_r($track->translate("fa")->texts);
 	}
 	public function getAdeleAlbums(){
 		$artist = $this->getAdele();
