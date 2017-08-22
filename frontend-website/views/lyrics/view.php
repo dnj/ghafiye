@@ -153,6 +153,9 @@ class view extends lyricsView{
 		return db::getValue('ghafiye_songs', 'release_at');
 	}
 	protected function getAlbums():array{
+		if($this->song->album === null){
+			return [];
+		}
 		return album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer, 4);
 	}
 	protected function isMoreAlbum():bool{
