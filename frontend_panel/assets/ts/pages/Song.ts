@@ -567,7 +567,7 @@ export default class Song{
 							let ltrOrginal = Song.is_ltr(song.lang) ? "ltr" : "";
 							const isTranslated = getTranslateOf(song.orginalLyric[i].id);
 							html += `<div class="form-group">
-								<input value="${song.orginalLyric[i].text}" name="" disabled="" class="form-control ${ltrOrginal}" type="text">
+								<input value="${song.orginalLyric[i].text}" name="" readonly="" class="form-control ${ltrOrginal}" type="text">
 								<input value="${song.orginalLyric[i].id}" name="lyric[${i}][parent]" class="form-control" type="hidden">
 								<input value="${isTranslated ? isTranslated : ""}" name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
 							let $help_block = $formGroup.find('.help-block');
