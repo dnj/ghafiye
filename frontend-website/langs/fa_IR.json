@@ -123,6 +123,16 @@
 		"pagination.previousPage": "قبلی",
 		"pagination.nextPage": "بعدی",
 		"blog.post.comment.site": "سایت شما",
-		"lyrics.top": "بهترین آثار"
+		"lyrics.top": "بهترین آثار",
+		"ghafiye.blog.post.share.facebook": "اشتراک در فیسبوک",
+		"ghafiye.blog.post.share.telegram": "اشتراک در تلگرام",
+		"ghafiye.blog.post.share.twitter": "اشتراک در توییتر",
+		"ghafiye.blog.post.share.google-plus": "اشتراک در گوگل+",
+		"ghafiye.blog.post.share.pinterest": "اشتراک در pinterest",
+		"ghafiye.blog.post.share.linkedin": "اشتراک در linkedin",
+		"ghafiye.blog.post.share.tumblr": "اشتراک در tumblr",
+		"ghafiye.blog.post.share.vk": "اشتراک در vk",
+		"ghafiye.blog.post.share.reddit": "اشتراک در reddit",
+		"ghafiye.blog.post.share.mail": "اشتراک با ایمیل"
 	}
 }

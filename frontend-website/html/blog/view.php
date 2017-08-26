@@ -37,6 +37,20 @@ $this->the_header();
 						<?php } ?>
 					</div>
 				</div>
+				<div class="row">
+					<div class="col-sm-12 share-box">
+						<h3><?php echo translator::trans("ghafiye.blog.post.share"); ?></h3>
+						<ul class="share-box-list">
+							<?php foreach($this->getShareSocial() as $social){ ?>
+							<li class="share-linksocial link-<?php echo $social['name']; ?>">
+								<a class="tooltips" target="_blank" href="<?php echo $social['link']; ?>" title="<?php echo translator::trans("ghafiye.blog.post.share.{$social['name']}"); ?>">
+									<i class="fa fa-<?php echo ($social['name'] == "mail" ? "envelope-o" : $social['name']); ?>"></i>
+								</a>
+							</li>
+							<?php } ?>
+						</ul>
+					</div>
+				</div>
 			</article>
 		</section>
 		<?php if(count($this->post->comments)){ ?>

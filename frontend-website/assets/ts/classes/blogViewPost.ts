@@ -1,5 +1,6 @@
 import * as $ from "jquery";
 import "jquery.growl";
+import "bootstrap/js/tooltip"
 export class blogViewPost{
 	public static runReplyComment(): void{
 		$(".reply").on('click',function(e){
@@ -27,5 +28,6 @@ export class blogViewPost{
 	public static init(){
 		this.runReplyComment();
 		this.commentSendResult();
+		$('.share-box-list a.tooltips').tooltip();
 	}
 }

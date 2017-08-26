@@ -14,10 +14,10 @@ class view extends postView{
 	private $number = 1;
 	function __beforeLoad(){
 		$this->post = $this->getPost();
-		$this->setTitle(array(
+		$this->setTitle([
 			translator::trans("blog.list.title"),
 			$this->post->title
-		));
+		]);
 		$this->addBodyClass('article');
 		$this->addBodyClass('blog');
 	}
@@ -69,5 +69,49 @@ class view extends postView{
 			}
 		}
 		return $code;
+	}
+	protected function getShareSocial(){
+		return [
+			[
+				"name"=> "facebook",
+				"link"=> "http://www.facebook.com/sharer.php?u=".$this->post->getURL([],true)
+			],
+			[
+				"name"=> "telegram",
+				"link"=> "tg://msg_url?text=".($this->post->title)."&url=".$this->post->getURL([],true)
+			],
+			[
+				"name"=> "twitter",
+				"link"=> "http://www.twitter.com/share?url=".$this->post->getURL([],true)
+			],
+			[
+				"name"=> "google-plus",
+				"link"=> "http://www.plus.google.com/sharer?url=".$this->post->getURL([],true)
+			],
+			[
+				"name"=> "pinterest",
+				"link"=> "http://www.pinterest.com/pin/create/button/?url=".$this->post->getURL([],true)
+			],
+			[
+				"name"=> "linkedin",
+				"link"=> "http://www.linkedin.com/shareArticle?mini=true&title=".$this->post->getURL([],true)
+			],
+			[
+				"name"=> "tumblr",
+				"link"=> "http://www.tumblr.com/share/link?url=".$this->post->getURL([],true)
+			],
+			[
+				"name"=> "vk",
+				"link"=> "http://www.vk.com/share.php?url=".$this->post->getURL([],true)
+			],
+			[
+				"name"=> "reddit",
+				"link"=> "http://www.reddit.com/submit?url=".$this->post->getURL([],true)
+			],
+			[
+				"name"=> "mail",
+				"link"=> "mailto:?subject={$this->post->title}&body={$this->post->description}\n".$this->post->getURL([],true)
+			]
+		];
 	}
 }
