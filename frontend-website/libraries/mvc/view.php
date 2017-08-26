@@ -1,10 +1,12 @@
 <?php
 namespace themes\musixmatch;
+use \packages\base\http;
 use \packages\base\view\error;
 use \packages\base\translator;
 use \packages\news\newpost;
 trait viewTrait{
 	protected $bodyClasses = array('rtl');
+	public $metaTags = [];
 	function the_header($template = ''){
 		require_once(__DIR__.'/../../html/header/'.($template ? $template : 'header').'.php');
 	}
@@ -90,5 +92,105 @@ trait viewTrait{
 		}
 
 		return $code;
+	}
+	public function addMetaTag($options){
+		if(!empty($options)){
+			$this->metaTags[] = $options;
+		}
+	}
+	public function buildMetaTags(){
+		$this->addDefaultMetaTags();
+		$html = '';
+		foreach($this->metaTags as $options){
+			$html .= "\t<meta";
+			foreach($options as $key => $value){
+				$html .= " {$key}=\"".htmlspecialchars($value)."\"";
+			}
+			$html .= ">\n";
+		}
+		echo $html;
+	}
+	public function addDefaultMetaTags(){
+		$description = $this->getDescription();
+		$properties = array_column($this->metaTags, 'property');
+		$names = array_column($this->metaTags, 'name');
+		if(!in_array('og:type', $properties)){
+			$this->addMetaTag(array(
+				'property' => 'og:type',
+				'content' => 'website'
+			));
+		}
+		if(!in_array('og:title', $properties)){
+			$this->addMetaTag(array(
+				'property' => 'og:title',
+				'content' => $this->getTitle()
+			));
+		}
+		if(!in_array('og:url', $properties)){
+			$this->addMetaTag(array(
+				'property' => 'og:url',
+				'content' => http::getURL()
+			));
+		}
+		if(!in_array('og:site_name', $properties)){
+			$this->addMetaTag(array(
+				'property' => 'og:site_name',
+				'content' => translator::trans("jeyblog")
+			));
+		}
+		if(!in_array('og:locale', $properties)){
+			$this->addMetaTag(array(
+				'property' => 'og:locale',
+				'content' => translator::getCodeLang()
+			));
+		}
+		if(!in_array('og:image', $properties)){
+			$this->addMetaTag(array(
+				'property' => 'og:image',
+				'content' => theme::url('assets/images/jslogo5.png', true)
+			));
+		}
+		if(!in_array('og:description', $properties) and $description){
+			$this->addMetaTag(array(
+				'property' => 'og:description',
+				'content' => $description
+			));
+		}
+		if(!in_array('twitter:title', $names)){
+			$this->addMetaTag(array(
+				'name' => 'twitter:title',
+				'content' => $this->getTitle()
+			));
+		}
+		if(!in_array('twitter:card', $names)){
+			$this->addMetaTag(array(
+				'name' => 'twitter:card',
+				'content' => 'summary'
+			));
+		}
+		if(!in_array('twitter:description', $names) and $description){
+			$this->addMetaTag(array(
+				'name' => 'twitter:description',
+				'content' => $description
+			));
+		}
+		if(!in_array('twitter:url', $names)){
+			$this->addMetaTag(array(
+				'name' => 'twitter:url',
+				'content' => http::getURL()
+			));
+		}
+		if(!in_array('twitter:creator', $names)){
+			$this->addMetaTag(array(
+				'name' => 'twitter:creator',
+				'content' => '@ghafiyecom'
+			));
+		}
+		if(!in_array('twitter:site', $names)){
+			$this->addMetaTag(array(
+				'name' => 'twitter:site',
+				'content' => '@ghafiyecom'
+			));
+		}
 	}
 }

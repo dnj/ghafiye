@@ -20,6 +20,7 @@ class view extends postView{
 		]);
 		$this->addBodyClass('article');
 		$this->addBodyClass('blog');
+		$this->addMetaTags();
 	}
 	protected function revertReply($reply = null){
 		$html = "";
@@ -113,5 +114,61 @@ class view extends postView{
 				"link"=> "mailto:?subject={$this->post->title}&body={$this->post->description}\n".$this->post->getURL([],true)
 			]
 		];
+	}
+	private function addMetaTags(){
+		$this->addMetaTag(array(
+			'property' => 'og:type',
+			'content' => 'article'
+		));
+		$this->addMetaTag(array(
+			'property' => 'og:url',
+			'content' => $this->post->getURL([], true)
+		));
+		$this->addMetaTag(array(
+			'property' => 'og:image',
+			'content' => $this->blogImage($this->post, true)
+		));
+		$this->addMetaTag(array(
+			'property' => 'article:published_time',
+			'content' => date('c', $this->post->date)
+		));
+		if($section = $this->getParentCategories()){
+			$this->addMetaTag(array(
+				'property' => 'article:section',
+				'content' => $section
+			));
+		}
+		if($this->post->author->name){
+			$this->addMetaTag(array(
+				'property' => 'article:author:first_name',
+				'content' => $this->post->author->name
+			));
+		}
+		if($this->post->author->lastname){
+			$this->addMetaTag(array(
+				'property' => 'article:author:last_name',
+				'content' => $this->post->author->lastname
+			));
+		}
+		foreach($this->getTags() as $tag){
+			$this->addMetaTag(array(
+				'property' => 'article:tag',
+				'content' => $tag->title
+			));
+		}
+		$this->addMetaTag(array(
+			'name' => 'twitter:card',
+			'content' => 'summary_large_image'
+		));
+	}
+	private function getParentCategories(){
+		foreach($this->getCategories() as $category){
+			if($category->parent == null){
+				return $category->title;
+			}
+		}
+	}
+	public function getDescription():string{
+		return $this->post->description;
 	}
 }

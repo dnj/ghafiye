@@ -18,6 +18,7 @@ use \packages\base\frontend\theme;
 	if($description){
 		echo("<meta content=\"{$description}\" name=\"description\" />");
 	}
+	$this->buildMetaTags();
 	$this->loadCSS();
 	?>
 </head>
