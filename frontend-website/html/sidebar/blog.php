@@ -1,5 +1,5 @@
 <?php
-use \packages\base;
+use \packages\blog;
 use \packages\base\translator;
 use \packages\userpanel\date;
 ?>
@@ -19,7 +19,7 @@ use \packages\userpanel\date;
 		<div class="panel-heading"><?php echo translator::trans('blog.popular_blog'); ?></div>
 		<ul class="list-group">
 			<?php foreach($popularsPost as $popular){ ?>
-				<li><a href="<?php echo base\url("blog/view/".$popular->id); ?>" class="list-group-item"><?php echo($popular->title); ?></a></li>
+				<li><a href="<?php echo $popular->getUrl(); ?>" class="list-group-item"><?php echo($popular->title); ?></a></li>
 			<?php } ?>
 		</ul>
 	</div>
@@ -29,7 +29,7 @@ use \packages\userpanel\date;
 		 <div class="panel-heading"><?php echo translator::trans('blog.archive_box'); ?></div>
 		 <ul class="list-group">
 			 <?php foreach($archivesPosts as $archive){ ?>
-				 <li><a href="<?php echo base\url("blog/archive/".date::format("Y/m", $archive)); ?>" class="list-group-item"><?php echo(date::format("F Y", $archive)); ?></a></li>
+				 <li><a href="<?php echo blog\url("archive/".date::format("Y/m", $archive)); ?>" class="list-group-item"><?php echo(date::format("F Y", $archive)); ?></a></li>
 			 <?php } ?>
 		 </ul>
 	 </div>
@@ -37,7 +37,7 @@ use \packages\userpanel\date;
 	 <div class="panel panel-default">
 		<div class="panel-heading"><?php echo translator::trans('blog.search'); ?></div>
 		<div class="panel-body">
-			<form action="<?php echo base\url('blog/search'); ?>" method="GET">
+			<form action="<?php echo blog\url('search'); ?>" method="GET">
 				<?php $this->createField([
 					'name' => 'word',
 					'input-group' => [
