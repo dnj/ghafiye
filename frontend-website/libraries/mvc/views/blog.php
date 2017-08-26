@@ -27,8 +27,8 @@ trait blogTrait{
 		}
 		return array_unique($arcive);
 	}
-	function blogImage(post $post){
-		return (packages::package('blog')->url($post->image ? $post->image : options::get('packages.blog.defaultimage')));
+	function blogImage(post $post, bool $absolute = false){
+		return (packages::package('blog')->url($post->image ? $post->image : options::get('packages.blog.defaultimage'), $absolute));
 	}
 	public function getPostsSubJects($parent = null){
 		$html = "";
