@@ -1,6 +1,6 @@
 <?php
 namespace themes\musixmatch\views\blog;
-use \packages\base;
+use \packages\blog;
 use \packages\base\translator;
 use \packages\userpanel\date;
 use \themes\musixmatch\viewTrait;
@@ -62,10 +62,10 @@ class view extends postView{
 
 			if(count($categories) > 1){
 				foreach($categories as $category){
-					$code .= '<span> : </span> <a href="'.base\url("blog/categories/".$category->id).'" rel="category tag">'.$category->title.'</a>';
+					$code .= '<span> : </span> <a href="'.$category->getUrl().'" rel="category tag">'.$category->title.'</a>';
 				}
 			}else{
-				$code = '<a class="dotted-link1" href="'.base\url("blog/categories/".$categories[0]->id).'" rel="category tag">'.$categories[0]->title.'</a>';
+				$code = '<a class="dotted-link1" href="'.$categories[0]->getUrl().'" rel="category tag">'.$categories[0]->title.'</a>';
 			}
 		}
 		return $code;
