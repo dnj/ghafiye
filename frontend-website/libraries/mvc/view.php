@@ -1,6 +1,7 @@
 <?php
 namespace themes\musixmatch;
 use \packages\base\http;
+use \packages\base\frontend\theme;
 use \packages\base\view\error;
 use \packages\base\translator;
 use \packages\news\newpost;
@@ -147,7 +148,7 @@ trait viewTrait{
 		if(!in_array('og:image', $properties)){
 			$this->addMetaTag(array(
 				'property' => 'og:image',
-				'content' => theme::url('assets/images/jslogo5.png', true)
+				'content' => theme::url('assets/images/favicon.ico', true)
 			));
 		}
 		if(!in_array('og:description', $properties) and $description){
