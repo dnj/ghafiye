@@ -534,7 +534,7 @@ export default class Song{
 					function getTranslateOf(parent:number){
 						for(const lyric of lyrics){
 							if(lyric.parent == parent){
-								return lyric.text;
+								return lyric;
 							}
 						}
 						return null;
@@ -542,12 +542,21 @@ export default class Song{
 					let ltr = Song.is_ltr(lang) ? "ltr" : "";
 					let html = `<input class="lyrics" type="hidden" name="lyric_lang" value="${lang}"/>`;
 					for(let i=0;i < song.orginalLyric.length;i++){
-						let isset = lyrics.length > i;
-						html += `<div class="row lyrics" data-lyriclang="${lang}"><div class="col-xs-3"><input value="${(isset && lyrics[i].id) ? lyrics[i].id : ""}" name="lyric[${i}][id]" class="form-control lyric_id" type="hidden">`;
+						let $lyric = getTranslateOf(song.orginalLyric[i].id);
+						let isset:boolean = true;
+						if($lyric === null){
+							$lyric = {
+								id: 0,
+								text: '',
+								parent: song.orginalLyric[i]
+							};
+							isset = false;
+						}
+						html += `<div class="row lyrics" data-lyriclang="${lang}"><div class="col-xs-3"><input value="${$lyric.id ? $lyric.id : ""}" name="lyric[${i}][id]" class="form-control lyric_id" type="hidden">`;
 						let $oldRow = getRowByID(song.orginalLyric[i].id);
 						if(song.orginalLang){
 							html += `<div class="form-group">
-								<input value="${isset ? lyrics[i].time : ""}" name="lyric[${i}][time]" class="form-control lyric_time ltr" type="text">
+								<input value="${isset ? $lyric.time : ""}" name="lyric[${i}][time]" class="form-control lyric_time ltr" type="text">
 							</div>`;
 						}else{
 							let $formGroup = $('.form-group', $oldRow).eq(0);
@@ -565,11 +574,10 @@ export default class Song{
 						}else{
 							let $formGroup = $('.form-group', $oldRow).eq(0);
 							let ltrOrginal = Song.is_ltr(song.lang) ? "ltr" : "";
-							const isTranslated = getTranslateOf(song.orginalLyric[i].id);
 							html += `<div class="form-group">
 								<input value="${song.orginalLyric[i].text}" name="" readonly="" class="form-control ${ltrOrginal}" type="text">
 								<input value="${song.orginalLyric[i].id}" name="lyric[${i}][parent]" class="form-control" type="hidden">
-								<input value="${isTranslated ? isTranslated : ""}" name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
+								<input value="${isset ? $lyric.text : ""}" name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
 							let $help_block = $formGroup.find('.help-block');
 							if($help_block.length){
 								html += $help_block[0].outerHTML;

@@ -397,17 +397,22 @@ class songs extends controller{
 						}
 					}
 					foreach($inputs['lyric'] as $lyric){
-						if(isset($lyric['parent']) and $lyric['parent'] instanceof lyric){
-							$lyric['obj'] = new lyric();
-							$lyric['obj']->song = $song->id;
-							$lyric['obj']->lang = $inputs['lyric_lang'];
-							$lyric['obj']->parent = $lyric['parent']->id;
-						}elseif(!isset($lyric['obj'])){
-							$lyric['obj'] = new lyric();
-							$lyric['obj']->song = $song->id;
-							$lyric['obj']->lang = $inputs['lyric_lang'];
+						if(!isset($lyric['obj'])){
+							if(isset($lyric['parent']) and $lyric['parent'] instanceof lyric){
+								$lyric['obj'] = new lyric();
+								$lyric['obj']->song = $song->id;
+								$lyric['obj']->lang = $inputs['lyric_lang'];
+								$lyric['obj']->parent = $lyric['parent']->id;
+							}elseif(!isset($lyric['obj'])){
+								$lyric['obj'] = new lyric();
+								$lyric['obj']->song = $song->id;
+								$lyric['obj']->lang = $inputs['lyric_lang'];
+							}
 						}
 						if(isset($lyric['obj'])){
+							if($lyric['obj']->parent){
+								$lyric['obj']->parent = $lyric['parent'];
+							}
 							$lyric['obj']->time = $isOriginalLyric ? $lyric['time'] : 0;
 							$lyric['obj']->text = $lyric['text'];
 							$lyric['obj']->save();
