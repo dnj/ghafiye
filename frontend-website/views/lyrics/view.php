@@ -174,6 +174,17 @@ class view extends lyricsView{
 			'property' => 'og:title',
 			'content' => translator::trans('ghafiye.lyric.view.metaTag.og:title', ['title'=>$this->song->title($lang), 'artist'=>$this->singer->name($lang)])
 		));
+		if($this->song->lang == $lang){
+			$this->addMetaTag(array(
+				'property' => 'og:description',
+				'content' => translator::trans('ghafiye.lyric.view.metaTag.description', ['title'=>$this->song->title($lang), 'artist'=>$this->singer->name($lang)])
+			));
+		}else{
+			$this->addMetaTag(array(
+				'property' => 'og:description',
+				'content' => translator::trans('ghafiye.lyric.view.metaTag.description.translated', ['title'=>$this->song->title($lang), 'artist'=>$this->singer->name($lang)])
+			));
+		}
 		$this->addMetaTag(array(
 			'property' => 'og:type',
 			'content' => 'song.lyric'
@@ -194,5 +205,16 @@ class view extends lyricsView{
 			'property' => 'twitter:title',
 			'content' => translator::trans('ghafiye.lyric.view.metaTag.og:title', ['title'=>$this->song->title($lang), 'artist'=>$this->singer->name($lang)])
 		));
+		if($this->song->lang == $lang){
+			$this->addMetaTag(array(
+				'property' => 'twitter:description',
+				'content' => translator::trans('ghafiye.lyric.view.metaTag.description', ['title'=>$this->song->title($lang), 'artist'=>$this->singer->name($lang)])
+			));
+		}else{
+			$this->addMetaTag(array(
+				'property' => 'twitter:description',
+				'content' => translator::trans('ghafiye.lyric.view.metaTag.description.translated', ['title'=>$this->song->title($lang), 'artist'=>$this->singer->name($lang)])
+			));
+		}
 	}
 }
