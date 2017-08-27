@@ -23,6 +23,7 @@ class view extends lyricsView{
 			$this->song->title($this->getLyricsLanguage())
 		));
 		$this->addBodyClass('lyric');
+		$this->addMetaTags();
 	}
 	function getGenres(){
 		return genre::getActives(6);
@@ -166,5 +167,32 @@ class view extends lyricsView{
 	}
 	protected function isMorePopularSong():bool{
 		return count(song::where("status", song::publish)->bySinger($this->singer)) > 5;
+	}
+	private function addMetaTags(){
+		$lang = $this->getLyricsLanguage();
+		$this->addMetaTag(array(
+			'property' => 'og:title',
+			'content' => translator::trans('ghafiye.lyric.view.metaTag.og:title', ['title'=>$this->song->title($lang), 'artist'=>$this->singer->name($lang)])
+		));
+		$this->addMetaTag(array(
+			'property' => 'og:type',
+			'content' => 'song.lyric'
+		));
+		$this->addMetaTag(array(
+			'property' => 'og:image',
+			'content' => $this->song->getImage(255, 255, 'image', true)
+		));
+		$this->addMetaTag(array(
+			'property' => 'song:artist:name',
+			'content' => $this->singer->name($lang)
+		));
+		$this->addMetaTag(array(
+			'name' => 'twitter:card',
+			'content' => 'summary_large_image'
+		));
+		$this->addMetaTag(array(
+			'property' => 'twitter:title',
+			'content' => translator::trans('ghafiye.lyric.view.metaTag.og:title', ['title'=>$this->song->title($lang), 'artist'=>$this->singer->name($lang)])
+		));
 	}
 }

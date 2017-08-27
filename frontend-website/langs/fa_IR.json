@@ -133,6 +133,7 @@
 		"ghafiye.blog.post.share.tumblr": "اشتراک در tumblr",
 		"ghafiye.blog.post.share.vk": "اشتراک در vk",
 		"ghafiye.blog.post.share.reddit": "اشتراک در reddit",
-		"ghafiye.blog.post.share.mail": "اشتراک با ایمیل"
+		"ghafiye.blog.post.share.mail": "اشتراک با ایمیل",
+		"ghafiye.lyric.view.metaTag.og:title": "متن آهنگ {title} از {artist}"
 	}
 }

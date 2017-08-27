@@ -6,10 +6,10 @@ use \packages\base\IO\file;
 use \packages\base\packages;
 use \packages\base\db\dbObject;
 trait imageTrait{
-	public function getImage(int $width, int $height, string $key = 'image'){
+	public function getImage(int $width, int $height, string $key = 'image', bool $absolute = false){
 		if($this->$key === null){
 			$this->$key = options::get('packages.ghafiye.getImage.defaultImage');
-			return $this->getImage($height, $width, $key);
+			return $this->getImage($height, $width, $key, $absolute);
 		}
 		static $package;
 		if(!$package){
@@ -21,7 +21,7 @@ trait imageTrait{
 			$path = "storage/public/resized/{$name}_{$height}x{$width}.{$suffix}";
 			$resized = new file\local($package->getFilePath($path));
 			if($resized->exists()){
-				return  $package->url($path);
+				return  $package->url($path, $absolute);
 			}
 			$avatar = new file\local($package->getFilePath($this->$key));
 			switch($suffix){
@@ -39,7 +39,7 @@ trait imageTrait{
 				$resized->getDirectory()->make(true);
 			}
 			$image->resize($width, $height)->saveToFile($resized);
-			return $package->url($path);
+			return $package->url($path, $absolute);
 		}
 	}
 }
