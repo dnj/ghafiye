@@ -136,6 +136,9 @@
 		"ghafiye.blog.post.share.mail": "اشتراک با ایمیل",
 		"ghafiye.lyric.view.metaTag.og:title": "متن آهنگ {title} از {artist}",
 		"ghafiye.lyric.view.metaTag.description": "متن آهنگ {title} از {artist}",
-		"ghafiye.lyric.view.metaTag.description.translated": "ترجمه متن آهنگ {title} از {artist}"
+		"ghafiye.lyric.view.metaTag.description.translated": "ترجمه متن آهنگ {title} از {artist}",
+		"ghafiye.album.view.metaTag.og:title": "متن آلبوم {album} از {artist}",
+		"ghafiye.album.view.metaTag.description": "متن آلبوم {album} از {artist}",
+		"ghafiye.album.view.metaTag.description.translated": "ترجمه آلبوم {album} از {artist}"
 	}
 }

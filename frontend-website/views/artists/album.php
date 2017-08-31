@@ -20,6 +20,7 @@ class album extends albumView{
 		$this->album = $this->getAlbum();
 		$this->setTitle($this->artist->name($this->getSongLanguage()));
 		$this->addBodyClass('album');
+		$this->addMetaTags();
 	}
 	protected function getAlbumReleaseDate(){
 		db::where("album", $this->album->id);
@@ -37,5 +38,62 @@ class album extends albumView{
 			$i++;
 		}
 		return $albums;
+	}
+	private function addMetaTags(){
+		$lang = $this->getSongLanguage();
+		$this->addMetaTag(array(
+			'property' => 'og:title',
+			'content' => translator::trans('ghafiye.album.view.metaTag.og:title', ['album'=>$this->album->title($lang), 'artist'=>$this->artist->name($lang)])
+		));
+		if($this->album->lang == $lang){
+			$this->addMetaTag(array(
+				'property' => 'og:description',
+				'content' => translator::trans('ghafiye.album.view.metaTag.description', ['album'=>$this->album->title($lang), 'artist'=>$this->artist->name($lang)])
+			));
+		}else{
+			$this->addMetaTag(array(
+				'property' => 'og:description',
+				'content' => translator::trans('ghafiye.album.view.metaTag.description.translated', ['album'=>$this->album->title($lang), 'artist'=>$this->artist->name($lang)])
+			));
+		}
+		$this->addMetaTag(array(
+			'property' => 'og:type',
+			'content' => 'album'
+		));
+		$this->addMetaTag(array(
+			'property' => 'og:image',
+			'content' => $this->album->getImage(255, 255, 'image', true)
+		));
+		$this->addMetaTag(array(
+			'property' => 'album:artist:name',
+			'content' => $this->artist->name($lang)
+		));
+		foreach($this->getSongs() as $song){
+			if($song->status == song::publish){
+				$this->addMetaTag(array(
+					'property' => 'album:song',
+					'content' => $song->title($lang)
+				));
+			}
+		}
+		$this->addMetaTag(array(
+			'name' => 'twitter:card',
+			'content' => 'summary_large_image'
+		));
+		$this->addMetaTag(array(
+			'property' => 'twitter:title',
+			'content' => translator::trans('ghafiye.album.view.metaTag.og:title', ['album'=>$this->album->title($lang), 'artist'=>$this->artist->name($lang)])
+		));
+		if($this->album->lang == $lang){
+			$this->addMetaTag(array(
+				'property' => 'twitter:description',
+				'content' => translator::trans('ghafiye.album.view.metaTag.description', ['album'=>$this->album->title($lang), 'artist'=>$this->artist->name($lang)])
+			));
+		}else{
+			$this->addMetaTag(array(
+				'property' => 'twitter:description',
+				'content' => translator::trans('ghafiye.album.view.metaTag.description.translated', ['album'=>$this->album->title($lang), 'artist'=>$this->artist->name($lang)])
+			));
+		}
 	}
 }
