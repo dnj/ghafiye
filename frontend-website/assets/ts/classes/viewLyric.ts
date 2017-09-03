@@ -27,10 +27,28 @@ export class viewLyric{
 			});
 		});
 	}
+	private static runChangeLangListener():void{
+		$('.translations select.selectpicker option').on('click', function(){
+			console.log($(this).hasClass('ltr'));
+			if($(this).hasClass('ltr')){
+				$(this).parents('.selectpicker').addClass('ltr');
+			}else{
+				$(this).parents('.selectpicker').removeClass('ltr');
+			}
+			const lang = $('section.text').data('lang');
+			if(lang != $(this).val()){
+				window.location.href = $(this).data('link');
+			}
+		});
+	}
 	public static init():void {
 		this.runLikelistener();
 		$(function () {
 			$('.tooltips').tooltip()
 		})
+		if($('.translations select.selectpicker').length){
+			$('.translations select.selectpicker').val($('section.text').data('lang'));
+			this.runChangeLangListener();
+		}
 	}
 }

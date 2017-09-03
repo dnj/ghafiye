@@ -25,11 +25,11 @@ $lang = $this->getLyricsLanguage();
 			}
 			if($numberOfLangs - 2 > 0){
 			?>
-			<select class="selectpicker"  data-width="fit"  title="<?php echo translator::trans('translations.langs.more', array('number' => $numberOfLangs -2)); ?>">
+			<select class="selectpicker<?php if($this->is_ltr($lang))echo(' ltr'); ?>"  data-width="fit"  title="<?php echo translator::trans('translations.langs.more', array('number' => $numberOfLangs -2)); ?>">
 				<?php
-				foreach($this->getLangs() as $lang){
+				foreach($this->getLangs() as $tlang){
 				?>
-				<option value="<?php echo $lang; ?>" <?php if($this->is_ltr($lang))echo('class="ltr"'); ?> data-link="<?php echo(base\url($this->singer->encodedName($lang)).'/'.$this->song->encodedTitle($lang)); ?>"><?php echo translator::trans('translations.langs.'.$lang); ?></option>
+				<option value="<?php echo $tlang; ?>" <?php if($this->is_ltr($tlang))echo('class="ltr"'); ?> data-link="<?php echo(base\url($this->singer->encodedName($tlang)).'/'.$this->song->encodedTitle($tlang)); ?>"><?php echo translator::trans('translations.langs.'.$tlang); ?></option>
 				<?php } ?>
 			</select>
 			<?php } ?>
@@ -38,7 +38,7 @@ $lang = $this->getLyricsLanguage();
 </header>
 <div class="row">
 	<div class="col-md-7 col-sm-9 col-md-offset-1 col-md-push-3">
-		<section class="text">
+		<section class="text" data-lang="<?php echo $lang; ?>">
 			<?php foreach($this->getOrginalLyrices() as $lyric){ ?>
 			<p>
 				<span <?php if($this->is_ltr($lyric->lang))echo('class="ltr"'); ?>><?php echo $lyric->text; ?></span>

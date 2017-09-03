@@ -47,7 +47,7 @@ class view extends lyricsView{
 	}
 	protected function getLangs(){
 		db::where("song", $this->song->id);
-		db::where('lang', [$this->song->lang, 'fa'], 'in');
+		db::where('lang', [$this->song->lang, 'fa'], 'not in');
 		return array_column(db::get("ghafiye_songs_titles",null, "ghafiye_songs_titles.*"), 'lang');
 	}
 	protected function isLang(string $language):bool{
