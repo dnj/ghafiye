@@ -18,12 +18,20 @@ $lang = $this->getLyricsLanguage();
 		<h2><a href="<?php echo(base\url($this->singer->encodedName($lang))); ?>"><?php echo $this->singer->name($lang); ?></a></h2>
 		<div class="translations">
 			<span><i class="fa fa-language"></i> <?php echo translator::trans('translations'); ?></span>
-			<a <?php if($this->getLyricsLanguage() == $this->song->lang)echo('class="active"'); ?> href="<?php echo(base\url($this->singer->encodedName($this->song->lang)).'/'.$this->song->encodedTitle($this->song->lang)); ?>"><?php echo translator::trans('translations.langs.original'); ?></a>
+			<a <?php if($lang == $this->song->lang)echo('class="active"'); ?> href="<?php echo(base\url($this->singer->encodedName($this->song->lang)).'/'.$this->song->encodedTitle($this->song->lang)); ?>"><?php echo translator::trans('translations.langs.original'); ?></a>
 			<?php if($this->song->lang != 'fa' and $this->isLang('fa')){ ?>
-			<a <?php if($this->getLyricsLanguage() == 'fa')echo('class="active"'); ?> href="<?php echo(base\url($this->singer->encodedName('fa')).'/'.$this->song->encodedTitle('fa')); ?>"><?php echo translator::trans('translations.langs.fa'); ?></a>
+				<a<?php if($lang == 'fa')echo(' class="active"'); ?> href="<?php echo(base\url($this->singer->encodedName('fa')).'/'.$this->song->encodedTitle('fa')); ?>"><?php echo translator::trans('translations.langs.fa'); ?></a>
 			<?php
 			}
-			if($numberOfLangs - 2 > 0){
+			if($numberOfLangs < 6){
+				foreach(array_reverse($this->getLangs()) as $olang){
+					if($this->song->lang != $olang and $this->isLang($olang)){
+				?>
+						<a<?php if($lang == $olang)echo(' class="active"'); ?> href="<?php echo(base\url($this->singer->encodedName($olang)).'/'.$this->song->encodedTitle($olang)); ?>"><?php echo translator::trans('translations.langs.'.$olang); ?></a>
+			<?php
+					}
+				}
+			}else{
 			?>
 			<select class="selectpicker<?php if($this->is_ltr($lang))echo(' ltr'); ?>"  data-width="fit"  title="<?php echo translator::trans('translations.langs.more', array('number' => $numberOfLangs -2)); ?>">
 				<?php
