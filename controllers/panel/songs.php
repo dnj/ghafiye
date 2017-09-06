@@ -150,8 +150,8 @@ class songs extends controller{
 		$allowlangs = translator::$allowlangs;
 		$view->setAllowLangs($allowlangs);
 		$view->setGenres(genre::get());
-		$this->response->setStatus(false);
 		if(http::is_post()){
+	    	$this->response->setStatus(false);
 			$inputsRules = array(
 				'persons' => array(
 					'optinal' => true
@@ -358,6 +358,7 @@ class songs extends controller{
 					}
 				}
 				$song->save();
+
 				if(isset($inputs['titles'])){
 					foreach($song->titles as $title){
 						if(!isset($inputs['titles'][$title->lang])){
@@ -373,18 +374,18 @@ class songs extends controller{
 				}
 				if(isset($inputs['persons'])){
 					foreach($song->persons as $person){
-						if(!isset($inputs['persons'][$person->id])){
+						if(!isset($inputs['persons'][$person->person->id])){
 							$person->delete();
 						}else{
-							$person->primary = isset($inputs['persons'][$person->id]['primary']);
-							$person->role = $inputs['persons'][$person->id]['role'];
+							$person->primary = isset($inputs['persons'][$person->person->id]['primary']);
+							$person->role = $inputs['persons'][$person->person->id]['role'];
 							$person->save();
 						}
 					}
 					foreach($inputs['persons'] as $key => $person){
 						$songPerson = new songPerson();
 						$songPerson->song = $song->id;
-						$songPerson->person = $person['id'];
+						$songPerson->person = $key;
 						$songPerson->primary = isset($inputs['persons'][$key]['primary']);
 						$songPerson->role = $inputs['persons'][$key]['role'];
 						$songPerson->save();
