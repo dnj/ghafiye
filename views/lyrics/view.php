@@ -1,7 +1,8 @@
 <?php
 namespace packages\ghafiye\views\lyrics;
-use \packages\ghafiye\person;
 use \packages\ghafiye\song;
+use \packages\ghafiye\group;
+use \packages\ghafiye\person;
 class view extends \packages\ghafiye\view{
 	public function setSinger(person $singer){
 		$this->setData($singer, 'singer');
@@ -29,5 +30,11 @@ class view extends \packages\ghafiye\view{
 	}
 	protected function getlikeStatus(){
 		return $this->getData("liked");
+	}
+	public function setGroup(group $group){
+		$this->setData($group, 'group');
+	}
+	protected function getGroup():group{
+		return $this->getData('group');
 	}
 }

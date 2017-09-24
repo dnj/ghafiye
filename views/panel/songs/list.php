@@ -28,8 +28,8 @@ class listview extends list_view{
 		foreach($this->getsongsLists() as $song){
 			$item = $song->toArray();
 			$item['title'] = $song->title($song->lang);
-			$item['singer'] = $song->persons ? $song->getPerson(person::singer)->toArray() : $song->group->toArray();
-			$item['singer']['name'] = $song->persons ? $song->getPerson(person::singer)->name() : $song->group->title($song->lang);
+			$item['singer'] = $song->getPerson(person::singer)->toArray();
+			$item['singer']['name'] = $song->getPerson(person::singer)->name();
 			$export['data']['items'][] = $item;
 		}
 		return $export;

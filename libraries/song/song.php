@@ -48,7 +48,7 @@ class song extends dbObject{
 				return $person->person;
 			}
 		}
-		return null;
+		return $this->group;
 	}
 	public function getLyricByLang($lang = null){
 		if(!$lang){
@@ -67,6 +67,17 @@ class song extends dbObject{
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.person", $singer->id);
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.role", songPerson::singer);
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.primary", true);
+		$data = db::getOne("ghafiye_songs", "ghafiye_songs.*");
+		if(!$data){
+			return null;
+		}
+		return new song($data);
+	}
+	static function byGroupAndTitle(group $group, $title){
+		db::join("ghafiye_songs_titles", "ghafiye_songs_titles.song=ghafiye_songs.id", "inner");
+		db::joinWhere("ghafiye_songs_titles", "ghafiye_songs_titles.title", $title);
+		
+		db::where("ghafiye_songs.group", $group->id);
 		$data = db::getOne("ghafiye_songs", "ghafiye_songs.*");
 		if(!$data){
 			return null;

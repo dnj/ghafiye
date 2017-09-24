@@ -163,10 +163,18 @@ class view extends lyricsView{
 		return count(album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer)) > 4;
 	}
 	protected function getPopularSongs():array{
-		return song::where("status", song::publish)->orderBy("views", "DESC")->bySinger($this->singer, 5);
+		if($this->song->persons){
+			return song::where("status", song::publish)->orderBy("views", "DESC")->bySinger($this->singer, 5);
+		}else{
+			return song::where('ghafiye_songs.group', $this->song->group->id)->orderBy("views", "DESC")->get(5, "ghafiye_songs.*");
+		}
 	}
 	protected function isMorePopularSong():bool{
-		return count(song::where("status", song::publish)->bySinger($this->singer)) > 5;
+		if($this->song->persons){
+			return count(song::where("status", song::publish)->bySinger($this->singer)) > 5;
+		}else{
+			return song::where('ghafiye_songs.group', $this->song->group->id)->where('ghafiye_songs.id', $this->song->id, "!=")->count() > 5;
+		}
 	}
 	private function addMetaTags(){
 		$lang = $this->getLyricsLanguage();

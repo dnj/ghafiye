@@ -9,4 +9,9 @@ class title extends dbObject{
 		'lang' => array('type' => 'text', 'required' => true),
 		'title' => array('type' => 'text', 'required' => true)
 	);
+	public static function byTitle(string $title){
+		$obj = new title();
+		$obj->where('title', $title);
+		return $obj->getOne();
+	}
 }

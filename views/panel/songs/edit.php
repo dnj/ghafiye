@@ -67,8 +67,8 @@ class edit extends listview{
 		$song = $this->getSong();
 		$item = $song->toArray();
 		$item['title'] = $song->title();
-		$item['singer'] = $song->persons ? $song->getPerson(person::singer)->toArray() : $song->group->toArray();
-		$item['singer']['name'] = $song->persons ? $song->getPerson(person::singer)->name() : $song->group->title($song->lang);
+		$item['singer'] = $song->getPerson(person::singer)->toArray();
+		$item['singer']['name'] = $song->getPerson(person::singer)->name();
 		$lang = http::getData("langLyric") ? http::getData("langLyric") : $song->lang;
 		$item['orginalLyric'] = array();
 		foreach($song->getLyricByLang() as $lyric){

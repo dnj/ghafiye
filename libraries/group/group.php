@@ -29,4 +29,10 @@ class group extends dbObject{
 	public function getCover(int $width, int $height){
 		return $this->getImage($width, $height, 'cover');
 	}
+	public function encodedName($lang = null){
+		return $this->encodedTitle($lang);
+	}
+	public function name($lang = null){
+		return $this->title($lang);
+	}
 }
