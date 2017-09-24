@@ -1,8 +1,7 @@
 <?php
 namespace packages\ghafiye\views\artists;
-use \packages\ghafiye\view;
 use \packages\base\db\dbObject;
-use \packages\ghafiye\person;
+use \packages\ghafiye\{person, group, view};
 class albums extends view{
 	public function setArtist(person $artist){
 		$this->setData($artist, 'artist');
@@ -22,10 +21,17 @@ class albums extends view{
 	public function getAlbums(){
 		return $this->getData('albums');
 	}
+	public function setGroup(group $group){
+		$this->setData($group, 'group');
+	}
+	protected function getGroup():group{
+		return $this->getData('group');
+	}
 	public function export(){
+		$artist = $this->getArtist() ? $this->getArtist() : $this->getGroup();
 		return array(
 			'data' => array(
-				'artist' => $this->getArtist()->toArray(),
+				'artist' => $artist->toArray(),
 				'albums' => dbObject::objectToArray($this->getAlbums()),
 				'language' => $this->getSongLanguage()
 			)

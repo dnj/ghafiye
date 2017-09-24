@@ -42,7 +42,7 @@ $this->the_header();
 									<img src="<?php echo $this->defaultCover(); ?>" class="preview img-responsive" alt="تصویر زمینه">
 									<div class="button-group">
 										<button type="button" class="btn btn-teal btn-sm btn-upload"><i class="fa fa-pencil"></i></button>
-										<button type="button" class="btn btn-bricky btn-sm btn-remove" data-default="<?php echo $this->defaultAvatar(); ?>"><i class="fa fa-times"></i></button>
+										<button type="button" class="btn btn-bricky btn-sm btn-remove" data-default="<?php echo $this->defaultCover(); ?>"><i class="fa fa-times"></i></button>
 									</div>
 								</div>
 							</div>

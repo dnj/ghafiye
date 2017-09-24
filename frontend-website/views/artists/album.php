@@ -16,7 +16,7 @@ class album extends albumView{
 	protected $artist;
 	protected $album;
 	function __beforeLoad(){
-		$this->artist = $this->getArtist();
+		$this->artist = $this->getArtist() ? $this->getArtist() : $this->getGroup();
 		$this->album = $this->getAlbum();
 		$this->setTitle($this->artist->name($this->getSongLanguage()));
 		$this->addBodyClass('album');

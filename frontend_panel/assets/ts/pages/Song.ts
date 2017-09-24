@@ -462,7 +462,7 @@ export default class Song{
 					<a href="#" data-lang="${lang}" data-type="text" data-pk="1" data-original-title="${title}" class="editable editable-click title" style="display: inline;">${title}</a>
 				</td>
 				<td class="center">
-					<a href="#" class="btn btn-xs btn-bricky tooltips lang-del" title="" data-original-title="حذف"><i class="fa fa-times"></i></a>
+					<a href="#" class="btn btn-xs btn-bricky tooltips title-del" title="" data-original-title="حذف"><i class="fa fa-times"></i></a>
 				</td>
 			</tr>`;
 			let $row = $(html).appendTo($('.langs', Song.$form));
@@ -835,6 +835,7 @@ export default class Song{
 			Song.runSubmitFormListener();
 			Song.inputDirection();
 			Song.editImportLyrics();
+			Song.setPersonsEvents();
 		}else if($body.hasClass('song_list')){
 			Song.$form = $('#songsLists');
 			Song.runAlbumAutoComplete();

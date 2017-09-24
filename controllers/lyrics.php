@@ -25,26 +25,22 @@ class lyrics extends controller{
 		$data['artist'] = person::decodeName($data['artist']);
 		$data['song'] = song::decodeTitle($data['song']);
 		$personName = personName::byName($data['artist']);
-		$groupName = null;
-		if(!$personName){
-			$groupName = groupTitle::byTitle($data['artist']);
-			if(!$groupName){
-				throw new NotFound();
-			}
+		if(!$personName and !$groupName = groupTitle::byTitle($data['artist'])){
+			throw new NotFound();
 		}
 		$person = $group = $song = null;
 		if($personName){
 			$person = person::byId($personName->person);
-		}else{
-			$group = group::byId($groupName->group_id);
-		}
-		if($personName){
 			$song = song::where("ghafiye_songs.status", song::publish)->bySingerAndTitle($person, $data['song']);
 		}else{
+			$group = group::byId($groupName->group_id);
 			$song = song::where("ghafiye_songs.status", song::publish)->byGroupAndTitle($group, $data['song']);
 		}
 		if(!$song){
 			throw new NotFound;
+		}
+		if($personName and $song->group){
+			$this->response->Go(base\url("{$song->group->encodedTitle()}/{$song->encodedTitle()}"));
 		}
 		$song->views++;
 		$song->save();

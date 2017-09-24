@@ -30,6 +30,16 @@ class album extends dbObject{
 		}
 		return $albums;
 	}
+	static function byGroup(group $group, $limit = null):array{
+		$albums = [];
+		db::join("ghafiye_songs", "ghafiye_songs.album=ghafiye_albums.id", "inner");
+		db::where('ghafiye_songs.group', $group->id);
+		db::setQueryOption('DISTINCT');
+		foreach(db::get("ghafiye_albums", $limit,"ghafiye_albums.*") as $data){
+			$albums[] = new self($data);
+		}
+		return $albums;
+	}
 	static function bySingerAndTitle(person $singer, $title){
 		db::join("ghafiye_albums_titles", "ghafiye_albums_titles.album=ghafiye_albums.id", "inner");
 		db::joinWhere("ghafiye_albums_titles", "ghafiye_albums_titles.title", $title);
@@ -39,6 +49,18 @@ class album extends dbObject{
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.person", $singer->id);
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.role", songPerson::singer);
 		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.primary", true);
+		$data = db::getOne("ghafiye_albums","ghafiye_albums.*");
+		if(!$data){
+			return null;
+		}
+		return new self($data);
+	}
+	static function byGroupAndTitle(group $group, string $title){
+		db::join("ghafiye_albums_titles", "ghafiye_albums_titles.album=ghafiye_albums.id", "inner");
+		db::joinWhere("ghafiye_albums_titles", "ghafiye_albums_titles.title", $title);
+		
+		db::join("ghafiye_songs", "ghafiye_songs.album=ghafiye_albums.id", "inner");
+		db::where("ghafiye_songs.group", $group->id);
 		$data = db::getOne("ghafiye_albums","ghafiye_albums.*");
 		if(!$data){
 			return null;

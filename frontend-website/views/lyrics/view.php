@@ -157,20 +157,28 @@ class view extends lyricsView{
 		if($this->song->album === null){
 			return [];
 		}
-		return album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer, 4);
+		if(!$this->song->group){
+			return album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer, 4);
+		}else{
+			return album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->byGroup($this->song->group, 4);
+		}
 	}
 	protected function isMoreAlbum():bool{
-		return count(album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer)) > 4;
+		if(!$this->song->group){
+			return count(album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer)) > 4;
+		}else{
+			return count(album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->byGroup($this->song->group)) > 4;
+		}
 	}
 	protected function getPopularSongs():array{
-		if($this->song->persons){
+		if(!$this->song->group){
 			return song::where("status", song::publish)->orderBy("views", "DESC")->bySinger($this->singer, 5);
 		}else{
 			return song::where('ghafiye_songs.group', $this->song->group->id)->orderBy("views", "DESC")->get(5, "ghafiye_songs.*");
 		}
 	}
 	protected function isMorePopularSong():bool{
-		if($this->song->persons){
+		if(!$this->song->group){
 			return count(song::where("status", song::publish)->bySinger($this->singer)) > 5;
 		}else{
 			return song::where('ghafiye_songs.group', $this->song->group->id)->where('ghafiye_songs.id', $this->song->id, "!=")->count() > 5;
