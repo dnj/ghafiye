@@ -17,14 +17,14 @@ $group = $this->getGroup();
 				</div>
 	        </div>
 	        <div class="panel-body">
-	            <div class="table-responsive">
-	                <form class="group_edit_form" action="<?php echo userpanel\url('groups/edit/'.$group->id); ?>" method="post" enctype="multipart/form-data">
+				<form class="group_edit_form" action="<?php echo userpanel\url('groups/edit/'.$group->id); ?>" method="post" enctype="multipart/form-data">
+					<div class="row">
 						<div class="col-sm-3">
 							<label class="control-label"><?php echo translator::trans("ghafiye.panel.group.avatar"); ?></label>
 							<div class="fileupload fileupload-new" data-provides="fileupload">
 								<div class="form-group">
 									<div class="user-image avatarPreview">
-										<img src="<?php echo $this->getImage($group->avatar); ?>" class="preview img-responsive">
+										<img src="<?php echo $this->getImage(); ?>" class="preview img-responsive">
 										<input name="avatar" type="file">
 										<div class="button-group">
 											<button type="button" class="btn btn-teal btn-sm btn-upload"><i class="fa fa-pencil"></i></button>
@@ -33,8 +33,23 @@ $group = $this->getGroup();
 									</div>
 								</div>
 							</div>
-	                    </div>
+						</div>
 						<div class="col-sm-9">
+							<div class="form-group">
+								<label class="control-label"><?php echo translator::trans("ghafiye.panel.group.cover"); ?></label>
+								<div class="center avatarPreview group-cover">
+									<input name="cover" type="file">
+									<img src="<?php echo $this->defaultCover(); ?>" class="preview img-responsive" alt="تصویر زمینه">
+									<div class="button-group">
+										<button type="button" class="btn btn-teal btn-sm btn-upload"><i class="fa fa-pencil"></i></button>
+										<button type="button" class="btn btn-bricky btn-sm btn-remove" data-default="<?php echo $this->defaultCover(); ?>"><i class="fa fa-times"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
 							<?php $this->createField(array(
 								'name' => 'group-lang',
 								'type' => 'select',
@@ -43,17 +58,17 @@ $group = $this->getGroup();
 							));
 							?>
 						</div>
-						<div class="col-sm-12">
+						<div class="col-sm-6">
 							<div class="panel panel-white">
-						        <div class="panel-heading">
-						            <i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.group.translated.titles"); ?>
-						            <div class="panel-tools">
+								<div class="panel-heading">
+									<i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.group.translated.titles"); ?>
+									<div class="panel-tools">
 										<a class="btn btn-xs btn-link tooltips" title="" href="#addTitle" data-toggle="modal" data-original-title=""><i class="fa fa-plus"></i></a>
-						                <a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
-						            </div>
-						        </div>
-						        <div class="panel-body">
-						      	  <div class="table-responsive">
+										<a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
+									</div>
+								</div>
+								<div class="panel-body">
+									<div class="table-responsive">
 										<table class="table table-bordered table-striped table-names">
 											<thead>
 												<th><?php echo translator::trans("ghafiye.panel.group.title.lang"); ?></th>
@@ -79,30 +94,32 @@ $group = $this->getGroup();
 										</table>
 									</div>
 								</div>
-						    </div>
+							</div>
 						</div>
-						<div class="col-sm-12">
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
 							<div class="panel panel-white">
-						        <div class="panel-heading">
-						            <i class="fa fa-users"></i> <?php echo translator::trans("ghafiye.panel.group.persons"); ?>
-						            <div class="panel-tools">
+								<div class="panel-heading">
+									<i class="fa fa-users"></i> <?php echo translator::trans("ghafiye.panel.group.persons"); ?>
+									<div class="panel-tools">
 										<a class="btn btn-xs btn-link tooltips" title="" href="#addPerson" data-toggle="modal" data-original-title=""><i class="fa fa-plus"></i></a>
-						                <a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
-						            </div>
-						        </div>
-						        <div class="panel-body">
+										<a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
+									</div>
+								</div>
+								<div class="panel-body">
 									<table class="table table-bordered table-striped table-names">
 										<thead>
 											<th><?php echo translator::trans("ghafiye.panel.group.person.name"); ?></th>
 											<th></th>
 										</thead>
-									    <tbody class="persons">
+										<tbody class="persons">
 											<?php
 											foreach($group->persons as $person){
 												$person = $person->person;
 											?>
-									        <tr data-person="<?php echo $person->id; ?>">
-									            <td class="column-left">
+											<tr data-person="<?php echo $person->id; ?>">
+												<td class="column-left">
 												<?php
 													$this->createField(array(
 														'type' => 'hidden',
@@ -113,21 +130,23 @@ $group = $this->getGroup();
 												<a href="<?php echo userpanel\url("persons/edit/{$person->id}"); ?>"><?php echo($person->name()); ?></a>
 												</td>
 												<td class="center"><a href="#" class="btn btn-xs btn-bricky tooltips person-del" title="" data-original-title="<?php echo translator::trans("delete"); ?>"><i class="fa fa-times"></i></a></td>
-									        </tr>
+											</tr>
 											<?php } ?>
-									    </tbody>
+										</tbody>
 									</table>
 								</div>
-						    </div>
+							</div>
 						</div>
+					</div>
+					<div class="row">
 						<div class="col-sm-12">
-			                <p>
-			                    <a href="<?php echo userpanel\url('groups'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('ghafiye.return'); ?></a>
-			                    <button type="submit" class="btn btn-teal"><i class="fa fa-edit"></i> <?php echo translator::trans("ghafiye.update") ?></button>
-			                </p>
+							<p>
+								<a href="<?php echo userpanel\url('groups'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('ghafiye.return'); ?></a>
+								<button type="submit" class="btn btn-teal"><i class="fa fa-edit"></i> <?php echo translator::trans("ghafiye.update") ?></button>
+							</p>
 						</div>
-					</form>
-	            </div>
+					</div>
+				</form>
 	        </div>
 	    </div>
 	</div>

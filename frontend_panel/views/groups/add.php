@@ -36,6 +36,9 @@ class add extends groupADD{
 	protected function getImage(){
 		return packages::package('ghafiye')->url(options::get('packages.ghafiye.groups.deafault_image'));
 	}
+	protected function defaultCover():string{
+		return packages::package('ghafiye')->url("storage/public/cover_placeholder.png");
+	}
 	protected function getLangsForSelect(){
 		$langs = [];
 		foreach(['en', 'fa'] as $lang){

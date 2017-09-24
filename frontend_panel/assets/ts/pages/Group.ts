@@ -124,6 +124,7 @@ export default class Group{
 	}
 	private static runAvatarPreview(){
 		new AvatarPreview($('.user-image', Group.$form));
+		new AvatarPreview($(".group-cover", Group.$form));
 	}
 	private static runSubmitFormListener(){
 		Group.$form.on('submit', function(e){

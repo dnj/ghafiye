@@ -570,14 +570,14 @@ export default class Song{
 						}
 						html += '</div><div class="col-xs-8">';
 						if(song.orginalLang){
-							html += `<div class="form-group"><input value="${lyrics[i].text}" name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text"></div></div></div>`;
+							html += `<div class="form-group"><input value='${lyrics[i].text}' name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text"></div></div></div>`;
 						}else{
 							let $formGroup = $('.form-group', $oldRow).eq(0);
 							let ltrOrginal = Song.is_ltr(song.lang) ? "ltr" : "";
 							html += `<div class="form-group">
-								<input value="${song.orginalLyric[i].text}" name="" readonly="" class="form-control ${ltrOrginal}" type="text">
+								<input value='${song.orginalLyric[i].text}' name="" readonly="" class="form-control ${ltrOrginal}" type="text">
 								<input value="${song.orginalLyric[i].id}" name="lyric[${i}][parent]" class="form-control" type="hidden">
-								<input value="${isset ? $lyric.text : ""}" name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
+								<input value='${isset ? $lyric.text : ""}' name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
 							let $help_block = $formGroup.find('.help-block');
 							if($help_block.length){
 								html += $help_block[0].outerHTML;

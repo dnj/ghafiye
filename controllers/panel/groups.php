@@ -20,12 +20,12 @@ use \packages\ghafiye\group;
 use \packages\ghafiye\person;
 use \packages\ghafiye\group\title;
 use \packages\ghafiye\authorization;
-
+use \packages\ghafiye\views\panel\group as vGroup;
 class groups extends controller{
 	protected $authentication = true;
 	public function listview(){
 		authorization::haveOrFail('groups_list');
-		$view = view::byName("\\packages\\ghafiye\\views\\panel\\group\\listview");
+		$view = view::byName(vGroup\listview::class);
 		$group = new group();
 		$inputsRules = array(
 			'id' => array(
@@ -96,7 +96,7 @@ class groups extends controller{
 	}
 	public function edit($data){
 		authorization::haveOrFail('group_edit');
-		$view = view::byName("\\packages\\ghafiye\\views\\panel\\group\\edit");
+		$view = view::byName(vGroup\edit::class);
 		$group = group::byId($data['id']);
 		if(!$group){
 			throw new NotFound;
@@ -112,106 +112,168 @@ class groups extends controller{
 				'type' => 'string',
 				'optional' => true
 			),
-			'titles' => array(),
-			'persons' => array(
-				'empty' => true,
+			'titles' => array(
 				'optional' => true
-			)
+			),
+			'persons' => array(
+				'optional' => true
+			),
+			'cover' => [
+				'type' => 'file',
+				'optional' => true,
+				'empty' => true
+			]
 		);
 		$this->response->setStatus(false);
 		if(http::is_post()){
 			try{
 				$inputs = $this->checkinputs($inputsRules);
-				if(is_array($inputs['titles'])){
-					foreach($inputs['titles'] as $key => $title){
-						if(!in_array($key, translator::$allowlangs) or !$title){
-							throw new inputValidation("titles[{$key}]");
-						}
-					}
-				}else{
-					throw new inputValidation("titles");
-				}
-				if(!array_key_exists("persons", $inputs) or !is_array($inputs['persons'])){
-					$inputs['persons'] = array();
-				}
-				foreach($inputs['persons'] as $key => $person){
-					$person = person::byId($person);
-					if(!$person){
-						throw new inputValidation("persons[{$key}]");
+				foreach(array_keys($inputsRules) as $item){
+					if(isset($inputs[$item]) and !$inputs[$item]){
+						unset($inputs[$item]);
 					}
 				}
-				if(!isset($inputs['titles'][$inputs['group-lang']])){
-					throw new translatedGroupLang();
-				}
-				foreach($group->titles as $title){
-					if(isset($inputs['titles'][$title->lang])){
-						if($inputs['titles'][$title->lang] != $title->title){
-							$title->title = $inputs['titles'][$title->lang];
-							$title->save();
-						}
-						unset($inputs['titles'][$title->lang]);
-					}else{
-						$title->delete();
-					}
-				}
-				foreach($inputs['titles'] as $lang => $title){
-					if($title){
-						$group->addTitle($title, $lang);
-					}else{
-						throw new inputValidation("titles[{$lang}]");
-					}
-				}
-
-				foreach($group->persons as $person){
-					if(($key = array_search($person->data['person'], $inputs['persons'])) === false){
-						$person->delete();
-					}else{
-						unset($inputs['persons'][$key]);
-					}
-				}
-				foreach($inputs['persons'] as $person){
-					$person = new group\person(array(
-						'group_id' => $group->id,
-						'person' => $person
-					));
-					$person->save();
-				}
-				if(isset($inputs['group-lang']) and $inputs['group-lang']){
+				if(isset($inputs['group-lang'])){
 					if(!in_array($inputs['group-lang'], translator::$allowlangs)){
 						throw new inputValidation("group-lang");
 					}
-					$group->lang = $inputs['group-lang'];
+				}else{
+					$inputs['group-lang'] = $group->lang;
 				}
-				if($inputs["avatar"]['error'] == 0){
-					$type = getimagesize($inputs["avatar"]['tmp_name']);
-					if(in_array($type[2], array(IMAGETYPE_JPEG ,IMAGETYPE_GIF, IMAGETYPE_PNG))){
-						$title = IO\md5($inputs["avatar"]['tmp_name']);
-						switch($type[2]){
-							case(IMAGETYPE_JPEG):
-								$type_name = '.jpg';
-								break;
-							case(IMAGETYPE_GIF):
-								$type_name = '.gif';
-								break;
-							case(IMAGETYPE_PNG):
-								$type_name = '.png';
-								break;
+				if(isset($inputs['titles'])){
+					if(is_array($inputs['titles'])){
+						if(isset($inputs['group-lang'])){
+							if(!isset($inputs['titles'][$inputs['group-lang']])){
+								throw new translatedGroupLang();
+							}
 						}
-						$directory = packages::package('ghafiye')->getFilePath("storage/public/groups/".$title.$type_name);
-						if(move_uploaded_file($inputs["avatar"]['tmp_name'], $directory)){
-							$group->avatar = "storage/public/groups/".$title.$type_name;
-						}else{
-							throw new inputValidation($inputs["avatar"]);
+						foreach($inputs['titles'] as $key => $title){
+							if(!in_array($key, translator::$allowlangs) or !$title){
+								throw new inputValidation("titles[{$key}]");
+							}
 						}
 					}else{
-						throw new inputValidation($inputs["avatar"]);
+						throw new inputValidation("titles");
 					}
-				}elseif($inputs["avatar"]['error'] != 4){
-					throw new inputValidation("avatar");
+				}
+				if(isset($inputs['persons'])){
+					if(!is_array($inputs['persons'])){
+						throw new inputValidation("persons");
+					}
+					foreach($inputs['persons'] as $key => $person){
+						if(!person::byId($person)){
+							throw new inputValidation("persons[{$key}]");
+						}
+					}
+				}
+				if(isset($inputs["avatar"])){
+					if($inputs["avatar"]['error'] == 0){
+						$type = getimagesize($inputs["avatar"]['tmp_name']);
+						if(!in_array($type[2], array(IMAGETYPE_JPEG ,IMAGETYPE_GIF, IMAGETYPE_PNG))){
+							throw new inputValidation("avatar");
+						}
+					}elseif($inputs["avatar"]['error'] == 4){
+						unset($inputs["avatar"]);
+					}else{
+						throw new inputValidation("avatar");
+					}
+				}
+				if(isset($inputs["cover"])){
+					if($inputs["cover"]['error'] == 0){
+						$type = getimagesize($inputs["cover"]['tmp_name']);
+						if(!in_array($type[2], array(IMAGETYPE_JPEG ,IMAGETYPE_GIF, IMAGETYPE_PNG))){
+							throw new inputValidation("cover");
+						}
+					}elseif($inputs["cover"]['error'] == 4){
+						unset($inputs["cover"]);
+					}else{
+						throw new inputValidation("cover");
+					}
+				}
+				if(isset($inputs["avatar"])){
+					$type = getimagesize($inputs["avatar"]['tmp_name']);
+					$title = IO\md5($inputs["avatar"]['tmp_name']);
+					switch($type[2]){
+						case(IMAGETYPE_JPEG):
+							$type_name = 'jpg';
+							break;
+						case(IMAGETYPE_GIF):
+							$type_name = 'gif';
+							break;
+						case(IMAGETYPE_PNG):
+							$type_name = 'png';
+							break;
+					}
+					$directory = packages::package('ghafiye')->getFilePath("storage/public/groups/{$title}.{$type_name}");
+					if(!move_uploaded_file($inputs["avatar"]['tmp_name'], $directory)){
+						throw new inputValidation("avatar");
+					}
+					$inputs["avatar"] = "storage/public/groups/{$title}.{$type_name}";
+				}
+
+				if(isset($inputs["cover"])){
+					$type = getimagesize($inputs["cover"]['tmp_name']);
+					$title = IO\md5($inputs["cover"]['tmp_name']);
+					switch($type[2]){
+						case(IMAGETYPE_JPEG):
+							$type_name = 'jpg';
+							break;
+						case(IMAGETYPE_GIF):
+							$type_name = 'gif';
+							break;
+						case(IMAGETYPE_PNG):
+							$type_name = 'png';
+							break;
+					}
+					$directory = packages::package('ghafiye')->getFilePath("storage/public/groups/{$title}.{$type_name}");
+					if(!move_uploaded_file($inputs["cover"]['tmp_name'], $directory)){
+						throw new inputValidation("cover");
+					}
+					$inputs["cover"] = "storage/public/groups/{$title}.{$type_name}";
+				}
+
+				if(isset($inputs['titles'])){
+					foreach($group->titles as $title){
+						if(isset($inputs['titles'][$title->lang])){
+							if($inputs['titles'][$title->lang] != $title->title){
+								$title->title = $inputs['titles'][$title->lang];
+								$title->save();
+							}
+							unset($inputs['titles'][$title->lang]);
+						}else{
+							$title->delete();
+						}
+					}
+					foreach($inputs['titles'] as $lang => $title){
+						$group->addTitle($title, $lang);
+					}
+				}
+				if(isset($inputs['persons'])){
+					foreach($group->persons as $person){
+						if(($key = array_search($person->data['person'], $inputs['persons'])) === false){
+							$person->delete();
+						}else{
+							unset($inputs['persons'][$key]);
+						}
+					}
+					foreach($inputs['persons'] as $person){
+						$person = new group\person(array(
+							'group_id' => $group->id,
+							'person' => $person
+						));
+						$person->save();
+					}
+				}
+				if(isset($inputs['group-lang'])){
+					$group->lang = $inputs['group-lang'];
+				}
+				foreach(['avatar', 'cover'] as $item){
+					if(isset($inputs[$item])){
+						$group->$item = $inputs[$item];
+					}
 				}
 				$group->save();
 				$this->response->setStatus(true);
-				$this->response->Go(userpanel\url("groups/edit/".$group->id));
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
 			}catch(translatedGroupLang $e){
@@ -227,7 +289,7 @@ class groups extends controller{
 	}
 	public function add($data){
 		authorization::haveOrFail('group_add');
-		$view = view::byName("\\packages\\ghafiye\\views\\panel\\group\\add");
+		$view = view::byName(vGroup\add::class);
 		$inputsRules = array(
 			'avatar' => array(
 				'type' => 'file',
@@ -240,9 +302,13 @@ class groups extends controller{
 			),
 			'titles' => array(),
 			'persons' => array(
-				'empty' => true,
-				'optional' => true
-			)
+				'empty' => true
+			),
+			'cover' => [
+				'type' => 'file',
+				'optional' => true,
+				'empty' => true
+			]
 		);
 		if(http::is_post()){
 			$this->response->setStatus(false);
@@ -268,6 +334,16 @@ class groups extends controller{
 					unset($inputs['avatar']);
 				}else{
 					throw new inputValidation("avatar");
+				}
+				if($inputs["cover"]['error'] == 0){
+					$type = getimagesize($inputs["cover"]['tmp_name']);
+					if(!in_array($type[2], array(IMAGETYPE_JPEG ,IMAGETYPE_GIF, IMAGETYPE_PNG))){
+						throw new inputValidation($inputs["cover"]);
+					}
+				}elseif($inputs["cover"]['error'] == 4){
+					unset($inputs['cover']);
+				}else{
+					throw new inputValidation("cover");
 				}
 				if(!isset($inputs["persons"]) or !is_array($inputs['persons'])){
 					$inputs['persons'] = [];
@@ -303,6 +379,27 @@ class groups extends controller{
 					}
 					$group->avatar = $inputs["avatar"];
 				}
+				if(isset($inputs['cover'])){
+					$title = IO\md5($inputs["cover"]['tmp_name']);
+					switch($type[2]){
+						case(IMAGETYPE_JPEG):
+							$type_name = '.jpg';
+							break;
+						case(IMAGETYPE_GIF):
+							$type_name = '.gif';
+							break;
+						case(IMAGETYPE_PNG):
+							$type_name = '.png';
+							break;
+					}
+					$directory = packages::package('ghafiye')->getFilePath("storage/public/groups/".$title.$type_name);
+					if(move_uploaded_file($inputs["cover"]['tmp_name'], $directory)){
+						$inputs["cover"] = "storage/public/groups/".$title.$type_name;
+					}else{
+						throw new inputValidation($inputs["cover"]);
+					}
+					$group->cover = $inputs["cover"];
+				}
 				$group->save();
 				foreach($inputs['persons'] as $person){
 					$person = new group\person(array(
@@ -311,14 +408,10 @@ class groups extends controller{
 					));
 					$person->save();
 				}
-
 				foreach($inputs['titles'] as $lang => $title){
-					if($title){
-						$group->addTitle($title, $lang);
-					}else{
-						throw new inputValidation("titles[{$lang}]");
-					}
+					$group->addTitle($title, $lang);
 				}
+
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("groups/edit/".$group->id));
 			}catch(inputValidation $error){
@@ -337,7 +430,7 @@ class groups extends controller{
 	}
 	public function delete($data){
 		authorization::haveOrFail('group_delete');
-		$view = view::byName("\\packages\\ghafiye\\views\\panel\\group\\delete");
+		$view = view::byName(vGroup\delete::class);
 		$group = group::byId($data['id']);
 		if(!$group){
 			throw new NotFound();

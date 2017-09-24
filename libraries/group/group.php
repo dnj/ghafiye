@@ -3,12 +3,13 @@ namespace packages\ghafiye;
 use packages\base\db\dbObject;
 use packages\ghafiye\translator\title;
 class group extends dbObject{
-	use title;
+	use title, imageTrait;
 	protected $dbTable = "ghafiye_groups";
 	protected $primaryKey = "id";
 	protected $dbFields = array(
         'avatar' => array('type' => 'text'),
-        'lang' => array('type' => 'text', 'required' => true)
+        'lang' => array('type' => 'text', 'required' => true),
+		'cover' => ['type' => 'text']
 	);
     protected $relations = array(
 		'titles' => array("hasMany", "packages\\ghafiye\\group\\title", "group_id"),
@@ -21,5 +22,11 @@ class group extends dbObject{
 			}
 		}
 		return false;
+	}
+	public function getAvatar(int $width, int $height){
+		return $this->getImage($width, $height, 'avatar');
+	}
+	public function getCover(int $width, int $height){
+		return $this->getImage($width, $height, 'cover');
 	}
 }
