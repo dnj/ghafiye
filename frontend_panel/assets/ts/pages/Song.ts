@@ -661,6 +661,13 @@ export default class Song{
 						}else{
 							$.growl.error($params);
 						}
+					}else if(error.hasOwnProperty('message')){
+						const $error = `<div class="alert alert-block alert-danger ">
+											<button data-dismiss="alert" class="close" type="button">×</button>
+											<h4 class="alert-heading"><i class="fa fa-times-circle"></i> خطا</h4>
+											<p>${error.message}</p>
+										</div>`;
+						$('.container .errors').html($error);
 					}else{
 						$.growl.error({
 							title:"خطا",
