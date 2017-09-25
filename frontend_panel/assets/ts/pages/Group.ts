@@ -160,7 +160,7 @@ export default class Group{
 						}else{
 							$.growl.error($params);
 						}
-					}else{
+					}else if(error.hasOwnProperty('message')){
 						$.growl.error({
 							title:"خطا",
 							message:'درخواست شما توسط سرور قبول نشد'
@@ -174,6 +174,11 @@ export default class Group{
 						const view = new View();
 						view.addError($viewError);
 						view.getErrorHTML();
+					}else{
+						$.growl.error({
+							title:"خطا",
+							message:'درخواست شما توسط سرور قبول نشد'
+						});
 					}
 				}
 			});
