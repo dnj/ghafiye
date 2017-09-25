@@ -21,6 +21,7 @@ class album extends albumView{
 		$this->setTitle($this->artist->name($this->getSongLanguage()));
 		$this->addBodyClass('album');
 		$this->addMetaTags();
+		$this->setDescription(translator::trans('ghafiye.album.view.metaTag.description.translated', ['album'=>$this->album->title(), 'artist'=>$this->artist->name()]));
 	}
 	protected function getAlbumReleaseDate(){
 		db::where("album", $this->album->id);

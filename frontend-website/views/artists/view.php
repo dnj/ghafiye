@@ -17,6 +17,9 @@ class view extends artistsView{
 		$this->artist = $this->getArtist() ? $this->getArtist() : $this->getGroup();
 		$this->setTitle($this->artist->name($this->getSongLanguage()));
 		$this->addBodyClass('artist');
+		$this->setDescription(translator::trans('ghafiye.artistsView.description', [
+			'name' => $this->artist->name()
+		]));
 	}
 	protected function getTopSongs(){
 		$song = new song();
@@ -68,5 +71,11 @@ class view extends artistsView{
 			$genres[] = new genre($data);
 		}
 		return $genres;
+	}
+	private function addMetaTags(){
+		$this->addMetaTag(array(
+			'property' => 'og:description',
+			'content' => translator::trans('ghafiye.lyric.view.metaTag.description', ['title'=>$this->song->title($lang), 'artist'=>$this->singer->name($lang)])
+		));
 	}
 }

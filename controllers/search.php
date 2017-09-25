@@ -98,18 +98,20 @@ class search extends controller{
 			$parenthesis->where("ghafiye_groups_titles.title", $data['word'], "contains");
 			$person->orWhere($parenthesis);
 			$person->where("ghafiye_songs.status", song::publish);
+			db::groupBy('ghafiye_persons.id');
 			db::setQueryOption("DISTINCT");
 			$persons = $person->get(null, array("ghafiye_persons.*", "ghafiye_persons_names.lang as `showing_lang`"));
-
+;
 			$group = new group();
+			db::join('ghafiye_songs', 'ghafiye_songs.group=ghafiye_groups.id', 'INNER');
 			db::join('ghafiye_groups_titles', 'ghafiye_groups_titles.group_id=ghafiye_groups.id', 'INNER');
+			$group->where('ghafiye_songs.status', song::publish);
 			$group->where("ghafiye_groups_titles.title", $data['word'], "contains");
-			db::groupBy("ghafiye_groups.id");
+			db::groupBy('ghafiye_groups.id');
 			db::setQueryOption("DISTINCT");
 			$groups = $group->get(null, array("ghafiye_groups.*", "ghafiye_groups_titles.lang as `showing_lang`"));
-
 			$persons = array_merge($groups, $persons);
-			
+
 			if(isset($data['type']) and $data['type']){
 				switch($data['type']) {
 					case("songs"):
