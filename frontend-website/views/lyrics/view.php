@@ -308,13 +308,6 @@ class view extends lyricsView{
 				];
 			}
 		}
-		$tags[] = [
-			'url' => base\url("{$this->singer->encodedName($lang)}/albums"),
-			'content' => translator::trans('ghafiye.song.album.withSinger.lyric.tag', [
-				'name'=> $this->song->album->title($lang),
-				'title' => $this->singer->name()
-			])
-		];
 		return $tags;
 	}
 }
