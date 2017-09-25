@@ -433,4 +433,22 @@ body.lyric{
 			font-size: 15px;
 		}
 	}
+	.tags{
+		a{
+			display: inline-block;
+			color: #636060;
+			font-size: 12px;
+			&:hover{
+				color: #aaa;
+				&:after{
+					color: #636060;
+				}
+			}
+			&:not(:last-child)::after{
+				content: "-";
+				margin-right: 5px;
+				
+			}
+		}
+	}
 }

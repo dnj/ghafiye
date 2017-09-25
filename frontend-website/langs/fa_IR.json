@@ -141,6 +141,17 @@
 		"ghafiye.album.view.metaTag.description": "متن آلبوم {album} از {artist}",
 		"ghafiye.album.view.metaTag.description.translated": "ترجمه آلبوم {album} از {artist}",
 		"ghafiye.artistsView.description": "آهنگ های {name}, آهنگ جدید {name}, لیست آهنگ {name}, متن آهنگ های {name}",
-		"ghafiye.artists.albumsView.description": "آهنگ های {name}, آلبوم جدید {name}, لیست آلبوم {name}, متن آهنگ های {name}, آلبوم های {name}"
+		"ghafiye.artists.albumsView.description": "آهنگ های {name}, آلبوم جدید {name}, لیست آلبوم {name}, متن آهنگ های {name}, آلبوم های {name}",
+		"ghafiye.song.lyric.tag": "متن آهنگ {title} از {name}",
+		"ghafiye.song.tag": "آهنگ {title} از {name}",
+		"ghafiye.song.lyric.tag.translated": "متن ترجمه آهنگ {title} از {name}",
+		"ghafiye.song.tag.translated": "ترجمه آهنگ {title} {name}",
+		"ghafiye.song.album.tag": "آهنگ های آلبوم {name}",
+		"ghafiye.song.album.tag.translated": "ترجمه آهنگ های آلبوم {name}",
+		"ghafiye.song.album.lyric.tag": "متن آهنگ های آلبوم {name}",
+		"ghafiye.song.album.lyric.tag.translated": "ترجمه متن آهنگ آلبوم {name}",
+		"ghafiye.song.album.withSinger.lyric.tag": "آلبوم {name} {title}",
+		"ghafiye.song.album.withSinger.lyric.tag.translated": "ترجمه آلبوم {name} {title}",
+		"ghafiye.songs.lyric.tag.translated": "ترجمه آهنگ های {name}"
 	}
 }

@@ -233,4 +233,88 @@ class view extends lyricsView{
 			));
 		}
 	}
+	protected function getTags():array{
+		$lang = $this->getLyricsLanguage();
+		if($this->song->lang == $lang){
+			$tags = [
+				[
+					'url' => base\url("{$this->singer->encodedName($lang)}/{$this->song->encodedTitle($lang)}"),
+					'content' => translator::trans('ghafiye.song.lyric.tag', [
+						'name'=>$this->singer->name($lang),
+						'title' => $this->song->title()
+					])
+				],
+				[
+					'url' => base\url("{$this->singer->encodedName($lang)}/{$this->song->encodedTitle($lang)}"),
+					'content' => translator::trans('ghafiye.song.tag', [
+						'name'=>$this->singer->name(),
+						'title' => $this->song->title()
+					])
+				]
+			];
+			if($this->song->album){
+				$tags[] = [
+					'url' => base\url("{$this->singer->encodedName($lang)}/albums/{$this->song->album->title()}"),
+					'content' => translator::trans('ghafiye.song.album.tag', [
+						'name'=> $this->song->album->title(),
+						'title' => $this->song->title()
+					])
+				];
+				$tags[] = [
+					'url' => base\url("{$this->singer->encodedName($lang)}/albums/{$this->song->album->title()}"),
+					'content' => translator::trans('ghafiye.song.album.lyric.tag', [
+						'name'=> $this->song->album->title(),
+						'title' => $this->song->title()
+					])
+				];
+			}
+		}else{
+			$tags = [
+				[
+					'url' => base\url("{$this->singer->encodedName($lang)}/{$this->song->encodedTitle($lang)}"),
+					'content' => translator::trans('ghafiye.song.lyric.tag.translated', [
+						'name'=> $this->singer->name($this->song->lang),
+						'title' => $this->song->title($lang)
+					])
+				],
+				[
+					'url' => base\url("{$this->singer->encodedName($lang)}/{$this->song->encodedTitle($lang)}"),
+					'content' => translator::trans('ghafiye.song.tag.translated', [
+						'name'=> $this->singer->name(),
+						'title' => $this->song->title()
+					])
+				],
+				[
+					'url' => base\url("{$this->singer->encodedName($lang)}/{$this->song->encodedTitle($lang)}"),
+					'content' => translator::trans('ghafiye.songs.lyric.tag.translated', [
+						'name'=>$this->singer->name(),
+					])
+				]
+			];
+			if($this->song->album){
+				$tags[] = [
+					'url' => base\url("{$this->singer->encodedName($lang)}/albums/{$this->song->album->title()}"),
+					'content' => translator::trans('ghafiye.song.album.tag.translated', [
+						'name'=> $this->song->album->title(),
+						'title' => $this->song->title()
+					])
+				];
+				$tags[] = [
+					'url' => base\url("{$this->singer->encodedName($lang)}/albums/{$this->song->album->title()}"),
+					'content' => translator::trans('ghafiye.song.album.lyric.tag.translated', [
+						'name'=> $this->song->album->title(),
+						'title' => $this->song->title()
+					])
+				];
+			}
+		}
+		$tags[] = [
+			'url' => base\url("{$this->singer->encodedName($lang)}/albums"),
+			'content' => translator::trans('ghafiye.song.album.withSinger.lyric.tag', [
+				'name'=> $this->song->album->title($lang),
+				'title' => $this->singer->name()
+			])
+		];
+		return $tags;
+	}
 }

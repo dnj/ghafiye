@@ -73,6 +73,16 @@ $lang = $this->getLyricsLanguage();
 				</ul>
 			</div>
 		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<div class="tags">
+					برچسب ها:
+					<?php foreach($this->getTags() as $tag){ ?>
+						<a href="<?php echo $tag['url']; ?>"><?php echo $tag['content']; ?></a>
+					<?php } ?>
+				</div>
+			</div>
+		</div>
 	</div>
 	<div class="col-sm-3 tools col-md-pull-8">
 		<ul class="list-group">
