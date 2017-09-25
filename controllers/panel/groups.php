@@ -8,9 +8,9 @@ use \packages\base\NotFound;
 use \packages\base\packages;
 use \packages\base\view\error;
 use \packages\base\translator;
-use \packages\base\db\parenthesis;
 use \packages\base\inputValidation;
 use \packages\base\views\FormError;
+use \packages\base\db\{parenthesis, duplicateRecord};
 
 use \packages\userpanel;
 use \packages\userpanel\controller;
@@ -152,6 +152,16 @@ class groups extends controller{
 								throw new inputValidation("titles[{$key}]");
 							}
 						}
+						$obj = new title();
+						$obj->where('title', $title);
+						$obj->where('group_id', $group->id, '!=');
+						if($obj->has()){
+							throw new duplicateTitleRecord($title);
+						}
+						$person = new person\name();
+						if($person->byName($title)){
+							throw new duplicateTitleRecord($title);
+						}
 					}else{
 						throw new inputValidation("titles");
 					}
@@ -276,6 +286,11 @@ class groups extends controller{
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
+			}catch(duplicateTitleRecord $e){
+				$error = new error();
+				$error->setCode('ghafiye.panel.group.duplicateTitleRecord');
+				$error->setMessage(translator::trans('error.ghafiye.panel.group.duplicateTitleRecord', ['title' => $e->getTitle()]));
+				$view->addError($error);
 			}catch(translatedGroupLang $e){
 				$error = new error();
 				$error->setMessage(translator::trans('error.translated.group.lang.empty'));
@@ -319,6 +334,15 @@ class groups extends controller{
 					foreach($inputs['titles'] as $key => $title){
 						if(!in_array($key, translator::$allowlangs) or !$title){
 							throw new inputValidation("titles[{$key}]");
+						}
+						$obj = new title();
+						$obj->where('title', $title);
+						if($obj->has()){
+							throw new duplicateTitleRecord($title);
+						}
+						$person = new person\name();
+						if($person->byName($title)){
+							throw new duplicateTitleRecord($title);
 						}
 					}
 				}else{
@@ -416,6 +440,11 @@ class groups extends controller{
 				$this->response->Go(userpanel\url("groups/edit/".$group->id));
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
+			}catch(duplicateTitleRecord $e){
+				$error = new error();
+				$error->setCode('ghafiye.panel.group.duplicateTitleRecord');
+				$error->setMessage(translator::trans('error.ghafiye.panel.group.duplicateTitleRecord', ['title' => $e->getTitle()]));
+				$view->addError($error);
 			}catch(translatedGroupLang $e){
 				$error = new error();
 				$error->setCode('translated.group.lang.empty');
@@ -453,3 +482,13 @@ class groups extends controller{
 	}
 }
 class translatedGroupLang extends \Exception{}
+class duplicateTitleRecord extends duplicateRecord{
+	private $title;
+	public function __construct($title, string $message = ''){
+		$this->title = $title;
+		parent::__construct($message);
+	}
+	public function getTitle(){
+		return $this->title;
+	}
+}

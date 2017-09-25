@@ -56,7 +56,7 @@
 		"ghafiye.add_new.name": "اضافه کردن نام",
 		"error.person_name.empty": "باید حداقل یک مقدار نام خواننده مشخص باشد",
 		"groups": "گروه ها",
-		"ghafiye.panle.groups.list": "لیست گروه ها",
+		"ghafiye.panle.groups.list": "گروه ها",
 		"ghafiye.panle.groups.add": "افزودن گروه",
 		"ghafiye.panle.groups.edit": "ویرایش گروه",
 		"ghafiye.panle.groups.delete": "حذف گروه",
@@ -183,6 +183,7 @@
 		"ghafiye.panel.crawler.add.step.import.title": "درون ریزی",
 		"ghafiye.panel.crawler.add.step.import.description": "تایید نتیجه",
 		"ghafiye.panel.crawler.queue.word": "کلمه کلیدی",
-		"error.ghafiye.panel.edit.song.unknowSongsArtistException": "باید شخص و یا گروهی برای آهنگ مشخص شود"
+		"error.ghafiye.panel.edit.song.unknowSongsArtistException": "باید شخص و یا گروهی برای آهنگ مشخص شود",
+		"error.ghafiye.panel.group.duplicateTitleRecord": "شخص و یا گروهی با عنوان {title} وجود دارد. ابتدا شخص و یا گروه دیگر را به نام دیگری ویرایش کنید و سپس تلاش کنید ."
 	}
 }
