@@ -6,6 +6,7 @@ import "x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js";
 import { Router, AjaxRequest, webuilder } from "webuilder";
 import AutoComplete from "../classes/AutoComplete";
 import {AvatarPreview} from 'bootstrap-avatar-preview/AvatarPreview';
+import htmlSpecialChars from '../classes/htmlSpecialChars'
 export default class Song{
 	private static $form:JQuery;
 	private static $lyricFields:JQuery;
@@ -492,7 +493,7 @@ export default class Song{
 			id?:number;
 			time?:string;
 			text:string;
-			parent?:Lyric;
+			parent?:Lyric | number;
 		}
 		let $langForm = $("#changeLyricForm");
 		$langForm.on("submit", function(e){
@@ -556,7 +557,7 @@ export default class Song{
 						let $oldRow = getRowByID(song.orginalLyric[i].id);
 						if(song.orginalLang){
 							html += `<div class="form-group">
-								<input value="${isset ? $lyric.time : ""}" name="lyric[${i}][time]" class="form-control lyric_time ltr" type="text">
+								<input value="${lyrics[i].time}" name="lyric[${i}][time]" class="form-control lyric_time ltr" type="text">
 							</div>`;
 						}else{
 							let $formGroup = $('.form-group', $oldRow).eq(0);
@@ -570,14 +571,15 @@ export default class Song{
 						}
 						html += '</div><div class="col-xs-8">';
 						if(song.orginalLang){
-							html += `<div class="form-group"><input value='${lyrics[i].text}' name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text"></div></div></div>`;
+							html += `<div class="form-group"><input value='${htmlSpecialChars(lyrics[i].text, 'ENT_QUOTES')}' name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text"></div></div></div>`;
 						}else{
 							let $formGroup = $('.form-group', $oldRow).eq(0);
 							let ltrOrginal = Song.is_ltr(song.lang) ? "ltr" : "";
+							const text = isset ? htmlSpecialChars($lyric.text, 'ENT_QUOTES') : "";
 							html += `<div class="form-group">
-								<input value='${song.orginalLyric[i].text}' name="" readonly="" class="form-control ${ltrOrginal}" type="text">
+								<input value='${htmlSpecialChars(song.orginalLyric[i].text)}' name="" readonly="" class="form-control ${ltrOrginal}" type="text">
 								<input value="${song.orginalLyric[i].id}" name="lyric[${i}][parent]" class="form-control" type="hidden">
-								<input value='${isset ? $lyric.text : ""}' name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
+								<input value='${text}' name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
 							let $help_block = $formGroup.find('.help-block');
 							if($help_block.length){
 								html += $help_block[0].outerHTML;
