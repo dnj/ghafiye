@@ -16,11 +16,12 @@ class album extends albumView{
 	protected $artist;
 	protected $album;
 	function __beforeLoad(){
-		$this->artist = $this->getArtist();
+		$this->artist = $this->getArtist() ? $this->getArtist() : $this->getGroup();
 		$this->album = $this->getAlbum();
 		$this->setTitle($this->artist->name($this->getSongLanguage()));
 		$this->addBodyClass('album');
 		$this->addMetaTags();
+		$this->setDescription(translator::trans('ghafiye.album.view.metaTag.description.translated', ['album'=>$this->album->title(), 'artist'=>$this->artist->name()]));
 	}
 	protected function getAlbumReleaseDate(){
 		db::where("album", $this->album->id);

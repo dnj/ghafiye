@@ -462,7 +462,7 @@ export default class Song{
 					<a href="#" data-lang="${lang}" data-type="text" data-pk="1" data-original-title="${title}" class="editable editable-click title" style="display: inline;">${title}</a>
 				</td>
 				<td class="center">
-					<a href="#" class="btn btn-xs btn-bricky tooltips lang-del" title="" data-original-title="حذف"><i class="fa fa-times"></i></a>
+					<a href="#" class="btn btn-xs btn-bricky tooltips title-del" title="" data-original-title="حذف"><i class="fa fa-times"></i></a>
 				</td>
 			</tr>`;
 			let $row = $(html).appendTo($('.langs', Song.$form));
@@ -570,14 +570,14 @@ export default class Song{
 						}
 						html += '</div><div class="col-xs-8">';
 						if(song.orginalLang){
-							html += `<div class="form-group"><input value="${lyrics[i].text}" name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text"></div></div></div>`;
+							html += `<div class="form-group"><input value='${lyrics[i].text}' name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text"></div></div></div>`;
 						}else{
 							let $formGroup = $('.form-group', $oldRow).eq(0);
 							let ltrOrginal = Song.is_ltr(song.lang) ? "ltr" : "";
 							html += `<div class="form-group">
-								<input value="${song.orginalLyric[i].text}" name="" readonly="" class="form-control ${ltrOrginal}" type="text">
+								<input value='${song.orginalLyric[i].text}' name="" readonly="" class="form-control ${ltrOrginal}" type="text">
 								<input value="${song.orginalLyric[i].id}" name="lyric[${i}][parent]" class="form-control" type="hidden">
-								<input value="${isset ? $lyric.text : ""}" name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
+								<input value='${isset ? $lyric.text : ""}' name="lyric[${i}][text]" class="form-control lyric_text ${ltr}" type="text">`;
 							let $help_block = $formGroup.find('.help-block');
 							if($help_block.length){
 								html += $help_block[0].outerHTML;
@@ -661,6 +661,13 @@ export default class Song{
 						}else{
 							$.growl.error($params);
 						}
+					}else if(error.hasOwnProperty('message')){
+						const $error = `<div class="alert alert-block alert-danger ">
+											<button data-dismiss="alert" class="close" type="button">×</button>
+											<h4 class="alert-heading"><i class="fa fa-times-circle"></i> خطا</h4>
+											<p>${error.message}</p>
+										</div>`;
+						$('.container .errors').html($error);
 					}else{
 						$.growl.error({
 							title:"خطا",
@@ -828,6 +835,7 @@ export default class Song{
 			Song.runSubmitFormListener();
 			Song.inputDirection();
 			Song.editImportLyrics();
+			Song.setPersonsEvents();
 		}else if($body.hasClass('song_list')){
 			Song.$form = $('#songsLists');
 			Song.runAlbumAutoComplete();

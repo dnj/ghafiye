@@ -11,6 +11,8 @@ use \packages\base\views\FormError;
 use \packages\ghafiye\controller;
 use \packages\ghafiye\view;
 
+use \packages\ghafiye\group;
+use \packages\ghafiye\group\title as groupTitle;
 use \packages\ghafiye\person;
 use \packages\ghafiye\person\name as personName;
 use \packages\ghafiye\song;
@@ -23,13 +25,22 @@ class lyrics extends controller{
 		$data['artist'] = person::decodeName($data['artist']);
 		$data['song'] = song::decodeTitle($data['song']);
 		$personName = personName::byName($data['artist']);
-		if(!$personName){
-			throw new NotFound;
+		if(!$personName and !$groupName = groupTitle::byTitle($data['artist'])){
+			throw new NotFound();
 		}
-		$person = person::byId($personName->person);
-		$song = song::where("status", song::publish)->bySingerAndTitle($person, $data['song']);
+		$person = $group = $song = null;
+		if($personName){
+			$person = person::byId($personName->person);
+			$song = song::where("ghafiye_songs.status", song::publish)->bySingerAndTitle($person, $data['song']);
+		}else{
+			$group = group::byId($groupName->group_id);
+			$song = song::where("ghafiye_songs.status", song::publish)->byGroupAndTitle($group, $data['song']);
+		}
 		if(!$song){
 			throw new NotFound;
+		}
+		if($personName and $song->group){
+			$this->response->Go(base\url("{$song->group->encodedTitle()}/{$song->encodedTitle()}"));
 		}
 		$song->views++;
 		$song->save();
@@ -50,7 +61,11 @@ class lyrics extends controller{
 		}
 		$songLiked = song\like::where($parenthesis)->where("song", $song->id)->getOne();
 		$view->setlikeStatus(($songLiked ? true : false));
-		$view->setSinger($person);
+		if($person){
+			$view->setSinger($person);
+		}else{
+			$view->setGroup($group);
+		}
 		$view->setSong($song);
 		$view->setLyrices($lyrices);
 		$view->setLyricsLanguage($songTitle->lang);

@@ -25,12 +25,12 @@ use \packages\ghafiye\person;
 use packages\ghafiye\song\lyric;
 use packages\ghafiye\song\person as songPerson;
 use \packages\ghafiye\authorization;
-
+use \packages\ghafiye\views\panel\song as vSong;
 class songs extends controller{
 	protected $authentication = true;
 	public function listview(){
 		authorization::haveOrFail('songs_list');
-		$view = view::byName("\\packages\\ghafiye\\views\\panel\\song\\listview");
+		$view = view::byName(vSong\listview::class);
 		$song = new song();
 		$inputsRules = array(
 			'id' => array(
@@ -111,7 +111,7 @@ class songs extends controller{
 	}
 	public function delete($data){
 		authorization::haveOrFail('song_delete');
-		$view = view::byName("\\packages\\ghafiye\\views\\panel\\song\\delete");
+		$view = view::byName(vSong\delete::class);
 		$song = song::byId($data['id']);
 		if(!$song)
 			throw new NotFound();
@@ -141,11 +141,10 @@ class songs extends controller{
 	}
 	public function edit($data){
 		authorization::haveOrFail('song_edit');
-		$song = song::byId($data['song']);
-		if(!$song){
+		if(!$song = song::byId($data['song'])){
 			throw new NotFound();
 		}
-		$view = view::byName("\\packages\\ghafiye\\views\\panel\\song\\edit");
+		$view = view::byName(vSong\edit::class);
 		$view->setSong($song);
 		$allowlangs = translator::$allowlangs;
 		$view->setAllowLangs($allowlangs);
@@ -154,39 +153,39 @@ class songs extends controller{
 	    	$this->response->setStatus(false);
 			$inputsRules = array(
 				'persons' => array(
-					'optinal' => true
+					'optional' => true
 				),
 				'musixmatch_id' => array(
 					'type' => 'string',
-					'optinal' => true,
+					'optional' => true,
 					'empty' => true
 				),
 				'spotify_id' => array(
 					'type' => 'string',
-					'optinal' => true,
+					'optional' => true,
 					'empty' => true
 				),
 				'album' => array(
 					'type' => 'string',
-					'optinal' => true,
+					'optional' => true,
 					'empty' => true
 				),
 				'group' => array(
 					'type' => 'string',
-					'optinal' => true,
+					'optional' => true,
 					'empty' => true
 				),
 				'duration' => array(
 					'type' => 'string',
-					'optinal' => true,
+					'optional' => true,
 				),
 				'genre' => array(
 					'type' => 'string',
-					'optinal' => true
+					'optional' => true
 				),
 				'lang' => array(
 					'type' => 'string',
-					'optinal' => true,
+					'optional' => true,
 					'values' => $allowlangs
 				),
 				'image' => array(
@@ -196,41 +195,57 @@ class songs extends controller{
 				),
 				'status' => array(
 					'type' => 'number',
-					'optinal' => true,
+					'optional' => true,
 					'values' => array(song::publish, song::draft)
 				),
 				'lyric_lang' => array(
 					'type' => 'string',
-					'optinal' => true,
+					'optional' => true,
 					'values' => $allowlangs
 				),
 				'titles' => array(
-					'optinal' => true
+					'optional' => true
 				),
 				'lyric' => array(
-					'optinal' => true
+					'optional' => true
 				)
 			);
 			try{
 				$lyricIDs = [];
 				$inputs = $this->checkinputs($inputsRules);
-				if(isset($inputs['persons'])){
-					if(is_array($inputs['persons'])){
-						foreach($inputs['persons'] as $key => $person){
-							$personObj = person::byId($person['id']);
-							if(!$personObj){
-								throw new inputValidation("persons[{$key}][id]");
-							}
-							if(!isset($inputs['persons'][$key]['role'])){
-								throw new inputValidation("persons[{$key}][id]");
-							}
-							if(!in_array($inputs['persons'][$key]['role'], array(songPerson::singer, songPerson::writer, songPerson::composer))){
-								throw new inputValidation("persons[{$key}][role]");
-							}
+				if(isset($inputs['group'])){
+					if($inputs['group']){
+						if(!group::byId($inputs['group'])){
+							throw new inputValidation('group');
 						}
 					}else{
-						throw new inputValidation("persons");
+						unset($inputs['group']);
 					}
+				}
+
+				if(isset($inputs['persons'])){
+					if($inputs['persons']){
+						if(is_array($inputs['persons'])){
+							foreach($inputs['persons'] as $key => $person){
+								if(!person::byId($person['id'])){
+									throw new inputValidation("persons[{$key}][id]");
+								}
+								if(!isset($inputs['persons'][$key]['role'])){
+									throw new inputValidation("persons[{$key}][id]");
+								}
+								if(!in_array($inputs['persons'][$key]['role'], array(songPerson::singer, songPerson::writer, songPerson::composer))){
+									throw new inputValidation("persons[{$key}][role]");
+								}
+							}
+						}else{
+							throw new inputValidation("persons");
+						}
+					}else{
+						unset($inputs['persons']);
+					}
+				}
+				if(!isset($inputs['persons']) and !isset($inputs['group'])){
+					throw new unknowSongsArtistException();
 				}
 				if(isset($inputs['titles'])){
 					if(is_array($inputs['titles'])){
@@ -278,8 +293,7 @@ class songs extends controller{
 				}
 				if(isset($inputs['album'])){
 					if($inputs['album']){
-						$album = album::byId($inputs['album']);
-						if(!$album){
+						if(!album::byId($inputs['album'])){
 							throw new inputValidation('album');
 						}
 					}else{
@@ -287,20 +301,9 @@ class songs extends controller{
 					}
 				
 				}
-				if(isset($inputs['group'])){
-					if($inputs['group']){
-						$group = group::byId($inputs['group']);
-						if(!$group){
-							throw new inputValidation('group');
-						}
-					}else{
-						unset($inputs['group']);
-					}
-				}
 				if(isset($inputs['genre'])){
 					if($inputs['genre']){
-						$genre = genre::byId($inputs['genre']);
-						if(!$genre){
+						if(!genre::byId($inputs['genre'])){
 							throw new inputValidation('genre');
 						}
 					}else{
@@ -314,18 +317,18 @@ class songs extends controller{
 							$title = IO\md5($inputs["image"]['tmp_name']);
 							switch($type[2]){
 								case(IMAGETYPE_JPEG):
-									$type_name = '.jpg';
+									$type_name = 'jpg';
 									break;
 								case(IMAGETYPE_GIF):
-									$type_name = '.gif';
+									$type_name = 'gif';
 									break;
 								case(IMAGETYPE_PNG):
-									$type_name = '.png';
+									$type_name = 'png';
 									break;
 							}
-							$directory = packages::package('ghafiye')->getFilePath("storage/public/songs/".$title.$type_name);
+							$directory = packages::package('ghafiye')->getFilePath("storage/public/songs/{$title}.{$type_name}");
 							if(move_uploaded_file($inputs["image"]['tmp_name'], $directory)){
-								$inputs["image"] = "storage/public/songs/".$title.$type_name;
+								$inputs["image"] = "storage/public/songs/{$title}.{$type_name}";
 							}else{
 								throw new inputValidation($inputs["image"]);
 							}
@@ -357,7 +360,6 @@ class songs extends controller{
 						$song->$key = $inputs[$key];
 					}
 				}
-				$song->save();
 
 				if(isset($inputs['titles'])){
 					foreach($song->titles as $title){
@@ -420,9 +422,15 @@ class songs extends controller{
 						}
 					}
 				}
+				$song->save();
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
+			}catch(unknowSongsArtistException $e){
+				$error = new error();
+				$error->setCode('ghafiye.panel.edit.song.unknowSongsArtistException');
+				$error->setMessage(translator::trans('error.ghafiye.panel.edit.song.unknowSongsArtistException'));
+				$view->addError($error);
 			}
 			$view->setDataForm($this->inputsvalue($inputsRules));
 		}else{
@@ -433,7 +441,7 @@ class songs extends controller{
 	}
 	public function add(){
 		authorization::haveOrFail('song_add');
-		$view = view::byName("\\packages\\ghafiye\\views\\panel\\song\\add");
+		$view = view::byName(vSong\add::class);
 		$allowlangs = translator::$allowlangs;
 		$view->setAllowLangs($allowlangs);
 		$view->setGenres(genre::get());
@@ -452,12 +460,12 @@ class songs extends controller{
 				),
 				'album' => array(
 					'type' => 'number',
-					'optinal' => true,
+					'optional' => true,
 					'empty' => true
 				),
 				'group' => array(
 					'type' => 'number',
-					'optinal' => true,
+					'optional' => true,
 					'empty' => true
 				),
 				'duration' => array(
@@ -483,25 +491,44 @@ class songs extends controller{
 					'type' => 'string',
 				),
 				'lyric' => array(),
-				'persons' => array()
+				'persons' => array(
+					'optional' => true
+				)
 			);
 			try{
 				$inputs = $this->checkinputs($inputsRules);
-				if(is_array($inputs['persons'])){
-					foreach($inputs['persons'] as $key => $person){
-						$personObj = person::byId($person['id']);
-						if(!$personObj){
-							throw new inputValidation("persons[{$key}][id]");
+				if(isset($inputs['group'])){
+					if($inputs['group']){
+						if(!group::byId($inputs['group'])){
+							throw new inputValidation('group');
 						}
-						if(!isset($inputs['persons'][$key]['role'])){
-							throw new inputValidation("persons[{$key}][id]");
-						}
-						if(!in_array($inputs['persons'][$key]['role'], array(songPerson::singer, songPerson::writer, songPerson::composer))){
-							throw new inputValidation("persons[{$key}][role]");
-						}
+					}else{
+						unset($inputs['group']);
 					}
-				}else{
-					throw new inputValidation("persons");
+				}
+				if(isset($inputs['persons'])){
+					if($inputs['persons']){
+						if(is_array($inputs['persons'])){
+							foreach($inputs['persons'] as $key => $person){
+								if(!person::byId($person['id'])){
+									throw new inputValidation("persons[{$key}][id]");
+								}
+								if(!isset($inputs['persons'][$key]['role'])){
+									throw new inputValidation("persons[{$key}][id]");
+								}
+								if(!in_array($inputs['persons'][$key]['role'], array(songPerson::singer, songPerson::writer, songPerson::composer))){
+									throw new inputValidation("persons[{$key}][role]");
+								}
+							}
+						}else{
+							throw new inputValidation("persons");
+						}
+					}else{
+						unset($inputs['persons']);
+					}
+				}
+				if(!isset($inputs['persons']) and !isset($inputs['group'])){
+					throw new unknowSongsArtistException();
 				}
 				if(is_array($inputs['lyric'])){
 					foreach($inputs['lyric'] as $key => $lyric){
@@ -518,8 +545,7 @@ class songs extends controller{
 						throw new inputValidation('duration');
 					}
 				}
-				$genre = genre::byId($inputs['genre']);
-				if(!$genre){
+				if(!genre::byId($inputs['genre'])){
 					throw new inputValidation('genre');
 				}
 				if(isset($inputs['album'])){
@@ -532,16 +558,7 @@ class songs extends controller{
 						unset($inputs['album']);
 					}
 				}
-				if(isset($inputs['group'])){
-					if($inputs['group']){
-						$group = group::byId($inputs['group']);
-						if(!$group){
-							throw new inputValidation('group');
-						}
-					}else{
-						unset($inputs['group']);
-					}
-				}
+				
 				if(isset($inputs['image'])){
 					if($inputs["image"]['error'] == 0){
 						$type = getimagesize($inputs["image"]['tmp_name']);
@@ -584,13 +601,15 @@ class songs extends controller{
 				}
 				$song->save();
 				$song->setTitle($inputs['title'], $inputs['lang']);
-				foreach($inputs['persons'] as $key => $person){
-					$songPerson = new songPerson();
-					$songPerson->song = $song->id;
-					$songPerson->person = $person['id'];
-					$songPerson->primary = isset($inputs['persons'][$key]['primary']);
-					$songPerson->role = $inputs['persons'][$key]['role'];
-					$songPerson->save();
+				if(isset($inputs['persons'])){
+					foreach($inputs['persons'] as $key => $person){
+						$songPerson = new songPerson();
+						$songPerson->song = $song->id;
+						$songPerson->person = $person['id'];
+						$songPerson->primary = isset($person['primary']);
+						$songPerson->role = $person['role'];
+						$songPerson->save();
+					}
 				}
 				foreach($inputs['lyric'] as $lyr){
 					$lyric = new lyric();
@@ -604,8 +623,11 @@ class songs extends controller{
 				$this->response->Go(userpanel\url("songs/edit/{$song->id}"));
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
-			}catch(duplicateRecord $error){
-				$view->setFormError(FormError::fromException($error));
+			}catch(unknowSongsArtistException $e){
+				$error = new error();
+				$error->setCode('ghafiye.panel.edit.song.unknowSongsArtistException');
+				$error->setMessage(translator::trans('error.ghafiye.panel.edit.song.unknowSongsArtistException'));
+				$view->addError($error);
 			}
 			$view->setDataForm($this->inputsvalue($inputsRules));
 		}else{
@@ -615,3 +637,4 @@ class songs extends controller{
 		return $this->response;
 	}
 }
+class unknowSongsArtistException extends \Exception{}

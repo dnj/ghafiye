@@ -8,6 +8,8 @@ import "webuilder/formAjax";
 import "x-editable/dist/bootstrap3-editable/js/bootstrap-editable.js";
 import AutoComplete from "../classes/AutoComplete";
 import { AvatarPreview } from "bootstrap-avatar-preview/AvatarPreview";
+import viewError from '../classes/viewError';
+import View from '../classes/view';
 
 export default class Person{
 	private static $form: JQuery;
@@ -96,6 +98,45 @@ export default class Person{
 					$.growl.notice({title: "موفقیت آمیز!", message: "تغییرات با موفقیت ذخیره شد."});
 					if(data.hasOwnProperty('redirect')){
 						window.location.href = data.redirect;
+					}
+				},
+				error: function(error:webuilder.AjaxError){
+					if(error.error == 'data_duplicate' || error.error == 'data_validation'){
+						let $input = $('[name='+error.input+']');
+						let $params = {
+							title: 'خطا',
+							message:''
+						};
+						if(error.error == 'data_validation'){
+							$params.message = 'داده وارد شده معتبر نیست';
+						}
+						if(error.error == 'data_duplicate'){
+							$params.message = 'داده وارد شده تکراری میباشد';
+						}
+						if($input.length){
+							$input.inputMsg($params);
+						}else{
+							$.growl.error($params);
+						}
+					}else if(error.hasOwnProperty('message')){
+						$.growl.error({
+							title:"خطا",
+							message:'درخواست شما توسط سرور قبول نشد'
+						});
+						const $error:any = error;
+						const $viewError = new viewError();
+						$viewError.setType($error.setType);
+						$viewError.setCode($error.code);
+						$viewError.setMessage($error.message);
+						$viewError.setData($error.data);
+						const view = new View();
+						view.addError($viewError);
+						view.getErrorHTML();
+					}else{
+						$.growl.error({
+							title:"خطا",
+							message:'درخواست شما توسط سرور قبول نشد'
+						});
 					}
 				}
 			});

@@ -31,8 +31,11 @@ class edit extends groupEdit{
 		breadcrumb::addItem($item);
 		navigation::active("groups");
 	}
-	protected function getImage($image){
-		return packages::package('ghafiye')->url($image ? $image : options::get('packages.ghafiye.groups.deafault_image'));
+	protected function getImage(){
+		return packages::package('ghafiye')->url($this->group->avatar ? $this->group->avatar : options::get('packages.ghafiye.groups.deafault_image'));
+	}
+	protected function defaultCover():string{
+		return packages::package('ghafiye')->url($this->group->cover ? $this->group->cover : "storage/public/cover_placeholder.png");
 	}
 	protected function getLangsForSelect(){
 		$langs = [];

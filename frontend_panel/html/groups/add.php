@@ -17,8 +17,8 @@ $this->the_header();
 				</div>
 	        </div>
 	        <div class="panel-body">
-	            <div class="table-responsive">
-	                <form class="group_add_form" action="<?php echo userpanel\url('groups/add'); ?>" method="post" enctype="multipart/form-data">
+				<form class="group_add_form" action="<?php echo userpanel\url('groups/add'); ?>" method="post" enctype="multipart/form-data">
+					<div class="row">
 						<div class="col-sm-3">
 							<label class="control-label"><?php echo translator::trans("ghafiye.panel.group.avatar"); ?></label>
 							<div class="fileupload fileupload-new" data-provides="fileupload">
@@ -33,8 +33,23 @@ $this->the_header();
 									</div>
 								</div>
 							</div>
-	                    </div>
+						</div>
 						<div class="col-sm-9">
+							<div class="form-group">
+								<label class="control-label"><?php echo translator::trans("ghafiye.panel.group.cover"); ?></label>
+								<div class="center avatarPreview group-cover">
+									<input name="cover" type="file">
+									<img src="<?php echo $this->defaultCover(); ?>" class="preview img-responsive" alt="تصویر زمینه">
+									<div class="button-group">
+										<button type="button" class="btn btn-teal btn-sm btn-upload"><i class="fa fa-pencil"></i></button>
+										<button type="button" class="btn btn-bricky btn-sm btn-remove" data-default="<?php echo $this->defaultCover(); ?>"><i class="fa fa-times"></i></button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<div class="row">
+						<div class="col-sm-6">
 							<?php $this->createField(array(
 								'name' => 'group-lang',
 								'type' => 'select',
@@ -43,7 +58,7 @@ $this->the_header();
 							));
 							?>
 						</div>
-						<div class="col-sm-12">
+						<div class="col-sm-6">
 							<div class="panel panel-white">
 								<div class="panel-heading">
 									<i class="fa fa-pencil"></i> <?php echo translator::trans("ghafiye.panel.group.translated.titles"); ?>
@@ -67,7 +82,9 @@ $this->the_header();
 								</div>
 							</div>
 						</div>
-						<div class="col-sm-12">
+					</div>
+					<div class="row">
+						<div class="col-xs-12">
 							<div class="panel panel-white">
 								<div class="panel-heading">
 									<i class="fa fa-users"></i> <?php echo translator::trans("ghafiye.panel.group.persons"); ?>
@@ -82,20 +99,21 @@ $this->the_header();
 											<th><?php echo translator::trans("ghafiye.panel.group.person.name"); ?></th>
 											<th></th>
 										</thead>
-										<tbody class="persons">
-										</tbody>
+										<tbody class="persons"></tbody>
 									</table>
 								</div>
 							</div>
 						</div>
+					</div>
+					<div class="row">
 						<div class="col-sm-12">
 							<p>
 								<a href="<?php echo userpanel\url('groups'); ?>" class="btn btn-light-grey"><i class="fa fa-chevron-circle-right"></i> <?php echo translator::trans('return'); ?></a>
 								<button type="submit" class="btn btn-success"><i class="fa fa-check-square-o"></i> <?php echo translator::trans("confrim") ?></button>
 							</p>
 						</div>
-					</form>
-	            </div>
+					</div>
+				</form>
 	        </div>
 	    </div>
 	</div>

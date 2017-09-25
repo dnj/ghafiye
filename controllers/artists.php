@@ -10,6 +10,8 @@ use \packages\base\views\FormError;
 use \packages\ghafiye\controller;
 use \packages\ghafiye\view;
 
+use \packages\ghafiye\group;
+use \packages\ghafiye\group\title as groupTitle;
 use \packages\ghafiye\person;
 use \packages\ghafiye\person\name as personName;
 use \packages\ghafiye\song;
@@ -23,19 +25,30 @@ class artists extends controller{
 		$view = view::byName("\\packages\\ghafiye\\views\\artists\\view");
 		$data['artist'] = person::decodeName($data['artist']);
 		$personName = personName::byName($data['artist']);
-		if(!$personName){
-			throw new NotFound;
+		if(!$personName and !$groupName = groupTitle::byTitle($data['artist'])){
+			throw new NotFound();
 		}
-		$person = person::byId($personName->person);
-		$songs = song::where("status", song::publish)->bySinger($person);
+		$person = $group = $song = null;
+		if($personName){
+			$person = person::byId($personName->person);
+			$songs = song::where("status", song::publish)->bySinger($person);
+		}else{
+			$group = group::byId($groupName->group_id);
+			$songs = song::where("status", song::publish)->byGroup($group);
+		}
 		if(!$songs){
 			throw new NotFound;
 		}
-		$albums = album::where("ghafiye_songs.status", song::publish)->bySinger($person, 5);
-		$view->setArtist($person);
+		if($person){
+			$albums = album::where("ghafiye_songs.status", song::publish)->bySinger($person, 5);
+			$view->setArtist($person);
+		}else{
+			$albums = album::where("ghafiye_songs.status", song::publish)->byGroup($group, 5);
+			$view->setGroup($group);
+		}
 		$view->setSongs($songs);
 		$view->setAlbums($albums);
-		$view->setSongLanguage($personName->lang);
+		$view->setSongLanguage($personName ? $personName->lang : $groupName->lang);
 		$this->response->setStatus(true);
 		$this->response->setView($view);
 		return $this->response;
@@ -44,14 +57,21 @@ class artists extends controller{
 		$view = view::byName("\\packages\\ghafiye\\views\\artists\\albums");
 		$data['artist'] = person::decodeName($data['artist']);
 		$personName = personName::byName($data['artist']);
-		if(!$personName){
-			throw new NotFound;
+		if(!$personName and !$groupName = groupTitle::byTitle($data['artist'])){
+			throw new NotFound();
 		}
-		$person = person::byId($personName->person);
-		$albums = album::where("ghafiye_songs.status", song::publish)->bySinger($person);
-		$view->setArtist($person);
+		if($personName){
+			$person = person::byId($personName->person);
+			$albums = album::where("ghafiye_songs.status", song::publish)->bySinger($person);
+			$view->setArtist($person);
+			$view->setSongLanguage($personName->lang);
+		}else{
+			$group = group::byId($groupName->group_id);
+			$albums = album::where("ghafiye_songs.status", song::publish)->byGroup($group);
+			$view->setSongLanguage($groupName->lang);
+			$view->setGroup($group);
+		}
 		$view->setAlbums($albums);
-		$view->setSongLanguage($personName->lang);
 		$this->response->setStatus(true);
 		$this->response->setView($view);
 		return $this->response;
@@ -61,19 +81,27 @@ class artists extends controller{
 		$data['artist'] = person::decodeName($data['artist']);
 		$data['album'] = song::decodeTitle($data['album']);
 		$personName = personName::byName($data['artist']);
-		if(!$personName){
-			throw new NotFound;
+		if(!$personName and !$groupName = groupTitle::byTitle($data['artist'])){
+			throw new NotFound();
 		}
-		$person = person::byId($personName->person);
-		$album = album::where("ghafiye_songs.status", song::publish)->bySingerAndTitle($person, $data['album']);
-		$albums = album::where("ghafiye_songs.status", song::publish)->bySinger($person, 5);
+		if($personName){
+			$person = person::byId($personName->person);
+			$album = album::where("ghafiye_songs.status", song::publish)->bySingerAndTitle($person, $data['album']);
+			$albums = album::where("ghafiye_songs.status", song::publish)->bySinger($person, 5);
+			$view->setArtist($person);
+			$view->setSongLanguage($personName->lang);
+		}else{
+			$group = group::byId($groupName->group_id);
+			$album = album::where("ghafiye_songs.status", song::publish)->byGroupAndTitle($group, $data['album']);
+			$albums = album::where("ghafiye_songs.status", song::publish)->byGroup($group, 5);
+			$view->setGroup($group);
+			$view->setSongLanguage($groupName->lang);
+		}
 		if(!$album){
 			throw new NotFound;
 		}
-		$view->setArtist($person);
 		$view->setAlbum($album);
 		$view->setAlbums($albums);
-		$view->setSongLanguage($personName->lang);
 		$this->response->setStatus(true);
 		$this->response->setView($view);
 		return $this->response;

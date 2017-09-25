@@ -2,7 +2,7 @@
 namespace packages\ghafiye;
 use packages\base\db;
 use packages\userpanel\date;
-use packages\base\db\dbObject;
+use packages\base\db\{dbObject, parenthesis};
 use packages\ghafiye\translator\title;
 use packages\ghafiye\song\person as songPerson;
 use packages\ghafiye\song\lyric;
@@ -38,6 +38,9 @@ class song extends dbObject{
         'genre' => array("hasOne", "packages\\ghafiye\\genre", "genre"),
     );
 	public function getPerson($role){
+		if($this->group){
+			return $this->group;
+		}
 		foreach($this->persons as $person){
 			if($person->role == $role and $person->primary){
 				return $person->person;
@@ -73,13 +76,39 @@ class song extends dbObject{
 		}
 		return new song($data);
 	}
+	static function byGroupAndTitle(group $group, $title){
+		db::join("ghafiye_songs_titles", "ghafiye_songs_titles.song=ghafiye_songs.id", "inner");
+		db::joinWhere("ghafiye_songs_titles", "ghafiye_songs_titles.title", $title);
+		
+		db::where("ghafiye_songs.group", $group->id);
+		$data = db::getOne("ghafiye_songs", "ghafiye_songs.*");
+		if(!$data){
+			return null;
+		}
+		return new song($data);
+	}
 	static function bySinger(person $singer, $limit = null){
 		$songs = array();
-		db::join("ghafiye_songs_persons", "ghafiye_songs_persons.song=ghafiye_songs.id", "inner");
-		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.person", $singer->id);
-		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.role", songPerson::singer);
-		db::joinWhere("ghafiye_songs_persons", "ghafiye_songs_persons.primary", true);
-		foreach(db::get("ghafiye_songs", $limit,"ghafiye_songs.*") as $data){
+		db::join("ghafiye_songs_persons", "ghafiye_songs_persons.song=ghafiye_songs.id", "LEFT");
+		db::join("ghafiye_groups_persons", "ghafiye_groups_persons.group_id=ghafiye_songs.group", "LEFT");
+
+		$parenthesis = new parenthesis();
+		$parenthesis->where("ghafiye_songs_persons.person", $singer->id);
+		$parenthesis->where("ghafiye_songs_persons.role", songPerson::singer);
+		$parenthesis->where("ghafiye_songs_persons.primary", true);
+		db::where($parenthesis);
+		$parenthesis = new parenthesis();
+		$parenthesis->orWhere("ghafiye_groups_persons.person", $singer->id);
+		db::orWhere($parenthesis);
+		foreach(db::get("ghafiye_songs", $limit, "ghafiye_songs.*") as $data){
+			$songs[] = new song($data);
+		}
+		return $songs;
+	}
+	static function byGroup(group $group, $limit = null):array{
+		$songs = [];
+		db::where('ghafiye_songs.group', $group->id);
+		foreach(db::get("ghafiye_songs", $limit, "ghafiye_songs.*") as $data){
 			$songs[] = new song($data);
 		}
 		return $songs;

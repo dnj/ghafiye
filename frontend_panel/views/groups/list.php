@@ -17,10 +17,7 @@ use \packages\ghafiye\views\panel\group\listview as groupsList;
 class listview extends groupsList{
 	use viewTrait,listTrait,formTrait;
 	function __beforeLoad(){
-		$this->setTitle(array(
-			translator::trans('groups'),
-			translator::trans('ghafiye.panle.groups.list')
-		));
+		$this->setTitle(translator::trans('groups'));
 		$this->setButtons();
 		$this->addBodyClass('group_list');
 		navigation::active("groups");

@@ -8,16 +8,16 @@ use \packages\base\NotFound;
 use \packages\base\packages;
 use \packages\base\view\error;
 use \packages\base\translator;
-use \packages\base\db\parenthesis;
 use \packages\base\inputValidation;
 use \packages\base\views\FormError;
+use \packages\base\db\{parenthesis, duplicateRecord};
 
 use \packages\userpanel;
 use \packages\userpanel\controller;
 
 use \packages\ghafiye\view;
-use \packages\ghafiye\person;
 use \packages\ghafiye\authorization;
+use \packages\ghafiye\{person, group};
 
 class persons extends controller{
 	protected $authentication = true;
@@ -205,6 +205,17 @@ class persons extends controller{
 						if(!in_array($key, translator::$allowlangs) or !$name){
 							throw new inputValidation("names[{$key}]");
 						}
+						$obj = new person\name();
+						$obj->where('name', $name);
+						$obj->where('person', $person->id, '!=');
+						if($obj->has()){
+							throw new duplicateNameRecord($name);
+						}
+						$group = new group\title();
+						$group->where('title', $name);
+						if($group->has()){
+							throw new duplicateNameRecord($name);
+						}
 					}
 				}else{
 					throw new inputValidation("names");
@@ -257,6 +268,11 @@ class persons extends controller{
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
+			}catch(duplicateNameRecord $e){
+				$error = new error();
+				$error->setCode('ghafiye.panel.person.duplicateNameRecord');
+				$error->setMessage(translator::trans('error.ghafiye.panel.person.duplicateNameRecord', ['name' => $e->getName()]));
+				$view->addError($error);
 			}catch(InvalidPersoName $e){
 				$error = new error();
 				$error->setCode('person_name.empty');
@@ -340,6 +356,14 @@ class persons extends controller{
 					if(!$name){
 						throw new inputValidation("names[{$lang}]");
 					}
+					if(person\name::byName($name)){
+						throw new duplicateNameRecord($name);
+					}
+					$group = new group\title();
+					$group->where('title', $name);
+					if($group->has()){
+						throw new duplicateNameRecord($name);
+					}
 				}
 				$person = new person();
 				foreach(array('name_prefix', 'first_name', 'middle_name', 'last_name', 'name_suffix', 'gender', 'musixmatch_id') as $item){
@@ -362,6 +386,11 @@ class persons extends controller{
 				$this->response->Go(userpanel\url("persons/edit/".$person->id));
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
+			}catch(duplicateNameRecord $e){
+				$error = new error();
+				$error->setCode('ghafiye.panel.person.duplicateNameRecord');
+				$error->setMessage(translator::trans('error.ghafiye.panel.person.duplicateNameRecord', ['name' => $e->getName()]));
+				$view->addError($error);
 			}catch(InvalidPersoName $e){
 				$error = new error();
 				$error->setCode('person_name.empty');
@@ -396,3 +425,13 @@ class persons extends controller{
 	}
 }
 class InvalidPersoName extends \Exception{}
+class duplicateNameRecord extends duplicateRecord{
+	private $name;
+	public function __construct($name, string $message = ''){
+		$this->name = $name;
+		parent::__construct($message);
+	}
+	public function getName(){
+		return $this->name;
+	}
+}

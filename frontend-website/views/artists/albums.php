@@ -14,10 +14,13 @@ class albums extends albumsView{
 	use viewTrait;
 	protected $artist;
 	function __beforeLoad(){
-		$this->artist = $this->getArtist();
+		$this->artist = $this->getArtist() ? $this->getArtist() : $this->getGroup();
 		$this->setTitle($this->artist->name($this->getSongLanguage()));
 		$this->addBodyClass('artist');
 		$this->addBodyClass('albums');
+		$this->setDescription(translator::trans('ghafiye.artists.albumsView.description', [
+			'name' => $this->artist->name()
+		]));
 	}
 	protected function getAlbumReleaseDate(album $album){
 		db::where("album", $album->id);
