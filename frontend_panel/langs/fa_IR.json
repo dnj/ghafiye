@@ -191,6 +191,7 @@
 		"ghafiye.logs.song.information": "مشخصات",
 		"ghafiye.logs.song.persons": "اشخاص",
 		"ghafiye.logs.song.titles": "عنوان ها",
-		"ghafiye.logs.song.lyrics": "اشعار"
+		"ghafiye.logs.song.lyrics": "اشعار",
+		"ghafiye.logs.song.delete": "آهنگ <span class=\"tooltips\" title=\"#{song_id}\">{song_title}</span> را حذف کرد"
 	}
 }

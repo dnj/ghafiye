@@ -332,6 +332,10 @@
 		{
 			"classes":["logs\\songs\\edit"],
 			"file":"logs/songs/edit.php"
+		},
+		{
+			"classes":["logs\\songs\\delete"],
+			"file":"logs/songs/delete.php"
 		}
 	]
 }

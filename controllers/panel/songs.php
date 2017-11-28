@@ -99,6 +99,14 @@ class songs extends controller{
 		$this->response->setStatus(false);
 		if(http::is_post()){
 			try{
+
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.song.delete", ['song_id' => $song->id, 'song_title' => $song->title($song->lang)]);
+				$log->type = logs\songs\delete::class;
+				$log->parameters = ['song' => $song];
+				$log->save();
+
 				$song->delete();
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("songs"));
