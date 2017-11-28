@@ -1,26 +1,11 @@
 <?php
 namespace packages\ghafiye\controllers\panel;
 use \packages\base;
-use \packages\base\IO;
-use \packages\base\db;
-use \packages\base\http;
-use \packages\base\NotFound;
-use \packages\base\packages;
-use \packages\base\view\error;
-use \packages\base\translator;
-use \packages\base\inputValidation;
-use \packages\base\views\FormError;
-use \packages\base\db\{parenthesis, duplicateRecord};
-
+use \packages\base\{IO, db, http, NotFound, packages, view\error, translator, inputValidation, views\FormError, db\parenthesis, db\duplicateRecord};
 use \packages\userpanel;
-use \packages\userpanel\controller;
+use \packages\userpanel\{controller, log};
+use \packages\ghafiye\{view, group, person, group\title, authorization, authentication, views\panel\group as vGroup, logs};
 
-use \packages\ghafiye\view;
-use \packages\ghafiye\group;
-use \packages\ghafiye\person;
-use \packages\ghafiye\group\title;
-use \packages\ghafiye\authorization;
-use \packages\ghafiye\views\panel\group as vGroup;
 class groups extends controller{
 	protected $authentication = true;
 	public function listview(){
@@ -435,6 +420,12 @@ class groups extends controller{
 				foreach($inputs['titles'] as $lang => $title){
 					$group->addTitle($title, $lang);
 				}
+
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.group.add", ['group_id' => $group->id, 'group_title' => $group->title()]);
+				$log->type = logs\groups\add::class;
+				$log->save();
 
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("groups/edit/".$group->id));

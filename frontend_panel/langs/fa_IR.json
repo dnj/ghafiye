@@ -195,6 +195,7 @@
 		"ghafiye.logs.song.delete": "آهنگ <span class=\"tooltips\" title=\"#{song_id}\">{song_title}</span> را حذف کرد",
 		"ghafiye.logs.person.add": "شخص <span class=\"tooltips\" title=\"#{person_id}\">{person_name}</span> را اضافه کرد",
 		"ghafiye.logs.person.edit": "شخص <span class=\"tooltips\" title=\"#{person_id}\">{person_name}</span> را ویرایش کرد",
-		"ghafiye.logs.person.delete": "شخص <span class=\"tooltips\" title=\"#{person_id}\">{person_name}</span> را حذف کرد"
+		"ghafiye.logs.person.delete": "شخص <span class=\"tooltips\" title=\"#{person_id}\">{person_name}</span> را حذف کرد",
+		"ghafiye.logs.group.add": "گروه <span class=\"tooltips\" title=\"#{group_id}\">{group_title}</span> را اضافه کرد"
 	}
 }

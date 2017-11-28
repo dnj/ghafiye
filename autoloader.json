@@ -348,6 +348,10 @@
 		{
 			"classes":["logs\\persons\\delete"],
 			"file":"logs/persons/delete.php"
+		},
+		{
+			"classes":["logs\\groups\\add"],
+			"file":"logs/groups/add.php"
 		}
 	]
 }
