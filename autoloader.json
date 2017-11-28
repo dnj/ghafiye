@@ -352,6 +352,10 @@
 		{
 			"classes":["logs\\groups\\add"],
 			"file":"logs/groups/add.php"
+		},
+		{
+			"classes":["logs\\groups\\edit"],
+			"file":"logs/groups/edit.php"
 		}
 	]
 }

@@ -227,15 +227,18 @@ class groups extends controller{
 					$inputs["cover"] = "storage/public/groups/{$title}.{$type_name}";
 				}
 
+				$parameters = ['oldData' => []];
 				if(isset($inputs['titles'])){
 					foreach($group->titles as $title){
 						if(isset($inputs['titles'][$title->lang])){
 							if($inputs['titles'][$title->lang] != $title->title){
+								$parameters['oldData']['titles'][] = $title;
 								$title->title = $inputs['titles'][$title->lang];
 								$title->save();
 							}
 							unset($inputs['titles'][$title->lang]);
 						}else{
+							$parameters['oldData']['titles'][] = $title;
 							$title->delete();
 						}
 					}
@@ -245,7 +248,8 @@ class groups extends controller{
 				}
 				if(isset($inputs['persons'])){
 					foreach($group->persons as $person){
-						if(($key = array_search($person->data['person'], $inputs['persons'])) === false){
+						if(($key = array_search($person->person->id, $inputs['persons'])) === false){
+							$parameters['oldData']['persons'][] = $person;
 							$person->delete();
 						}else{
 							unset($inputs['persons'][$key]);
@@ -259,7 +263,9 @@ class groups extends controller{
 						$person->save();
 					}
 				}
-				if(isset($inputs['group-lang'])){
+
+				if(isset($inputs['group-lang']) and $group->lang != $inputs['group-lang']){
+					$parameters['oldData']['group-lang'] = $group->lang;
 					$group->lang = $inputs['group-lang'];
 				}
 				foreach(['avatar', 'cover'] as $item){
@@ -268,6 +274,14 @@ class groups extends controller{
 					}
 				}
 				$group->save();
+
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.group.edit", ['group_id' => $group->id, 'group_title' => $group->title()]);
+				$log->type = logs\groups\edit::class;
+				$log->parameters = $parameters;
+				$log->save();
+
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));

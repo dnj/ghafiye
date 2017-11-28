@@ -196,6 +196,10 @@
 		"ghafiye.logs.person.add": "شخص <span class=\"tooltips\" title=\"#{person_id}\">{person_name}</span> را اضافه کرد",
 		"ghafiye.logs.person.edit": "شخص <span class=\"tooltips\" title=\"#{person_id}\">{person_name}</span> را ویرایش کرد",
 		"ghafiye.logs.person.delete": "شخص <span class=\"tooltips\" title=\"#{person_id}\">{person_name}</span> را حذف کرد",
-		"ghafiye.logs.group.add": "گروه <span class=\"tooltips\" title=\"#{group_id}\">{group_title}</span> را اضافه کرد"
+		"ghafiye.logs.group.add": "گروه <span class=\"tooltips\" title=\"#{group_id}\">{group_title}</span> را اضافه کرد",
+		"ghafiye.logs.group.edit": "گروه <span class=\"tooltips\" title=\"#{group_id}\">{group_title}</span> را ویرایش کرد",
+		"ghafiye.logs.group.information": "مشخصات ویرایش شده",
+		"ghafiye.logs.group.titles": "عنوان ها",
+		"ghafiye.logs.group.persons": "اشخاص"
 	}
 }
