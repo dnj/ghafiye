@@ -1,31 +1,11 @@
 <?php
 namespace packages\ghafiye\controllers\panel;
 use \packages\base;
-use \packages\base\IO;
-use \packages\base\db;
-use \packages\base\http;
-use \packages\base\NotFound;
-use \packages\base\packages;
-use \packages\base\view\error;
-use \packages\base\translator;
-use \packages\base\db\parenthesis;
-use \packages\base\inputValidation;
-use \packages\base\views\FormError;
-use \packages\base\db\duplicateRecord;
-
+use \packages\base\{IO, db, http, NotFound, packages, view\error, translator, db\parenthesis, inputValidation, views\FormError, db\duplicateRecord};
 use \packages\userpanel;
-use \packages\userpanel\controller;
+use \packages\userpanel\{controller, log};
+use \packages\ghafiye\{view, song, album, group, genre, person, events, song\lyric, song\person as songPerson, authorization, authentication, views\panel\song as vSong, logs};
 
-use \packages\ghafiye\view;
-use \packages\ghafiye\song;
-use packages\ghafiye\album;
-use packages\ghafiye\group;
-use \packages\ghafiye\genre;
-use \packages\ghafiye\person;
-use packages\ghafiye\song\lyric;
-use packages\ghafiye\song\person as songPerson;
-use \packages\ghafiye\authorization;
-use \packages\ghafiye\views\panel\song as vSong;
 class songs extends controller{
 	protected $authentication = true;
 	public function listview(){
@@ -619,6 +599,11 @@ class songs extends controller{
 					$lyric->text = $lyr['text'];
 					$lyric->save();
 				}
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.song.add", ['song_id' => $song->id, 'song_title' => $song->title($song->lang)]);
+				$log->type = logs\songs\add::class;
+				$log->save();
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("songs/edit/{$song->id}"));
 			}catch(inputValidation $error){

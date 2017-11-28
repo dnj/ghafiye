@@ -324,6 +324,10 @@
 		{
 			"classes":["imageTrait"],
 			"file":"libraries/image/imageTrait.php"
+		},
+		{
+			"classes":["logs\\songs\\add"],
+			"file":"logs/songs/add.php"
 		}
 	]
 }
