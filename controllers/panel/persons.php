@@ -1,23 +1,10 @@
 <?php
 namespace packages\ghafiye\controllers\panel;
 use \packages\base;
-use \packages\base\IO;
-use \packages\base\db;
-use \packages\base\http;
-use \packages\base\NotFound;
-use \packages\base\packages;
-use \packages\base\view\error;
-use \packages\base\translator;
-use \packages\base\inputValidation;
-use \packages\base\views\FormError;
-use \packages\base\db\{parenthesis, duplicateRecord};
-
+use \packages\base\{IO, db, http, NotFound, packages, view\error, translator, inputValidation, views\FormError, db\parenthesis, db\duplicateRecord};
 use \packages\userpanel;
-use \packages\userpanel\controller;
-
-use \packages\ghafiye\view;
-use \packages\ghafiye\authorization;
-use \packages\ghafiye\{person, group};
+use \packages\userpanel\{controller, log};
+use \packages\ghafiye\{view, person, group, authorization, authentication, logs};
 
 class persons extends controller{
 	protected $authentication = true;
@@ -382,6 +369,13 @@ class persons extends controller{
 				foreach($inputs['names'] as $lang => $name){
 					$person->addName($name, $lang);
 				}
+				
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.person.add", ['person_id' => $person->id, 'person_name' => $person->name()]);
+				$log->type = logs\persons\add::class;
+				$log->save();
+
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("persons/edit/".$person->id));
 			}catch(inputValidation $error){
