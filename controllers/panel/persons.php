@@ -218,14 +218,17 @@ class persons extends controller{
 				if(!$hasName){
 					throw new InvalidPersoName();
 				}
+				$parameters = ['oldData' => []];
 				foreach($person->names as $name){
 					if(isset($inputs['names'][$name->lang])){
 						if($inputs['names'][$name->lang] != $name->name){
+							$parameters['oldData']['names'][] = $name;
 							$name->name = $inputs['names'][$name->lang];
 							$name->save();
 						}
 						unset($inputs['names'][$name->lang]);
 					}else{
+						$parameters['oldData']['names'][] = $name;
 						$name->delete();
 					}
 				}
@@ -236,9 +239,12 @@ class persons extends controller{
 						throw new inputValidation("names[{$lang}]");
 					}
 				}
-
+				
 				foreach(array('name_prefix', 'first_name', 'middle_name', 'last_name', 'name_suffix', 'gender', 'musixmatch_id') as $item){
 					if(array_key_exists($item, $inputs) and $inputs[$item]){
+						if($person->$item != $inputs[$item]){
+							$parameters['oldData'][$item] = $person->$item;
+						}
 						$person->$item = $inputs[$item];
 					}
 				}
@@ -252,6 +258,14 @@ class persons extends controller{
 					}
 				}
 				$person->save();
+
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.person.edit", ['person_id' => $person->id, 'person_name' => $person->name()]);
+				$log->type = logs\persons\edit::class;
+				$log->parameters = $parameters;
+				$log->save();
+				
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));

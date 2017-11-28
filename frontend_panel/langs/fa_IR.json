@@ -193,6 +193,7 @@
 		"ghafiye.logs.song.titles": "عنوان ها",
 		"ghafiye.logs.song.lyrics": "اشعار",
 		"ghafiye.logs.song.delete": "آهنگ <span class=\"tooltips\" title=\"#{song_id}\">{song_title}</span> را حذف کرد",
-		"ghafiye.logs.person.add": "شخص <span class=\"tooltips\" title=\"#{person_id}\">{person_name}</span> را اضافه کرد"
+		"ghafiye.logs.person.add": "شخص <span class=\"tooltips\" title=\"#{person_id}\">{person_name}</span> را اضافه کرد",
+		"ghafiye.logs.person.edit": "شخص <span class=\"tooltips\" title=\"#{person_id}\">{person_name}</span> را ویرایش کرد"
 	}
 }

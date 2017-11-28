@@ -340,6 +340,10 @@
 		{
 			"classes":["logs\\persons\\add"],
 			"file":"logs/persons/add.php"
+		},
+		{
+			"classes":["logs\\persons\\edit"],
+			"file":"logs/persons/edit.php"
 		}
 	]
 }
