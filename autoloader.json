@@ -344,6 +344,10 @@
 		{
 			"classes":["logs\\persons\\edit"],
 			"file":"logs/persons/edit.php"
+		},
+		{
+			"classes":["logs\\persons\\delete"],
+			"file":"logs/persons/delete.php"
 		}
 	]
 }

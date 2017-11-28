@@ -265,7 +265,7 @@ class persons extends controller{
 				$log->type = logs\persons\edit::class;
 				$log->parameters = $parameters;
 				$log->save();
-				
+
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
@@ -419,6 +419,12 @@ class persons extends controller{
 		$this->response->setStatus(false);
 		if(http::is_post()){
 			try{
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.person.delete", ['person_id' => $person->id, 'person_name' => $person->name()]);
+				$log->type = logs\persons\delete::class;
+				$log->parameters = ['person' => $person];
+				$log->save();
 				$person->delete();
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("persons"));
