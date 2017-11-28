@@ -473,6 +473,14 @@ class groups extends controller{
 		$this->response->setStatus(false);
 		if(http::is_post()){
 			try{
+
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.group.delete", ['group_id' => $group->id, 'group_title' => $group->title()]);
+				$log->type = logs\groups\delete::class;
+				$log->parameters = ['group' => $group];
+				$log->save();
+
 				$group->delete();
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("groups"));

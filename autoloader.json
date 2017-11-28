@@ -356,6 +356,10 @@
 		{
 			"classes":["logs\\groups\\edit"],
 			"file":"logs/groups/edit.php"
+		},
+		{
+			"classes":["logs\\groups\\delete"],
+			"file":"logs/groups/delete.php"
 		}
 	]
 }
