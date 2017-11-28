@@ -321,6 +321,24 @@ class songs extends controller{
 						throw new inputValidation("image");
 					}
 				}
+
+				$logsfields = [
+					'musixmatch_id',
+					'spotify_id',
+					'album',
+					'group',
+					'duration',
+					'lang',
+					'status',
+				];
+				$parameters = [
+					'oldData' => []
+				];
+				foreach($logsfields as $field){
+					if(isset($inputs[$field]) and $song->$field != $inputs[$field]){
+						$parameters['oldData'][$field] = $song->$field;
+					}
+				}
 				foreach(array('musixmatch_id', 'spotify_id') as $key){
 					if(isset($inputs[$key]) and $inputs[$key]){
 						$song->$key = $inputs[$key];
@@ -335,7 +353,7 @@ class songs extends controller{
 						$song->$item = null;
 					}
 				}
-				foreach(array('lang', 'status', 'image', 'genre') as $key){
+				foreach(array('lang', 'status', 'image', 'genre', 'duration') as $key){
 					if(isset($inputs[$key]) and $inputs[$key]){
 						$song->$key = $inputs[$key];
 					}
@@ -344,9 +362,13 @@ class songs extends controller{
 				if(isset($inputs['titles'])){
 					foreach($song->titles as $title){
 						if(!isset($inputs['titles'][$title->lang])){
+							$parameters['oldData']['titles'][] = $title;
 							$title->delete();
 						}else{
-							$title->title = $inputs['titles'][$title->lang];
+							if($title->title != $inputs['titles'][$title->lang]){
+								$parameters['oldData']['titles'][] = $title;
+								$title->title = $inputs['titles'][$title->lang];
+							}
 							$title->save();
 						}
 					}
@@ -357,10 +379,14 @@ class songs extends controller{
 				if(isset($inputs['persons'])){
 					foreach($song->persons as $person){
 						if(!isset($inputs['persons'][$person->person->id])){
+							$parameters['oldData']['persons'][] = $person;
 							$person->delete();
 						}else{
 							$person->primary = isset($inputs['persons'][$person->person->id]['primary']);
-							$person->role = $inputs['persons'][$person->person->id]['role'];
+							if($person->role != $inputs['persons'][$person->person->id]['role']){
+								$parameters['oldData']['persons'][] = $person;
+								$person->role = $inputs['persons'][$person->person->id]['role'];
+							}
 							$person->save();
 						}
 					}
@@ -376,33 +402,46 @@ class songs extends controller{
 				if(isset($inputs['lyric'])){
 					foreach($song->getLyricByLang($inputs['lyric_lang']) as $lyric){
 						if(!in_array($lyric->id, $lyricIDs)){
+							$parameters['oldData']['lyrics'][] = $lyric;
 							$lyric->delete();
 						}
 					}
 					foreach($inputs['lyric'] as $lyric){
-						if(!isset($lyric['obj'])){
+						if(isset($lyric['obj'])){
+							if($lyric['obj']->parent){
+								$lyric['obj']->parent = $lyric['parent'];
+							}
+							$time = $isOriginalLyric ? $lyric['time'] : 0;
+							if($lyric['obj']->time != $time or $lyric['obj']->text != $lyric['text']){
+								$parameters['oldData']['lyrics'][] = $lyric['obj'];
+							}
+							$lyric['obj']->time = $time;
+							$lyric['obj']->text = $lyric['text'];
+							$lyric['obj']->save();
+						}else{
 							if(isset($lyric['parent']) and $lyric['parent'] instanceof lyric){
 								$lyric['obj'] = new lyric();
 								$lyric['obj']->song = $song->id;
 								$lyric['obj']->lang = $inputs['lyric_lang'];
 								$lyric['obj']->parent = $lyric['parent']->id;
-							}elseif(!isset($lyric['obj'])){
+							}else{
 								$lyric['obj'] = new lyric();
 								$lyric['obj']->song = $song->id;
 								$lyric['obj']->lang = $inputs['lyric_lang'];
 							}
 						}
-						if(isset($lyric['obj'])){
-							if($lyric['obj']->parent){
-								$lyric['obj']->parent = $lyric['parent'];
-							}
-							$lyric['obj']->time = $isOriginalLyric ? $lyric['time'] : 0;
-							$lyric['obj']->text = $lyric['text'];
-							$lyric['obj']->save();
-						}
 					}
 				}
+				
 				$song->save();
+
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.song.edit", ['song_id' => $song->id, 'song_title' => $song->title($song->lang)]);
+				$log->type = logs\songs\edit::class;
+				$log->parameters = $parameters;
+				$log->save();
+
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));

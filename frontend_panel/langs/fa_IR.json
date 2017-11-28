@@ -186,6 +186,11 @@
 		"error.ghafiye.panel.edit.song.unknowSongsArtistException": "باید شخص و یا گروهی برای آهنگ مشخص شود",
 		"error.ghafiye.panel.group.duplicateTitleRecord": "شخص و یا گروهی با عنوان {title} وجود دارد. ابتدا شخص و یا گروه دیگر را به نام دیگری ویرایش کنید و سپس تلاش کنید .",
 		"error.ghafiye.panel.person.duplicateNameRecord": "شخص و یا گروهی با عنوان {name} وجود دارد. ابتدا شخص و یا گروه دیگر را به نام دیگری ویرایش کنید و سپس تلاش کنید .",
-		"ghafiye.logs.song.add": "آهنگ <span class=\"tooltips\" title=\"#{song_id}\">{song_title}</span> را اضافه کرد"
+		"ghafiye.logs.song.add": "آهنگ <span class=\"tooltips\" title=\"#{song_id}\">{song_title}</span> را اضافه کرد",
+		"ghafiye.logs.song.edit": "آهنگ <span class=\"tooltips\" title=\"#{song_id}\">{song_title}</span> را ویرایش کرد",
+		"ghafiye.logs.song.information": "مشخصات",
+		"ghafiye.logs.song.persons": "اشخاص",
+		"ghafiye.logs.song.titles": "عنوان ها",
+		"ghafiye.logs.song.lyrics": "اشعار"
 	}
 }
