@@ -376,6 +376,10 @@
 		{
 			"classes":["logs\\albums\\add"],
 			"file":"logs/albums/add.php"
+		},
+		{
+			"classes":["logs\\albums\\edit"],
+			"file":"logs/albums/edit.php"
 		}
 	]
 }

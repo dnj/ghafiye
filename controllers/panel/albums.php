@@ -135,14 +135,17 @@ class albums extends controller{
 				if(!isset($inputs['titles'][$inputs['album-lang']])){
 					throw new translatedAlbumLang();
 				}
+				$parameters = ['oldData' => []];
 				foreach($album->titles as $title){
 					if(isset($inputs['titles'][$title->lang])){
 						if($inputs['titles'][$title->lang] != $title->title){
+							$parameters['oldData']['titles'][] = $title;
 							$title->title = $inputs['titles'][$title->lang];
 							$title->save();
 						}
 						unset($inputs['titles'][$title->lang]);
 					}else{
+						$parameters['oldData']['titles'][] = $title;
 						$title->delete();
 					}
 				}
@@ -156,6 +159,7 @@ class albums extends controller{
 
 				foreach($album->songs as $song){
 					if(($key = array_search($song->id, $inputs['songs'])) === false){
+						$parameters['oldData']['songs'][] = $song;
 						$song->album = null;
 						$song->save();
 					}else{
@@ -171,9 +175,13 @@ class albums extends controller{
 					if(!in_array($inputs['album-lang'], translator::$allowlangs)){
 						throw new inputValidation("album-lang");
 					}
-					$album->lang = $inputs['album-lang'];
+					if($album->lang != $inputs['album-lang']){
+						$parameters['oldData']['album-lang'] = $album->lang;
+						$album->lang = $inputs['album-lang'];
+					}
 				}
-				if(isset($inputs['musixmatch_id']) and $inputs['musixmatch_id']){
+				if(isset($inputs['musixmatch_id']) and $inputs['musixmatch_id'] and $album->musixmatch_id != $inputs['musixmatch_id']){
+					$parameters['oldData']['musixmatch_id'] = $album->musixmatch_id;
 					$album->musixmatch_id = $inputs['musixmatch_id'];
 				}
 				if($inputs["avatar"]['error'] == 0){
@@ -204,6 +212,14 @@ class albums extends controller{
 					throw new inputValidation("avatar");
 				}
 				$album->save();
+
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.album.edit", ['album_id' => $album->id, 'album_title' => $album->title()]);
+				$log->type = logs\albums\edit::class;
+				$log->parameters = $parameters;
+				$log->save();
+
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
