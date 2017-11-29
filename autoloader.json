@@ -372,6 +372,10 @@
 		{
 			"classes":["logs\\genres\\delete"],
 			"file":"logs/genres/delete.php"
+		},
+		{
+			"classes":["logs\\albums\\add"],
+			"file":"logs/albums/add.php"
 		}
 	]
 }

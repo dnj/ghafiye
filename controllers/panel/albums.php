@@ -1,24 +1,9 @@
 <?php
 namespace packages\ghafiye\controllers\panel;
-use \packages\base;
-use \packages\base\IO;
-use \packages\base\db;
-use \packages\base\http;
-use \packages\base\NotFound;
-use \packages\base\packages;
-use \packages\base\view\error;
-use \packages\base\translator;
-use \packages\base\db\parenthesis;
-use \packages\base\inputValidation;
-use \packages\base\views\FormError;
-
+use \packages\base\{IO, db, http, NotFound, packages, view\error, translator, db\parenthesis, inputValidation, views\FormError};
 use \packages\userpanel;
-use \packages\userpanel\controller;
-
-use \packages\ghafiye\view;
-use \packages\ghafiye\song;
-use \packages\ghafiye\album;
-use \packages\ghafiye\authorization;
+use \packages\userpanel\{controller, log};
+use \packages\ghafiye\{view, song, album, authorization, authentication, logs};
 
 class albums extends controller{
 	protected $authentication = true;
@@ -319,6 +304,13 @@ class albums extends controller{
 					$song->album = $album->id;
 					$song->save();
 				}
+
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.album.add", ['album_id' => $album->id, 'album_title' => $album->title()]);
+				$log->type = logs\albums\add::class;
+				$log->save();
+
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("albums/edit/{$album->id}"));
 			}catch(inputValidation $error){
