@@ -1,23 +1,10 @@
 <?php
 namespace packages\ghafiye\controllers\panel;
 use \packages\base;
-use \packages\base\IO;
-use \packages\base\db;
-use \packages\base\http;
-use \packages\base\NotFound;
-use \packages\base\packages;
-use \packages\base\view\error;
-use \packages\base\translator;
-use \packages\base\db\parenthesis;
-use \packages\base\inputValidation;
-use \packages\base\views\FormError;
-
+use \packages\base\{IO, db, http, NotFound, packages, view\error, translator, db\parenthesis, inputValidation, views\FormError};
 use \packages\userpanel;
-use \packages\userpanel\controller;
-
-use \packages\ghafiye\view;
-use \packages\ghafiye\genre;
-use \packages\ghafiye\authorization;
+use \packages\userpanel\{controller, log};
+use \packages\ghafiye\{view, genre, authorization, authentication, logs};
 
 class genres extends controller{
 	protected $authentication = true;
@@ -193,6 +180,13 @@ class genres extends controller{
 						throw new inputValidation("titles[{$lang}]");
 					}
 				}
+				
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.genre.add", ['genre_id' => $genre->id, 'genre_title' => $genre->title()]);
+				$log->type = logs\genres\add::class;
+				$log->save();
+
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("genres/edit/{$genre->id}"));
 			}catch(inputValidation $error){

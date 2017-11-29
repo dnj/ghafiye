@@ -360,6 +360,10 @@
 		{
 			"classes":["logs\\groups\\delete"],
 			"file":"logs/groups/delete.php"
+		},
+		{
+			"classes":["logs\\genres\\add"],
+			"file":"logs/genres/add.php"
 		}
 	]
 }

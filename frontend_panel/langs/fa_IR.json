@@ -201,6 +201,7 @@
 		"ghafiye.logs.group.information": "مشخصات ویرایش شده",
 		"ghafiye.logs.group.titles": "عنوان ها",
 		"ghafiye.logs.group.persons": "اشخاص",
-		"ghafiye.logs.group.delete": "گروه <span class=\"tooltips\" title=\"#{group_id}\">{group_title}</span> را حذف کرد"
+		"ghafiye.logs.group.delete": "گروه <span class=\"tooltips\" title=\"#{group_id}\">{group_title}</span> را حذف کرد",
+		"ghafiye.logs.genre.add": "ژانر <span class=\"tooltips\" title=\"#{genre_id}\">{genre_title}</span> را اضافه کرد"
 	}
 }
