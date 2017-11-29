@@ -368,6 +368,10 @@
 		{
 			"classes":["logs\\genres\\edit"],
 			"file":"logs/genres/edit.php"
+		},
+		{
+			"classes":["logs\\genres\\delete"],
+			"file":"logs/genres/delete.php"
 		}
 	]
 }

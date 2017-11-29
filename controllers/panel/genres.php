@@ -221,6 +221,13 @@ class genres extends controller{
 		$this->response->setStatus(false);
 		if(http::is_post()){
 			try{
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.genre.delete", ['genre_id' => $genre->id, 'genre_title' => $genre->title()]);
+				$log->type = logs\genres\delete::class;
+				$log->parameters = ['genre' => $genre];
+				$log->save();
+
 				$genre->delete();
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("genres"));

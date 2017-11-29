@@ -205,6 +205,7 @@
 		"ghafiye.logs.genre.add": "سبک <span class=\"tooltips\" title=\"#{genre_id}\">{genre_title}</span> را اضافه کرد",
 		"ghafiye.logs.genre.edit": "سبک <span class=\"tooltips\" title=\"#{genre_id}\">{genre_title}</span> را ویرایش کرد",
 		"ghafiye.logs.genre.information": "مشخصات سبک",
-		"ghafiye.logs.genre.titles": "عنوان ها"
+		"ghafiye.logs.genre.titles": "عنوان ها",
+		"ghafiye.logs.genre.delete": "سبک <span class=\"tooltips\" title=\"#{genre_id}\">{genre_title}</span> را حذف کرد"
 	}
 }
