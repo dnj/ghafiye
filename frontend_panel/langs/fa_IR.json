@@ -202,6 +202,9 @@
 		"ghafiye.logs.group.titles": "عنوان ها",
 		"ghafiye.logs.group.persons": "اشخاص",
 		"ghafiye.logs.group.delete": "گروه <span class=\"tooltips\" title=\"#{group_id}\">{group_title}</span> را حذف کرد",
-		"ghafiye.logs.genre.add": "ژانر <span class=\"tooltips\" title=\"#{genre_id}\">{genre_title}</span> را اضافه کرد"
+		"ghafiye.logs.genre.add": "سبک <span class=\"tooltips\" title=\"#{genre_id}\">{genre_title}</span> را اضافه کرد",
+		"ghafiye.logs.genre.edit": "سبک <span class=\"tooltips\" title=\"#{genre_id}\">{genre_title}</span> را ویرایش کرد",
+		"ghafiye.logs.genre.information": "مشخصات سبک",
+		"ghafiye.logs.genre.titles": "عنوان ها"
 	}
 }

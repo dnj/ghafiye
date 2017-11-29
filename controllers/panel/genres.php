@@ -109,14 +109,17 @@ class genres extends controller{
 				}else{
 					throw new inputValidation("titles");
 				}
+				$parameters = ['oldData' => []];
 				foreach($genre->titles as $title){
 					if(isset($inputs['titles'][$title->lang])){
 						if($inputs['titles'][$title->lang] != $title->name){
 							$title->name = $inputs['titles'][$title->lang];
 							$title->save();
+							$parameters['oldData']['titles'][] = $title;
 						}
 						unset($inputs['titles'][$title->lang]);
 					}else{
+						$parameters['oldData']['titles'][] = $title;
 						$title->delete();
 					}
 				}
@@ -127,10 +130,19 @@ class genres extends controller{
 						throw new inputValidation("titles[{$lang}]");
 					}
 				}
-				if(isset($inputs['musixmatch_id']) and $inputs['musixmatch_id']){
+				if(isset($inputs['musixmatch_id']) and $inputs['musixmatch_id'] and $inputs['musixmatch_id'] != $genre->musixmatch_id){
+					$parameters['oldData']['musixmatch_id'] = $genre->musixmatch_id;
 					$genre->musixmatch_id = $inputs['musixmatch_id'];
 				}
 				$genre->save();
+				
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.genre.edit", ['genre_id' => $genre->id, 'genre_title' => $genre->title()]);
+				$log->type = logs\genres\edit::class;
+				$log->parameters = $parameters;
+				$log->save();
+
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
 				$view->setFormError(FormError::fromException($error));
