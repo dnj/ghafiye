@@ -354,6 +354,13 @@ class albums extends controller{
 		$this->response->setStatus(false);
 		if(http::is_post()){
 			try{
+				$log = new log();
+				$log->user = authentication::getID();
+				$log->title = translator::trans("ghafiye.logs.album.delete", ['album_id' => $album->id, 'album_title' => $album->title()]);
+				$log->type = logs\albums\delete::class;
+				$log->parameters = ['album' => $album];
+				$log->save();
+
 				$album->delete();
 				$this->response->setStatus(true);
 				$this->response->Go(userpanel\url("albums"));

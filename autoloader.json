@@ -380,6 +380,10 @@
 		{
 			"classes":["logs\\albums\\edit"],
 			"file":"logs/albums/edit.php"
+		},
+		{
+			"classes":["logs\\albums\\delete"],
+			"file":"logs/albums/delete.php"
 		}
 	]
 }
