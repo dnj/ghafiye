@@ -36,6 +36,29 @@ class edit extends logs{
 			$panel->size = 6;
 			$panel->title = translator::trans('ghafiye.logs.song.information');
 			$html = '';
+			var_dump($oldData);
+			var_dump(isset($oldData['release_at']));
+			if (isset($oldData['release_at'])) {
+				$html .= '<div class="form-group">';
+				$html .= '<label class="col-xs-4 control-label">'.translator::trans("ghafiye.panel.song.release_at").': </label>';
+				$html .= '<div class="col-xs-8 ltr">'.date::format("Y/m/d H:i:s", $oldData['release_at']).'</div>';
+				$html .= "</div>";
+				unset($oldData['release_at']);
+			}
+			if (array_key_exists("update_at", $oldData)) {
+				$html .= '<div class="form-group">';
+				$html .= '<label class="col-xs-4 control-label">'.translator::trans("ghafiye.panel.song.update_at").': </label>';
+				$html .= '<div class="col-xs-8 ltr">'.date::format("Y/m/d H:i:s", $oldData['update_at']).'</div>';
+				$html .= "</div>";
+				unset($oldData['update_at']);
+			}
+			if (isset($oldData['album'])) {
+				$html .= '<div class="form-group">';
+				$html .= '<label class="col-xs-4 control-label">'.translator::trans("ghafiye.panel.song.album").': </label>';
+				$html .= '<div class="col-xs-8 ltr">'.$oldData['album']->title().'</div>';
+				$html .= "</div>";
+				unset($oldData['album']);
+			}
 			foreach($oldData as $field => $val){
 				$html .= '<div class="form-group">';
 				$html .= '<label class="col-xs-4 control-label">'.translator::trans("ghafiye.panel.song.{$field}").': </label>';

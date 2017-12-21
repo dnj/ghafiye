@@ -1,10 +1,8 @@
 <?php
-use \packages\base\json;
-use \packages\base\translator;
-use \packages\base\frontend\theme;
+use \packages\base\{json, translator, frontend\theme};
 use \packages\userpanel;
-use \packages\ghafiye\person;
-use \packages\ghafiye\song\lyric;
+use \packages\userpanel\date;
+use \packages\ghafiye\{person, song\lyric};
 $this->the_header();
 ?>
 <div class="row">
@@ -64,6 +62,12 @@ $this->the_header();
 									'name' => 'group',
 									'type' => 'hidden'
 								));
+								$this->createField([
+									"name" => "release_at",
+									"label" => translator::trans("ghafiye.panel.song.release_at"),
+									"ltr" => true,
+									"placeholder" => date::format("Y/m/d H:i:s", date::time()),
+								]);
 								?>
 							</div>
 							<div class="col-sm-6">
@@ -92,6 +96,12 @@ $this->the_header();
 									'label' => translator::trans("ghafiye.panel.song.status"),
 									'options' => $this->getStatusForSelect()
 								));
+								$this->createField([
+									"name" => "update_at",
+									"label" => translator::trans("ghafiye.panel.song.update_at"),
+									"ltr" => true,
+									"placeholder" => date::format("Y/m/d H:i:s", date::time()),
+								]);
 								?>
 							</div>
 						</div>

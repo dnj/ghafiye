@@ -212,6 +212,8 @@
 		"ghafiye.logs.album.information": "مشخصات آلبوم",
 		"ghafiye.logs.album.titles": "عنوان ها",
 		"ghafiye.logs.album.songs": "آهنگ ها",
-		"ghafiye.logs.album.delete": "آلبوم <span class=\"tooltips\" title=\"#{album_id}\">{album_title}</span> را حذف کرد"
+		"ghafiye.logs.album.delete": "آلبوم <span class=\"tooltips\" title=\"#{album_id}\">{album_title}</span> را حذف کرد",
+		"ghafiye.panel.song.release_at": "تاریخ انتشار",
+		"ghafiye.panel.song.update_at": "تاریخ بروزرسانی"
 	}
 }

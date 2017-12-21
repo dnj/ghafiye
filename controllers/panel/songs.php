@@ -1,9 +1,8 @@
 <?php
 namespace packages\ghafiye\controllers\panel;
-use \packages\base;
-use \packages\base\{IO, db, http, NotFound, packages, view\error, translator, db\parenthesis, inputValidation, views\FormError, db\duplicateRecord};
+use \packages\base\{IO, db, http, NotFound, packages, view\error, translator, db\parenthesis, inputValidation, views\FormError, db\duplicateRecord, dbObject};
 use \packages\userpanel;
-use \packages\userpanel\{controller, log};
+use \packages\userpanel\{controller, log, date};
 use \packages\ghafiye\{view, song, album, group, genre, person, events, song\lyric, song\person as songPerson, authorization, authentication, views\panel\song as vSong, logs};
 
 class songs extends controller{
@@ -196,11 +195,33 @@ class songs extends controller{
 				),
 				'lyric' => array(
 					'optional' => true
-				)
+				),
+				"release_at" => [
+					"type" => "date",
+					"optional" => true,
+				],
+				"update_at" => [
+					"type" => "date",
+					"optional" => true,
+				]
 			);
 			try{
 				$lyricIDs = [];
 				$inputs = $this->checkinputs($inputsRules);
+				if (isset($inputs['release_at'])) {
+					if ($inputs['release_at']) {
+						$inputs['release_at'] = date::strtotime($inputs['release_at']);
+					} else {
+						unset($inputs['release_at']);
+					}
+				}
+				if (isset($inputs['update_at'])) {
+					if ($inputs['update_at']) {
+						$inputs['update_at'] = date::strtotime($inputs['update_at']);
+					} else {
+						unset($inputs['update_at']);
+					}
+				}
 				if(isset($inputs['group'])){
 					if($inputs['group']){
 						if(!group::byId($inputs['group'])){
@@ -210,7 +231,23 @@ class songs extends controller{
 						unset($inputs['group']);
 					}
 				}
-
+				if (isset($inputs['release_at'])) {
+					if ($inputs['release_at'] < 0) {
+						throw new inputValidation('release_at');
+					}
+				}
+				if (isset($inputs['update_at'])) {
+					if (isset($inputs['release_at'])) {
+						if ($inputs['update_at'] < $inputs['release_at']) {
+							throw new inputValidation('update_at');
+						}
+					}else{
+						if ($inputs['update_at'] < $song->release_at) {
+							throw new inputValidation('update_at');
+						}
+					}
+					
+				}
 				if(isset($inputs['persons'])){
 					if($inputs['persons']){
 						if(is_array($inputs['persons'])){
@@ -338,16 +375,24 @@ class songs extends controller{
 					'duration',
 					'lang',
 					'status',
+					"release_at",
+					"update_at",
 				];
 				$parameters = [
 					'oldData' => []
 				];
-				foreach($logsfields as $field){
-					if(isset($inputs[$field]) and $song->$field != $inputs[$field]){
-						$parameters['oldData'][$field] = $song->$field;
+				foreach ($logsfields as $field) {
+					if (isset($inputs[$field])) {
+						if (in_array($field, ["album", "group"])) {
+							if ($song->$field->id != $inputs[$field]) {
+								$parameters['oldData'][$field] = $song->$field;
+							}
+						} else if ($song->$field != $inputs[$field]) {
+							$parameters['oldData'][$field] = $song->$field;
+						}
 					}
 				}
-				foreach(array('musixmatch_id', 'spotify_id') as $key){
+				foreach(array('musixmatch_id', 'spotify_id', "update_at") as $key){
 					if(isset($inputs[$key]) and $inputs[$key]){
 						$song->$key = $inputs[$key];
 					}else{
@@ -361,7 +406,7 @@ class songs extends controller{
 						$song->$item = null;
 					}
 				}
-				foreach(array('lang', 'status', 'image', 'genre', 'duration') as $key){
+				foreach(array('lang', 'status', 'image', 'genre', 'duration', "release_at") as $key){
 					if(isset($inputs[$key]) and $inputs[$key]){
 						$song->$key = $inputs[$key];
 					}
@@ -452,6 +497,7 @@ class songs extends controller{
 
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
+				var_dump($error);
 				$view->setFormError(FormError::fromException($error));
 			}catch(unknowSongsArtistException $e){
 				$error = new error();

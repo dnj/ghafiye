@@ -12,13 +12,13 @@ trait title{
 			$lang = $defaultlang;
 		}
 		if(isset($this->data['titles'])){
-			foreach($this->data['titles'] as $title){
+			foreach($this->titles as $title){
 				if($title->lang == $lang){
 					return $title->title;
 				}
 			}
 			if($originalang == null){
-				foreach($this->data['titles'] as $title){
+				foreach($this->titles as $title){
 					if($title->lang == $defaultlang){
 						return $title->title;
 					}

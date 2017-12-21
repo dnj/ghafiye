@@ -1,13 +1,8 @@
 <?php
 namespace packages\ghafiye\views\panel\song;
-use \packages\base\http;
-use \packages\base\db\dbObject;
-use \packages\ghafiye\song;
-use \packages\ghafiye\views\form;
-use \packages\ghafiye\views\listview;
-use \packages\base\views\traits\form as formTrait;
-use \packages\ghafiye\song\person;
-use \packages\ghafiye\song\lyric;
+use \packages\base\{http, db\dbObject, views\traits\form as formTrait};
+use \packages\ghafiye\{song, views\form, views\listview, song\person, song\lyric};
+use \packages\userpanel\date;
 class edit extends listview{
 	use formTrait;
 	public function setSong(song $song){
@@ -41,6 +36,10 @@ class edit extends listview{
 			);
 		}
 		$this->setDataForm($persons, "persons");
+		$this->setDataForm(date::format("Y/m/d H:i:s", $song->release_at), "release_at");
+		if ($song->update_at) {
+			$this->setDataForm(date::format("Y/m/d H:i:s", $song->update_at), "update_at");
+		}
 	}
 	private function formatTime($time){
 		$min = floor($time / 60);
