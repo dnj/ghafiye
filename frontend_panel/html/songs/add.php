@@ -1,8 +1,7 @@
 <?php
-use \packages\base\json;
-use \packages\base\frontend\theme;
-use \packages\base\translator;
+use \packages\base\{json, frontend\theme, translator};
 use \packages\userpanel;
+use \packages\userpanel\date;
 use \packages\ghafiye\person;
 $this->the_header();
 ?>
@@ -95,6 +94,12 @@ $this->the_header();
 									'label' => translator::trans("ghafiye.panel.song.status"),
 									'options' => $this->getStatusForSelect()
 								));
+								$this->createField([
+									"name" => "release_at",
+									"label" => translator::trans("ghafiye.panel.song.release_at"),
+									"ltr" => true,
+									"placeholder" => date::format("Y/m/d H:i:s", date::time()),
+								]);
 								?>
 							</div>
 						</div>

@@ -1,19 +1,9 @@
 <?php
 namespace themes\clipone\views\ghafiye\song;
-use \packages\base\options;
-use \packages\base\packages;
-use \packages\base\translator;
-use \packages\base\frontend\theme;
-
-use \themes\clipone\viewTrait;
-use \themes\clipone\navigation;
-use \themes\clipone\views\formTrait;
-use \themes\clipone\views\listTrait;
-
-use \packages\ghafiye\song;
-use \packages\ghafiye\person;
-use \packages\ghafiye\song\person as songPerson;
-use \packages\ghafiye\views\panel\song\add as ADDSongs;
+use \packages\base\{options, packages, translator, frontend\theme};
+use \themes\clipone\{viewTrait, navigation, views\formTrait, views\listTrait};
+use \packages\ghafiye\{song, person, song\person as songPerson, views\panel\song\add as ADDSongs};
+use \packages\userpanel\date;
 
 class add extends ADDSongs{
 	use viewTrait, formTrait;
@@ -60,6 +50,9 @@ class add extends ADDSongs{
 					$this->setDataForm($personName->name($this->getDataForm("lang")), "person_name");
 				}
 			}
+		}
+		if (!$this->getDataForm("release_at")) {
+			$this->setDataForm(date::format("Y/m/d H:i:s", date::time()), "release_at");	
 		}
 	}
 	protected function getGenreForSelect(){

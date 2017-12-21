@@ -566,10 +566,26 @@ class songs extends controller{
 				'lyric' => array(),
 				'persons' => array(
 					'optional' => true
-				)
+				),
+				"release_at" => [
+					"type" => "date",
+					"optional" => true,
+				]
 			);
 			try{
 				$inputs = $this->checkinputs($inputsRules);
+				if (isset($inputs["release_at"])) {
+					if ($inputs["release_at"]) {
+						$inputs["release_at"] = date::strtotime($inputs["release_at"]);
+					} else {
+						unset($inputs["release_at"]);
+					}
+				}
+				if (isset($inputs["release_at"])) {
+					if ($inputs["release_at"] <= 0) {
+						throw new inputValidation('release_at');
+					}
+				}
 				if(isset($inputs['group'])){
 					if($inputs['group']){
 						if(!group::byId($inputs['group'])){
@@ -664,7 +680,7 @@ class songs extends controller{
 					}
 				}
 				$song = new song();
-				foreach(array('lang', 'status', 'genre', 'duration') as $key){
+				foreach(array('lang', 'status', 'genre', 'duration', "release_at") as $key){
 					$song->$key = $inputs[$key];
 				}
 				foreach(array('musixmatch_id', 'spotify_id', 'group', 'album', 'image') as $key){
