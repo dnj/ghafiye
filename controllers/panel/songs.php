@@ -237,16 +237,9 @@ class songs extends controller{
 					}
 				}
 				if (isset($inputs['update_at'])) {
-					if (isset($inputs['release_at'])) {
-						if ($inputs['update_at'] < $inputs['release_at']) {
-							throw new inputValidation('update_at');
-						}
-					}else{
-						if ($inputs['update_at'] < $song->release_at) {
-							throw new inputValidation('update_at');
-						}
+					if ($inputs['update_at'] < 0) {
+						throw new inputValidation('update_at');
 					}
-					
 				}
 				if(isset($inputs['persons'])){
 					if($inputs['persons']){
@@ -497,7 +490,6 @@ class songs extends controller{
 
 				$this->response->setStatus(true);
 			}catch(inputValidation $error){
-				var_dump($error);
 				$view->setFormError(FormError::fromException($error));
 			}catch(unknowSongsArtistException $e){
 				$error = new error();
