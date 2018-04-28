@@ -48,8 +48,13 @@ use \packages\base\frontend\theme;
 			</div>
 		</div>
 		<div class="note">
-			<p><?php echo translator::trans('footer.notelove'); ?></p>
-			<p class="copyright"><?php echo translator::trans('footer.copyright'); ?></p>
+			<div class="row">
+				<div class="col-sm-9">
+				<p><?php echo translator::trans('footer.notelove'); ?></p>
+				<p class="copyright"><?php echo translator::trans('footer.copyright'); ?></p>
+			</div>
+			<p class="col-sm-3 text-left hidden-xs">میزبانی و برنامه نویسی: <a href="https://www.jeyserver.com" target="_blank" title="هاست لینوکس، برنامه نویسی php">جی سرور</a></p>
+			<p class="col-sm-3 visible-xs-block">میزبانی و برنامه نویسی: <a href="https://www.jeyserver.com" target="_blank" title="هاست لینوکس، برنامه نویسی php">جی سرور</a></p>
 		</div>
 	</div>
 </footer>
