@@ -1,10 +1,8 @@
 <?php
 use \packages\base;
 use \packages\userpanel\date;
-use \packages\base\translator;
-use \packages\ghafiye\song\lyric;
-use \packages\ghafiye\song\person;
-use \packages\ghafiye\person\name as personName;
+use \packages\base\{translator, frontend\theme};
+use \packages\ghafiye\{song\lyric, song\person, person\name as personName};
 $this->the_header();
 $numberOfLangs = $this->numberOfLangs();
 $lang = $this->getLyricsLanguage();
@@ -13,9 +11,11 @@ $lang = $this->getLyricsLanguage();
 	<div class="col-sm-3">
 		<img src="<?php echo $this->song->getImage(255, 255); ?>" class="song-image">
 	</div>
-	<div class="col-sm-9 title">
+	<?php $topAd = $this->getTopAd(); ?>
+	<div class="col-sm-9 title<?php echo $topAd ? " withAd" : "" ?>">
 		<h1><?php echo $this->song->title($lang); ?></h1>
 		<h2><a href="<?php echo(base\url($this->singer->encodedName($lang))); ?>"><?php echo $this->singer->name($lang); ?></a></h2>
+		<?php echo $topAd; ?>
 		<div class="translations">
 			<span><i class="fa fa-language"></i> <?php echo translator::trans('translations'); ?></span>
 			<a <?php if($lang == $this->song->lang)echo('class="active"'); ?> href="<?php echo(base\url($this->singer->encodedName($this->song->lang)).'/'.$this->song->encodedTitle($this->song->lang)); ?>"><?php echo translator::trans('translations.langs.original'); ?></a>
@@ -47,7 +47,7 @@ $lang = $this->getLyricsLanguage();
 <div class="row">
 	<div class="col-md-7 col-sm-9 col-md-offset-1 col-md-push-3">
 		<section class="text" data-lang="<?php echo $lang; ?>">
-			<?php foreach($this->getOrginalLyrices() as $lyric){ ?>
+			<?php foreach ($this->getOrginalLyrices() as $lyric) { ?>
 			<p>
 				<span <?php if($this->is_ltr($lyric->lang))echo('class="ltr"'); ?>><?php echo $lyric->text; ?></span>
 				<?php
@@ -99,7 +99,7 @@ $lang = $this->getLyricsLanguage();
 				<a href="<?php echo base\url('explore/genre/'.$this->song->genre->encodedTitle()); ?>"><?php echo($this->song->genre->title()); ?></a>
 			</li>
 		</ul>
-		<?php if($songs = $this->getSongs()){ ?>
+		<?php if ($songs = $this->getSongs()) { ?>
 		<div class="panel">
 			<div class="panel-heading">
 				<a class="album-name" href="<?php echo(base\url($this->singer->encodedName($lang).'/albums/'.$this->song->album->encodedTitle($lang))); ?>">
@@ -138,8 +138,10 @@ $lang = $this->getLyricsLanguage();
 				<?php } ?>
 			</div>
 		</div>
-		<?php } ?>
-		<?php if($songs = $this->getPopularSongs()){ ?>
+		<?php
+			echo $this->getSideAd();
+		}
+		if ($songs = $this->getPopularSongs()) { ?>
 		<div class="panel panel-songs">
 			<div class="panel-heading">
 				<?php echo translator::trans('lyrics.top'); ?>
@@ -171,7 +173,10 @@ $lang = $this->getLyricsLanguage();
 				</ul>
 			</div>
 		</div>
-		<?php } ?>
+		<?php
+		}
+		echo $this->getSideAd();
+		?>
 	</div>
 </div>
 <?php if($albums = $this->getAlbums()){ ?>
@@ -200,6 +205,6 @@ $lang = $this->getLyricsLanguage();
 		</div>
 	</div>
 </div>
-<?php } ?>
 <?php
+	}
 $this->the_footer();

@@ -1,6 +1,6 @@
 <?php
 use \packages\base;
-use \packages\base\translator;
+use \packages\base\{translator, frontend\theme};
 use \packages\userpanel\date;
 use \packages\ghafiye\song\person;
 $this->the_header('artists');
@@ -51,6 +51,13 @@ $lang = $this->getSongLanguage();
 	  	  			</li>
 	  	  			<?php } ?>
 	  	  		</ul>
+			</div>
+		</div>
+		<div class="row">
+		<div class="col-xs-12">
+			<a class="banner-ad" href="https://www.jeyserver.com" target="_blank" title="هاست لینوکس، برنامه نویسی php">
+				<img src="<?php echo theme::url("assets/images/ads/3078323516528828115111121661694.gif"); ?>" alt="جی هاست لینوکس، برنامه نویسی php">
+				</a>
 			</div>
 		</div>
 	</aside>
