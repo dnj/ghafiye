@@ -1,19 +1,15 @@
 <?php
 namespace themes\musixmatch\views\lyrics;
 use \packages\base;
-use \packages\base\db;
-use \packages\base\translator;
-use \packages\ghafiye\genre;
-use \packages\ghafiye\album;
-use \packages\ghafiye\song;
-use \packages\ghafiye\song\person;
-
-use \packages\ghafiye\views\lyrics\view as lyricsView;
+use \packages\base\{db, translator, frontend\theme};
+use \packages\ghafiye\{genre, album, song, song\person, views\lyrics\view as lyricsView};
 use \themes\musixmatch\viewTrait;
+
 class view extends lyricsView{
 	use viewTrait;
 	protected $song;
 	protected $singer;
+	protected $loadSideAd = false;
 	function __beforeLoad(){
 		$this->song = $this->getSong();
 		$this->singer = $this->song->getPerson(person::singer);
@@ -314,5 +310,28 @@ class view extends lyricsView{
 			}
 		}
 		return $tags;
+	}
+	protected function getSideAd() {
+		if ($this->loadSideAd) {
+			return "";
+		}
+		$this->loadSideAd = true;
+		return '<div class="row">
+			<div class="col-xs-12">
+				<a class="banner-ad" href="https://www.jeyserver.com" target="_blank" title="هاست لینوکس، برنامه نویسی php">
+					<img src="' . theme::url("assets/images/ads/3078323516528828115111121661694.gif") . '" alt="جی هاست لینوکس، برنامه نویسی php">
+					</a>
+				</div>
+			</div>';
+	}
+	protected function getTopAd() {
+		/*return '<div class="row">
+		<div class="col-xs-12">
+			<a class="banner-ad banner-top" href="https://www.jeyserver.com" target="_blank" title="هاست لینوکس، برنامه نویسی php">
+				<img src="' . theme::url("assets/images/ads/3078323516528828115111129128503.gif") . '" alt="جی هاست لینوکس، برنامه نویسی php">
+				</a>
+			</div>
+		</div>';*/
+		return "";
 	}
 }
