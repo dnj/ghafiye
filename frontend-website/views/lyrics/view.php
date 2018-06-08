@@ -32,6 +32,7 @@ class view extends lyricsView{
 		$song = new song();
 		$song->where("status", song::publish);
 		$song->orderBy("views", "desc");
+		$song->setQueryOption("DISTINCT");
 		return $song->get(6);
 	}
 	protected function getTopSongsByGenre(genre $genre){
@@ -39,6 +40,7 @@ class view extends lyricsView{
 		$song->where("status", song::publish);
 		$song->where("genre", $genre->id);
 		$song->orderBy("views", "desc");
+		$song->setQueryOption("DISTINCT");
 		return $song->get(6);
 	}
 	protected function numberOfLangs(){
@@ -65,6 +67,7 @@ class view extends lyricsView{
 			$song->where('ghafiye_songs.id', $this->song->id, '!=');
 			$song->where('ghafiye_songs.album', $album->id);
 			$song->orderBy("ghafiye_songs.release_at", "desc");
+			$song->setQueryOption("DISTINCT");
 			return $song->get(4, 'ghafiye_songs.*');
 		}
 	}
@@ -171,6 +174,7 @@ class view extends lyricsView{
 		}
 	}
 	protected function getPopularSongs():array{
+		db::setQueryOption("DISTINCT");
 		if(!$this->song->group){
 			return song::where("status", song::publish)->orderBy("views", "DESC")->bySinger($this->singer, 5);
 		}else{
@@ -178,6 +182,7 @@ class view extends lyricsView{
 		}
 	}
 	protected function isMorePopularSong():bool{
+		db::setQueryOption("DISTINCT");
 		if(!$this->song->group){
 			return count(song::where("status", song::publish)->bySinger($this->singer)) > 5;
 		}else{
