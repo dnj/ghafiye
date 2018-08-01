@@ -17,7 +17,7 @@ use \packages\ghafiye\views\panel\song\listview as songsList;
 class listview extends songsList{
 	use viewTrait,listTrait,formTrait;
 	function __beforeLoad(){
-		$this->setTitle(translator::trans('ghafiye.panle.songs'));
+		$this->setTitle(translator::trans('ghafiye.panel.songs'));
 		$this->setButtons();
 		$this->addBodyClass('song_list');
 		navigation::active("songs");
@@ -38,7 +38,7 @@ class listview extends songsList{
 		parent::onSourceLoad();
 		if(parent::$navigation){
 			$songs = new menuItem("songs");
-			$songs->setTitle(translator::trans("ghafiye.panle.songs"));
+			$songs->setTitle(translator::trans("ghafiye.panel.songs"));
 			$songs->setURL(userpanel\url('songs'));
 			$songs->setIcon('fa fa-music');
 			navigation::addItem($songs);

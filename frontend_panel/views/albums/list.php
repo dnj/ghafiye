@@ -41,7 +41,7 @@ class listview extends albumsList{
 		parent::onSourceLoad();
 		if(parent::$navigation){
 			$albums = new menuItem("albums");
-			$albums->setTitle(translator::trans("ghafiye.panle.albums.list"));
+			$albums->setTitle(translator::trans("ghafiye.panel.albums.list"));
 			$albums->setURL(userpanel\url('albums'));
 			$albums->setIcon('fa fa-file-audio-o');
 			navigation::addItem($albums);

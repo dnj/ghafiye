@@ -14,10 +14,9 @@ $this->the_header();
 ?>
 <div class="row">
 	<div class="col-md-12">
-		<!-- start: BASIC TABLE PANEL -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="clip-globe"></i> <?php echo translator::trans("ghafiye.panle.songs.list"); ?>
+				<i class="clip-globe"></i> <?php echo translator::trans("ghafiye.panel.songs.list"); ?>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link tooltips" title="<?php echo translator::trans('search'); ?>" href="#search" data-toggle="modal" data-original-title=""><i class="fa fa-search"></i></a>
 					<?php if($this->canAdd){ ?>
@@ -39,8 +38,6 @@ $this->the_header();
 								<th><?php echo translator::trans('ghafiye.panel.song.title'); ?></th>
 								<th><?php echo translator::trans('ghafiye.panel.song.album'); ?></th>
 								<th><?php echo translator::trans('ghafiye.panel.song.group'); ?></th>
-								<th><?php echo translator::trans('ghafiye.panel.song.views'); ?></th>
-								<th><?php echo translator::trans('ghafiye.panel.song.likes'); ?></th>
 								<th><?php echo translator::trans('ghafiye.panel.song.status'); ?></th>
 								<?php if($hasButtons){ ?><th></th><?php } ?>
 							</tr>
@@ -65,8 +62,6 @@ $this->the_header();
 								<td><?php echo $song->title($song->lang); ?></td>
 								<td><?php echo ($song->album ? "<a href=\"".userpanel\url("albums/edit/{$song->album->id}")."\">{$song->album->getTitle()}</a>" : "-"); ?></td>
 								<td><?php echo ($song->group ? "<a href=\"".userpanel\url("groups/edit/{$song->group->id}")."\">{$song->group->getTitle()}</a>" : "-"); ?></td>
-								<td><span class="badge"><?php echo $song->views; ?></span></td>
-								<td><span class="badge"><?php echo $song->likes; ?></span></td>
 								<td class="hidden-xs"><span class="<?php echo $statusClass; ?>"><?php echo translator::trans($statusTxt); ?></span></td>
 								<?php
 								if($hasButtons){
@@ -83,7 +78,6 @@ $this->the_header();
 				<?php $this->paginator(); ?>
 			</div>
 		</div>
-		<!-- end: BASIC TABLE PANEL -->
 	</div>
 </div>
 <div class="modal fade" id="search" tabindex="-1" data-show="true" role="dialog">

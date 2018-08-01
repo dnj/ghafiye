@@ -38,7 +38,7 @@ class listview extends groupsList{
 		parent::onSourceLoad();
 		if(parent::$navigation){
 			$groups = new menuItem("groups");
-			$groups->setTitle(translator::trans("ghafiye.panle.groups.list"));
+			$groups->setTitle(translator::trans("ghafiye.panel.groups.list"));
 			$groups->setURL(userpanel\url('groups'));
 			$groups->setIcon('fa fa-list-alt');
 			navigation::addItem($groups);

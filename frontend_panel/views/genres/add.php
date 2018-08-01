@@ -12,7 +12,7 @@ class add extends genreADD{
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans('genres'),
-			translator::trans('ghafiye.panle.genres.add')
+			translator::trans('ghafiye.panel.genres.add')
 		));
 		$this->addBodyClass('genres');
 		$this->addBodyClass('genre_add');

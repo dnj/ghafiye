@@ -13,7 +13,7 @@ use \packages\ghafiye\views\panel\crawler\search as crawlerSearch;
 class search extends crawlerSearch{
 	use viewTrait, listTrait, formTrait;
 	function __beforeLoad(){
-		$this->setTitle(translator::trans('ghafiye.panle.crawler'));
+		$this->setTitle(translator::trans('ghafiye.panel.crawler'));
 		$this->setButtons();
 		$this->addBodyClass('crawler-search');
 		navigation::active("crawler");
@@ -47,7 +47,7 @@ class search extends crawlerSearch{
 		parent::onSourceLoad();
 		if(parent::$navigation){
 			$crawlers = new menuItem("crawler");
-			$crawlers->setTitle(translator::trans("ghafiye.panle.crawler"));
+			$crawlers->setTitle(translator::trans("ghafiye.panel.crawler"));
 			$crawlers->setURL(userpanel\url('crawler/queue'));
 			$crawlers->setIcon('fa fa-bug');
 			navigation::addItem($crawlers);

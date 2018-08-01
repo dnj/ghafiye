@@ -12,7 +12,7 @@ class delete extends genreDelete{
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans('genres'),
-			translator::trans('ghafiye.panle.genres.delete')
+			translator::trans('ghafiye.panel.genres.delete')
 		));
 		$this->setNavigation();
 	}

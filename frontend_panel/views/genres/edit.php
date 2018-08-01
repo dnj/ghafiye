@@ -17,7 +17,7 @@ class edit extends genreEdit{
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans('genres'),
-			translator::trans('ghafiye.panle.genres.edit')
+			translator::trans('ghafiye.panel.genres.edit')
 		));
 		$this->addBodyClass('genres');
 		$this->addBodyClass('genre_edit');

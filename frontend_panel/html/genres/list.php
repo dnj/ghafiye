@@ -17,7 +17,7 @@ $this->the_header();
 		<!-- start: BASIC TABLE PANEL -->
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="clip-globe"></i> <?php echo translator::trans("ghafiye.panle.genres.list"); ?>
+				<i class="clip-globe"></i> <?php echo translator::trans("ghafiye.panel.genres.list"); ?>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link tooltips" title="<?php echo translator::trans('search'); ?>" href="#search" data-toggle="modal" data-original-title=""><i class="fa fa-search"></i></a>
 					<?php if($this->canAdd){ ?>

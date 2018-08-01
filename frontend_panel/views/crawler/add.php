@@ -10,8 +10,8 @@ class add extends crawlerAdd{
 	use viewTrait, formTrait;
 	function __beforeLoad(){
 		$this->setTitle([
-			translator::trans('ghafiye.panle.crawler'),
-			translator::trans('ghafiye.panle.crawler.add')
+			translator::trans('ghafiye.panel.crawler'),
+			translator::trans('ghafiye.panel.crawler.add')
 		]);
 		$this->addBodyClass('crawler-add');
 		navigation::active("crawler");

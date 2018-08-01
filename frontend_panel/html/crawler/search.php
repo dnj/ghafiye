@@ -11,7 +11,7 @@ $this->the_header();
 	<div class="col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="fa fa-bug"></i> <?php echo translator::trans("ghafiye.panle.crawler.queue"); ?>
+				<i class="fa fa-bug"></i> <?php echo translator::trans("ghafiye.panel.crawler.queue"); ?>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link tooltips" title="<?php echo translator::trans('search'); ?>" href="#search" data-toggle="modal" data-original-title=""><i class="fa fa-search"></i></a>
 					<?php if($this->canAdd){ ?>

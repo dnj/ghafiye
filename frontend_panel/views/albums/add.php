@@ -19,7 +19,7 @@ class add extends albumADD{
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans('albums'),
-			translator::trans('ghafiye.panle.albums.add')
+			translator::trans('ghafiye.panel.albums.add')
 		));
 		$this->addBodyClass('album_add');
 		$this->setNavigation();

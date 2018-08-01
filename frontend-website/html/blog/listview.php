@@ -30,7 +30,7 @@ $this->the_header();
 									<li><i class="fa fa-clock-o"></i><a href="<?php echo blog\url('archive/'.date::format('Y/m', $post->date)); ?>"><?php echo date::format("l، j F Y", $post->date) ?></a></li>
 									<li><i class="fa fa-eye"></i><?php echo translator::trans("blog.post.view.number", array("view" => $post->view)); ?></li>
 									<li><i class="fa fa-user"></i><a href="<?php echo blog\url("author/".$post->author->id); ?>" class="artist"><?php echo $post->author->getFullName(); ?></a></li>
-									<li><i class="fa fa-comments"></i> <?php echo translator::trans("blog.post.comments.number", array("count" => $post->getCountPostCommnets())); ?></li>
+									<li><i class="fa fa-comments"></i> <?php echo translator::trans("blog.post.comments.number", array("count" => $post->getCountPostcomments())); ?></li>
 								</ul>
 							</header>
 							<div class="post-content">

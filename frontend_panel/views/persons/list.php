@@ -42,7 +42,7 @@ class listview extends personsList{
 		parent::onSourceLoad();
 		if(parent::$navigation){
 			$persons = new menuItem("persons");
-			$persons->setTitle(translator::trans("ghafiye.panle.persons.list"));
+			$persons->setTitle(translator::trans("ghafiye.panel.persons.list"));
 			$persons->setURL(userpanel\url('persons'));
 			$persons->setIcon('fa fa-list-alt');
 			navigation::addItem($persons);

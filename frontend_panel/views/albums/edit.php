@@ -17,7 +17,7 @@ class edit extends albumEdit{
 		$this->album = $this->getAlbum();
 		$this->setTitle(array(
 			translator::trans('albums'),
-			translator::trans('ghafiye.panle.albums.edit')
+			translator::trans('ghafiye.panel.albums.edit')
 		));
 		$this->addBodyClass('album_edit');
 		$this->setNavigation();

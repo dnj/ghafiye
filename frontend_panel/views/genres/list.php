@@ -19,7 +19,7 @@ class listview extends genresList{
 	function __beforeLoad(){
 		$this->setTitle(array(
 			translator::trans('genres'),
-			translator::trans('ghafiye.panle.genres.list')
+			translator::trans('ghafiye.panel.genres.list')
 		));
 		$this->setButtons();
 		$this->addBodyClass('genre_list');
@@ -41,7 +41,7 @@ class listview extends genresList{
 		parent::onSourceLoad();
 		if(parent::$navigation){
 			$genres = new menuItem("genres");
-			$genres->setTitle(translator::trans("ghafiye.panle.genres.list"));
+			$genres->setTitle(translator::trans("ghafiye.panel.genres.list"));
 			$genres->setURL(userpanel\url('genres'));
 			$genres->setIcon('fa fa-th-large');
 			navigation::addItem($genres);

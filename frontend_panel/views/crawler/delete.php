@@ -11,8 +11,8 @@ class delete extends crawlerDelete{
 	function __beforeLoad(){
 		$this->queue = $this->getQueue();
 		$this->setTitle(array(
-			translator::trans('ghafiye.panle.crawler'),
-			translator::trans('ghafiye.panle.crawler.delete')
+			translator::trans('ghafiye.panel.crawler'),
+			translator::trans('ghafiye.panel.crawler.delete')
 		));
 		navigation::active("crawlers");
 	}

@@ -11,7 +11,7 @@ $group = $this->getGroup();
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
 	            <i class="fa fa-edit"></i>
-	            <span><?php echo translator::trans("ghafiye.panle.groups.edit").' #'.$group->id; ?></span>
+	            <span><?php echo translator::trans("ghafiye.panel.groups.edit").' #'.$group->id; ?></span>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
 				</div>

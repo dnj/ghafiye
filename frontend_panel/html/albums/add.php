@@ -10,7 +10,7 @@ $this->the_header();
 	    <div class="panel panel-default">
 	        <div class="panel-heading">
 	            <i class="fa fa-plus"></i>
-	            <span><?php echo translator::trans("ghafiye.panle.albums.add"); ?></span>
+	            <span><?php echo translator::trans("ghafiye.panel.albums.add"); ?></span>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
 				</div>

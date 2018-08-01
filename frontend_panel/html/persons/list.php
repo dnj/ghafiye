@@ -10,7 +10,7 @@ $this->the_header();
 	<div class="col-xs-12">
 		<div class="panel panel-default">
 			<div class="panel-heading">
-				<i class="clip-users"></i> <?php echo(translator::trans("ghafiye.panle.persons.list")); ?>
+				<i class="clip-users"></i> <?php echo(translator::trans("ghafiye.panel.persons.list")); ?>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link tooltips" title="<?php echo translator::trans('search'); ?>" href="#search" data-toggle="modal" data-original-title=""><i class="fa fa-search"></i></a>
 					<?php if($this->canAdd){ ?>
