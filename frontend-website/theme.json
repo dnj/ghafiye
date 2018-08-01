@@ -8,9 +8,9 @@
 	},
 	"homepage": "https://www.musixmatch.com/",
 	"assets": [
-		{"type": "package","name": "jquery"},
-		{"type": "package","name": "bootstrap"},
-		{"type": "package","name": "bootstrap-rtl"},
+		{"type": "package","name": "jquery", "version": "^3.2.1"},
+		{"type": "package","name": "bootstrap", "version": "^3.3.7"},
+		{"type": "package","name": "bootstrap-rtl", "version": "^3.3.4"},
 		{"type": "package","name": "bootstrap-select"},
 		{"type": "package","name": "bootstrap-inputmsg"},
 		{"type": "package","name": "font-awesome"},
@@ -142,6 +142,21 @@
 			"name": "\\themes\\musixmatch\\views\\pages\\view",
 			"parent": "\\packages\\pages\\views\\page\\view",
 			"file": "html/pages/view.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\community\\Contributes",
+			"parent": "\\packages\\ghafiye\\views\\community\\Contributes",
+			"file": "html/Community/contributes.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\profile\\Contributes",
+			"parent": "\\packages\\ghafiye\\views\\profile\\Contributes",
+			"file": "html/Profile/contributes.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\profile\\Favorites",
+			"parent": "\\packages\\ghafiye\\views\\profile\\Favorites",
+			"file": "html/Profile/favorites.php"
 		}
 	]
 }

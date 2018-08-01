@@ -30,8 +30,6 @@ body{
 			    font-family: yekan;
 			    font-size: 30px;
 			    text-align: center;
-				img{
-				}
 				span{
 					&:nth-of-type(1){
 						color: #01a89e;
@@ -49,7 +47,6 @@ body{
 			}
 			ul{
 				float: right;
-				margin-left: 150px;
 				margin-bottom: 0;
 				height: 55px;
 				@media (max-width: 767px){
@@ -60,17 +57,25 @@ body{
 					list-style: none;
 					a{
 						color: #7f8c8d;
-						font-size: 18px;
+						font-size: 14px;
 						font-family: yekan;
 						font-weight: 600;
+						margin-left: 10px;
 						&:hover,&:focus{
 							color: #000;
 						}
 					}
+					&.divider {
+						height: 50%;
+						margin: 14px;
+						overflow: hidden;
+						background-color: #e5e5e5;
+						width: 1px;
+					}
 				}
 			}
 			form.searchbox{
-				float:right;
+				float: left;
 				.form-group {
 				    margin-bottom: 0;
 					position: relative;
@@ -119,7 +124,13 @@ form{
 		font-size: 15px;
 	}
 }
-
+.panel {
+	.panel-heading {
+		.panel-tools {
+			float: left;
+		}
+	}
+}
 
 @import "home.less";
 @import "footer.less";
@@ -132,3 +143,7 @@ form{
 @import "blog.less";
 @import "search.less";
 @import "pages.less";
+@import "community.less";
+@import "profile.less";
+
+@import "responsive.less";

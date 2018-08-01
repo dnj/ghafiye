@@ -152,6 +152,19 @@
 		"ghafiye.song.album.lyric.tag.translated": "ترجمه متن آهنگ آلبوم {name}",
 		"ghafiye.song.album.withSinger.lyric.tag": "آلبوم {name} {title}",
 		"ghafiye.song.album.withSinger.lyric.tag.translated": "ترجمه آلبوم {name} {title}",
-		"ghafiye.songs.lyric.tag.translated": "ترجمه آهنگ های {name}"
+		"ghafiye.songs.lyric.tag.translated": "ترجمه آهنگ های {name}",
+		"ghafiye.login": "ورود",
+		"ghafiye.register": "ثبت نام",
+		"ghafiye.contribute": "مشارکت",
+		"ghafiye.community": "جامعه قافیه",
+		"ghafiye.comments": "نظرات",
+		"ghafiye.songs.comment.email.description": "آدرس ایمیل شما منتشر نخواهد شد",
+		"ghafiye.comment.name": "نام",
+		"ghafiye.comment.email": "ایمیل",
+		"ghafiye.comment.content": "متن",
+		"ghafiye.songs.add.comments": "نظر بگذارید",
+		"ghafiye.reply.comment": "پاسخ دهید",
+		"ghafiye.cancel": "انصراف",
+		"ghafiye.comment.replyTo": "در پاسخ به"
 	}
 }

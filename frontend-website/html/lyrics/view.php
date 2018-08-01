@@ -49,12 +49,25 @@ $lang = $this->getLyricsLanguage();
 		<section class="text" data-lang="<?php echo $lang; ?>">
 			<?php foreach ($this->getOrginalLyrices() as $lyric) { ?>
 			<p>
-				<span <?php if($this->is_ltr($lyric->lang))echo('class="ltr"'); ?>><?php echo $lyric->text; ?></span>
 				<?php
-				$translate = $this->getTranslateLyricById($lyric->id);
-				if($translate and $lang != $this->song->lang){
+				$isLtr = $this->is_ltr($lyric->lang);
+				$hasDescription = $lyric->hasDescription();
 				?>
-				<span <?php if($this->is_ltr($translate->lang))echo('class="ltr"'); ?>><?php echo $translate->text; ?></span>
+				<span class="<?php echo $isLtr ? "ltr" : ""; ?> <?php echo $hasDescription ? "hasdescription" : ""; ?>" data-lyric="<?php echo $lyric->id ?>">
+				<?php echo $lyric->text; ?>
+				</span>
+				<?php
+				if ($lang == $this->song->lang) {
+					continue;
+				}
+				$translate = $this->getTranslateLyricById($lyric->id);
+				if ($translate) {
+					$isLtr = $this->is_ltr($translate->lang);
+					$hasDescription = $translate->hasDescription();
+				?>
+				<span class="<?php echo $isLtr ? 'ltr' : ""; ?> <?php echo $hasDescription ? "hasdescription" : ""; ?>" data-lyric="<?php echo $translate->id ?>">
+				<?php echo $translate->text; ?>
+				</span>
 				<?php } ?>
 			</p>
 			<?php } ?>
@@ -80,6 +93,69 @@ $lang = $this->getLyricsLanguage();
 					<?php foreach($this->getTags() as $tag){ ?>
 						<a href="<?php echo $tag['url']; ?>"><?php echo $tag['content']; ?></a>
 					<?php } ?>
+				</div>
+			</div>
+		</div>
+		<div class="comments-section">
+			<div class="row">
+				<div class="col-xs-12">
+					<h3><?php echo translator::trans("ghafiye.comments"); ?></h3>
+					<?php echo $this->revertReply(); ?>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<div class="panel panel-default panel-comments">
+						<div class="panel-body">
+							<p class="panel-title"><?php echo translator::trans("ghafiye.songs.add.comments"); ?></p>
+							<form method="post">
+								<div class="row reply-section">
+									<?php
+									$this->createField(array(
+										"name" => "reply",
+										"type" => "hidden",
+									));
+									?>
+									<div class="col-sm-10 col-xs-8">
+										<p><span><?php echo translator::trans("ghafiye.comment.replyTo"); ?></span> <strong class="comment-reply-sender-name"></strong></p>
+									</div>
+									<div class="col-sm-2 col-xs-4">
+										<button class="btn btn-sm btn-default btn-block bnt-cancel-reply"><?php echo translator::trans("ghafiye.cancel"); ?></button>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-5 col-xs-12">
+										<?php
+										$this->createField(array(
+											"name" => "name",
+											"label" => translator::trans("ghafiye.comment.name"),
+										));
+										$this->createField(array(
+											"type" => "email",
+											"name" => "email",
+											"label" => translator::trans("ghafiye.comment.email"),
+											"ltr" => true,
+										));
+										?>
+										<small class="text-muted"><?php echo translator::trans("ghafiye.songs.comment.email.description"); ?></small>
+									</div>
+									<div class="col-sm-7 col-xs-12">
+										<?php $this->createField(array(
+											"type" => "textarea",
+											"name" => "content",
+											"label" => translator::trans("ghafiye.comment.content"),
+											"rows" => 4,
+										)); ?>
+									</div>
+								</div>
+								<div class="row">
+									<div class="col-sm-3 pull-left">
+										<button type="submit" class="btn btn-sm btn-block btn-success btn-submit"><i class="fa fa-paper-plane"></i> ارسال</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
 				</div>
 			</div>
 		</div>

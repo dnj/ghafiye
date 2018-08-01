@@ -175,6 +175,91 @@
 		"method":"post"
 	},
 	{
+		"path": ["community"],
+		"controller": "controllers\\Community@contributes",
+		"method": "get"
+	},
+	{
+		"path": ["profile", {"type" : "dynamic", "name" : "user", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\Profile@contributes",
+		"method": "get"
+	},
+	{
+		"path": ["profile", "favorites", {"type" : "dynamic", "name" : "user", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\Profile@favorites",
+		"method": "get"
+	},
+	{
+		"path": ["userpanel", "songs", "comments"],
+		"controller": "controllers\\panel\\songs\\Comments@search",
+		"method":"get"
+	},
+	{
+		"path": ["userpanel", "songs", "comments", "view", {"type" : "dynamic", "name" : "comment", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\songs\\Comments@view",
+		"method":"get"
+	},
+	{
+		"path": ["userpanel", "songs", "comments", "edit", {"type" : "dynamic", "name" : "comment", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\songs\\Comments@edit",
+		"method": "post"
+	},
+	{
+		"path": ["userpanel", "songs", "comments", "delete", {"type" : "dynamic", "name" : "comment", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\songs\\Comments@delete",
+		"method": "get"
+	},
+	{
+		"path": ["userpanel", "songs", "comments", "delete", {"type" : "dynamic", "name" : "comment", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\songs\\Comments@terminate",
+		"method": "post"
+	},
+	{
+		"path": ["songs", {"type" : "dynamic", "name" : "song", "regex" : "/^\\d+$/"}, "addComment"],
+		"controller": "controllers\\lyrics@addComment",
+		"method": "post"
+	},
+	{
+		"path": ["songs", "lyric", {"type" : "dynamic", "name" : "lyric", "regex" : "/^\\d+$/"}, "description"],
+		"controller": "controllers\\lyrics@description",
+		"method": "post"
+	},
+	{
+		"path": ["songs", "lyric", {"type" : "dynamic", "name" : "lyric", "regex" : "/^\\d+$/"}, "description", "add"],
+		"controller": "controllers\\lyrics@addDescription",
+		"method": "post"
+	},
+	{
+		"path": ["userpanel", "songs", "lyrics", "descriptions"],
+		"controller": "controllers\\panel\\songs\\lyrics\\Descriptions@search",
+		"method": "get"
+	},
+	{
+		"path": ["userpanel", "songs", "lyrics", "descriptions", "edit", {"type" : "dynamic", "name" : "description", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\songs\\lyrics\\Descriptions@edit",
+		"method": "get"
+	},
+	{
+		"path": ["userpanel", "songs", "lyrics", "descriptions", "edit", {"type" : "dynamic", "name" : "description", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\songs\\lyrics\\Descriptions@update",
+		"method": "post"
+	},
+	{
+		"path": ["userpanel", "songs", "lyrics", "descriptions", "delete", {"type" : "dynamic", "name" : "description", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\songs\\lyrics\\Descriptions@delete",
+		"method": "get"
+	},
+	{
+		"path": ["userpanel", "songs", "lyrics", "descriptions", "delete", {"type" : "dynamic", "name" : "description", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\songs\\lyrics\\Descriptions@terminate",
+		"method": "post"
+	},
+	{
+		"path": ["songs", "lyric", "descriptions", {"type" : "dynamic", "name" : "description", "regex" : "/^\\d+$/"}, "like"],
+		"controller": "controllers\\lyrics@likeDescription",
+		"method": "post"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

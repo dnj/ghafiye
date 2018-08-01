@@ -15,6 +15,10 @@
 		{
 			"name":"\\packages\\userpanel\\events\\search",
 			"listener": "listeners\\search@find"
+		},
+		{
+			"name":"\\packages\\base\\frontend\\events\\throwDynamicData",
+			"listener": "listeners\\Base@beforeLoad"
 		}
 	],
 	"sitemap": [{

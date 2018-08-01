@@ -1,9 +1,10 @@
 <?php
 namespace packages\ghafiye\views\lyrics;
-use \packages\ghafiye\song;
-use \packages\ghafiye\group;
-use \packages\ghafiye\person;
-class view extends \packages\ghafiye\view{
+use packages\ghafiye\song;
+use packages\ghafiye\group;
+use packages\ghafiye\person;
+
+class view extends \packages\ghafiye\views\form {
 	public function setSinger(person $singer){
 		$this->setData($singer, 'singer');
 	}

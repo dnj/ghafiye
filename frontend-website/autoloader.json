@@ -115,6 +115,18 @@
 		{
 			"classes":["views\\pages\\view"],
 			"file":"views/pages/view.php"
+		},
+		{
+			"classes":["views\\community\\Contributes"],
+			"file":"views/Community/Contributes.php"
+		},
+		{
+			"classes":["views\\profile\\Contributes"],
+			"file":"views/Profile/Contributes.php"
+		},
+		{
+			"classes":["views\\profile\\Favorites"],
+			"file":"views/Profile/Favorites.php"
 		}
 	]
 }
