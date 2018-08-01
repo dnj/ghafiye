@@ -260,6 +260,21 @@
 		"method": "post"
 	},
 	{
+		"path": ["contribute"],
+		"controller": "controllers\\Contribute@main",
+		"method": "get"
+	},
+	{
+		"path": ["contribute", "translate"],
+		"controller": "controllers\\Contribute@translate",
+		"method": "get"
+	},
+	{
+		"path": ["contribute", "synce"],
+		"controller": "controllers\\Contribute@synce",
+		"method": "get"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

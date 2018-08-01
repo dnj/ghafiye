@@ -5,6 +5,7 @@ import {blogListView} from "../classes/blogListView";
 import {blogViewPost} from "../classes/blogViewPost";
 import Contributes from "../classes/Contributes";
 import "bootstrap/js/tab";
+import Contribute from "../classes/Contribute";
 
 declare const packages_ghafiye_isLogin: any;
 
@@ -37,6 +38,7 @@ export default class Main {
 			Main.windowHeight = $(window).height();
 		});
 		Main._isLogin = packages_ghafiye_isLogin;
+		Contribute.initIfNeeded();
 	}
 	static get isLogin() {
 		return Main._isLogin;

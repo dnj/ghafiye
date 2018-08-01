@@ -127,6 +127,18 @@
 		{
 			"classes":["views\\profile\\Favorites"],
 			"file":"views/Profile/Favorites.php"
+		},
+		{
+			"classes":["views\\contribute\\Main"],
+			"file":"views/Contribute/Main.php"
+		},
+		{
+			"classes":["views\\contribute\\Translate"],
+			"file":"views/Contribute/Translate.php"
+		},
+		{
+			"classes":["views\\contribute\\Synce"],
+			"file":"views/Contribute/Synce.php"
 		}
 	]
 }

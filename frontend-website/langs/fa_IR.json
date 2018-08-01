@@ -165,6 +165,16 @@
 		"ghafiye.songs.add.comments": "نظر بگذارید",
 		"ghafiye.reply.comment": "پاسخ دهید",
 		"ghafiye.cancel": "انصراف",
-		"ghafiye.comment.replyTo": "در پاسخ به"
+		"ghafiye.comment.replyTo": "در پاسخ به",
+		"ghafiye.contribute.point": "{point} امتیاز",
+		"ghafiye.contribute.load.more": "موارد بیشتر",
+		"ghafiye.contribute.translate": "ترجمه کنید",
+		"ghafiye.contribute.synce": "همگام سازی",
+		"ghafiye.contribute.panel.title.synce": "همگام سازی متن عبارت",
+		"ghafiye.contribute.add.song": "افزودن آهنگ جدید",
+		"ghafiye.contribute.add.singer": "افزودن خواننده جدید",
+		"ghafiye.contribute.add.group": "افزودن گروه جدید",
+		"ghafiye.contribute.allert": "<p>با فعالیت در قافیه میتوانید امتیاز های بیشتری کسب کنید و در لیگ قافیه نخست باشید</p><p>جایگاه شما در هر لحظه ممکن توسط شخص دیگری تصاحب شود، عجله کنید ..</p>",
+		"ghafiye.contribute.weekly.leag.panel.title": "مشارکت دهندگان برتر هفته"
 	}
 }

@@ -7,4 +7,5 @@ abstract class Contributes {
 		$this->contribute = $contribute;
 	}
 	public abstract function buildFrontend(): string;
+	public abstract function getPoint(): int;
 }

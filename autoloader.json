@@ -442,10 +442,6 @@
 			"file":"libraries/song/Lyric/Description.php"
 		},
 		{
-			"classes":["contributes\\songs\\add"],
-			"file":"Contributes/Songs/add.php"
-		},
-		{
 			"classes":["listeners\\Base"],
 			"file":"listeners/Base.php"
 		},
@@ -468,6 +464,34 @@
 		{
 			"classes":["song\\lyric\\description\\Like"],
 			"file":"libraries/song/Lyric/Descriptions/Like.php"
+		},
+		{
+			"classes":["controllers\\Contribute"],
+			"file":"controllers/Contribute.php"
+		},
+		{
+			"classes":["views\\contribute\\Main"],
+			"file":"views/Contribute/Main.php"
+		},
+		{
+			"classes":["contributes\\songs\\Add"],
+			"file":"Contributes/Songs/Add.php"
+		},
+		{
+			"classes":["contributes\\songs\\Translate"],
+			"file":"Contributes/Songs/Translate.php"
+		},
+		{
+			"classes":["contributes\\songs\\Synce"],
+			"file":"Contributes/Songs/Synce.php"
+		},
+		{
+			"classes":["views\\contribute\\Translate"],
+			"file":"views/Contribute/Translate.php"
+		},
+		{
+			"classes":["views\\contribute\\Synce"],
+			"file":"views/Contribute/Synce.php"
 		}
 	]
 }

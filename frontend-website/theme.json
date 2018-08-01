@@ -157,6 +157,21 @@
 			"name": "\\themes\\musixmatch\\views\\profile\\Favorites",
 			"parent": "\\packages\\ghafiye\\views\\profile\\Favorites",
 			"file": "html/Profile/favorites.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\contribute\\Main",
+			"parent": "\\packages\\ghafiye\\views\\contribute\\Main",
+			"file": "html/Contribute/main.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\contribute\\Translate",
+			"parent": "\\packages\\ghafiye\\views\\contribute\\Translate",
+			"file": "html/Contribute/translate.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\contribute\\Synce",
+			"parent": "\\packages\\ghafiye\\views\\contribute\\Synce",
+			"file": "html/Contribute/synce.php"
 		}
 	]
 }

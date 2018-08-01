@@ -1,15 +1,16 @@
 <?php
 namespace packages\ghafiye;
-use packages\base\db;
+use packages\base;
 use packages\userpanel\date;
-use packages\base\db\{dbObject, parenthesis};
-use packages\ghafiye\translator\title;
-use packages\ghafiye\song\person as songPerson;
-use packages\ghafiye\song\lyric;
+use packages\base\{db, db\dbObject, db\parenthesis};
+use packages\ghafiye\{translator\title, song\person as songPerson, song\lyric};
+
 class song extends dbObject{
 	use title, imageTrait;
 	const publish = 1;
 	const draft = 2;
+	const synced = 1;
+	protected $singer;
 	protected $dbTable = "ghafiye_songs";
 	protected $primaryKey = "id";
 	protected $dbFields = array(
@@ -24,7 +25,8 @@ class song extends dbObject{
         'lang' => array('type' => 'text', 'required' => true),
         'image' => array('type' => 'text'),
         'views' => array('type' => 'int'),
-        'likes' => array('type' => 'int'),
+		'likes' => array('type' => 'int'),
+		"synced" => array("type" => "int"),
         'status' => array('type' => 'int', 'required' => true)
 	);
     protected $relations = array(
@@ -61,6 +63,15 @@ class song extends dbObject{
 		$lyric->where("lang", $lang);
 		$lyric->where("song", $this->id);
 		return $lyric->get();
+	}
+	public function getSinger() {
+		if (!$this->singer) {
+			$this->singer = $this->getPerson(songPerson::singer);
+		}
+		return $this->singer;
+	}
+	public function url(): string {
+		return base\url($this->getSinger()->encodedName() . '/' . $this->encodedTitle());
 	}
 	static function bySingerAndTitle(person $singer, $title){
 		db::join("ghafiye_songs_titles", "ghafiye_songs_titles.song=ghafiye_songs.id", "inner");
