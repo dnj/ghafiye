@@ -140,6 +140,36 @@
 			"name": "\\themes\\clipone\\views\\ghafiye\\crawler\\delete",
 			"parent": "\\packages\\ghafiye\\views\\panel\\crawler\\delete",
 			"file": "html/crawler/delete.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\songs\\comments\\Search",
+			"parent": "\\packages\\ghafiye\\views\\panel\\songs\\comments\\Search",
+			"file": "html/songs/Comments/search.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\songs\\comments\\View",
+			"parent": "\\packages\\ghafiye\\views\\panel\\songs\\comments\\View",
+			"file": "html/songs/Comments/view.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\songs\\comments\\Delete",
+			"parent": "\\packages\\ghafiye\\views\\panel\\songs\\comments\\Delete",
+			"file": "html/songs/Comments/delete.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\songs\\lyrics\\descriptions\\Search",
+			"parent": "\\packages\\ghafiye\\views\\panel\\songs\\lyrics\\descriptions\\Search",
+			"file": "html/songs/Lyrics/Descriptions/search.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\songs\\lyrics\\descriptions\\Edit",
+			"parent": "\\packages\\ghafiye\\views\\panel\\songs\\lyrics\\descriptions\\Edit",
+			"file": "html/songs/Lyrics/Descriptions/edit.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\songs\\lyrics\\descriptions\\Delete",
+			"parent": "\\packages\\ghafiye\\views\\panel\\songs\\lyrics\\descriptions\\Delete",
+			"file": "html/songs/Lyrics/Descriptions/delete.php"
 		}
 	]
 }
