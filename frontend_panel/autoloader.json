@@ -91,6 +91,30 @@
 		{
 			"classes":["views\\ghafiye\\crawler\\delete"],
 			"file":"views/crawler/delete.php"
+		},
+		{
+			"classes":["views\\ghafiye\\songs\\comments\\Search"],
+			"file":"views/songs/Comments/Search.php"
+		},
+		{
+			"classes":["views\\ghafiye\\songs\\comments\\View"],
+			"file":"views/songs/Comments/View.php"
+		},
+		{
+			"classes":["views\\ghafiye\\songs\\comments\\Delete"],
+			"file":"views/songs/Comments/Delete.php"
+		},
+		{
+			"classes":["views\\ghafiye\\songs\\lyrics\\descriptions\\Search"],
+			"file":"views/songs/Lyrics/Descriptions/Search.php"
+		},
+		{
+			"classes":["views\\ghafiye\\songs\\lyrics\\descriptions\\Edit"],
+			"file":"views/songs/Lyrics/Descriptions/Edit.php"
+		},
+		{
+			"classes":["views\\ghafiye\\songs\\lyrics\\descriptions\\Delete"],
+			"file":"views/songs/Lyrics/Descriptions/Delete.php"
 		}
 	]
 }

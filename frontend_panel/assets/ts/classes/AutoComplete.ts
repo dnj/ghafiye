@@ -57,6 +57,17 @@ export default class AutoComplete{
 			return false;
 		});
 	}
+	public users() {
+		this.runAutocomplete("userpanel/users", function( ul:any, item:any ) {
+			return $( "<li>" )
+				.append( "<strong>" +item.name+ "</strong>" )
+				.appendTo( ul );
+		}, (event, ui) => {
+			this.$element.val(ui.item.name);
+			this.$input.val(ui.item.id).trigger('change');
+			return false;
+		});
+	}
 	private runAutocomplete(url:string, render:(ul:any,item:any)=>void, select:JQueryUI.AutocompleteEvent){
 		this.$element.autocomplete({
 			source: function( request:any, response:any ) {

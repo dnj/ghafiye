@@ -7,6 +7,7 @@ import { Router, AjaxRequest, webuilder } from "webuilder";
 import AutoComplete from "../classes/AutoComplete";
 import {AvatarPreview} from 'bootstrap-avatar-preview/AvatarPreview';
 import htmlSpecialChars from '../classes/htmlSpecialChars'
+import Descriptions from "./Songs/Lyrics/Descriptions";
 export default class Song{
 	private static $form:JQuery;
 	private static $lyricFields:JQuery;
@@ -846,6 +847,7 @@ export default class Song{
 		}
 	}
 	public static initIfNeeded(){
+		Descriptions.initIfNeeded();
 		let $body = $('body');
 		if($body.hasClass('song_edit') || $body.hasClass('song_add') || $body.hasClass('song_list')){
 			Song.init();
