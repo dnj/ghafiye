@@ -33,7 +33,16 @@ class usertype{
 
 			'crawler_search',
 			'crawler_add',
-			'crawler_delete'
+			'crawler_delete',
+
+			"songs_comments_search",
+			"songs_comments_view",
+			"songs_comments_edit",
+			"songs_comments_delete",
+
+			"songs_lyrics_descriptions_search",
+			"songs_lyrics_descriptions_edit",
+			"songs_lyrics_descriptions_delete",
 		);
 		foreach($permissions as $permission){
 			permissions::add('ghafiye_'.$permission);
