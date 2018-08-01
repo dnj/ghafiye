@@ -1,0 +1,61 @@
+body {
+	@media (max-width: 768px) {
+		&.community {
+			.contributes {
+				.contribute-info {
+					.contributor-name {
+						a {
+							display: block;
+						}
+					}
+				}
+			}
+		}
+		&.profile {
+			.contributes {
+				.contribute-info {
+					.contributor-name {
+						p {
+							margin: 0;
+							display: block;
+						}
+					}
+				}
+			}
+		}
+		&.lyric {
+			> main {
+				section.text {
+					> p {
+						.lyric-description {
+							display: inline;
+						}
+						.popover {
+							max-width: 320px;
+							width: 320px;
+							padding-bottom: 25px;
+						}
+						.popover-footer {
+							position: fixed;
+							bottom: 0;
+							left: 0;
+							right: 0;
+							padding: 8px 14px;
+							font-size: 14px;
+							background-color: #f7f7f7;
+							border-top: 1px solid #ebebeb;
+							border-radius: 0px 0px 5px 5px;
+						}
+					}
+				}
+				.comments-section {
+					.comment {
+						&.reply {
+							margin-right: -15px;
+						}
+					}
+				}
+			}
+		}
+	}
+}
