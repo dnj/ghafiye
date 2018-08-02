@@ -86,7 +86,7 @@ $this->the_header();
 					<div class="col-xs-12">
 						<ul class="list-group">
 							<li class="list-group-item">
-								<a href="<?php echo base\url("song/add"); ?>">
+								<a href="<?php echo base\url("contribute/song/add"); ?>">
 									<?php echo translator::trans("ghafiye.contribute.add.song"); ?>
 								</a>
 							</li>

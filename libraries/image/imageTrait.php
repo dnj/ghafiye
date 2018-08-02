@@ -15,12 +15,12 @@ trait imageTrait{
 		if(!$package){
 			$package = packages::package('ghafiye');
 		}
-		if(preg_match('/\\/(\w+)\\.(png|jpg|gif)$/', $this->$key, $matches)){
+		if(preg_match('/([A-Za-z0-9\-]+)\\.(png|jpg|gif)$/', $this->$key, $matches)){
 			$name = $matches[1];
 			$suffix = $matches[2];
 			$path = "storage/public/resized/{$name}_{$height}x{$width}.{$suffix}";
 			$resized = new file\local($package->getFilePath($path));
-			if($resized->exists()){
+			if ($resized->exists()) {
 				return  $package->url($path, $absolute);
 			}
 			$avatar = new file\local($package->getFilePath($this->$key));

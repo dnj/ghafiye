@@ -139,6 +139,14 @@
 		{
 			"classes":["views\\contribute\\Synce"],
 			"file":"views/Contribute/Synce.php"
+		},
+		{
+			"classes":["views\\contributes\\songs\\Add"],
+			"file":"views/Contributes/Songs/Add.php"
+		},
+		{
+			"classes":["views\\contribute\\View"],
+			"file":"views/Contribute/View.php"
 		}
 	]
 }

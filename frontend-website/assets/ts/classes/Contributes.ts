@@ -1,5 +1,6 @@
 import * as $ from "jquery";
 import { AjaxRequest } from "webuilder";
+import Add from "./Contributes/Songs/Add";
 
 interface IContribute {
 	title: string;
@@ -21,10 +22,20 @@ interface IContribute {
 
 export default class Contributes {
 	public static initIfNeeded() {
+		Add.initIfNeeded();
 		if ($("body").hasClass("contributes")) {
 			Contributes.init();
 		}
 	}
+	public static isLtr(lang: string): boolean {
+		let ltrLangs = ["ar", "fa", "dv", "he", "ps", "sd", "ur", "yi", "ug", "ku"];
+		for (let ltrLang of ltrLangs) {
+			if (ltrLang === lang) {
+				return false;
+			}
+		}
+		return true;
+}
 	protected static init() {
 		Contributes.listenForMoreActivities();
 	}

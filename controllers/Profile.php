@@ -13,6 +13,7 @@ class Profile extends controller {
 		$contribute = new Contribute();
 		$contribute->where("user", $user->id);
 		$contribute->orderBy("done_at", "DESC");
+		$contribute->where("status", Contribute::accepted);
 		$contribute->pageLimit = $this->items_per_page;
 		$contributes = $contribute->paginate($this->page);
 		$view->setContributes($contributes);

@@ -175,6 +175,14 @@
 		"ghafiye.contribute.add.singer": "افزودن خواننده جدید",
 		"ghafiye.contribute.add.group": "افزودن گروه جدید",
 		"ghafiye.contribute.allert": "<p>با فعالیت در قافیه میتوانید امتیاز های بیشتری کسب کنید و در لیگ قافیه نخست باشید</p><p>جایگاه شما در هر لحظه ممکن توسط شخص دیگری تصاحب شود، عجله کنید ..</p>",
-		"ghafiye.contribute.weekly.leag.panel.title": "مشارکت دهندگان برتر هفته"
+		"ghafiye.contribute.weekly.leag.panel.title": "مشارکت دهندگان برتر هفته",
+		"ghafiye.singer": "خواننده",
+		"ghafiye.group": "گروه",
+		"ghafiye.album": "آلبوم",
+		"ghafiye.song.title": "عنوان آهنگ",
+		"ghafiye.song.lang": "زبان آهنگ",
+		"ghafiye.song.genre": "سبک آهنگ",
+		"ghafiye.song.lyrics": "متن آهنگ",
+		"ghafiye.choose": "انتخاب کنید .."
 	}
 }

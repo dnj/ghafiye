@@ -4,6 +4,9 @@ use packages\userpanel\date;
 use packages\base\{db, db\dbObject};
 
 class Contribute extends dbObject {
+	const accepted = 1;
+	const waitForAccept = 2;
+	const rejected = 3;
 	protected $handler;
 	protected $dbTable = "ghafiye_contributes";
 	protected $primaryKey = "id";
@@ -13,7 +16,8 @@ class Contribute extends dbObject {
 		"song" => array("type" => "int", "required" => true),
 		"done_at" => array("type" => "int", "required" => true),
 		"type" => array("type" => "text", "required" => true),
-		"parameters" => array("type" => "text", "required" => true),
+		"parameters" => array("type" => "text"),
+		"status" => array("type" => "int", "required" => true),
 	);
     protected $relations = array(
         "user" => array("hasOne", User::class, "user"),
@@ -36,7 +40,7 @@ class Contribute extends dbObject {
 		$users = $user->get($limit, "userpanel_users.*");
 		return $users;
 	}
-	public function getHandler(){
+	public function getHandler() {
 		if (!$this->handler) {
 			if (!class_exists($this->type)) {
 				throw new \TypeError($this->type);
@@ -45,5 +49,26 @@ class Contribute extends dbObject {
 			$this->handler->setContribute($this);
 		}
 		return $this->handler;
+	}
+	public function getPoint(): int {
+		return $this->getHandler()->getPoint();
+	}
+	public function getImage(int $width, int $height) {
+		return $this->getHandler()->getImage($width, $height);
+	}
+	public function getPreviewContent(): string {
+		return $this->getHandler()->getPreviewContent();
+	}
+	public function buildFrontend(): string {
+		return $this->getHandler()->buildFrontend();
+	}
+	protected function preLoad(array $data): array {
+		if (!isset($data["status"])) {
+			$data["status"] = self::waitForAccept;
+		}
+		if (!isset($data["done_at"])) {
+			$data["done_at"] = date::time();
+		}
+		return $data;
 	}
 }

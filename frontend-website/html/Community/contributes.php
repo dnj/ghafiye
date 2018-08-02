@@ -26,15 +26,15 @@ $this->the_header();
 						<div class="row">
 							<div class="col-sm-1 col-xs-2">
 								<div class="contributor-avatar">
-									<a href="#">
+									<a href="<?php echo base\url("profile/{$contribute->user->id}"); ?>">
 										<img src="<?php echo $contribute->user->getAvatar(32, 32); ?>" class="img-responsive img-circle" ‌title="مشاهده پروفایل">
 									</a>
 								</div>
 							</div>
 							<div class="col-sm-11 col-xs-8">
 								<div class="contributor-name">
-									<a href="#"><?php echo $contribute->user->getFullName(); ?></a>
-									<span><?php echo $contribute->title; ?></span>
+									<a href="<?php echo base\url("profile/{$contribute->user->id}"); ?>"><?php echo $contribute->user->getFullName(); ?></a>
+									<a class="link-muted" href="<?php echo base\url("contribute/{$contribute->id}"); ?>"><?php echo $contribute->title; ?></a>
 								</div>
 							</div>
 						</div>
@@ -44,14 +44,15 @@ $this->the_header();
 							<div class="col-sm-11 col-sm-offset-1">
 								<div class="panel panel-default">
 									<div class="panel-body">
+										<span class="badge"><?php echo $contribute->getPoint(); ?></span>
 										<div class="row">
 											<div class="col-sm-1 col-xs-2">
-												<img src="<?php echo $contribute->song->getImage(32, 32); ?>" alt="<?php echo $contribute->song->title(); ?>">
+												<a href="<?php echo base\url("contribute/{$contribute->id}"); ?>">
+													<img src="<?php echo $contribute->getImage(32, 32); ?>" alt="<?php echo $contribute->song->title(); ?>">
+												</a>
 											</div>
 											<div class="col-sm-11 col-xs-10">
-												<?php $singer = $contribute->song->getPerson(person::singer); ?>
-												<p><a href="<?php echo base\url($singer->encodedName().'/'.$contribute->song->encodedTitle()); ?>"><?php echo $contribute->song->title(); ?></a></p>
-												<p><a href="<?php echo base\url($singer->encodedName()); ?>" class="song-singer"><?php echo $singer->name(); ?></a></p>
+												<?php echo $contribute->getPreviewContent(); ?>
 											</div>
 										</div>
 									</div>

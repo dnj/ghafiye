@@ -1,7 +1,7 @@
 <?php
 use \packages\base;
-use \packages\base\translator;
-use \packages\base\frontend\theme;
+use \packages\base\{translator, frontend\theme};
+use \packages\userpanel;
 ?>
 <!DOCTYPE html>
 <html dir="rtl" lang="<?php echo translator::getShortCodeLang(); ?>">
@@ -34,6 +34,9 @@ use \packages\base\frontend\theme;
 					<span>یـه</span>
 				</a>
 				<ul>
+					<li><a href="<?php echo userpanel\url("login"); ?>"><?php echo translator::trans("ghafiye.login"); ?></a></li>
+					<li><a href="<?php echo userpanel\url("register"); ?>"><?php echo translator::trans("ghafiye.register"); ?></a></li>
+					<li class="divider"></li>
 					<li><a href="<?php echo base\url('explore'); ?>"><?php echo translator::trans('toplyrics'); ?></a></li>
 				</ul>
 			</nav>

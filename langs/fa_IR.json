@@ -195,6 +195,7 @@
 		"ghafiye.search.songs.description": "انتشار در: {release_at}, خواننده: {singer}, سبک: {genre}",
 		"ghafiye.search.groups": "گروه {title}",
 		"ghafiye.search.albums": "آلبوم {title}",
-		"ghafiye.search.genres": "سبک {title}"
+		"ghafiye.search.genres": "سبک {title}",
+		"ghafiye.contributes.title.songs.add": "آهنگ {title} را اضافه کرد"
 	}
 }

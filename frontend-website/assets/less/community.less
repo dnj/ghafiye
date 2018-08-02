@@ -66,18 +66,49 @@
 			}
 			.contributor-avatar {
 				img {
+					margin-top: 8px;
 					display: block;
 					margin: 0 auto;
 				}
 			}
 			.contributor-name {
+				padding-left: 85px;
+				font-family: IRANSans;
 				a {
 					color: #555;
 					margin-left: 5px;
 					font-size: 15px;
 				}
-				span {
+				.link-muted {
 					color: #8d9aa5;
+					font-size: 13px;
+				}
+			}
+		}
+		.contribute-container {
+			img {
+				margin-top: 5px;
+			}
+			.badge {
+				position: absolute;
+				right: 0;
+				top: 0;
+				background-color: gold;
+			}
+			a {
+				font-family: yekan;
+				display: block;
+				color: #8d9aa5;
+				&:hover {
+					text-decoration: underline;
+				}
+				&:first-child {
+					font-size: 17px;
+					color: #4e5860;
+					font-weight: 600;
+					&:hover {
+						color: #f63;
+					}
 				}
 			}
 		}

@@ -1,7 +1,8 @@
 <?php
 namespace packages\ghafiye\controllers;
 use packages\base\{db, response};
-use packages\ghafiye\{view, views, controller, authorization, song};
+use packages\userpanel\controller;
+use packages\ghafiye\{view, views, authorization, song, Contribute as contributeObj};
 
 class Contribute extends controller {
 	public $authentication = true;
@@ -49,6 +50,19 @@ class Contribute extends controller {
 		$songs = $song->paginate($this->page, "ghafiye_songs.*");
 		$view->setDataList($songs);
 		$view->setPaginate($this->page, db::totalCount(), $this->items_per_page);
+		$this->response->setStatus(true);
+		return $this->response;
+	}
+	public function view($data): response {
+		$contribute = new contributeObj();
+		$contribute->where("id", $data["contribute"]);
+		$contribute->where("status", contributeObj::accepted);
+		if (!$contribute = $contribute->getOne()) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\contribute\View::class);
+		$this->response->setView($view);
+		$view->setContribute($contribute);
 		$this->response->setStatus(true);
 		return $this->response;
 	}

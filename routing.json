@@ -275,6 +275,21 @@
 		"method": "get"
 	},
 	{
+		"path": ["contribute", "song", "add"],
+		"controller": "controllers\\contributes\\Song@add",
+		"method": "get"
+	},
+	{
+		"path": ["contribute", "song", "add"],
+		"controller": "controllers\\contributes\\Song@store",
+		"method": "post"
+	},
+	{
+		"path": ["contribute", {"type" : "dynamic", "name" : "contribute", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\Contribute@view",
+		"method": "get"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

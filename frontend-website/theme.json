@@ -17,11 +17,14 @@
 		{"type": "package","name": "jquery-ui"},
 		{"type": "package","name": "jquery.growl"},
 		{"type": "package","name": "webuilder"},
+		{"type": "package","name":"bootstrap-avatar-preview"},
 		{"type": "less","file": "node_modules/bootstrap/less/bootstrap.less"},
 		{"type": "less","file": "node_modules/bootstrap-rtl/less/bootstrap-rtl.less"},
 		{"type": "less","file": "node_modules/font-awesome/less/font-awesome.less"},
 		{"type": "css","file": "node_modules/jquery.growl/stylesheets/jquery.growl.css"},
+		{"type": "css","file":"node_modules/jquery-ui/themes/base/all.css"},
 		{"type": "less","file": "assets/less/main.less"},
+		{"type": "less", "file":"node_modules/bootstrap-avatar-preview/avatarPreview.less"},
 		{"type": "ts","file": "assets/ts/events/main.ts"},
 		{
 			"type":"js",
@@ -172,6 +175,16 @@
 			"name": "\\themes\\musixmatch\\views\\contribute\\Synce",
 			"parent": "\\packages\\ghafiye\\views\\contribute\\Synce",
 			"file": "html/Contribute/synce.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\contributes\\songs\\Add",
+			"parent": "\\packages\\ghafiye\\views\\contributes\\songs\\Add",
+			"file": "html/Contributes/Songs/add.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\contribute\\View",
+			"parent": "\\packages\\ghafiye\\views\\contribute\\View",
+			"file": "html/Contribute/view.php"
 		}
 	]
 }
