@@ -9,12 +9,14 @@ class Contribute extends controller {
 	public function main(): response {
 		$view = view::byName(views\contribute\Main::class);
 		$this->response->setView($view);
-		$data = db::rawQuery("SELECT * FROM `ghafiye_songs` WHERE `id` IN( SELECT `song` FROM `ghafiye_songs_lyrices` GROUP BY `song` HAVING COUNT(DISTINCT `lang`) = 1 ORDER BY `song` DESC ) AND `lang` != 'fa' AND `status`  = " . song::publish . " ORDER BY release_at DESC LIMIT 7");
-		$tracks = [];
-		foreach ($data as $item) {
-			$tracks[] = new song($item);
-		}
-		$view->setTranslateTracks($tracks);
+		db::join("ghafiye_songs_translates_progress", "ghafiye_songs_translates_progress.song=ghafiye_songs.id", "INNER");
+		$song = new song();
+		$song->where("ghafiye_songs_translates_progress.progress", 100, "!=");
+		$song->where("ghafiye_songs_translates_progress.lang", "fa");
+		$song->where("ghafiye_songs.status", song::publish);
+		$song->where("ghafiye_songs.lang", "fa", "!=");
+		$song->orderBy("ghafiye_songs.release_at", "DESC");
+		$view->setTranslateTracks($song->get(7, "ghafiye_songs.*"));
 		$song = new song();
 		$song->where("synced", song::synced, "!=");
 		$song->where("status", song::publish);
@@ -27,15 +29,18 @@ class Contribute extends controller {
 	public function translate(): response {
 		$view = view::byName(views\contribute\Translate::class);
 		$this->response->setView($view);
-		$data = db::rawQuery("SELECT SQL_CALC_FOUND_ROWS * FROM `ghafiye_songs` WHERE `id` IN( SELECT `song` FROM `ghafiye_songs_lyrices` GROUP BY `song` HAVING COUNT(DISTINCT `lang`) = 1 ORDER BY `song` DESC ) AND `lang` != 'fa' AND `status`  = " . song::publish . " ORDER BY `release_at` DESC LIMIT ?, ?",
-		array(($this->page - 1) * $this->items_per_page, $this->items_per_page));
-		$totalCount = db::rawQueryValue("SELECT FOUND_ROWS()")[0];
-		$songs = [];
-		foreach ($data as $item) {
-			$songs[] = new song($item);
-		}
+		$song = new song();
+		db::join("ghafiye_songs_translates_progress", "ghafiye_songs_translates_progress.song=ghafiye_songs.id", "INNER");
+		$song = new song();
+		$song->where("ghafiye_songs_translates_progress.progress", 100, "!=");
+		$song->where("ghafiye_songs_translates_progress.lang", "fa");
+		$song->where("ghafiye_songs.status", song::publish);
+		$song->where("ghafiye_songs.lang", "fa", "!=");
+		$song->orderBy("ghafiye_songs.release_at", "DESC");
+		$song->pageLimit = $this->items_per_page;
+		$songs = $song->paginate($this->page, "ghafiye_songs.*");
 		$view->setDataList($songs);
-		$view->setPaginate($this->page, $totalCount, $this->items_per_page);
+		$view->setPaginate($this->page, $song->totalCount, $this->items_per_page);
 		$this->response->setStatus(true);
 		return $this->response;
 	}

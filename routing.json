@@ -290,6 +290,16 @@
 		"method": "get"
 	},
 	{
+		"path": ["contribute", "song", "translate", {"type" : "dynamic", "name" : "song", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\contributes\\Song@translate",
+		"method": "get"
+	},
+	{
+		"path": ["contribute", "song", "translate", {"type" : "dynamic", "name" : "song", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\contributes\\Song@doTranslate",
+		"method": "post"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

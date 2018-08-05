@@ -196,6 +196,7 @@
 		"ghafiye.search.groups": "گروه {title}",
 		"ghafiye.search.albums": "آلبوم {title}",
 		"ghafiye.search.genres": "سبک {title}",
-		"ghafiye.contributes.title.songs.add": "آهنگ {title} را اضافه کرد"
+		"ghafiye.contributes.title.songs.add": "آهنگ {title} را اضافه کرد",
+		"ghafiye.contributes.title.songs.translate": "آهنگ {title} را به {lang} ترجمه کرد"
 	}
 }

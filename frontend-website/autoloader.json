@@ -147,6 +147,10 @@
 		{
 			"classes":["views\\contribute\\View"],
 			"file":"views/Contribute/View.php"
+		},
+		{
+			"classes":["views\\contributes\\songs\\Translate"],
+			"file":"views/Contributes/Songs/Translate.php"
 		}
 	]
 }

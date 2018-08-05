@@ -13,10 +13,15 @@ class Contribute extends dbObject {
 	protected $dbFields = array(
 		"title" => array("type" => "text", "required" => true),
 		"user" => array("type" => "int", "required" => true),
-		"song" => array("type" => "int", "required" => true),
+		"song" => array("type" => "int"),
+		"person" => array("type" => "int"),
+		"album" => array("type" => "int"),
+		"groupID" => array("type" => "int"),
+		"lang" => array("type" => "text"),
 		"done_at" => array("type" => "int", "required" => true),
 		"type" => array("type" => "text", "required" => true),
 		"parameters" => array("type" => "text"),
+		"point" => array("type" => "int", "required" => true),
 		"status" => array("type" => "int", "required" => true),
 	);
     protected $relations = array(
@@ -32,13 +37,12 @@ class Contribute extends dbObject {
 			$startWeek--;
 		}
 		$start = date::mktime(0, 0, 0, null, $startWeek);
-		db::join("ghafiye_contributes", "ghafiye_contributes.user=userpanel_users.id", "INNER");
-		$user = new User();
-		$user->where("ghafiye_contributes.done_at", $start, ">=");
-		$user->groupBy("ghafiye_contributes.user");
-		$user->orderBy("userpanel_users.points", "DESC");
-		$users = $user->get($limit, "userpanel_users.*");
-		return $users;
+		$contribute = new static();
+		$contribute->where("ghafiye_contributes.done_at", $start, ">=");
+		$contribute->groupBy("ghafiye_contributes.user");
+		$contribute->orderBy("`cpoints`", "DESC");
+		$contributes = $contribute->get($limit, array("ghafiye_contributes.user", "SUM(ghafiye_contributes.point) as `cpoints`"));
+		return $contributes;
 	}
 	public function getHandler() {
 		if (!$this->handler) {

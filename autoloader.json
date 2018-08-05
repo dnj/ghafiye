@@ -504,6 +504,18 @@
 		{
 			"classes":["views\\contribute\\View"],
 			"file":"views/Contribute/View.php"
+		},
+		{
+			"classes":["views\\contributes\\songs\\Translate"],
+			"file":"views/Contributes/Songs/Translate.php"
+		},
+		{
+			"classes":["contribute\\Lyric"],
+			"file":"libraries/Contributes/Lyric.php"
+		},
+		{
+			"classes":["song\\Translate"],
+			"file":"libraries/song/Translate.php"
 		}
 	]
 }

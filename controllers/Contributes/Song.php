@@ -1,8 +1,8 @@
 <?php
 namespace packages\ghafiye\controllers\contributes;
 use packages\userpanel\controller;
-use packages\base\{db, date, translator, IO\file, inputValidation, image, packages};
-use packages\ghafiye\{view, views, authentication, song as songObj, album, person, group, Contribute, genre, contributes\songs};
+use packages\base\{db, date, translator, IO\file, inputValidation, image, packages, NotFound, view\error};
+use packages\ghafiye\{view, views, authentication, song as songObj, album, person, group, Contribute, genre, contributes\songs, song\lyric, song\title, contribute\Lyric as ContributeLyric};
 
 class Song extends controller {
 	protected $authentication = true;
@@ -204,21 +204,156 @@ class Song extends controller {
 		}
 
 		foreach (explode("\r\n", $inputs["lyrics"]) as $lyr) {
-			$lyric = new songObj\lyric();
+			$lyric = new lyric();
 			$lyric->song = $song->id;
 			$lyric->lang = $song->lang;
 			$lyric->time = 0;
 			$lyric->text = $lyr;
 			$lyric->save();
 		}
-
+		
 		$contribute = new Contribute();
 		$contribute->title = translator::trans("ghafiye.contributes.title.songs.add", array("title" => $inputs["title"]));
 		$contribute->user = authentication::getID();
 		$contribute->song = $song->id;
 		$contribute->type = songs\Add::class;
+		$contribute->point = (new songs\Add)->getPoint();
 		$contribute->save();
 		$this->response->setStatus(true);
+		return $this->response;
+	}
+	public function translate($data) {
+		$song = new songObj();
+		$song->where("ghafiye_songs.id", $data["song"]);
+		$song->where("ghafiye_songs.status", songObj::publish);
+		if (!$song = $song->getOne("ghafiye_songs.*")) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\contributes\songs\Translate::class);
+		$this->response->setView($view);
+		$view->setSong($song);
+		$inputsRules = array(
+			"songlang" => array(
+				"type" => "string",
+				"optional" => true,
+				"empty" => true,
+			),
+		);
+		$inputs = $this->checkinputs($inputsRules);
+		if (isset($inputs["songlang"]) and $inputs["songlang"]) {
+			if (in_array($inputs["songlang"], translator::$allowlangs)) {
+				$lyric = new lyric();
+				$lyric->where("song", $song->id);
+				$lyric->where("lang", $inputs["songlang"]);
+				$lyric->where("status", lyric::published);
+				$view->setTranslateLyrics($lyric->get());
+				$view->setTranslateTitle($song->title($inputs["songlang"]));
+				$view->setTranslateLang($inputs["songlang"]);
+				$contribute = new Contribute();
+				$contribute->where("lang", $inputs["songlang"]);
+				$contribute->where("status", Contribute::waitForAccept);
+				$contribute->where("user", authentication::getID());
+				$contribute->where("type", songs\Translate::class);
+				if ($contribute->has()) {
+					$error = new error();
+					$error->setType(error::WARNING);
+					$error->setCode("ghafiye.has.contribute.wait.for.accept");
+					$error->setMessage(translator::trans("error.ghafiye.has.contribute.wait.for.accept"));
+					$view->addError($error);
+				}
+			}
+		}
+		$this->response->setStatus(true);
+		return $this->response;
+	}
+	public function doTranslate($data) {
+		$song = new songObj();
+		$song->where("ghafiye_songs.id", $data["song"]);
+		$song->where("ghafiye_songs.status", songObj::publish);
+		if (!$song = $song->getOne("ghafiye_songs.*")) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\contributes\songs\Translate::class);
+		$this->response->setView($view);
+		$view->setSong($song);
+		$inputsRules = array(
+			"lang" => array(
+				"values" => translator::$allowlangs,
+			),
+			"title" => array(
+				"type" => "string",
+				"optional" => true,
+			),
+			"translates" => array(),
+		);
+		$inputs = $this->checkinputs($inputsRules);
+		try {
+			if ($inputs["lang"] == $song->lang) {
+				throw new inputValidation("lang");
+			}
+			if ($song->translatedTo($inputs["lang"])) {
+				throw new alreadyTranslated();
+			}
+			if (!$inputs["translates"]) {
+				throw new inputValidation("translates");
+			}
+			$lyric = new lyric();
+			$lyric->where("song", $song->id);
+			$lyric->where("status", lyric::published);
+			$lyric->where("lang", array($song->lang, $inputs["lang"]), "in");
+			$lyrics = $lyric->get();
+			foreach ($lyrics as $lyric) {
+				if ($lyric->lang == $song->lang) {
+					if (isset($inputs["translates"][$lyric->id])) {
+						if (!$inputs["translates"][$lyric->id]) {
+							unset($inputs["translates"][$lyric->id]);
+						}
+					}
+				} else {
+					if (isset($inputs["translates"][$lyric->parent])) {
+						unset($inputs["translates"][$lyric->parent]);
+					}
+				}
+			}
+			if ($inputs["translates"]) {
+				$contribute = new Contribute();
+				$contribute->title = translator::trans("ghafiye.contributes.title.songs.translate", array(
+					"title" => $song->title($song->lang),
+					"lang" => translator::trans("translations.langs.{$inputs["lang"]}"),
+				));
+				$contribute->user = authentication::getID();
+				$contribute->song = $song->id;
+				$contribute->lang = $inputs["lang"];
+				$contribute->type = songs\Translate::class;
+				$contribute->point = (new songs\Translate)->getPoint();
+				$contribute->save();
+				foreach ($inputs["translates"] as $lyric => $translate) {
+					$lyr = new lyric();
+					$lyr->song = $song->id;
+					$lyr->lang = $inputs["lang"];
+					$lyr->text = $translate;
+					$lyr->parent = $lyric;
+					$lyr->status = lyric::draft;
+					$lyr->save();
+
+					$clyr = new ContributeLyric();
+					$clyr->contribute = $contribute->id;
+					$clyr->parent = $lyric;
+					$clyr->lyric = $lyr->id;
+					$clyr->text = $lyr->text;
+					$clyr->save();
+				}
+				if (isset($inputs["title"])) {
+					$song->addTitle($inputs["title"], $inputs["lang"], title::draft);
+				}
+			}
+			$this->response->setStatus(true);
+		} catch (alreadyTranslated $e) {
+			$error = new error();
+			$error->setType(error::WARNING);
+			$error->setMessage(translator::trans("error.contribute.songs.translate.alreadyTranslated"));
+			$view->addError($error);
+		}
 		return $this->response;
 	}
 }

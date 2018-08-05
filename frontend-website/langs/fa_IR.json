@@ -183,6 +183,15 @@
 		"ghafiye.song.lang": "زبان آهنگ",
 		"ghafiye.song.genre": "سبک آهنگ",
 		"ghafiye.song.lyrics": "متن آهنگ",
-		"ghafiye.choose": "انتخاب کنید .."
+		"ghafiye.choose": "انتخاب کنید ..",
+		"ghafiye.contribute.translate.song": "ترجمه آهنگ {title}",
+		"ghafiye.lang": "زبان",
+		"error.contribute.songs.translate.alreadyTranslated": "ترجمه ی زبان انتخاب شده قبلا کامل شده است، در صورتی که نیاز به تغییر دارد، از صفحه ی تصحیح آهنگ استفاده کنید",
+		"error.ghafiye.has.contribute.wait.for.accept": "شما قبلا مشارکت ترجمه با این زبان را داشته اید، مشارکت شما هنوز منتظر تایید تیم قافیه است .",
+		"ghafiye.add": "افزودن",
+		"ghafiye.singer.avatar": "تصویر",
+		"ghafiye.singer.name": "نام",
+		"ghafiye.singer.lang": "زبان",
+		"ghafiye.singer.gender": "جنسیت"
 	}
 }

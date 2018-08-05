@@ -26,7 +26,7 @@ $this->the_header();
 								<a class="track-singer-name" href="<?php echo base\url($track->getSinger()->encodedName()); ?>"><?php echo $track->getSinger()->name(); ?></a>
 							</div>
 							<div class="col-sm-3 col-xs-3">
-								<a href="<?php echo base\url("song/translate/{$track->id}"); ?>" class="btn btn-sm btn-block btn-default btn-translate"><span class="hidden-xs"><?php echo translator::trans("ghafiye.contribute.translate"); ?></span><span class="visible-xs"><i class="fa fa-edit"></i></span></a>
+								<a href="<?php echo base\url("contribute/song/translate/{$track->id}"); ?>" class="btn btn-sm btn-block btn-default btn-translate"><span class="hidden-xs"><?php echo translator::trans("ghafiye.contribute.translate"); ?></span><span class="visible-xs"><i class="fa fa-edit"></i></span></a>
 							</div>
 						</div>
 					</li>

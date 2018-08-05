@@ -185,6 +185,11 @@
 			"name": "\\themes\\musixmatch\\views\\contribute\\View",
 			"parent": "\\packages\\ghafiye\\views\\contribute\\View",
 			"file": "html/Contribute/view.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\contributes\\songs\\Translate",
+			"parent": "\\packages\\ghafiye\\views\\contributes\\songs\\Translate",
+			"file": "html/Contributes/Songs/translate.php"
 		}
 	]
 }

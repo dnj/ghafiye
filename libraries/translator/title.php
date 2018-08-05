@@ -56,12 +56,13 @@ trait title{
 	public static function decodeTitle($title){
 		return str_replace('-', ' ',$title);
 	}
-	public function addTitle($titletxt, $lang){
+	public function addTitle($titletxt, $lang, $status){
 		$column = $this->relations['titles'][2];
 		$title = new $this->relations['titles'][1]();
 		$title->$column = $this->id;
 		$title->title = $titletxt;
 		$title->lang = $lang;
+		$title->status = $status;
 		$title->save();
 	}
 	public function setTitle($titletxt, $lang){

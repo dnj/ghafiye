@@ -1,6 +1,6 @@
 import * as $ from "jquery";
 import { AjaxRequest } from "webuilder";
-import Add from "./Contributes/Songs/Add";
+import Songs from "./Contributes/Songs";
 
 interface IContribute {
 	title: string;
@@ -22,7 +22,7 @@ interface IContribute {
 
 export default class Contributes {
 	public static initIfNeeded() {
-		Add.initIfNeeded();
+		Songs.initIfNeeded();
 		if ($("body").hasClass("contributes")) {
 			Contributes.init();
 		}

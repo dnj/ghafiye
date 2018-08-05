@@ -73,6 +73,22 @@ class song extends dbObject{
 	public function url(): string {
 		return base\url($this->getSinger()->encodedName() . '/' . $this->encodedTitle());
 	}
+	public function translatedTo(string $lang) {
+		$translate = new song\Translate();
+		$translate->where("song", $this->id);
+		$translate->where("lang", $lang);
+		$translate->where("progress", 100);
+		return $translate->has();
+	}
+	public function getTranslateProgressByLang(string $lang): int {
+		$translate = new song\Translate();
+		$translate->where("song", $this->id);
+		$translate->where("lang", $lang);
+		if ($translate = $translate->getOne()) {
+			return $translate->progress;
+		}
+		return 0;
+	}
 	static function bySingerAndTitle(person $singer, $title){
 		db::join("ghafiye_songs_titles", "ghafiye_songs_titles.song=ghafiye_songs.id", "inner");
 		db::joinWhere("ghafiye_songs_titles", "ghafiye_songs_titles.title", $title);
