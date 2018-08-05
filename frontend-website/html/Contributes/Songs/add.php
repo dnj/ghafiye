@@ -61,7 +61,7 @@ $this->the_header();
 									));
 									?>
 									<p><small>نام گروه را در فیلد بالا وارد و آن را در بین نتایج انتخاب کنید</small></p>
-									<p><small>در صورتی که گروه مد نظر شما در بین نتایج نیست، میتوانید از <a href="#">اینجا</a> آن را اضافه کنید</small></p>
+									<p><small>در صورتی که گروه مد نظر شما در بین نتایج نیست، میتوانید از <a href="#addGroup" data-toggle="modal">اینجا</a> آن را اضافه کنید</small></p>
 								</div>
 							</div>
 							<div class="row">
@@ -77,7 +77,7 @@ $this->the_header();
 									));
 									?>
 									<p><small>نام آلبوم را در فیلد بالا وارد و آن را در بین نتایج انتخاب کنید</small></p>
-									<p><small>در صورتی که آلبوم مد نظر شما در بین نتایج نیست، میتوانید از <a href="#">اینجا</a> آن را اضافه کنید</small></p>
+									<p><small>در صورتی که آلبوم مد نظر شما در بین نتایج نیست، میتوانید از <a href="#addAlbum" data-toggle="modal">اینجا</a> آن را اضافه کنید</small></p>
 								</div>
 							</div>
 						</div>
@@ -181,6 +181,143 @@ $this->the_header();
 			</div>
 			<div class="modal-footer">
 				<button type="submit" form="addSingerForm" class="btn btn-success"><?php echo translator::trans("ghafiye.add"); ?></button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans("ghafiye.cancel"); ?></button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="addGroup" tabindex="-1" data-show="true" role="dialog">
+	<div class="modal-dialog modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title"><?php echo translator::trans("ghafiye.contribute.add.singer"); ?></h4>
+			</div>
+			<div class="modal-body">
+				<form id="addGroupForm" action="#" method="post">
+					<div class="row">
+						<div class="col-sm-4 col-xs-12">
+							<label class="control-label"><?php echo translator::trans("ghafiye.group.avatar"); ?></label>
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+								<div class="form-group">
+									<div class="user-image avatarPreview">
+										<img src="<?php echo $this->getImage(); ?>" class="preview img-responsive">
+										<input name="avatar" type="file">
+										<div class="button-group">
+											<button type="button" class="btn btn-teal btn-sm btn-upload"><i class="fa fa-pencil"></i></button>
+											<button type="button" class="btn btn-bricky btn-sm btn-remove" data-default="<?php echo $this->getImage(); ?>"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+							</div>	
+						</div>
+						<div class="col-sm-8 col-xs-12">
+							<div class="row">
+								<div class="col-xs-12">
+								<?php
+								$this->createField(array(
+									"name" => "title",
+									"label" => translator::trans("ghafiye.group.name"),
+								));
+								$this->createField(array(
+									"type" => "select",
+									"name" => "lang",
+									"label" => translator::trans("ghafiye.group.lang"),
+									"options" => $this->getLangsForSelect(),
+								));
+								?>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-8 col-xs-12">
+									<?php
+									$this->createField(array(
+										"name" => "person",
+										"type" => "hidden",
+									));
+									$this->createField(array(
+										"name" => "person_name",
+										"label" => translator::trans("ghafiye.group.person"),
+									));
+									?>
+									<small>نام شخص را در فیلد بالا وارد و آن را در بین نتایج انتخاب کنید و سپس افزودن را بزنید</small>
+								</div>	
+								<div class="col-sm-4 col-xs-12">
+									<button type="button" class="btn btn-block btn-sm btn-primary btn-add-person"><?php echo translator::trans("ghafiye.group.person.add"); ?></button>
+								</div>	
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="panel panel-group-persons">
+										<div class="table-responsive">
+											<table class="table table-hover table-striped">
+												<thead>
+													<tr>
+														<th><?php echo translator::trans("ghafiye.singer.name"); ?></th>
+														<th></th>
+													</tr>
+												</thead>
+												<tbody></tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" form="addGroupForm" class="btn btn-success"><?php echo translator::trans("ghafiye.add"); ?></button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans("ghafiye.cancel"); ?></button>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="addAlbum" tabindex="-1" data-show="true" role="dialog">
+	<div class="modal-dialog modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title"><?php echo translator::trans("ghafiye.contribute.add.singer"); ?></h4>
+			</div>
+			<div class="modal-body">
+				<form id="addAlbumForm" action="#" method="post">
+					<div class="row">
+						<div class="col-sm-4 col-xs-12">
+							<label class="control-label"><?php echo translator::trans("ghafiye.singer.avatar"); ?></label>
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+								<div class="form-group">
+									<div class="user-image avatarPreview">
+										<img src="<?php echo $this->getImage(); ?>" class="preview img-responsive">
+										<input name="image" type="file">
+										<div class="button-group">
+											<button type="button" class="btn btn-teal btn-sm btn-upload"><i class="fa fa-pencil"></i></button>
+											<button type="button" class="btn btn-bricky btn-sm btn-remove" data-default="<?php echo $this->getImage(); ?>"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+							</div>	
+						</div>
+						<div class="col-sm-8 col-xs-12">
+							<?php
+							$this->createField(array(
+								"name" => "title",
+								"label" => translator::trans("ghafiye.album.title"),
+							));
+							$this->createField(array(
+								"type" => "select",
+								"name" => "lang",
+								"label" => translator::trans("ghafiye.album.lang"),
+								"options" => $this->getLangsForSelect(),
+							));
+							?>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" form="addAlbumForm" class="btn btn-success"><?php echo translator::trans("ghafiye.add"); ?></button>
 				<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans("ghafiye.cancel"); ?></button>
 			</div>
 		</div>

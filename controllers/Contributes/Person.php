@@ -18,13 +18,13 @@ class Person extends controller {
 		$items = array();
 		if (isset($inputs["word"])) {
 			if ($inputs["word"]) {
-				$items = db::rawQuery("SELECT DISTINCT `ghafiye_persons`.*, `ghafiye_persons_names`.`name` FROM `ghafiye_persons` INNER JOIN `ghafiye_persons_names` ON `ghafiye_persons_names`.`person` = `ghafiye_persons`.`id`
+				$persons = db::rawQuery("SELECT DISTINCT `ghafiye_persons`.* FROM `ghafiye_persons` INNER JOIN `ghafiye_persons_names` ON `ghafiye_persons_names`.`person` = `ghafiye_persons`.`id`
 			WHERE
 				(
 					`name_prefix` LIKE ? OR `first_name` LIKE ? OR `middle_name` LIKE ? OR `last_name` LIKE ? OR `name_suffix` LIKE ? OR `ghafiye_persons_names`.`name` LIKE ?
 				) AND `ghafiye_persons`.`status` = " . personObj::accepted . "
-			UNION
-			SELECT `ghafiye_persons`.*, `ghafiye_persons_names`.`name`  FROM `ghafiye_persons` INNER JOIN `ghafiye_persons_names` ON `ghafiye_persons_names`.`person` = `ghafiye_persons`.`id` INNER JOIN `ghafiye_contributes` ON `ghafiye_contributes`.`person` = `ghafiye_persons`.`id`
+			UNION DISTINCT
+			SELECT DISTINCT `ghafiye_persons`.*  FROM `ghafiye_persons` INNER JOIN `ghafiye_persons_names` ON `ghafiye_persons_names`.`person` = `ghafiye_persons`.`id` INNER JOIN `ghafiye_contributes` ON `ghafiye_contributes`.`person` = `ghafiye_persons`.`id`
 			WHERE
 				(
 					`name_prefix` LIKE ? OR `first_name` LIKE ? OR `middle_name` LIKE ? OR `last_name` LIKE ? OR `name_suffix` LIKE ? OR `ghafiye_persons_names`.`name` LIKE ?
@@ -42,6 +42,12 @@ class Person extends controller {
 					'%' . $inputs["word"] . '%',
 					'%' . $inputs["word"] . '%',
 				));
+			}
+			foreach ($persons as $data) {
+				$person = new personObj($data);
+				$item = $data;
+				$item["name"] = $person->name();
+				$items[] = $item;
 			}
 		}
 		$this->response->setStatus(true);
@@ -71,9 +77,7 @@ class Person extends controller {
 		if (personObj\name::byName($inputs["name"])) {
 			throw new duplicateRecord("name");
 		}
-		$group = new group\title();
-		$group->where("title", $inputs["name"]);
-		if ($group->has()) {
+		if (group\title::byTitle($inputs["name"])) {
 			throw new duplicateRecord("name");
 		}
 		if (isset($inputs["avatar"])) {

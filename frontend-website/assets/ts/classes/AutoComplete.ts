@@ -41,12 +41,16 @@ export default class AutoComplete {
 		});
 	}
 	public groups() {
-		this.runAutocomplete("userpanel/groups", function( ul:any, item:any ) {
+		this.runAutocomplete("contribute/group/search", function( ul:any, item:any ) {
+			let html = "<strong>" +item.name+ "</strong>";
+			if (item.status === 2) {
+				html += "<small>این گروه توسط شما اضافه شده و هنوز تایید نشده است</small>";
+			}
 			return $( "<li>" )
-				.append( "<strong>" +item.title+ "</strong>" )
+				.append( html )
 				.appendTo( ul );
 		}, (event, ui) => {
-			this.$element.val(ui.item.title);
+			this.$element.val(ui.item.name);
 			this.$input.val(ui.item.id).trigger('change');
 			return false;
 		});

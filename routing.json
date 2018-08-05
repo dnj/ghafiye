@@ -310,6 +310,26 @@
 		"method": "post"
 	},
 	{
+		"path": ["contribute", "group", "search"],
+		"controller": "controllers\\contributes\\Group@search",
+		"method": "get"
+	},
+	{
+		"path": ["contribute", "group", "add"],
+		"controller": "controllers\\contributes\\Group@add",
+		"method": "post"
+	},
+	{
+		"path": ["contribute", "album", "search"],
+		"controller": "controllers\\contributes\\Album@search",
+		"method": "get"
+	},
+	{
+		"path": ["contribute", "album", "add"],
+		"controller": "controllers\\contributes\\Album@add",
+		"method": "post"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

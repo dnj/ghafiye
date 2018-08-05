@@ -106,13 +106,15 @@ class Song extends controller {
 		$inputs = $this->checkinputs($inputsRules);
 		if (isset($inputs["person"])) {
 			if ($inputs["person"]) {
-				db::join("ghafiye_contributes", "ghafiye_contributes.person=ghafiye_persons.id", "INNER");
-				db::join("userpanel_users", "ghafiye_contributes.user=userpanel_users.id", "INNER");
+				db::join("ghafiye_contributes", "ghafiye_contributes.person=ghafiye_persons.id", "LEFT");
 				$person = new person();
-				$person->where("ghafiye_persons.status", person::accepted);
 				$parenthesis = new parenthesis();
-				$parenthesis->orWhere("userpanel_users.id", authentication::getID());
-				$parenthesis->orWhere("ghafiye_contributes.person", $inputs["person"]);
+				$parenthesis->where("ghafiye_persons.id", $inputs["person"]);
+				$parenthesis->where("ghafiye_persons.status", person::accepted);
+				$person->orWhere($parenthesis);
+				$parenthesis = new parenthesis();
+				$parenthesis->where("ghafiye_contributes.user", authentication::getID());
+				$parenthesis->where("ghafiye_contributes.person", $inputs["person"]);
 				$person->orWhere($parenthesis);
 				if (!$person->has()) {
 					throw new inputValidation("person");
@@ -141,7 +143,17 @@ class Song extends controller {
 		}
 		if (isset($inputs["group"])) {
 			if ($inputs["group"]) {
-				if (!group::byId($inputs["group"])) {
+				db::join("ghafiye_contributes", "ghafiye_contributes.groupID=ghafiye_groups.id", "LEFT");
+				$group = new group();
+				$parenthesis = new parenthesis();
+				$parenthesis->where("ghafiye_groups.id", $inputs["group"]);
+				$parenthesis->where("ghafiye_groups.status", group::accepted);
+				$group->orWhere($parenthesis);
+				$parenthesis = new parenthesis();
+				$parenthesis->where("ghafiye_contributes.user", authentication::getID());
+				$parenthesis->where("ghafiye_contributes.groupID", $inputs["group"]);
+				$group->orWhere($parenthesis);
+				if (!$group->has()) {
 					throw new inputValidation("group");
 				}
 			} else {

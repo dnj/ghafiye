@@ -198,6 +198,8 @@
 		"ghafiye.search.genres": "سبک {title}",
 		"ghafiye.contributes.title.songs.add": "آهنگ {title} را اضافه کرد",
 		"ghafiye.contributes.title.songs.translate": "آهنگ {title} را به {lang} ترجمه کرد",
-		"ghafiye.contributes.title.singer.add": "خواننده {name} را اضافه کرد"
+		"ghafiye.contributes.title.singer.add": "خواننده {name} را اضافه کرد",
+		"ghafiye.contributes.title.group.add": "گروه {title} را اضافه کرد",
+		"ghafiye.contributes.title.album.add": "آلبوم {title} را اضافه کرد"
 	}
 }

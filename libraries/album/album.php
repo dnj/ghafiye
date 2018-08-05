@@ -6,12 +6,16 @@ use packages\ghafiye\translator\title;
 use packages\ghafiye\song\person as songPerson;
 class album extends dbObject{
 	use title, imageTrait;
+	const accepted = 1;
+	const waitForAccept = 2;
+	const rejected = 3;
 	protected $dbTable = "ghafiye_albums";
 	protected $primaryKey = "id";
 	protected $dbFields = array(
 		'musixmatch_id' => array('type' => 'int', 'unique'=>true),
         'image' => array('type' => 'text'),
-        'lang' => array('type' => 'text', 'required' => true)
+		'lang' => array('type' => 'text', 'required' => true),
+		"status" => array("type" => "int", "required" => true),
 	);
     protected $relations = array(
 		'titles' => array("hasMany", "packages\\ghafiye\\album\\title", "album"),

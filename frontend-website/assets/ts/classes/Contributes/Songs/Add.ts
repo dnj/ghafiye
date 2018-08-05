@@ -14,17 +14,21 @@ export default class Add {
 	protected static $body = $("body.contribute.contribute-add-song");
 	protected static $form: JQuery;
 	protected static $addSingerform: JQuery;
-	protected static $addAlbumform: JQuery;
-	protected static $addGroupform: JQuery;
+	protected static $addAlbumForm: JQuery;
+	protected static $addGroupForm: JQuery;
 	protected static init() {
 		Add.$form = $(".panel-add-song .panel-body form", Add.$body);
 		Add.$addSingerform = $("#addSingerForm", Add.$body);
+		Add.$addGroupForm = $("#addGroupForm", Add.$body);
+		Add.$addAlbumForm = $("#addAlbumForm", Add.$body);
 		Add.runSingerAutoComplete();
 		Add.runAlbumAutoComplete();
 		Add.runGroupAutoComplete();
 		Add.runAvatarPreview();
 		Add.runFormSubmitListener();
 		Add.runAddSingerFormListener();
+		Add.setAddGroupEvents();
+		Add.runAddAlbumFormSubmitListener();
 	}
 	protected static runSingerAutoComplete() {
 		const $ac = new AutoComplete($("input[name=person_name]", Add.$form));
@@ -41,6 +45,8 @@ export default class Add {
 	protected static runAvatarPreview() {
 		new AvatarPreview($(".user-image", Add.$form));
 		new AvatarPreview($(".user-image", Add.$addSingerform));
+		new AvatarPreview($(".user-image", Add.$addGroupForm));
+		new AvatarPreview($(".user-image", Add.$addAlbumForm));
 	}
 	public static changeLangListener() {
 		$(".panel-white select[name=lang]", Add.$form).on("change", function() {
@@ -74,6 +80,7 @@ export default class Add {
 						message: "امتیاز فعالیت شما بعد از تایید آهنگ برایتان حساب خواهد شد"
 					});
 					form.reset();
+					$("img", Add.$form).attr("src", $(".btn-remove", Add.$form).data("default"));
 					reset();
 				},
 				error: function(error: any) {
@@ -82,7 +89,7 @@ export default class Add {
 						if (error.input === "person" || error.input === "group" || error.input === "album") {
 							error.input += "_name";
 						}
-						let $input = $(`[name="${error.input}"]`);
+						let $input = $(`[name="${error.input}"]`, form);
 						let $params = {
 							title: "خطا",
 							message: ""
@@ -125,7 +132,7 @@ export default class Add {
 			};
 			$(this).formAjax({
 				url: "contribute/person/add?ajax=1",
-				data: new FormData(this as HTMLFormElement),
+				data: new FormData(form),
 				contentType: false,
 				processData: false,
 				success: (data: any) => {
@@ -143,7 +150,176 @@ export default class Add {
 				error: function(error: any) {
 					reset();
 					if (error.error == "data_duplicate" || error.error == "data_validation") {
-						let $input = $(`[name="${error.input}"]`);
+						let $input = $(`[name="${error.input}"]`, form);
+						let $params = {
+							title: "خطا",
+							message: ""
+						};
+						if (error.error == "data_validation") {
+							$params.message = "داده وارد شده معتبر نیست";
+						}
+						if (error.error == "data_duplicate") {
+							$params.message = "داده وارد شده تکراری میباشد";
+						}
+						if ($input.length) {
+							$input.inputMsg($params);
+						} else {
+							$.growl.error($params);
+						}
+					} else if (error.hasOwnProperty("message")) {
+						const $error = `<div class="alert alert-block alert-danger ">
+											<button data-dismiss="alert" class="close" type="button">×</button>
+											<h4 class="alert-heading"><i class="fa fa-times-circle"></i> خطا</h4>
+											<p>${error.message}</p>
+										</div>`;
+						$(".container .errors").html($error);
+					} else {
+						$.growl.error({
+							title: "خطا",
+							message: "درخواست شما توسط سرور قبول نشد"
+						});
+					}
+				}
+			});
+		});
+	}
+	protected static setAddGroupEvents() {
+		const $ac = new AutoComplete($("input[name=person_name]", Add.$addGroupForm));
+		$ac.persons();
+		const $panel = $(".panel", Add.$addGroupForm);
+		const $personName = $("input[name=person_name]", Add.$addGroupForm);
+		const $person = $("input[name=person]", Add.$addGroupForm);
+		$(".btn-add-person", Add.$addGroupForm).on("click", function(e) {
+			e.preventDefault();
+			$(".has-error", Add.$addGroupForm).removeClass("has-error");
+			$(".help-block", Add.$addGroupForm).remove();
+			const person = $person.val();
+			const personName = $personName.val();
+			if (!person || !personName) {
+				$personName.inputMsg({
+					message: "شخصی انتخاب کنید",
+				});
+				return;
+			}
+			if ($(`input[name="persons[${person}]"]`, $panel).length) {
+				$personName.inputMsg({
+					message: "شخص قبلا اضافه شده",
+				});
+				return;
+			}
+			$panel.show();
+			const tr = `<tr>
+				<td>
+					<input type="hidden" name="persons[${person}]" value="${person}">
+					${personName}
+				</td>
+				<td>
+					<button type="button" class="btn btn-xs btn-bricky tooltips btn-remove" title="حذف"><i class="fa fa-times"></i></a>
+				</td>
+			</tr>`;
+			const $tr = $(tr).appendTo($("tbody", $panel));
+			$(".btn-remove", $tr).on("click", function(e) {
+				$(this).parents("tr").remove();
+				if (!$("tbody tr", $panel).length) {
+					$panel.hide();
+				}
+			});
+			$(".tooltips", $tr).tooltip();
+			$personName.val("");
+			$person.val("");
+		});
+		Add.runAddGroupFormSubmitListener();
+	}
+	protected static runAddGroupFormSubmitListener() {
+		Add.$addGroupForm.on("submit", function(e) {
+			e.preventDefault();
+			const form = this as HTMLFormElement;
+			const reset = () => {
+				$(".has-error", this).removeClass("has-error");
+				$(".help-block", this).remove();
+			};
+			$(this).formAjax({
+				url: "contribute/group/add?ajax=1",
+				data: new FormData(form),
+				contentType: false,
+				processData: false,
+				success: (data: any) => {
+					$.growl.notice({
+						title: "موفق",
+						message: "امتیاز فعالیت شما بعد از تایید گروه اهدا خواهد شد"
+					});
+					form.reset();
+					reset();
+					$("#addGroup").modal("hide");
+					$("img", Add.$addGroupForm).attr("src", $(".btn-remove", Add.$addGroupForm).data("default"));
+					$("input[name=group]", Add.$form).val(data.group.id);
+					$("input[name=group_name]", Add.$form).val(data.group.title);
+				},
+				error: function(error: any) {
+					reset();
+					if (error.error == "data_duplicate" || error.error == "data_validation") {
+						let $input = $(`[name="${error.input}"]`, form);
+						let $params = {
+							title: "خطا",
+							message: ""
+						};
+						if (error.error == "data_validation") {
+							$params.message = "داده وارد شده معتبر نیست";
+						}
+						if (error.error == "data_duplicate") {
+							$params.message = "داده وارد شده تکراری میباشد";
+						}
+						if ($input.length) {
+							$input.inputMsg($params);
+						} else {
+							$.growl.error($params);
+						}
+					} else if (error.hasOwnProperty("message")) {
+						const $error = `<div class="alert alert-block alert-danger ">
+											<button data-dismiss="alert" class="close" type="button">×</button>
+											<h4 class="alert-heading"><i class="fa fa-times-circle"></i> خطا</h4>
+											<p>${error.message}</p>
+										</div>`;
+						$(".container .errors").html($error);
+					} else {
+						$.growl.error({
+							title: "خطا",
+							message: "درخواست شما توسط سرور قبول نشد"
+						});
+					}
+				}
+			});
+		});
+	}
+	protected static runAddAlbumFormSubmitListener() {
+		Add.$addAlbumForm.on("submit", function(e) {
+			e.preventDefault();
+			const form = this as HTMLFormElement;
+			const reset = () => {
+				$(".has-error", this).removeClass("has-error");
+				$(".help-block", this).remove();
+			};
+			$(this).formAjax({
+				url: "contribute/album/add?ajax=1",
+				data: new FormData(form),
+				contentType: false,
+				processData: false,
+				success: (data: any) => {
+					$.growl.notice({
+						title: "موفق",
+						message: "امتیاز فعالیت شما بعد از تایید آلبوم اهدا خواهد شد"
+					});
+					form.reset();
+					reset();
+					$("#addAlbum").modal("hide");
+					$("img", Add.$addAlbumForm).attr("src", $(".btn-remove", Add.$addAlbumForm).data("default"));
+					$("input[name=album]", Add.$form).val(data.album.id);
+					$("input[name=album_name]", Add.$form).val(data.album.title);
+				},
+				error: function(error: any) {
+					reset();
+					if (error.error == "data_duplicate" || error.error == "data_validation") {
+						let $input = $(`[name="${error.input}"]`, form);
 						let $params = {
 							title: "خطا",
 							message: ""

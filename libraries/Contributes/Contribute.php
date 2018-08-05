@@ -27,6 +27,9 @@ class Contribute extends dbObject {
     protected $relations = array(
         "user" => array("hasOne", User::class, "user"),
         "song" => array("hasOne", song::class, "song"),
+        "person" => array("hasOne", person::class, "person"),
+        "album" => array("hasOne", album::class, "album"),
+        "group" => array("hasOne", group::class, "groupID"),
     );
 	public static function getWeeklyUsersLeaderboard($page = 1, $limit = 20): array {
 		$startWeek = $today = date::format("j");

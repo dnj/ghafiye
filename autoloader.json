@@ -524,6 +524,22 @@
 		{
 			"classes":["contributes\\persons\\Add"],
 			"file":"Contributes/Persons/Add.php"
+		},
+		{
+			"classes":["controllers\\contributes\\Group"],
+			"file":"controllers/Contributes/Group.php"
+		},
+		{
+			"classes":["contributes\\groups\\Add"],
+			"file":"Contributes/Groups/Add.php"
+		},
+		{
+			"classes":["controllers\\contributes\\Album"],
+			"file":"controllers/Contributes/Album.php"
+		},
+		{
+			"classes":["contributes\\albums\\Add"],
+			"file":"Contributes/Albums/Add.php"
 		}
 	]
 }
