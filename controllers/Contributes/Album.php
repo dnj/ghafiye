@@ -98,6 +98,7 @@ class Album extends controller {
 		$album->title = $inputs["title"];
 		$album->addTitle($inputs["title"], $inputs["lang"], albumObj\title::draft);
 		$contribute = new Contribute();
+		$contribute->lang = $inputs["lang"];
 		$contribute->title = translator::trans("ghafiye.contributes.title.album.add", array("title" => $inputs["title"]));
 		$contribute->user = authentication::getID();
 		$contribute->album = $album->id;

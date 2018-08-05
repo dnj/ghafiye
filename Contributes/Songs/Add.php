@@ -41,11 +41,13 @@ class add extends Contributes {
 							<div class="col-xs-7' . ($this->isLtr($this->contribute->song->album->lang) ? " ltr" : "") .'">' . $this->contribute->song->album->title() . '</div>
 						</div>';
 				}
-				$html .= '<div class="form-group">
-							<label class="col-xs-5">' . translator::trans("ghafiye.song.genre") . ':</label>
-							<div class="col-xs-7">' . $this->contribute->song->genre->title() . '</div>
-						</div>
-					</div>
+				if ($this->contribute->song->genre) {
+			$html .= '<div class="form-group">
+						<label class="col-xs-5">' . translator::trans("ghafiye.song.genre") . ':</label>
+						<div class="col-xs-7">' . $this->contribute->song->genre->title() . '</div>
+					</div>';
+				}
+			$html .= '</div>
 				</div>
 			</div>
 			<div class="col-sm-8">';

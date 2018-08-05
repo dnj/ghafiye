@@ -17,7 +17,6 @@ $this->the_header();
 		$contributes = $this->getContributes();
 		if ($contributes) {
 			foreach ($contributes as $contribute) {
-				$handler = $contribute->getHandler();
 		?>
 			<div class="row">
 				<div class="col-xs-12">
@@ -48,7 +47,7 @@ $this->the_header();
 										<div class="row">
 											<div class="col-sm-1 col-xs-2">
 												<a href="<?php echo base\url("contribute/{$contribute->id}"); ?>">
-													<img src="<?php echo $contribute->getImage(32, 32); ?>" alt="<?php echo $contribute->song->title(); ?>">
+													<img src="<?php echo $contribute->getImage(32, 32); ?>" alt="<?php echo $contribute->title; ?>">
 												</a>
 											</div>
 											<div class="col-sm-11 col-xs-10">
@@ -92,18 +91,18 @@ $this->the_header();
 					<?php
 					$length = count($this->users);
 					for ($i = 0; $i < $length; $i++) {
-						$user = $this->users[$i];
+						$user = $this->users[$i]->user;
 						$level = $i + 1;
 					?>
 					<li class="list-group-item">
 						<a href="<?php echo base\url("profile/{$user->id}"); ?>">
 							<span class="badge<?php echo $i < 3 ? " badge-{$level}" : ""; ?>"><?php echo $level; ?></span>
 							<div class="user-avatar">
-								<img src="<?php echo $user->getAvatar(32, 32); ?>" class="img-responsive img-circle" ‌title="مشاهده پروفایل">
+								<img src="<?php echo $user->getAvatar(32, 32); ?>" class="img-responsive img-circle tooltips" ‌title="مشاهده پروفایل">
 							</div>
 							<div class="user-name">
 								<p><?php echo $user->getFullName(); ?></p>
-								<small><?php echo $user->points; ?> امتیاز</small>
+								<small><?php echo $this->users[$i]->cpoints; ?> امتیاز</small>
 							</div>
 						</a>
 					</li>
