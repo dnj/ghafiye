@@ -58,14 +58,16 @@ $this->the_header();
 							<?php } ?>
 						</ul>
 					</div>
+					<?php if ($songs) { ?>
 					<div class="panel-footer text-center">
 						<a href="<?php echo base\url("profile/favorites/{$this->user->id}"); ?>" class="btn btn-bloc">بیشتر</a>
 					</div>
+					<?php } ?>
 				</div>
 			</div>
 			<div class="col-sm-7">
 				<div class="contributes">
-				<p class="title">فعالیت ها</p>
+					<p class="title">فعالیت ها</p>
 				<?php
 				$contributes = $this->getContributes();
 				if ($contributes) {
@@ -75,17 +77,17 @@ $this->the_header();
 					<div class="row">
 						<div class="col-xs-12">
 							<div class="contribute-info">
-								<time><?php echo date::relativeTime($contribute->done_at); ?></time>
+								<time class="tooltips" title="<?php echo date::format("Y/m/d H:i", $contribute->done_at); ?>"><?php echo date::relativeTime($contribute->done_at); ?></time>
 								<div class="row">
 									<div class="col-sm-1 col-xs-2">
 										<div class="contributor-avatar">
-											<img src="<?php echo $this->user->getAvatar(32, 32); ?>" class="img-responsive img-circle">
+											<img src="<?php echo $contribute->user->getAvatar(32, 32); ?>" class="img-responsive img-circle" ‌title="مشاهده پروفایل">
 										</div>
 									</div>
-									<div class="col-sm-11 col-xs-10">
+									<div class="col-sm-10 col-xs-7">
 										<div class="contributor-name">
-											<p><?php echo $this->user->getFullName(); ?></p>
-											<span><?php echo $contribute->title; ?></span>
+											<a href="#"><?php echo $contribute->user->getFullName(); ?></a>
+											<a class="link-muted" href="<?php echo base\url("contribute/{$contribute->id}"); ?>"><?php echo $contribute->title; ?></a>
 										</div>
 									</div>
 								</div>
@@ -95,14 +97,15 @@ $this->the_header();
 									<div class="col-sm-11 col-sm-offset-1">
 										<div class="panel panel-default">
 											<div class="panel-body">
+												<span class="badge"><?php echo $contribute->getPoint(); ?></span>
 												<div class="row">
-													<div class="col-sm-2 col-xs-3">
-														<img src="<?php echo $contribute->song->getImage(48, 48); ?>" alt="<?php echo $contribute->song->title(); ?>">
+													<div class="col-sm-1 col-xs-2">
+														<a href="<?php echo base\url("contribute/{$contribute->id}"); ?>">
+															<img src="<?php echo $contribute->getImage(32, 32); ?>" alt="<?php echo $contribute->title; ?>">
+														</a>
 													</div>
-													<div class="col-sm-10 col-xs-9">
-														<?php $singer = $contribute->song->getPerson(person::singer); ?>
-														<p><a target="_blank" href="<?php echo base\url($singer->encodedName().'/'.$contribute->song->encodedTitle()); ?>"><?php echo $contribute->song->title(); ?></a></p>
-														<p><a target="_blank" href="<?php echo base\url($singer->encodedName()); ?>" class="song-singer"><?php echo $singer->name(); ?></a></p>
+													<div class="col-sm-11 col-xs-10">
+														<?php echo $contribute->getPreviewContent(); ?>
 													</div>
 												</div>
 											</div>

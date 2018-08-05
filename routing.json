@@ -190,6 +190,16 @@
 		"method": "get"
 	},
 	{
+		"path": ["profile"],
+		"controller": "controllers\\Profile@contributes",
+		"method": "get"
+	},
+	{
+		"path": ["profile", "favorites"],
+		"controller": "controllers\\Profile@favorites",
+		"method": "get"
+	},
+	{
 		"path": ["userpanel", "songs", "comments"],
 		"controller": "controllers\\panel\\songs\\Comments@search",
 		"method":"get"

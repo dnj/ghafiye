@@ -1,7 +1,8 @@
 <?php
-use \packages\base;
-use \packages\base\{translator, frontend\theme};
-use \packages\userpanel;
+use packages\base;
+use packages\base\{http, translator, frontend\theme};
+use packages\userpanel;
+use packages\ghafiye\authentication;
 ?>
 <!DOCTYPE html>
 <html dir="rtl" lang="<?php echo translator::getShortCodeLang(); ?>">
@@ -33,8 +34,19 @@ use \packages\userpanel;
 					<span>یـه</span>
 				</a>
 				<ul>
-					<li><a href="<?php echo userpanel\url("login"); ?>"><?php echo translator::trans("ghafiye.login"); ?></a></li>
-					<li><a href="<?php echo userpanel\url("register"); ?>"><?php echo translator::trans("ghafiye.register"); ?></a></li>
+					<?php
+					if (authentication::check()) {
+						$user = authentication::getUser();
+					?>
+						<li>
+							<a href="<?php echo base\url("profile"); ?>">
+								<img class="img-circle" src="<?php echo $user->getAvatar(32, 32); ?>" alt="<?php echo $user->getFullName(); ?>">
+							</a>
+						</li>
+					<?php } else { ?>
+					<li><a href="<?php echo userpanel\url("login", array("backTo" => http::$request["uri"])); ?>"><?php echo translator::trans("ghafiye.login"); ?></a></li>
+					<li><a href="<?php echo userpanel\url("register", array("backTo" => http::$request["uri"])); ?>"><?php echo translator::trans("ghafiye.register"); ?></a></li>
+					<?php } ?>
 					<li class="divider"></li>
 					<li><a href="<?php echo base\url("contribute"); ?>"><?php echo translator::trans("ghafiye.contribute"); ?></a></li>
 					<li><a href="<?php echo base\url("community"); ?>"><?php echo translator::trans("ghafiye.community"); ?></a></li>
@@ -51,3 +63,11 @@ use \packages\userpanel;
 		</div>
 	</header>
 	<main class="container">
+		<div class="row">
+			<div class="col-xs-12 errors">
+			<?php
+			if($errorcode = $this->getErrorsHTML()){
+				echo $errorcode;
+			}
+			?></div>
+		</div>

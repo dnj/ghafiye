@@ -4,7 +4,7 @@ import {viewLyric} from "../classes/viewLyric";
 import {blogListView} from "../classes/blogListView";
 import {blogViewPost} from "../classes/blogViewPost";
 import Contributes from "../classes/Contributes";
-import "bootstrap/js/tab";
+import "bootstrap";
 import Contribute from "../classes/Contribute";
 
 declare const packages_ghafiye_isLogin: any;
@@ -39,6 +39,9 @@ export default class Main {
 		});
 		Main._isLogin = packages_ghafiye_isLogin;
 		Contribute.initIfNeeded();
+		$(".tooltips").tooltip({
+			container: "body",
+		});
 	}
 	static get isLogin() {
 		return Main._isLogin;

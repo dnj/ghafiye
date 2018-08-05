@@ -18,6 +18,7 @@ class Add extends Contributes {
 		if ($song = $song->getOne()) {
 			return "<a href=\"" . base\url($song->getSinger()->encodedName($this->contribute->lang) . '/albums/' . $this->contribute->album->encodedTitle($this->contribute->lang)) . "\">{$this->contribute->album->title($this->contribute->lang)}</a>";
 		}
+		return '<a href="#">' . $this->contribute->album->title($this->contribute->lang) . "</a>";
 	}
 	public function buildFrontend(): string {
 		$html = '<div class="row">

@@ -2,7 +2,7 @@
 namespace packages\ghafiye\views\profile;
 use packages\base;
 use packages\base\date;
-use packages\ghafiye\{views\listview, User, song\person};
+use packages\ghafiye\{views\listview, User, song, song\person, contributes\songs, contributes\persons, contributes\groups, contributes\albums};
 
 class Contributes extends listview {
 	public function setUser(User $user) {
@@ -30,24 +30,62 @@ class Contributes extends listview {
 		$userAvatar = $user->getAvatar(32, 32);
 		$items = array();
 		foreach ($this->getContributes() as $contribute) {
-			$singer = $contribute->song->getPerson(person::singer);
 			$item = array(
+				"id" => $contribute->id,
 				"title" => $contribute->title,
 				"done_at" => date::relativeTime($contribute->done_at),
 				"user" => array(
+					"id" => $user->id,
 					"name" => $username,
 					"avatar" => $userAvatar,
 				),
-				"song" => array(
-					"title" => $contribute->song->title(),
-					"avatar" => $contribute->song->getImage(48, 48),
-					"url" => base\url($singer->encodedName() . '/' . $contribute->song->encodedTitle()),
-					"singer" => array(
-						"title" => $singer->name(),
-						"url" => base\url($singer->encodedName()),
-					),
-				),
 			);
+			switch ($contribute->type) {
+				case (songs\Add::class):
+				case (songs\Translate::class):
+				case (songs\Synce::class):
+					$item["image"] = $contribute->song->getImage(48, 48);
+					$item["song"] = array(
+						"title" => $contribute->song->title(),
+						"url" => base\url($contribute->song->getSinger()->encodedName() . '/' . $contribute->song->encodedTitle()),
+						"singer" => array(
+							"title" => $contribute->song->getSinger()->name(),
+							"url" => base\url($contribute->song->getSinger()->encodedName()),
+						),
+					);
+					break;
+				case (persons\Add::class):
+				$item["image"] = $contribute->person->getAvatar(48, 48);
+					$item["person"] = array(
+						"name" => $contribute->person->name($contribute->lang),
+						"url" => base\url($contribute->person->encodedName()),
+					);
+					break;
+				case (groups\Add::class):
+					$item["image"] = $contribute->group->getAvatar(48, 48);
+					$item["group"] = array(
+						"name" => $contribute->group->name($contribute->lang),
+						"url" => base\url($contribute->group->encodedName()),
+					);
+					break;
+				case (albums\Add::class):
+					$item["image"] = $contribute->album->getImage(48, 48);
+					$song = new song();
+					$song->where("album", $contribute->album->id);
+					$song->where("status", song::publish);
+					if ($song = $song->getOne()) {
+						$item["group"] = array(
+							"name" => $contribute->album->title($contribute->lang),
+							"url" => base\url($song->getSinger()->encodedName($contribute->lang) . '/albums/' . $contribute->album->encodedTitle($contribute->lang)),
+						);
+					} else {
+						$item["group"] = array(
+							"name" => $contribute->album->title($contribute->lang),
+							"url" => "#",
+						);
+					}
+					break;
+			}
 			$items[] = $item;
 		}
 		$export["data"]["items"] = $items;

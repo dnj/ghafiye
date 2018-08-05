@@ -1,23 +1,37 @@
 import * as $ from "jquery";
-import { AjaxRequest } from "webuilder";
+import { AjaxRequest, Router } from "webuilder";
 import Songs from "./Contributes/Songs";
 
 interface IContribute {
+	id: number;
 	title: string;
 	done_at: string;
+	image: string;
 	user: {
+		id: number;
 		name: string;
 		avatar: string;
 	};
-	song: {
+	song?: {
 		title: string;
-		avatar: string;
 		url: string;
 		singer: {
 			title: string;
 			url: string;
 		}
-	}
+	};
+	person?: {
+		name: string;
+		url: string;
+	};
+	group?: {
+		name: string;
+		url: string;
+	};
+	album?: {
+		name: string;
+		url: string;
+	};
 }
 
 export default class Contributes {
@@ -74,21 +88,23 @@ export default class Contributes {
 			})
 		});
 	}
-	protected static appendToContributes(item: IContribute) {
-		const html = `<div class="row">
+	protected static appendToContributes(contribute: IContribute) {
+		let html = `<div class="row">
 			<div class="col-xs-12">
 				<div class="contribute-info">
-					<time>${item.done_at}</time>
+					<time>${contribute.done_at}</time>
 					<div class="row">
 						<div class="col-sm-1 col-xs-2">
 							<div class="contributor-avatar">
-								<img src="${item.user.avatar}" class="img-responsive img-circle">
+								<a href="${Router.url("profile/" + contribute.user.id)}">
+									<img src="${contribute.user.avatar}" class="img-responsive img-circle">
+								</a>
 							</div>
 						</div>
 						<div class="col-sm-11 col-xs-10">
 							<div class="contributor-name">
-								<p>${item.user.name}</p>
-								<span>${item.title}</span>
+								<a href="${Router.url("profile/" + contribute.user.id)}">${contribute.user.name}</a>
+								<a class="link-muted" href="${Router.url("contribute" + contribute.id)}">${contribute.title}</a>
 							</div>
 						</div>
 					</div>
@@ -100,12 +116,20 @@ export default class Contributes {
 								<div class="panel-body">
 									<div class="row">
 										<div class="col-sm-2 col-xs-3">
-											<img src="${item.song.avatar}" alt="${item.song.title}">
+											<img src="${contribute.image}" alt="${contribute.title}">
 										</div>
-										<div class="col-sm-10 col-xs-9">
-											<p><a target="_blank" href="${item.song.url}">${item.song.title}</a></p>
-											<p><a target="_blank" href="${item.song.singer.url}" class="song-singer">${item.song.singer.title}</a></p>
-										</div>
+										<div class="col-sm-10 col-xs-9">`;
+											if (contribute.hasOwnProperty("song")) {
+												html +=	`<a target="_blank" href="${contribute.song.url}">${contribute.song.title}</a>
+												<a target="_blank" href="${contribute.song.singer.url}" class="song-singer">${contribute.song.singer.title}</a>`;
+											} else if (contribute.hasOwnProperty("person")) {
+												html += `<a href="${contribute.person.url}">${contribute.person.name}</a>`;
+											} else if (contribute.hasOwnProperty("group")) {
+												html += `<a href="${contribute.group.url}">${contribute.group.name}</a>`;
+											} else if (contribute.hasOwnProperty("album")) {
+												html += `<a href="${contribute.album.url}">${contribute.album.name}</a>`;
+											}
+								html += `</div>
 									</div>
 								</div>
 							</div>

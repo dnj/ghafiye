@@ -111,6 +111,77 @@ body{
 	> main{
 		min-height: 300px;
 	}
+
+	.ui-autocomplete {
+		background: #fff;
+		padding: 8px 0px;
+		border: 1px solid rgba(0, 0, 0, 0.2);
+		border-radius: 8px;
+		box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+		list-style: none;
+		margin: 12px 0;
+		z-index: 105000;
+		height: 280px;
+		overflow: hidden;
+		overflow-y: auto;
+		li.ui-menu-item {
+			padding: 10px 20px;
+			font-size: 18px;
+			line-height: 16px;
+			font-family: yekan;
+			&:hover, &:focus {
+				cursor: pointer;
+				color: #FFF;
+				background: #0097CF;
+				border: none;
+				font-weight: normal;
+				.ui-menu-item-wrapper.ui-state-active {
+					color: #FFF;
+				}
+			}
+		}
+		li.ui-state-focus {
+			padding: 10px 20px;
+			font-size: 18px;
+			line-height: 16px;
+			font-family: Tahoma;
+			word-break: break-all;
+			max-width: 100%;
+		}
+	}
+	.ui-autocomplete.ui-menu {
+		.ui-state-focus {
+			margin: 0;
+		}
+		.ui-state-active {
+			margin: 0;
+		}
+		.ui-menu-item {
+			strong {
+				display: block;
+				line-height: 14px;
+				font-family: yekan;
+				font-size: 16px;
+				font-weight: 700;
+			}
+			small {
+				display: block;
+				font-family: IRANSans;
+				line-height: 14px;
+				font-size: 11px;
+			}
+			.ui-menu-item-wrapper.ui-state-active {
+				background: none;
+				border: none;
+				color: #000;
+			}
+		}
+	}
+	.btn-bricky {
+		background-color: #c83a2a;
+		border-color: #b33426;
+		color: #fff;
+	}
 }
 .form-group{
 	label.control-label{

@@ -58,16 +58,6 @@ $this->the_header();
 									<?php echo translator::trans("ghafiye.contribute.add.song"); ?>
 								</a>
 							</li>
-							<li class="list-group-item">
-								<a href="<?php echo base\url("singer/add"); ?>">
-									<?php echo translator::trans("ghafiye.contribute.add.singer"); ?>
-								</a>
-							</li>
-							<li class="list-group-item">
-								<a href="<?php echo base\url("group/add"); ?>">
-									<?php echo translator::trans("ghafiye.contribute.add.group"); ?>
-								</a>
-							</li>
 						</ul>
 					</div>
 				</div>
@@ -91,7 +81,7 @@ $this->the_header();
 					<?php
 					$length = count($this->users);
 					for ($i = 0; $i < $length; $i++) {
-						$user = $this->users[$i];
+						$user = $this->users[$i]->user;
 						$level = $i + 1;
 					?>
 					<li class="list-group-item<?php $this->user->id == $user->id ? " active" : ""; ?>">
@@ -102,7 +92,7 @@ $this->the_header();
 							</div>
 							<div class="user-name">
 								<p><?php echo $user->getFullName(); ?></p>
-								<small><?php echo translator::trans("ghafiye.contribute.point", array("point" => $user->points)) ?></small>
+								<small><?php echo translator::trans("ghafiye.contribute.point", array("point" => $this->users[$i]->cpoints)) ?></small>
 							</div>
 						</a>
 					</li>

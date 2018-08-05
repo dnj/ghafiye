@@ -6,11 +6,11 @@ $this->the_header();
 ?>
 <div class="row">
 	<div class="col-sm-8">
-		<div class="alert alert-info">
+		<div class="alert alert-warning">
 			<button data-dismiss="alert" class="close" type="button">&times;</button>
 			<h4 class="alert-heading"><i class="fa fa-headphones"></i> به جامعه آماری قافیه خوش آمدید </h4>
-			<p class="text-muted">شما آثار و اشخاص را معرفی می کنید، شما ترانه ها را ترجمه می کنید و در نهایت خودتان از آن ها استفاده می کنید.</p>
-			<a href="<?php echo base\url("contribute");  ?>" class="btn btn-primary">مشارکت</a>
+			<p class="text-muted">متن آهنگ ها را با دیگران به اشتراک بگذارید، متن آهنگ ها را ترجمه کنید و این لذت را با دیگران سهیم شوید.</p>
+			<a href="<?php echo base\url("contribute");  ?>" class="btn btn-primary">مشارکت در لیگ قافیه</a>
 		</div>
 		<div class="contributes">
 		<?php
@@ -30,7 +30,7 @@ $this->the_header();
 									</a>
 								</div>
 							</div>
-							<div class="col-sm-11 col-xs-8">
+							<div class="col-sm-10 col-xs-7">
 								<div class="contributor-name">
 									<a href="<?php echo base\url("profile/{$contribute->user->id}"); ?>"><?php echo $contribute->user->getFullName(); ?></a>
 									<a class="link-muted" href="<?php echo base\url("contribute/{$contribute->id}"); ?>"><?php echo $contribute->title; ?></a>

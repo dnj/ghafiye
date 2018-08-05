@@ -1,10 +1,22 @@
 <?php
 namespace packages\ghafiye\controllers;
+use packages\base;
+use packages\userpanel;
 use packages\base\{response, NotFound, db};
-use packages\ghafiye\{view, views, controller, User, Contribute, song};
+use packages\ghafiye\{view, views, controller, User, Contribute, song, authentication};
 
 class Profile extends controller {
 	public function contributes($data): response {
+		if (!isset($data["user"])) {
+			$data = array();
+			if (authentication::check()) {
+				$data["user"] = authentication::getID();
+			} else {
+				$this->response->Go(userpanel\url("login", array("backTo" => base\url("profile"))));
+				$this->response->setStatus(true);
+				return $this->response;
+			}
+		}
 		if (!$user = User::byId($data["user"])) {
 			throw new NotFound();
 		}
@@ -27,6 +39,15 @@ class Profile extends controller {
 		return $this->response;
 	}
 	public function favorites($data) {
+		if (!isset($data["user"])) {
+			if (authentication::check()) {
+				$data["user"] = authentication::getID();
+			} else {
+				$this->response->Go(userpanel\url("login", array("backTo" => base\url("profile"))));
+				$this->response->setStatus(true);
+				return $this->response;
+			}
+		}
 		if (!$user = User::byId($data["user"])) {
 			throw new NotFound();
 		}

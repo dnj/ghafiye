@@ -19,6 +19,7 @@ class view extends lyricsView {
 			$this->singer->name($this->getLyricsLanguage()),
 			$this->song->title($this->getLyricsLanguage())
 		));
+		$this->addBodyClass('article');
 		$this->addBodyClass('lyric');
 		$this->addMetaTags();
 		$this->comments = $this->getComments();

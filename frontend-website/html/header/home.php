@@ -2,6 +2,7 @@
 use \packages\base;
 use \packages\base\{translator, frontend\theme};
 use \packages\userpanel;
+use \packages\ghafiye\authentication;
 ?>
 <!DOCTYPE html>
 <html dir="rtl" lang="<?php echo translator::getShortCodeLang(); ?>">
@@ -34,9 +35,14 @@ use \packages\userpanel;
 					<span>یـه</span>
 				</a>
 				<ul>
-					<li><a href="<?php echo userpanel\url("login"); ?>"><?php echo translator::trans("ghafiye.login"); ?></a></li>
-					<li><a href="<?php echo userpanel\url("register"); ?>"><?php echo translator::trans("ghafiye.register"); ?></a></li>
+					<?php if (authentication::check()) { ?>
+						<li><a href="<?php echo base\url("contribute"); ?>"><?php echo translator::trans("ghafiye.contribute"); ?></a></li>
+					<?php } else { ?>
+						<li><a href="<?php echo userpanel\url("login"); ?>"><?php echo translator::trans("ghafiye.login"); ?></a></li>
+						<li><a href="<?php echo userpanel\url("register"); ?>"><?php echo translator::trans("ghafiye.register"); ?></a></li>
+					<?php } ?>
 					<li class="divider"></li>
+					<li><a href="<?php echo base\url("community"); ?>"><?php echo translator::trans("ghafiye.community"); ?></a></li>
 					<li><a href="<?php echo base\url('explore'); ?>"><?php echo translator::trans('toplyrics'); ?></a></li>
 				</ul>
 			</nav>
