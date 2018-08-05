@@ -1,7 +1,7 @@
 <?php
 namespace packages\ghafiye\controllers\contributes;
 use packages\userpanel\controller;
-use packages\base\{db, date, translator, IO\file, inputValidation, image, packages, NotFound, view\error};
+use packages\base\{db, date, translator, IO\file, inputValidation, image, packages, NotFound, view\error, db\parenthesis};
 use packages\ghafiye\{view, views, authentication, song as songObj, album, person, group, Contribute, genre, contributes\songs, song\lyric, song\title, contribute\Lyric as ContributeLyric};
 
 class Song extends controller {
@@ -106,7 +106,15 @@ class Song extends controller {
 		$inputs = $this->checkinputs($inputsRules);
 		if (isset($inputs["person"])) {
 			if ($inputs["person"]) {
-				if (!person::byId($inputs["person"])) {
+				db::join("ghafiye_contributes", "ghafiye_contributes.person=ghafiye_persons.id", "INNER");
+				db::join("userpanel_users", "ghafiye_contributes.user=userpanel_users.id", "INNER");
+				$person = new person();
+				$person->where("ghafiye_persons.status", person::accepted);
+				$parenthesis = new parenthesis();
+				$parenthesis->orWhere("userpanel_users.id", authentication::getID());
+				$parenthesis->orWhere("ghafiye_contributes.person", $inputs["person"]);
+				$person->orWhere($parenthesis);
+				if (!$person->has()) {
 					throw new inputValidation("person");
 				}
 			} else {
@@ -170,7 +178,7 @@ class Song extends controller {
 					break;
 			}
 			$image->saveToFile($tmpfile);
-			$inputs["image"] = "/storage/public/songs/" . $tmpfile->md5() . $type_name;
+			$inputs["image"] = "storage/public/songs/" . $tmpfile->md5() . $type_name;
 			$image = new file\local(packages::package("ghafiye")->getFilePath($inputs["image"]));
 			$image->getDirectory()->make(true);
 			$tmpfile->copyTo($image);
@@ -192,8 +200,9 @@ class Song extends controller {
 		}
 		$song->release_at = date::time();
 		$song->duration = 0;
+		$song->status = songObj::draft;
 		$song->save();
-		$song->setTitle($inputs["title"], $inputs["lang"]);
+		$song->addTitle($inputs["title"], $inputs["lang"], songObj\title::draft);
 		if (isset($inputs["person"])) {
 			$person = new songObj\person();
 			$person->song = $song->id;
@@ -209,6 +218,7 @@ class Song extends controller {
 			$lyric->lang = $song->lang;
 			$lyric->time = 0;
 			$lyric->text = $lyr;
+			$lyric->status = lyric::draft;
 			$lyric->save();
 		}
 		

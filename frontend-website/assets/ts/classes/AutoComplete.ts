@@ -15,9 +15,13 @@ export default class AutoComplete {
 		this.$input = $element.parents('form').find(`input[name='${input}']`);
 	}
 	public persons() {
-		this.runAutocomplete("userpanel/persons", function( ul:any, item:any ) {
+		this.runAutocomplete("contribute/person/search", function( ul:any, item:any ) {
+			let html = "<strong>" +item.name+ "</strong>";
+			if (item.status === 2) {
+				html += "<small>این شخص توسط شما اضافه شده و هنوز تایید نشده است</small>";
+			}
 			return $( "<li>" )
-				.append( "<strong>" +item.name+ "</strong>" )
+				.append( html )
 				.appendTo( ul );
 		}, (event, ui) => {
 			this.$element.val(ui.item.name);

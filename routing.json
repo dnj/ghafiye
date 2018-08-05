@@ -300,6 +300,16 @@
 		"method": "post"
 	},
 	{
+		"path": ["contribute", "person", "search"],
+		"controller": "controllers\\contributes\\Person@search",
+		"method": "get"
+	},
+	{
+		"path": ["contribute", "person", "add"],
+		"controller": "controllers\\contributes\\Person@add",
+		"method": "post"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

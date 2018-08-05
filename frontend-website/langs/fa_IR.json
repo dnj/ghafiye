@@ -192,6 +192,8 @@
 		"ghafiye.singer.avatar": "تصویر",
 		"ghafiye.singer.name": "نام",
 		"ghafiye.singer.lang": "زبان",
-		"ghafiye.singer.gender": "جنسیت"
+		"ghafiye.singer.gender": "جنسیت",
+		"ghafiye.gender.men": "مذکر",
+		"ghafiye.gender.women": "مونث"
 	}
 }

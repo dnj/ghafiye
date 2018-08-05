@@ -516,6 +516,14 @@
 		{
 			"classes":["song\\Translate"],
 			"file":"libraries/song/Translate.php"
+		},
+		{
+			"classes":["controllers\\contributes\\Person"],
+			"file":"controllers/Contributes/Person.php"
+		},
+		{
+			"classes":["contributes\\persons\\Add"],
+			"file":"Contributes/Persons/Add.php"
 		}
 	]
 }

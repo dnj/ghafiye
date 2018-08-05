@@ -44,7 +44,7 @@ $this->the_header();
 									));
 									?>
 									<p><small>نام شخص را در فیلد بالا وارد و آن را در بین نتایج انتخاب کنید</small></p>
-									<p><small>در صورتی که شخص مد نظر شما در بین نتایج نیست، میتوانید از <a href="#">اینجا</a> آن را اضافه کنید</small></p>
+									<p><small>در صورتی که شخص مد نظر شما در بین نتایج نیست، میتوانید از <a href="#addSinger" data-toggle="modal">اینجا</a> آن را اضافه کنید</small></p>
 									<p><small>اگر بیشتر از یک خواننده در این آهنگ شرکت کرده اند، از فیلد گروه استفاده کنید</small></p>
 								</div>
 							</div>
@@ -127,6 +127,61 @@ $this->the_header();
 						</div>
 					</div>
 				</form>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="modal fade" id="addSinger" tabindex="-1" data-show="true" role="dialog">
+	<div class="modal-dialog modal-md" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title"><?php echo translator::trans("ghafiye.contribute.add.singer"); ?></h4>
+			</div>
+			<div class="modal-body">
+				<form id="addSingerForm" action="#" method="post">
+					<div class="row">
+						<div class="col-sm-4 col-xs-12">
+							<label class="control-label"><?php echo translator::trans("ghafiye.singer.avatar"); ?></label>
+							<div class="fileupload fileupload-new" data-provides="fileupload">
+								<div class="form-group">
+									<div class="user-image avatarPreview">
+										<img src="<?php echo $this->getImage(); ?>" class="preview img-responsive">
+										<input name="avatar" type="file">
+										<div class="button-group">
+											<button type="button" class="btn btn-teal btn-sm btn-upload"><i class="fa fa-pencil"></i></button>
+											<button type="button" class="btn btn-bricky btn-sm btn-remove" data-default="<?php echo $this->getImage(); ?>"><i class="fa fa-times"></i></button>
+										</div>
+									</div>
+								</div>
+							</div>	
+						</div>
+						<div class="col-sm-8 col-xs-12">
+							<?php
+							$this->createField(array(
+								"name" => "name",
+								"label" => translator::trans("ghafiye.singer.name"),
+							));
+							$this->createField(array(
+								"type" => "select",
+								"name" => "lang",
+								"label" => translator::trans("ghafiye.singer.lang"),
+								"options" => $this->getLangsForSelect(),
+							));
+							$this->createField(array(
+								"type" => "select",
+								"name" => "gender",
+								"label" => translator::trans("ghafiye.singer.gender"),
+								"options" => $this->getGendesFroSelect(),
+							));
+							?>
+						</div>
+					</div>
+				</form>
+			</div>
+			<div class="modal-footer">
+				<button type="submit" form="addSingerForm" class="btn btn-success"><?php echo translator::trans("ghafiye.add"); ?></button>
+				<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans("ghafiye.cancel"); ?></button>
 			</div>
 		</div>
 	</div>

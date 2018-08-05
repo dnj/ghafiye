@@ -2,7 +2,7 @@
 namespace themes\musixmatch\views\contributes\songs;
 use packages\base\{translator, packages, options};
 use themes\musixmatch\{viewTrait, views\formTrait};
-use packages\ghafiye\views\contributes\songs\Add as parentView;
+use packages\ghafiye\{views\contributes\songs\Add as parentView, person};
 
 class Add extends parentView {
 	use viewTrait, formTrait;
@@ -51,6 +51,20 @@ class Add extends parentView {
 	protected function getImage() {
 		return $this->image;
 	}
-	protected function handleFormErrors() {
+	protected function getGendesFroSelect() {
+		return array(
+			array(
+				"title" => translator::trans("ghafiye.choose"),
+				"value" => "",
+			),
+			array(
+				"title" => translator::trans("ghafiye.gender.men"),
+				"value" => person::men,
+			),
+			array(
+				"title" => translator::trans("ghafiye.gender.women"),
+				"value" => person::women,
+			),
+		);
 	}
 }

@@ -6,6 +6,9 @@ class person extends dbObject{
 	use name, imageTrait;
 	const men = 1;
 	const women = -1;
+	const accepted = 1;
+	const waitForAccept = 2;
+	const rejected = 3;
 	protected $dbTable = "ghafiye_persons";
 	protected $primaryKey = "id";
 	protected $dbFields = array(
@@ -18,7 +21,8 @@ class person extends dbObject{
 		'name_suffix' => array('type' => 'text'),
 		'gender' => array('type' => 'int'),
 		'avatar' => array('type' => 'text'),
-		'cover' => array('type' => 'text')
+		'cover' => array('type' => 'text'),
+		"status" => array("type" => "int", "required" => true),
 	);
     protected $relations = array(
 		'user' => array("hasOne", "packages\\userpanel\\user", "user"),

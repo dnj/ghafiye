@@ -57,11 +57,12 @@ trait name{
 	public static function decodeName($name){
 		return str_replace('-', ' ',$name);
 	}
-	public function addName($nametxt, $lang){
+	public function addName(string $nametxt, string $lang, int $status){
 		$name = new $this->relations['names'][1]();
 		$name->person = $this->id;
 		$name->name = $nametxt;
 		$name->lang = $lang;
+		$name->status = $status;
 		$name->save();
 	}
 }
