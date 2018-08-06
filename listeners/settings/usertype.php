@@ -43,6 +43,11 @@ class usertype{
 			"songs_lyrics_descriptions_search",
 			"songs_lyrics_descriptions_edit",
 			"songs_lyrics_descriptions_delete",
+
+			"contributes_search",
+			"contributes_view",
+			"contributes_edit",
+			"contributes_delete",
 		);
 		foreach($permissions as $permission){
 			permissions::add('ghafiye_'.$permission);

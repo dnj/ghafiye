@@ -340,6 +340,11 @@
 		"method": "post"
 	},
 	{
+		"path": ["userpanel", "contributes"],
+		"controller": "controllers\\panel\\Contributes@search",
+		"method": "get"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

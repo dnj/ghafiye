@@ -540,6 +540,14 @@
 		{
 			"classes":["contributes\\albums\\Add"],
 			"file":"Contributes/Albums/Add.php"
+		},
+		{
+			"classes":["controllers\\panel\\Contributes"],
+			"file":"controllers/panel/Contributes.php"
+		},
+		{
+			"classes":["views\\panel\\contributes\\Search"],
+			"file":"views/panel/Contributes/Search.php"
 		}
 	]
 }

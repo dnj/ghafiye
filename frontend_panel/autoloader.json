@@ -115,6 +115,10 @@
 		{
 			"classes":["views\\ghafiye\\songs\\lyrics\\descriptions\\Delete"],
 			"file":"views/songs/Lyrics/Descriptions/Delete.php"
+		},
+		{
+			"classes":["views\\ghafiye\\contributes\\Search"],
+			"file":"views/Contributes/Search.php"
 		}
 	]
 }

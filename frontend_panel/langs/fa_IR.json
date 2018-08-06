@@ -253,6 +253,21 @@
 		"edit": "ویرایش",
 		"ghafiye.panel.songs.lyrics.descriptions.delete": "حذف توضیح",
 		"ghafiye.panel.songs.lyrics.descriptions.delete.notice": "در حذف توضیحات دقت کنید. این عملیات بدون بازگشت است .",
-		"ghafiye.panel.songs.comments.replyTo": "در پاسخ به"
+		"ghafiye.panel.songs.comments.replyTo": "در پاسخ به",
+		"ghafiye.panel.contributes": "مشارکت ها",
+		"usertype.permissions.ghafiye_contributes_search": "جستجوی مشارکت ها",
+		"usertype.permissions.ghafiye_contributes_view": "ویرایش مشارکت ها",
+		"usertype.permissions.ghafiye_contributes_edit": "ویرایش مشارکت ها",
+		"usertype.permissions.ghafiye_contributes_delete": "حذف مشارکت ها",
+		"ghafiye.view": "مشاهده",
+		"ghafiye.panel.contributes.title": "عنوان",
+		"ghafiye.panel.contributes.user": "کاربر",
+		"ghafiye.panel.contributes.song": "آهنگ",
+		"ghafiye.panel.contributes.doneAt": "زمان انجام",
+		"ghafiye.panel.contributes.status": "وضعیت",
+		"ghafiye.panel.contributes.status.accepted": "تایید شده",
+		"ghafiye.panel.contributes.status.waitForAccept": "منتظر تایید",
+		"ghafiye.panel.contributes.status.rejected": "رد شده",
+		"error.ghafiye.panel.contributes.empty": "مشارکتی برای نمایش پیدا نشد."
 	}
 }
