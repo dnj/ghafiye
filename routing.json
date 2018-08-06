@@ -345,6 +345,16 @@
 		"method": "get"
 	},
 	{
+		"path": ["userpanel", "contributes", "accept", {"type" : "dynamic", "name" : "contribute", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\Contributes@edit",
+		"method": "get"
+	},
+	{
+		"path": ["userpanel", "contributes", "accept", {"type" : "dynamic", "name" : "contribute", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\Contributes@accept",
+		"method": "post"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

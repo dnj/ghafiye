@@ -125,6 +125,7 @@ class Group extends controller {
 		$contribute = new Contribute();
 		$contribute->title = translator::trans("ghafiye.contributes.title.group.add", array("title" => $inputs["title"]));
 		$contribute->user = authentication::getID();
+		$contribute->lang = $inputs["lang"];
 		$contribute->groupID = $group->id;
 		$contribute->type = groups\Add::class;
 		$contribute->point = (new groups\Add)->getPoint();

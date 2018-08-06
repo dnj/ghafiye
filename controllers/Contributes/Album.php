@@ -101,6 +101,7 @@ class Album extends controller {
 		$contribute->lang = $inputs["lang"];
 		$contribute->title = translator::trans("ghafiye.contributes.title.album.add", array("title" => $inputs["title"]));
 		$contribute->user = authentication::getID();
+		$contribute->lang = $inputs["lang"];
 		$contribute->album = $album->id;
 		$contribute->type = albums\Add::class;
 		$contribute->point = (new albums\Add)->getPoint();

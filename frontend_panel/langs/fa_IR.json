@@ -260,6 +260,7 @@
 		"usertype.permissions.ghafiye_contributes_edit": "ویرایش مشارکت ها",
 		"usertype.permissions.ghafiye_contributes_delete": "حذف مشارکت ها",
 		"ghafiye.view": "مشاهده",
+		"ghafiye.panel.contributes.id": "شناسه",
 		"ghafiye.panel.contributes.title": "عنوان",
 		"ghafiye.panel.contributes.user": "کاربر",
 		"ghafiye.panel.contributes.song": "آهنگ",
@@ -268,6 +269,7 @@
 		"ghafiye.panel.contributes.status.accepted": "تایید شده",
 		"ghafiye.panel.contributes.status.waitForAccept": "منتظر تایید",
 		"ghafiye.panel.contributes.status.rejected": "رد شده",
-		"error.ghafiye.panel.contributes.empty": "مشارکتی برای نمایش پیدا نشد."
+		"error.ghafiye.panel.contributes.empty": "مشارکتی برای نمایش پیدا نشد.",
+		"ghafiye.panel.contributes.accept": "پذیرفتن مشارکت"
 	}
 }

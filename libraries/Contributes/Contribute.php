@@ -17,7 +17,7 @@ class Contribute extends dbObject {
 		"person" => array("type" => "int"),
 		"album" => array("type" => "int"),
 		"groupID" => array("type" => "int"),
-		"lang" => array("type" => "text"),
+		"lang" => array("type" => "text", "required" => true),
 		"done_at" => array("type" => "int", "required" => true),
 		"type" => array("type" => "text", "required" => true),
 		"parameters" => array("type" => "text"),
@@ -68,6 +68,9 @@ class Contribute extends dbObject {
 	}
 	public function buildFrontend(): string {
 		return $this->getHandler()->buildFrontend();
+	}
+	public function accepted() {
+		return $this->getHandler()->onAccept();
 	}
 	protected function preLoad(array $data): array {
 		if (!isset($data["status"])) {

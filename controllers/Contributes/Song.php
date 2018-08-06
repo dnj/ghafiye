@@ -238,6 +238,7 @@ class Song extends controller {
 		$contribute->title = translator::trans("ghafiye.contributes.title.songs.add", array("title" => $inputs["title"]));
 		$contribute->user = authentication::getID();
 		$contribute->song = $song->id;
+		$contribute->lang = $song->lang;
 		$contribute->type = songs\Add::class;
 		$contribute->point = (new songs\Add)->getPoint();
 		$contribute->save();

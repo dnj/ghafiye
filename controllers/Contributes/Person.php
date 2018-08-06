@@ -126,6 +126,7 @@ class Person extends controller {
 		$contribute = new Contribute();
 		$contribute->title = translator::trans("ghafiye.contributes.title.singer.add", array("name" => $inputs["name"]));
 		$contribute->user = authentication::getID();
+		$contribute->lang = $inputs["lang"];
 		$contribute->person = $person->id;
 		$contribute->type = persons\Add::class;
 		$contribute->point = (new persons\Add)->getPoint();

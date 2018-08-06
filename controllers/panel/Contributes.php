@@ -1,6 +1,7 @@
 <?php
 namespace packages\ghafiye\controllers\panel;
-use packages\base\{response, db};
+use packages\userpanel;
+use packages\base\{response, db, NotFound};
 use packages\userpanel\controller;
 use packages\ghafiye\{view, views, authentication, authorization, Contribute};
 
@@ -67,6 +68,50 @@ class Contributes extends controller {
 		$view->setDataList($contributes);
 		$view->setPaginate($this->page, db::totalCount(), $this->items_per_page);
 		$this->response->setStatus(true);
+		return $this->response;
+	}
+	public function edit($data): response {
+		authorization::haveOrFail("contributes_edit");
+		$types = authorization::childrenTypes();
+		$contribute = new Contribute();
+		db::join("userpanel_users", "userpanel_users.id=ghafiye_contributes.user", "INNER");
+		if ($types) {
+			$contribute->where("userpanel_users.type", $types, "in");
+		} else {
+			$contribute->where("userpanel_users.id", authentication::getID());
+		}
+		$contribute->where("ghafiye_contributes.id", $data["contribute"]);
+		$contribute->where("ghafiye_contributes.status", Contribute::waitForAccept);
+		if (!$contribute = $contribute->getOne("ghafiye_contributes.*")) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\panel\contributes\Edit::class);
+		$this->response->setView($view);
+		$view->setContribute($contribute);
+		$this->response->setStatus(true);
+		return $this->response;
+	}
+	public function accept($data) {
+		authorization::haveOrFail("contributes_edit");
+		$types = authorization::childrenTypes();
+		$contribute = new Contribute();
+		db::join("userpanel_users", "userpanel_users.id=ghafiye_contributes.user", "INNER");
+		if ($types) {
+			$contribute->where("userpanel_users.type", $types, "in");
+		} else {
+			$contribute->where("userpanel_users.id", authentication::getID());
+		}
+		$contribute->where("ghafiye_contributes.id", $data["contribute"]);
+		$contribute->where("ghafiye_contributes.status", Contribute::waitForAccept);
+		if (!$contribute = $contribute->getOne("ghafiye_contributes.*")) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\panel\contributes\Edit::class);
+		$this->response->setView($view);
+		$view->setContribute($contribute);
+		$contribute->accepted();
+		$this->response->setStatus(true);
+		$this->response->Go(userpanel\url("contributes"));
 		return $this->response;
 	}
 }

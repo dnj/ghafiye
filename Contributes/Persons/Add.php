@@ -1,7 +1,8 @@
 <?php
 namespace packages\ghafiye\contributes\persons;
 use packages\base;
-use packages\ghafiye\Contributes;
+use packages\base\db;
+use packages\ghafiye\{Contributes, person, Contribute};
 
 class Add extends Contributes {
 	protected $point = 10;
@@ -17,5 +18,18 @@ class Add extends Contributes {
 	public function buildFrontend(): string {
 		$html = "";
 		return $html;
+	}
+	public function onAccept() {
+		$this->contribute->person->status = person::accepted;
+		$this->contribute->person->save();
+		db::where("ghafiye_persons_names.person", $this->contribute->person->id);
+		db::where("ghafiye_persons_names.lang", $this->contribute->lang);
+		db::update("ghafiye_persons_names", array(
+			"status" => person\name::published,
+		));
+		$this->contribute->status = Contribute::accepted;
+		$this->contribute->save();
+		$this->contribute->user->points += $this->point;
+		$this->contribute->user->save();
 	}
 }

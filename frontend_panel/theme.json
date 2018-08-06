@@ -175,6 +175,11 @@
 			"name": "\\themes\\clipone\\views\\ghafiye\\contributes\\Search",
 			"parent": "\\packages\\ghafiye\\views\\panel\\contributes\\Search",
 			"file": "html/Contributes/search.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\contributes\\Accept",
+			"parent": "\\packages\\ghafiye\\views\\panel\\contributes\\Edit",
+			"file": "html/Contributes/accept.php"
 		}
 	]
 }

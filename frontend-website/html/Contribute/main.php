@@ -98,6 +98,7 @@ $this->the_header();
 		<div class="alert alert-warning">
 			<?php echo translator::trans("ghafiye.contribute.allert"); ?>
 		</div>
+		<?php if ($this->users) { ?>
 		<div class="panel panel-white">
 			<div class="panel-heading">
 				<div class="panel-icon">
@@ -132,6 +133,7 @@ $this->the_header();
 				</ul>
 			</div>
 		</div>
+		<?php } ?>
 	</div>
 </div>
 <?php

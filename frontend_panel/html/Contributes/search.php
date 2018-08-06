@@ -98,7 +98,7 @@ $this->the_header();
 				array(
 					"name" => "id",
 					"type" => "number",
-					"label" => translator::trans("ghafiye.panel.song.id"),
+					"label" => translator::trans("ghafiye.panel.contributes.id"),
 					"ltr" => true
 				),
 				array(

@@ -67,18 +67,11 @@ $this->the_header();
 					<button type="button" class="btn btn-default btn-block btn-load-more" data-user="<?php echo $this->user->id; ?>">بیشتر</button>
 				</div>
 			</div>
-		<?php } else { ?>
-		<div class="row">
-			<div class="col-xs-12">
-				<div class="alert alert-warning" role="alert">
-					<p>بدون فعالیت</p>
-				</div>
-			</div>
-		</div>
 		<?php } ?>
 		</div>
 	</div>
 	<div class="col-sm-4">
+	<?php if ($this->users) { ?>
 		<div class="panel panel-default">
 			<div class="panel-heading">
 				مشارکت دهندگان برتر هفته
@@ -110,6 +103,7 @@ $this->the_header();
 				</ul>
 			</div>
 		</div>
+	<?php } ?>
 	</div>
 </div>
 <?php

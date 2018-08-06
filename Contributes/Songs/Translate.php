@@ -2,7 +2,7 @@
 namespace packages\ghafiye\contributes\songs;
 use packages\base;
 use packages\base\translator;
-use packages\ghafiye\{Contributes, contribute\Lyric, song};
+use packages\ghafiye\{Contributes, contribute\Lyric, song, Contribute};
 
 class Translate extends Contributes {
 	protected $point = 10;
@@ -88,7 +88,12 @@ class Translate extends Contributes {
 		}
 		foreach ($this->lyrics as $lyric) {
 			if ($lyric->parent == $id) {
-				return '<ins class="lyric'. ($translteILtr ? " ltr" : "") . '">' . $lyric->text . '</ins>';
+				$html = "";
+				if ($lyric->old_text) {
+					$html = '<del class="lyric"'. ($translteILtr ? " ltr" : "") . '">' . $lyric->old_text . '</del>';
+				}
+				$html .= '<ins class="lyric'. ($translteILtr ? " ltr" : "") . '">' . $lyric->text . '</ins>';
+				return $html;
 			}
 		}
 		foreach ($this->translates as $translat) {
@@ -97,5 +102,20 @@ class Translate extends Contributes {
 			}
 		}
 		return "";
+	}
+	public function onAccept() {
+		$lyric = new Lyric();
+		$lyric->where("contribute", $this->contribute->id);
+		foreach ($lyric->get() as $lyr) {
+			if ($lyr->lyric) {
+				$lyr->lyric->text = $lyr->text;
+				$lyr->lyric->status = song\lyric::published;
+				$lyr->lyric->save();
+			}
+		}
+		$this->contribute->status = Contribute::accepted;
+		$this->contribute->save();
+		$this->contribute->user->points += $this->point;
+		$this->contribute->user->save();
 	}
 }

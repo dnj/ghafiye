@@ -1,8 +1,8 @@
 <?php
 namespace packages\ghafiye\contributes\groups;
 use packages\base;
-use packages\base\translator;
-use packages\ghafiye\{Contributes, group};
+use packages\base\{translator, db};
+use packages\ghafiye\{Contributes, group, Contribute};
 
 class Add extends Contributes {
 	protected $point = 10;
@@ -61,5 +61,18 @@ class Add extends Contributes {
 		$person = new group\person();
 		$person->where("group_id", $this->contribute->groupID);
 		return $person->get();
+	}
+	public function onAccept() {
+		$this->contribute->group->status = group::accepted;
+		$this->contribute->group->save();
+		db::where("ghafiye_groups_titles.group_id", $this->contribute->group->id);
+		db::where("ghafiye_groups_titles.lang", $this->contribute->lang);
+		db::update("ghafiye_groups_titles", array(
+			"status" => group\title::published,
+		));
+		$this->contribute->status = Contribute::accepted;
+		$this->contribute->save();
+		$this->contribute->user->points += $this->point;
+		$this->contribute->user->save();
 	}
 }

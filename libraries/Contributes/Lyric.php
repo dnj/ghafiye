@@ -2,8 +2,7 @@
 namespace packages\ghafiye\contribute;
 use packages\userpanel\date;
 use packages\base\{db, db\dbObject};
-use packages\ghafiye;
-use packages\ghafiye\Contribute;
+use packages\ghafiye\{Contribute, song};
 
 class Lyric  extends dbObject {
 	protected $handler;
@@ -19,6 +18,6 @@ class Lyric  extends dbObject {
 	);
     protected $relations = array(
         "contribute" => array("hasOne", Contribute::class, "contribute"),
-        "lyric" => array("hasOne", ghafiye\lyric::class, "lyric"),
+        "lyric" => array("hasOne", song\lyric::class, "lyric"),
     );
 }

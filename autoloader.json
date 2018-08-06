@@ -548,6 +548,10 @@
 		{
 			"classes":["views\\panel\\contributes\\Search"],
 			"file":"views/panel/Contributes/Search.php"
+		},
+		{
+			"classes":["views\\panel\\contributes\\Edit"],
+			"file":"views/panel/Contributes/Edit.php"
 		}
 	]
 }

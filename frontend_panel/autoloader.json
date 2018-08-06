@@ -119,6 +119,10 @@
 		{
 			"classes":["views\\ghafiye\\contributes\\Search"],
 			"file":"views/Contributes/Search.php"
+		},
+		{
+			"classes":["views\\ghafiye\\contributes\\Accept"],
+			"file":"views/Contributes/Accept.php"
 		}
 	]
 }

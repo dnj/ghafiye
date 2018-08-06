@@ -1,8 +1,8 @@
 <?php
 namespace packages\ghafiye\contributes\albums;
 use packages\base;
-use packages\base\translator;
-use packages\ghafiye\{Contributes, song};
+use packages\base\{translator, db};
+use packages\ghafiye\{Contributes, song, album, Contribute};
 
 class Add extends Contributes {
 	protected $point = 10;
@@ -37,5 +37,18 @@ class Add extends Contributes {
 			</div>
 		</div>';
 		return $html;
+	}
+	public function onAccept() {
+		$this->contribute->album->status = album::accepted;
+		$this->contribute->album->save();
+		db::where("ghafiye_albums_titles.album", $this->contribute->album->id);
+		db::where("ghafiye_albums_titles.lang", $this->contribute->lang);
+		db::update("ghafiye_albums_titles", array(
+			"status" => album\title::published,
+		));
+		$this->contribute->status = Contribute::accepted;
+		$this->contribute->save();
+		$this->contribute->user->points += $this->point;
+		$this->contribute->user->save();
 	}
 }
