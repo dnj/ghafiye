@@ -26,7 +26,7 @@ export default class Translate {
 	}
 	protected static changeLangListener() {
 		const $progress = $(".translate-progress", Translate.$form);
-		const lyricsLngth = $("input", Translate.$form).get().length;
+		const lyricsLngth = $(".translate-panel input", Translate.$form).get().length;
 		$("select[name=lang]", Translate.$form).on("change", function() {
 			const lang = $(this).val() as string;
 			if (Contributes.isLtr(lang)) {
@@ -47,12 +47,11 @@ export default class Translate {
 				success: function(data) {
 					$("> p", $progress).html(`درصد ترجمه شده: `);
 					$(that).prop("disabled", false);
-					$("input.disabled").removeClass("disabled").prop("disabled", false).val("");
 					for (const lyric of data.items as Lyric[]) {
-						$(`input[name="translates[${lyric.parent}]"]`, Translate.$form).val(lyric.text).addClass("disabled").prop("disabled", true);
+						$(`input[name="translates[${lyric.parent}]"]`, Translate.$form).val(lyric.text);
 					}
 					if (data.hasOwnProperty("title")) {
-						$("input[name=title]", Translate.$form).val(data.title).addClass("disabled").prop("disabled", true);
+						$("input[name=title]", Translate.$form).val(data.title);
 					}
 					const percent = (data.items.length * 100) / lyricsLngth;
 					$(".progress-bar", $progress).css("width", percent + "%");

@@ -42,6 +42,7 @@ class Contribute extends dbObject {
 		$start = date::mktime(0, 0, 0, null, $startWeek);
 		$contribute = new static();
 		$contribute->where("ghafiye_contributes.done_at", $start, ">=");
+		$contribute->where("ghafiye_contributes.status", self::accepted);
 		$contribute->groupBy("ghafiye_contributes.user");
 		$contribute->orderBy("`cpoints`", "DESC");
 		$contributes = $contribute->get($limit, array("ghafiye_contributes.user", "SUM(ghafiye_contributes.point) as `cpoints`"));

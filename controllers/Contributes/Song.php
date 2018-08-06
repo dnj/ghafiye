@@ -334,7 +334,13 @@ class Song extends controller {
 					}
 				} else {
 					if (isset($inputs["translates"][$lyric->parent])) {
-						unset($inputs["translates"][$lyric->parent]);
+						if ($inputs["translates"][$lyric->parent]) {
+							if ($lyric->text == $inputs["translates"][$lyric->parent]) {
+								unset($inputs["translates"][$lyric->parent]);
+							}
+						} else {
+							unset($inputs["translates"][$lyric->parent]);
+						}
 					}
 				}
 			}
@@ -350,6 +356,21 @@ class Song extends controller {
 				$contribute->type = songs\Translate::class;
 				$contribute->point = (new songs\Translate)->getPoint();
 				$contribute->save();
+				foreach ($lyrics as $lyric) {
+					if ($lyric->lang == $song->lang) {
+						continue;
+					}
+					if (isset($inputs["translates"][$lyric->parent])) {
+						$clyr = new ContributeLyric();
+						$clyr->contribute = $contribute->id;
+						$clyr->parent = $lyric->parent;
+						$clyr->lyric = $lyric->id;
+						$clyr->old_text = $lyric->text;
+						$clyr->text = $inputs["translates"][$lyric->parent];
+						$clyr->save();
+						unset($inputs["translates"][$lyric->parent]);
+					}
+				}
 				foreach ($inputs["translates"] as $lyric => $translate) {
 					$lyr = new lyric();
 					$lyr->song = $song->id;

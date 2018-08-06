@@ -170,10 +170,12 @@ $lang = $this->getLyricsLanguage();
 				<span class="float-xs-right"><i class="fa fa-language"></i></span>
 				<?php echo(translator::trans("songs.translations.number", array('number' => $numberOfLangs))); ?>
 			</li>
+			<?php if ($this->song->genre) { ?>
 			<li class="list-group-item">
 				<span class="float-xs-right"><i class="fa fa-tag"></i></span>
 				<a href="<?php echo base\url('explore/genre/'.$this->song->genre->encodedTitle()); ?>"><?php echo($this->song->genre->title()); ?></a>
 			</li>
+			<?php } ?>
 		</ul>
 		<?php if ($songs = $this->getSongs()) { ?>
 		<div class="panel">

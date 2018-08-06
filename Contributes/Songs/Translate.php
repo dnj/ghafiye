@@ -113,6 +113,30 @@ class Translate extends Contributes {
 				$lyr->lyric->save();
 			}
 		}
+		$lyric = new song\lyric();
+		$lyric->where("song", $this->song->id);
+		$lyric->where("lang", $this->song->lang);
+		$lyric->where("status", song\lyric::published);
+		$countOrginalLyrics = $lyric->count();
+
+		$lyric = new song\lyric();
+		$lyric->where("song", $this->song->id);
+		$lyric->where("lang", $this->contribute->lang);
+		$lyric->where("status", song\lyric::published);
+		$count = $lyric->count();
+
+		$progress = ceil(($count * 100) / $countOrginalLyrics);
+		$translate = new song\Translate();
+		$translate->where("lang", $this->contribute->lang);
+		if ($translate = $translate->getOne()) {
+			$translate->progress = $progress > 100 ? 100 : $progress;
+		} else {
+			$translate = new song\Translate();
+			$translate->song = $this->contribute->id;
+			$translate->lang = $this->contribute->lang;
+			$translate->progress = $progress > 100 ? 100 : $progress;
+			$translate->save();
+		}
 		$this->contribute->status = Contribute::accepted;
 		$this->contribute->save();
 		$this->contribute->user->points += $this->point;
