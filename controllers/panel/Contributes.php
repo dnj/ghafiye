@@ -185,7 +185,7 @@ class Contributes extends controller {
 		return $this->response;
 	}
 	public function terminate($data) {
-		authorization::haveOrFail("contributes_edit");
+		authorization::haveOrFail("contributes_delete");
 		$types = authorization::childrenTypes();
 		$contribute = new Contribute();
 		db::join("userpanel_users", "userpanel_users.id=ghafiye_contributes.user", "INNER");
@@ -210,6 +210,27 @@ class Contributes extends controller {
 				$view->addError($error);
 			}
 		}
+		return $this->response;
+	}
+	public function view($data): response {
+		authorization::haveOrFail("contributes_view");
+		$types = authorization::childrenTypes();
+		$contribute = new Contribute();
+		db::join("userpanel_users", "userpanel_users.id=ghafiye_contributes.user", "INNER");
+		if ($types) {
+			$contribute->where("userpanel_users.type", $types, "in");
+		} else {
+			$contribute->where("userpanel_users.id", authentication::getID());
+		}
+		$contribute->where("ghafiye_contributes.id", $data["contribute"]);
+		$contribute->where("ghafiye_contributes.status", Contribute::rejected, "!=");
+		if (!$contribute = $contribute->getOne("ghafiye_contributes.*")) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\panel\contributes\View::class);
+		$this->response->setView($view);
+		$view->setContribute($contribute);
+		$this->response->setStatus(true);
 		return $this->response;
 	}
 }

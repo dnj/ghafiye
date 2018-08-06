@@ -131,6 +131,10 @@
 		{
 			"classes":["views\\ghafiye\\contributes\\Delete"],
 			"file":"views/Contributes/Delete.php"
+		},
+		{
+			"classes":["views\\ghafiye\\contributes\\View"],
+			"file":"views/Contributes/View.php"
 		}
 	]
 }

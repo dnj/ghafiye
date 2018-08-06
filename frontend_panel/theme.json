@@ -190,6 +190,11 @@
 			"name": "\\themes\\clipone\\views\\ghafiye\\contributes\\Delete",
 			"parent": "\\packages\\ghafiye\\views\\panel\\contributes\\Delete",
 			"file": "html/Contributes/delete.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\contributes\\View",
+			"parent": "\\packages\\ghafiye\\views\\panel\\contributes\\View",
+			"file": "html/Contributes/view.php"
 		}
 	]
 }

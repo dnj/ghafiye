@@ -568,6 +568,10 @@
 		{
 			"classes":["views\\panel\\contributes\\Delete"],
 			"file":"views/panel/Contributes/Delete.php"
+		},
+		{
+			"classes":["views\\panel\\contributes\\View"],
+			"file":"views/panel/Contributes/View.php"
 		}
 	]
 }

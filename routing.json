@@ -375,6 +375,11 @@
 		"method": "post"
 	},
 	{
+		"path": ["userpanel", "contributes", "view", {"type" : "dynamic", "name" : "contribute", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\Contributes@view",
+		"method": "get"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

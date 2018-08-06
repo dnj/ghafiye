@@ -50,7 +50,7 @@ class add extends Contributes {
 			$html .= '</div>
 				</div>
 			</div>
-			<div class="col-sm-8">';
+			<div class="col-sm-8 col-xs-12">';
 		foreach ($this->getSongLyrics() as $lyric) {
 			$html .= '<p class="lyric'. ($isLtr ? " ltr" : "") . '">';
 				$html .= $lyric->text;

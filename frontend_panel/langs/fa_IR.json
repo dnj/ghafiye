@@ -274,6 +274,27 @@
 		"ghafiye.panel.contributes.reject": "رد مشارکت",
 		"error.ghafiye.contributes.groups.add.onReject": "آهنگی با این گروه وجود دارد، ابتدا وضعیت آهنگ را مشخص کنید",
 		"error.ghafiye.contributes.persons.add.onReject": "آهنگی با این شخص وجود دارد، ابتدا وضعیت آهنگ را مشخص کنید",
-		"ghafiye.panel.contributes.delete": "حذف مشارکت"
+		"ghafiye.panel.contributes.delete": "حذف مشارکت",
+		"ghafiye.panel.contributes.view": "مشاهده مشارکت",
+		"ghafiye.singer.avatar": "تصویر",
+		"ghafiye.singer.name": "نام",
+		"ghafiye.singer.lang": "زبان",
+		"ghafiye.singer.gender": "جنسیت",
+		"ghafiye.gender.men": "مذکر",
+		"ghafiye.gender.women": "مونث",
+		"ghafiye.group.avatar": "تصویر",
+		"ghafiye.group.name": "نام گروه",
+		"ghafiye.group.person": "شخص",
+		"ghafiye.group.lang": "زبان",
+		"ghafiye.group.person.add": "افزودن شخص",
+		"ghafiye.album.title": "نام آلبوم",
+		"ghafiye.album.lang": "زبان",
+		"ghafiye.singer": "خواننده",
+		"ghafiye.group": "گروه",
+		"ghafiye.album": "آلبوم",
+		"ghafiye.song.title": "عنوان آهنگ",
+		"ghafiye.song.lang": "زبان آهنگ",
+		"ghafiye.song.genre": "سبک آهنگ",
+		"ghafiye.song.lyrics": "متن آهنگ"
 	}
 }
