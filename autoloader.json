@@ -482,16 +482,16 @@
 			"file":"Contributes/Songs/Translate.php"
 		},
 		{
-			"classes":["contributes\\songs\\Synce"],
-			"file":"Contributes/Songs/Synce.php"
+			"classes":["contributes\\songs\\Sync"],
+			"file":"Contributes/Songs/Sync.php"
 		},
 		{
 			"classes":["views\\contribute\\Translate"],
 			"file":"views/Contribute/Translate.php"
 		},
 		{
-			"classes":["views\\contribute\\Synce"],
-			"file":"views/Contribute/Synce.php"
+			"classes":["views\\contribute\\Sync"],
+			"file":"views/Contribute/Sync.php"
 		},
 		{
 			"classes":["controllers\\contributes\\Song"],
@@ -572,6 +572,10 @@
 		{
 			"classes":["views\\panel\\contributes\\View"],
 			"file":"views/panel/Contributes/View.php"
+		},
+		{
+			"classes":["views\\contributes\\songs\\Sync"],
+			"file":"views/Contributes/Songs/Sync.php"
 		}
 	]
 }

@@ -44,8 +44,8 @@ class Contribute extends controller {
 		$this->response->setStatus(true);
 		return $this->response;
 	}
-	public function synce(): response {
-		$view = view::byName(views\contribute\Synce::class);
+	public function sync(): response {
+		$view = view::byName(views\contribute\Sync::class);
 		$this->response->setView($view);
 		$song = new song();
 		$song->where("synced", song::synced, "!=");

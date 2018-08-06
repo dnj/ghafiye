@@ -172,9 +172,9 @@
 			"file": "html/Contribute/translate.php"
 		},
 		{
-			"name": "\\themes\\musixmatch\\views\\contribute\\Synce",
-			"parent": "\\packages\\ghafiye\\views\\contribute\\Synce",
-			"file": "html/Contribute/synce.php"
+			"name": "\\themes\\musixmatch\\views\\contribute\\Sync",
+			"parent": "\\packages\\ghafiye\\views\\contribute\\Sync",
+			"file": "html/Contribute/sync.php"
 		},
 		{
 			"name": "\\themes\\musixmatch\\views\\contributes\\songs\\Add",
@@ -190,6 +190,11 @@
 			"name": "\\themes\\musixmatch\\views\\contributes\\songs\\Translate",
 			"parent": "\\packages\\ghafiye\\views\\contributes\\songs\\Translate",
 			"file": "html/Contributes/Songs/translate.php"
+		},
+		{
+			"name": "\\themes\\musixmatch\\views\\contributes\\songs\\Sync",
+			"parent": "\\packages\\ghafiye\\views\\contributes\\songs\\Sync",
+			"file": "html/Contributes/Songs/sync.php"
 		}
 	]
 }

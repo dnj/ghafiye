@@ -3,11 +3,11 @@ namespace packages\ghafiye\views\contribute;
 use packages\base;
 use packages\ghafiye\{views\listview, authentication, Contribute};
 
-class Synce extends listview {
+class Sync extends listview {
 	public function export(): array {
 		$export = parent::export();
 		$items = array();
-		foreach ($this->getSynceTracks() as $track) {
+		foreach ($this->getSyncTracks() as $track) {
 			$item = array(
 				"id" => $track->id,
 				"image" => $track->getImage(32, 32),
@@ -31,7 +31,7 @@ class Synce extends listview {
 	protected function getWeeklyUsersLeaderboard() {
 		return Contribute::getWeeklyUsersLeaderboard();
 	}
-	protected function getSynceTracks() {
+	protected function getSyncTracks() {
 		return $this->getDataList();
 	}
 }

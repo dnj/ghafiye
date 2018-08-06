@@ -5,15 +5,15 @@ $this->the_header();
 ?>
 <div class="row">
 	<div class="col-sm-8 col-sm-push-4">
-		<div class="panel panel-white panel-synce">
+		<div class="panel panel-white panel-sync">
 			<div class="panel-heading">
 				<div class="panel-icon"><i class="fa fa-clock-o"></i></div>
-				<?php echo translator::trans("ghafiye.contribute.panel.title.synce"); ?>
-				<span class="badge"><?php echo translator::trans("ghafiye.contribute.point", array("point" => $this->syncedPoint)); ?></span>
+				<?php echo translator::trans("ghafiye.contribute.panel.title.sync"); ?>
+				<span class="badge"><?php echo translator::trans("ghafiye.contribute.point", array("point" => $this->syncdPoint)); ?></span>
 			</div>
 			<div class="panel-body">
 				<ul class="list-group tracks">
-					<?php foreach ($this->getSynceTracks() as $track) { ?>
+					<?php foreach ($this->getSyncTracks() as $track) { ?>
 					<li class="list-group-item">
 						<div class="row">
 							<div class="col-sm-1 col-xs-2 track-img">
@@ -26,7 +26,7 @@ $this->the_header();
 								<a class="track-singer-name" href="<?php echo base\url($track->getSinger()->encodedName()); ?>"><?php echo $track->getSinger()->name(); ?></a>
 							</div>
 							<div class="col-sm-3 col-xs-3">
-								<a href="#" class="btn btn-sm btn-block btn-default btn-synce"><span class="hidden-xs"><?php echo translator::trans("ghafiye.contribute.synce"); ?></span><span class="visible-xs"><i class="fa fa-check-square-o"></i></span></a>
+								<a href="<?php echo base\url("contribute/song/sync/{$track->id}"); ?>" class="btn btn-sm btn-block btn-default btn-sync"><span class="hidden-xs"><?php echo translator::trans("ghafiye.contribute.sync"); ?></span><span class="visible-xs"><i class="fa fa-check-square-o"></i></span></a>
 							</div>
 						</div>
 					</li>

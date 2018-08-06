@@ -400,4 +400,79 @@ class Song extends controller {
 		}
 		return $this->response;
 	}
+	public function sync($data) {
+		$song = new songObj();
+		$song->where("id", $data["song"]);
+		$song->where("synced", songObj::synced, "!=");
+		if (!$song = $song->getOne()) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\contributes\songs\Sync::class);
+		$this->response->setView($view);
+		$view->setSong($song);
+		$this->response->setStatus(true);
+		return $this->response;
+	}
+	public function doSync($data) {
+		$song = new songObj();
+		$song->where("id", $data["song"]);
+		$song->where("synced", songObj::synced, "!=");
+		if (!$song = $song->getOne()) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\contributes\songs\Sync::class);
+		$this->response->setView($view);
+		$view->setSong($song);
+		$inputsRules = array(
+			"time" => array(),
+		);
+		$inputs = $this->checkinputs($inputsRules);
+		$lyric = new lyric();
+		$lyric->where("song", $song->id);
+		$lyric->where("lang", $song->lang);
+		$lyrics = $lyric->get();
+		foreach ($lyrics as $lyr) {
+			if (isset($inputs["time"][$lyr->id])) {
+				if ($inputs["time"][$lyr->id]) {
+					list($min, $sec) = explode(":", $inputs["time"][$lyr->id], 2);
+					if (!$min or !$sec) {
+						throw new inputValidation("time[{$lyr->id}]");
+					}
+					if ($min == "00" and $sec == "00") {
+						unset($inputs["time"][$lyr->id]);
+						continue;
+					}
+					$inputs["time"][$lyr->id] = ($min * 60) + $sec;
+				} else {
+					unset($inputs["time"][$lyr->id]);
+				}
+			}
+		}
+		if ($inputs["time"]) {
+			$contribute = new Contribute();
+			$contribute->title = translator::trans("ghafiye.contributes.title.songs.synce", array("title" => $song->title($song->lang)));
+			$contribute->user = authentication::getID();
+			$contribute->song = $song->id;
+			$contribute->lang = $song->lang;
+			$contribute->type = songs\Sync::class;
+			$contribute->point = (new songs\Sync)->getPoint();
+			$contribute->save();
+			foreach ($lyrics as $lyr) {
+				if (isset($inputs["time"][$lyr->id])) {
+					$clyr = new ContributeLyric();
+					$clyr->contribute = $contribute->id;
+					$clyr->lyric = $lyr->id;
+					$clyr->text = $lyr->text;
+					$clyr->time = $inputs["time"][$lyr->id];
+					$clyr->save();
+				}
+			}
+		} else {
+			$this->response->setData(array(
+				"contribute" => false
+			));
+		}
+		$this->response->setStatus(true);
+		return $this->response;
+	}
 }

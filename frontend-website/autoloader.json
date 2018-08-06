@@ -137,8 +137,8 @@
 			"file":"views/Contribute/Translate.php"
 		},
 		{
-			"classes":["views\\contribute\\Synce"],
-			"file":"views/Contribute/Synce.php"
+			"classes":["views\\contribute\\Sync"],
+			"file":"views/Contribute/Sync.php"
 		},
 		{
 			"classes":["views\\contributes\\songs\\Add"],
@@ -151,6 +151,10 @@
 		{
 			"classes":["views\\contributes\\songs\\Translate"],
 			"file":"views/Contributes/Songs/Translate.php"
+		},
+		{
+			"classes":["views\\contributes\\songs\\Sync"],
+			"file":"views/Contributes/Songs/Sync.php"
 		}
 	]
 }

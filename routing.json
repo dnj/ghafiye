@@ -280,8 +280,8 @@
 		"method": "get"
 	},
 	{
-		"path": ["contribute", "synce"],
-		"controller": "controllers\\Contribute@synce",
+		"path": ["contribute", "sync"],
+		"controller": "controllers\\Contribute@sync",
 		"method": "get"
 	},
 	{
@@ -378,6 +378,16 @@
 		"path": ["userpanel", "contributes", "view", {"type" : "dynamic", "name" : "contribute", "regex" : "/^\\d+$/"}],
 		"controller": "controllers\\panel\\Contributes@view",
 		"method": "get"
+	},
+	{
+		"path": ["contribute", "song", "sync", {"type" : "dynamic", "name" : "song", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\contributes\\Song@sync",
+		"method": "get"
+	},
+	{
+		"path": ["contribute", "song", "sync", {"type" : "dynamic", "name" : "song", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\contributes\\Song@doSync",
+		"method": "post"
 	},
 	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],

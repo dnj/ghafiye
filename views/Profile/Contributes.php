@@ -43,7 +43,7 @@ class Contributes extends listview {
 			switch ($contribute->type) {
 				case (songs\Add::class):
 				case (songs\Translate::class):
-				case (songs\Synce::class):
+				case (songs\Sync::class):
 					$item["image"] = $contribute->song->getImage(48, 48);
 					$item["song"] = array(
 						"title" => $contribute->song->title(),

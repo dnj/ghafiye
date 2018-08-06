@@ -16,7 +16,7 @@ interface ITrack {
 
 export default class Contribute {
 	public static initIfNeeded() {
-		if ($("body").hasClass("contribute-main") || $("body").hasClass("contribute-synce") || $("body").hasClass("contribute-translate")) {
+		if ($("body").hasClass("contribute-main") || $("body").hasClass("contribute-sync") || $("body").hasClass("contribute-translate")) {
 			Contribute.init();
 		}
 	}
@@ -38,7 +38,7 @@ export default class Contribute {
 			</div>
 		</li>`;
 	}
-	public static getSynceTrackHtml(track: ITrack): string {
+	public static getSyncTrackHtml(track: ITrack): string {
 		return `<li class="list-group-item">
 			<div class="row">
 				<div class="col-sm-1 col-xs-2 track-img">
@@ -51,16 +51,16 @@ export default class Contribute {
 					<a class="track-singer-name" href="${track.singer.url}">${track.singer.name}</a>
 				</div>
 				<div class="col-sm-3 col-xs-3">
-					<a href="${Router.url("songs/synce/" + track.id)}" class="btn btn-sm btn-block btn-default btn-synce"><span class="hidden-xs">همگام سازی</span><span class="visible-xs"><i class="fa fa-check-square-o"></i></span></a>
+					<a href="${Router.url("contribute/song/sync/" + track.id)}" class="btn btn-sm btn-block btn-default btn-sync"><span class="hidden-xs">همگام سازی</span><span class="visible-xs"><i class="fa fa-check-square-o"></i></span></a>
 				</div>
 			</div>
 		</li>`;
 	}
 	protected static $tranlatePanel: JQuery;
-	protected static $syncePanel: JQuery;
+	protected static $syncPanel: JQuery;
 	protected static init() {
 		Contribute.$tranlatePanel = $(".panel-translate");
-		Contribute.$syncePanel = $(".panel-synce");
+		Contribute.$syncPanel = $(".panel-sync");
 		Contribute.loadMoreTrackListener();
 	}
 	protected static loadMoreTrackListener() {
@@ -100,29 +100,29 @@ export default class Contribute {
 				}
 			});
 		});
-		let syncePage = 1;
-		$(".panel-footer .btn-more-sync-track", Contribute.$syncePanel).on("click", function(e) {
+		let syncPage = 1;
+		$(".panel-footer .btn-more-sync-track", Contribute.$syncPanel).on("click", function(e) {
 			e.preventDefault();
 			if ($(this).hasClass("disabled")) {
 				return;
 			}
-			$(".panel-icon i", Contribute.$syncePanel).removeClass("fa-clock-o").addClass("fa-spinner fa-pulse fa-fw");
+			$(".panel-icon i", Contribute.$syncPanel).removeClass("fa-clock-o").addClass("fa-spinner fa-pulse fa-fw");
 			$(this).addClass("disabled");
 			const that = this;
 			AjaxRequest({
-				url: "contribute/synce?ajax=1",
+				url: "contribute/sync?ajax=1",
 				dataType: "json",
 				data: {
 					ipp: 7,
-					page: ++syncePage,
+					page: ++syncPage,
 				},
 				success: function(data) {
-					$(".panel-icon i", Contribute.$syncePanel).removeClass("fa-spinner fa-pulse fa-fw").addClass("fa-clock-o");
-					if ($(".panel-body .tracks.list-group li", Contribute.$syncePanel).get().length === data.total_items) {
+					$(".panel-icon i", Contribute.$syncPanel).removeClass("fa-spinner fa-pulse fa-fw").addClass("fa-clock-o");
+					if ($(".panel-body .tracks.list-group li", Contribute.$syncPanel).get().length === data.total_items) {
 						return;
 					}
 					for (const track of data.items as ITrack[]) {
-						$(".panel-body .tracks.list-group", Contribute.$syncePanel).append(Contribute.getSynceTrackHtml(track));;
+						$(".panel-body .tracks.list-group", Contribute.$syncPanel).append(Contribute.getSyncTrackHtml(track));;
 					}
 					$(that).removeClass("disabled");
 				},
@@ -131,7 +131,7 @@ export default class Contribute {
 						title: "خطا",
 						message: "سرور پاسخ درخواست شما را به درستی ارسال نمی کند"
 					});
-					$(".panel-icon i", Contribute.$syncePanel).removeClass("fa-spinner fa-pulse fa-fw").addClass("fa-clock-o");
+					$(".panel-icon i", Contribute.$syncPanel).removeClass("fa-spinner fa-pulse fa-fw").addClass("fa-clock-o");
 					$(that).removeClass("disabled");
 				}
 			});

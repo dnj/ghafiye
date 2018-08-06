@@ -169,8 +169,8 @@
 		"ghafiye.contribute.point": "{point} امتیاز",
 		"ghafiye.contribute.load.more": "موارد بیشتر",
 		"ghafiye.contribute.translate": "ترجمه کنید",
-		"ghafiye.contribute.synce": "همگام سازی",
-		"ghafiye.contribute.panel.title.synce": "همگام سازی متن عبارت",
+		"ghafiye.contribute.sync": "همگام سازی",
+		"ghafiye.contribute.panel.title.sync": "همگام سازی متن عبارت",
 		"ghafiye.contribute.add.song": "افزودن آهنگ جدید",
 		"ghafiye.contribute.add.singer": "افزودن خواننده جدید",
 		"ghafiye.contribute.add.group": "افزودن گروه جدید",
@@ -201,6 +201,8 @@
 		"ghafiye.group.lang": "زبان",
 		"ghafiye.group.person.add": "افزودن شخص",
 		"ghafiye.album.title": "نام آلبوم",
-		"ghafiye.album.lang": "زبان"
+		"ghafiye.album.lang": "زبان",
+		"ghafiye.song.lyric.time": "زمان",
+		"ghafiye.contribute.sync.song": "همگام سازی آهنگ {title}"
 	}
 }

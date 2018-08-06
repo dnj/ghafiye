@@ -18,7 +18,7 @@ class Main extends view {
 	protected function getTranslateTracks() {
 		return $this->getData("traslatetracks");
 	}
-	protected function getSynceTracks() {
+	protected function getSyncTracks() {
 		return $this->getData("synctracks");
 	}
 }
