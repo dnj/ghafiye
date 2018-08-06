@@ -3,7 +3,7 @@ namespace packages\ghafiye\controllers\panel;
 use packages\userpanel;
 use packages\base\{response, db, NotFound};
 use packages\userpanel\controller;
-use packages\ghafiye\{view, views, authentication, authorization, Contribute};
+use packages\ghafiye\{view, views, authentication, authorization, Contribute, contributes\preventRejectException};
 
 class Contributes extends controller {
 	protected $authentication = true;
@@ -70,7 +70,7 @@ class Contributes extends controller {
 		$this->response->setStatus(true);
 		return $this->response;
 	}
-	public function edit($data): response {
+	public function accept($data): response {
 		authorization::haveOrFail("contributes_edit");
 		$types = authorization::childrenTypes();
 		$contribute = new Contribute();
@@ -85,13 +85,13 @@ class Contributes extends controller {
 		if (!$contribute = $contribute->getOne("ghafiye_contributes.*")) {
 			throw new NotFound();
 		}
-		$view = view::byName(views\panel\contributes\Edit::class);
+		$view = view::byName(views\panel\contributes\Accept::class);
 		$this->response->setView($view);
 		$view->setContribute($contribute);
 		$this->response->setStatus(true);
 		return $this->response;
 	}
-	public function accept($data) {
+	public function onAccept($data) {
 		authorization::haveOrFail("contributes_edit");
 		$types = authorization::childrenTypes();
 		$contribute = new Contribute();
@@ -106,12 +106,62 @@ class Contributes extends controller {
 		if (!$contribute = $contribute->getOne("ghafiye_contributes.*")) {
 			throw new NotFound();
 		}
-		$view = view::byName(views\panel\contributes\Edit::class);
+		$view = view::byName(views\panel\contributes\Accept::class);
 		$this->response->setView($view);
 		$view->setContribute($contribute);
 		$contribute->accepted();
 		$this->response->setStatus(true);
 		$this->response->Go(userpanel\url("contributes"));
+		return $this->response;
+	}
+	public function reject($data): response {
+		authorization::haveOrFail("contributes_edit");
+		$types = authorization::childrenTypes();
+		$contribute = new Contribute();
+		db::join("userpanel_users", "userpanel_users.id=ghafiye_contributes.user", "INNER");
+		if ($types) {
+			$contribute->where("userpanel_users.type", $types, "in");
+		} else {
+			$contribute->where("userpanel_users.id", authentication::getID());
+		}
+		$contribute->where("ghafiye_contributes.id", $data["contribute"]);
+		$contribute->where("ghafiye_contributes.status", Contribute::waitForAccept);
+		if (!$contribute = $contribute->getOne("ghafiye_contributes.*")) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\panel\contributes\Reject::class);
+		$this->response->setView($view);
+		$view->setContribute($contribute);
+		$this->response->setStatus(true);
+		return $this->response;
+	}
+	public function onReject($data) {
+		authorization::haveOrFail("contributes_edit");
+		$types = authorization::childrenTypes();
+		$contribute = new Contribute();
+		db::join("userpanel_users", "userpanel_users.id=ghafiye_contributes.user", "INNER");
+		if ($types) {
+			$contribute->where("userpanel_users.type", $types, "in");
+		} else {
+			$contribute->where("userpanel_users.id", authentication::getID());
+		}
+		$contribute->where("ghafiye_contributes.id", $data["contribute"]);
+		$contribute->where("ghafiye_contributes.status", Contribute::waitForAccept);
+		if (!$contribute = $contribute->getOne("ghafiye_contributes.*")) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\panel\contributes\Reject::class);
+		$this->response->setView($view);
+		try {
+			$view->setContribute($contribute);
+			$contribute->rejected();
+			$this->response->setStatus(true);
+			$this->response->Go(userpanel\url("contributes"));
+		} catch (preventRejectException $exception) {
+			foreach ($exception->getErrors() as $error) {
+				$view->addError($error);
+			}
+		}
 		return $this->response;
 	}
 }

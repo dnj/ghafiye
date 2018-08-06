@@ -45,6 +45,7 @@ $this->the_header();
 								$this->setButtonParam("delete", "link", userpanel\url("contributes/delete/" . $contribute->id));
 								$this->setButtonActive("accept", $contribute->status == Contribute::waitForAccept);
 								$this->setButtonActive("reject", $contribute->status == Contribute::waitForAccept);
+								$this->setButtonActive("view", $contribute->status != Contribute::rejected);
 								$statusClass = utility::switchcase($contribute->status, array(
 									"label label-success" => Contribute::accepted,
 									"label label-warning" => Contribute::waitForAccept,

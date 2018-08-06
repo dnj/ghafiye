@@ -1,8 +1,8 @@
 <?php
 namespace packages\ghafiye\contributes\groups;
 use packages\base;
-use packages\base\{translator, db};
-use packages\ghafiye\{Contributes, group, Contribute};
+use packages\base\{translator, db, view\error};
+use packages\ghafiye\{Contributes, group, song, Contribute, contributes\preventRejectException};
 
 class Add extends Contributes {
 	protected $point = 10;
@@ -74,5 +74,18 @@ class Add extends Contributes {
 		$this->contribute->save();
 		$this->contribute->user->points += $this->point;
 		$this->contribute->user->save();
+	}
+	public function onReject() {
+		$song = new song();
+		$song->where("`group`", $this->contribute->groupID);
+		if ($song->has()) {
+			$error = new error();
+			$error->setType(error::FATAL);
+			$error->setCode("ghafiye.contributes.groups.add.onReject");
+			throw new preventRejectException($error);
+		}
+		$this->contribute->group->delete();
+		$this->contribute->status = Contribute::rejected;
+		return $this->contribute->save();
 	}
 }

@@ -550,8 +550,19 @@
 			"file":"views/panel/Contributes/Search.php"
 		},
 		{
-			"classes":["views\\panel\\contributes\\Edit"],
-			"file":"views/panel/Contributes/Edit.php"
+			"classes":["views\\panel\\contributes\\Accept"],
+			"file":"views/panel/Contributes/Accept.php"
+		},
+		{
+			"classes":["views\\panel\\contributes\\Reject"],
+			"file":"views/panel/Contributes/Reject.php"
+		},
+		{
+			"classes":[
+				"contributes\\Exception",
+				"contributes\\preventRejectException"
+			],
+			"file":"libraries/Contributes/Exceptions.php"
 		}
 	]
 }

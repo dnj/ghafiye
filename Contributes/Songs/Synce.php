@@ -31,4 +31,8 @@ class Synce extends Contributes {
 		$this->contribute->user->points += $this->point;
 		$this->contribute->user->save();
 	}
+	public function onReject() {
+		$this->contribute->status = Contribute::rejected;
+		$this->contribute->save();
+	}
 }

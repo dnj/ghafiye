@@ -270,6 +270,9 @@
 		"ghafiye.panel.contributes.status.waitForAccept": "منتظر تایید",
 		"ghafiye.panel.contributes.status.rejected": "رد شده",
 		"error.ghafiye.panel.contributes.empty": "مشارکتی برای نمایش پیدا نشد.",
-		"ghafiye.panel.contributes.accept": "پذیرفتن مشارکت"
+		"ghafiye.panel.contributes.accept": "پذیرفتن مشارکت",
+		"ghafiye.panel.contributes.reject": "رد مشارکت",
+		"error.ghafiye.contributes.groups.add.onReject": "آهنگی با این گروه وجود دارد، ابتدا وضعیت آهنگ را مشخص کنید",
+		"error.ghafiye.contributes.persons.add.onReject": "آهنگی با این شخص وجود دارد، ابتدا وضعیت آهنگ را مشخص کنید"
 	}
 }

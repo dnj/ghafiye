@@ -178,8 +178,13 @@
 		},
 		{
 			"name": "\\themes\\clipone\\views\\ghafiye\\contributes\\Accept",
-			"parent": "\\packages\\ghafiye\\views\\panel\\contributes\\Edit",
+			"parent": "\\packages\\ghafiye\\views\\panel\\contributes\\Accept",
 			"file": "html/Contributes/accept.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\contributes\\Reject",
+			"parent": "\\packages\\ghafiye\\views\\panel\\contributes\\Reject",
+			"file": "html/Contributes/reject.php"
 		}
 	]
 }

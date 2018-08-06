@@ -346,12 +346,22 @@
 	},
 	{
 		"path": ["userpanel", "contributes", "accept", {"type" : "dynamic", "name" : "contribute", "regex" : "/^\\d+$/"}],
-		"controller": "controllers\\panel\\Contributes@edit",
+		"controller": "controllers\\panel\\Contributes@accept",
 		"method": "get"
 	},
 	{
 		"path": ["userpanel", "contributes", "accept", {"type" : "dynamic", "name" : "contribute", "regex" : "/^\\d+$/"}],
-		"controller": "controllers\\panel\\Contributes@accept",
+		"controller": "controllers\\panel\\Contributes@onAccept",
+		"method": "post"
+	},
+	{
+		"path": ["userpanel", "contributes", "reject", {"type" : "dynamic", "name" : "contribute", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\Contributes@reject",
+		"method": "get"
+	},
+	{
+		"path": ["userpanel", "contributes", "reject", {"type" : "dynamic", "name" : "contribute", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\Contributes@onReject",
 		"method": "post"
 	},
 	{

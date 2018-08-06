@@ -1,8 +1,8 @@
 <?php
 namespace packages\ghafiye\contributes\persons;
 use packages\base;
-use packages\base\db;
-use packages\ghafiye\{Contributes, person, Contribute};
+use packages\base\{db, view\error};
+use packages\ghafiye\{Contributes, person, song, Contribute, contributes\preventRejectException};
 
 class Add extends Contributes {
 	protected $point = 10;
@@ -31,5 +31,18 @@ class Add extends Contributes {
 		$this->contribute->save();
 		$this->contribute->user->points += $this->point;
 		$this->contribute->user->save();
+	}
+	public function onReject() {
+		$person = new song\person();
+		$person->where("person", $this->contribute->person->id);
+		if ($person->has()) {
+			$error = new error();
+			$error->setType(error::FATAL);
+			$error->setCode("ghafiye.contributes.persons.add.onReject");
+			throw new preventRejectException($error);
+		}
+		$this->contribute->person->delete();
+		$this->contribute->status = Contribute::rejected;
+		$this->contribute->save();
 	}
 }
