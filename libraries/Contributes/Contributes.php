@@ -12,6 +12,7 @@ abstract class Contributes {
 	public abstract function getPreviewContent(): string;
 	public abstract function onAccept();
 	public abstract function onReject();
+	public abstract function onDelete();
 	protected function isLtr(string $lang): bool {
 		return !in_array($lang, array("ar", "fa", "dv", "he", "ps", "sd", "ur", "yi", "ug", "ku"));
 	}

@@ -560,9 +560,14 @@
 		{
 			"classes":[
 				"contributes\\Exception",
-				"contributes\\preventRejectException"
+				"contributes\\preventRejectException",
+				"contributes\\preventDeleteException"
 			],
 			"file":"libraries/Contributes/Exceptions.php"
+		},
+		{
+			"classes":["views\\panel\\contributes\\Delete"],
+			"file":"views/panel/Contributes/Delete.php"
 		}
 	]
 }

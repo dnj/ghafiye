@@ -129,4 +129,7 @@ class Translate extends Contributes {
 		$this->contribute->status = Contribute::rejected;
 		$this->contribute->save();
 	}
+	public function onDelete() {
+		$this->contribute->song->delete();
+	}
 }

@@ -16,3 +16,15 @@ class preventRejectException extends Exception {
 		return $this->errors;
 	}
 }
+class preventDeleteException extends Exception {
+	protected $errors = array();
+	public function __construct(error $error, string $message = "") {
+		$this->errors[] = $error;
+	}
+	public function addError(error $error) {
+		$this->errors[] = $error;
+	}
+	public function getErrors(): array {
+		return $this->errors;
+	}
+}

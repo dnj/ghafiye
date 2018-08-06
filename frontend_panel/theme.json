@@ -185,6 +185,11 @@
 			"name": "\\themes\\clipone\\views\\ghafiye\\contributes\\Reject",
 			"parent": "\\packages\\ghafiye\\views\\panel\\contributes\\Reject",
 			"file": "html/Contributes/reject.php"
+		},
+		{
+			"name": "\\themes\\clipone\\views\\ghafiye\\contributes\\Delete",
+			"parent": "\\packages\\ghafiye\\views\\panel\\contributes\\Delete",
+			"file": "html/Contributes/delete.php"
 		}
 	]
 }

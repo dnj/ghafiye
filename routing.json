@@ -365,6 +365,16 @@
 		"method": "post"
 	},
 	{
+		"path": ["userpanel", "contributes", "delete", {"type" : "dynamic", "name" : "contribute", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\Contributes@delete",
+		"method": "get"
+	},
+	{
+		"path": ["userpanel", "contributes", "delete", {"type" : "dynamic", "name" : "contribute", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\panel\\Contributes@terminate",
+		"method": "post"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

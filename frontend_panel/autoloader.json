@@ -127,6 +127,10 @@
 		{
 			"classes":["views\\ghafiye\\contributes\\Reject"],
 			"file":"views/Contributes/Reject.php"
+		},
+		{
+			"classes":["views\\ghafiye\\contributes\\Delete"],
+			"file":"views/Contributes/Delete.php"
 		}
 	]
 }

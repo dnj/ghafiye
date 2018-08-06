@@ -86,6 +86,9 @@ class Add extends Contributes {
 		}
 		$this->contribute->group->delete();
 		$this->contribute->status = Contribute::rejected;
-		return $this->contribute->save();
+		$this->contribute->save();
+	}
+	public function onDelete() {
+		$this->contribute->group->delete();
 	}
 }

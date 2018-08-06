@@ -35,4 +35,5 @@ class Synce extends Contributes {
 		$this->contribute->status = Contribute::rejected;
 		$this->contribute->save();
 	}
+	public function onDelete() {}
 }

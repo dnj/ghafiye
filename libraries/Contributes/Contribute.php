@@ -75,6 +75,13 @@ class Contribute extends dbObject {
 	public function rejected() {
 		return $this->getHandler()->onReject();
 	}
+	public function delete() {
+		if ($this->status == self::waitForAccept) {
+			$this->rejected();
+		}
+		$this->getHandler()->onDelete();
+		parent::delete();
+	}
 	protected function preLoad(array $data): array {
 		if (!isset($data["status"])) {
 			$data["status"] = self::waitForAccept;
