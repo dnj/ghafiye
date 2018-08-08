@@ -223,15 +223,18 @@ class Song extends controller {
 			$person->role = songObj\person::singer;
 			$person->save();
 		}
-
+		$i = 1;
 		foreach (explode("\r\n", $inputs["lyrics"]) as $lyr) {
-			$lyric = new lyric();
-			$lyric->song = $song->id;
-			$lyric->lang = $song->lang;
-			$lyric->time = 0;
-			$lyric->text = $lyr;
-			$lyric->status = lyric::draft;
-			$lyric->save();
+			if ($lyr) {
+				$lyric = new lyric();
+				$lyric->song = $song->id;
+				$lyric->lang = $song->lang;
+				$lyric->time = 0;
+				$lyric->text = trim($lyr);
+				$lyric->status = lyric::draft;
+				$lyric->ordering = $i++;
+				$lyric->save();
+			}
 		}
 		
 		$contribute = new Contribute();

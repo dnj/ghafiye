@@ -33,14 +33,29 @@ export default class Add {
 	protected static runSingerAutoComplete() {
 		const $ac = new AutoComplete($("input[name=person_name]", Add.$form));
 		$ac.persons();
+		$("input[name=person_name]", Add.$form).on("change keyup", function() {
+			if (!$(this).val()) {
+				$("input[name=person]", Add.$form).val("");
+			}
+		});
 	}
 	protected static runAlbumAutoComplete() {
 		const $ac = new AutoComplete($("input[name=album_name]", Add.$form));
 		$ac.albums();
+		$("input[name=album_name]", Add.$form).on("change keyup", function() {
+			if (!$(this).val()) {
+				$("input[name=album]", Add.$form).val("");
+			}
+		});
 	}
 	protected static runGroupAutoComplete() {
 		const $ac = new AutoComplete($("input[name=group_name]", Add.$form));
 		$ac.groups();
+		$("input[name=group_name]", Add.$form).on("change keyup", function() {
+			if (!$(this).val()) {
+				$("input[name=group]", Add.$form).val("");
+			}
+		});
 	}
 	protected static runAvatarPreview() {
 		new AvatarPreview($(".user-image", Add.$form));

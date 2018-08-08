@@ -295,6 +295,7 @@
 		"ghafiye.song.title": "عنوان آهنگ",
 		"ghafiye.song.lang": "زبان آهنگ",
 		"ghafiye.song.genre": "سبک آهنگ",
-		"ghafiye.song.lyrics": "متن آهنگ"
+		"ghafiye.song.lyrics": "متن آهنگ",
+		"ghafiye.contribute.add.group.persons.not.active": "شخص و یا اشخاصی از این گروه هنوز تایید نشده اند<br> تایید گروه به منزله ی تایید تمامی اشخاص در نظر گرفته می شود ."
 	}
 }

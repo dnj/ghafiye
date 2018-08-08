@@ -82,6 +82,8 @@ class Sync extends Contributes {
 				$lyr->lyric->save();
 			}
 		}
+		$this->contribute->song->synced = song::synced;
+		$this->contribute->song->save();
 		$this->contribute->status = Contribute::accepted;
 		$this->contribute->save();
 		$this->contribute->user->points += $this->point;
