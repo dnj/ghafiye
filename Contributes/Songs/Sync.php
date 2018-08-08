@@ -82,8 +82,21 @@ class Sync extends Contributes {
 				$lyr->lyric->save();
 			}
 		}
-		$this->contribute->song->synced = song::synced;
-		$this->contribute->song->save();
+		$song = $this->contribute->song;
+		$lyric = new song\lyric();
+		$lyric->where("song", $song->id);
+		$lyric->where("status", song\lyric::published);
+		$synced = true;
+		foreach ($lyric->get() as $lyric) {
+			if (!$lyric->time) {
+				$synced = false;
+				break;
+			}
+		}
+		if ($synced) {
+			$song->synced = song::synced;
+			$song->save();
+		}
 		$this->contribute->status = Contribute::accepted;
 		$this->contribute->save();
 		$this->contribute->user->points += $this->point;
