@@ -51,24 +51,24 @@ class search extends controller{
 			db::join("ghafiye_persons_names", "ghafiye_persons_names.person=ghafiye_persons.id", "INNER");
 			$song->where("ghafiye_persons_names.name", $data['word'], "contains");
 			db::setQueryOption("DISTINCT");
-			$songsByArtistName = $song::where("status", song::publish)->get(null, array("ghafiye_songs.*", "ghafiye_persons_names.lang as `showing_lang`"));
+			$songsByArtistName = $song::where("ghafiye_songs.status", song::publish)->get(null, array("ghafiye_songs.*", "ghafiye_persons_names.lang as `showing_lang`"));
 		
 
 			db::join("ghafiye_groups_titles", "ghafiye_groups_titles.group_id=ghafiye_songs.group", "LEFT");
 			$song->where("ghafiye_groups_titles.title", $data['word'], "contains");
 			db::setQueryOption("DISTINCT");
-			$songsByGroupName = $song::where("status", song::publish)->get(null, array("ghafiye_songs.*", "ghafiye_groups_titles.lang as `showing_lang`"));
+			$songsByGroupName = $song::where("ghafiye_songs.status", song::publish)->get(null, array("ghafiye_songs.*", "ghafiye_groups_titles.lang as `showing_lang`"));
 
 			db::join("ghafiye_songs_titles", "ghafiye_songs_titles.song=ghafiye_songs.id", "INNER");
 			$song->where("ghafiye_songs_titles.title", $data['word'], "contains");
 			db::setQueryOption("DISTINCT");
-			$songsByTitle = $song::where("status", song::publish)->get(null, array("ghafiye_songs.*", "ghafiye_songs_titles.lang as `showing_lang`"));
+			$songsByTitle = $song::where("ghafiye_songs.status", song::publish)->get(null, array("ghafiye_songs.*", "ghafiye_songs_titles.lang as `showing_lang`"));
 
 
 			db::join("ghafiye_songs_lyrices", "ghafiye_songs_lyrices.song=ghafiye_songs.id", "INNER");
 			$song->where("ghafiye_songs_lyrices.text", $data['word'], "contains");
 			db::setQueryOption("DISTINCT");
-			$songsByLyrice = $song::where("status", song::publish)->get(null, array("ghafiye_songs.*", "ghafiye_songs_lyrices.lang as `showing_lang`"));
+			$songsByLyrice = $song::where("ghafiye_songs.status", song::publish)->get(null, array("ghafiye_songs.*", "ghafiye_songs_lyrices.lang as `showing_lang`"));
 			$songs = array_merge($songsByArtistName, $songsByTitle, $songsByLyrice, $songsByGroupName);
 			$c = count($songs);
 			for($key1=0;$key1<$c-1;$key1++){
@@ -91,17 +91,18 @@ class search extends controller{
 			db::join("ghafiye_groups_persons", "ghafiye_groups_persons.person=ghafiye_persons.id", "INNER");
 			db::join('ghafiye_groups_titles', 'ghafiye_groups_titles.group_id=ghafiye_groups_persons.group_id', 'INNER');
 			$parenthesis = new parenthesis();
+			$parenthesis->where("ghafiye_persons_names.status", person\name::published);
 			$parenthesis->where("ghafiye_persons_names.name", $data['word'], "contains");
 			$parenthesis->where("ghafiye_songs_persons.role", song\person::singer);
 			$person->where($parenthesis);
 			$parenthesis = new parenthesis();
+			$parenthesis->where("ghafiye_groups_titles.status", group\title::published);
 			$parenthesis->where("ghafiye_groups_titles.title", $data['word'], "contains");
 			$person->orWhere($parenthesis);
 			$person->where("ghafiye_songs.status", song::publish);
 			db::groupBy('ghafiye_persons.id');
 			db::setQueryOption("DISTINCT");
-			$persons = $person->get(null, array("ghafiye_persons.*", "ghafiye_persons_names.lang as `showing_lang`"));
-;
+			$persons = $person->get(null, array("ghafiye_persons.*"));
 			$group = new group();
 			db::join('ghafiye_songs', 'ghafiye_songs.group=ghafiye_groups.id', 'INNER');
 			db::join('ghafiye_groups_titles', 'ghafiye_groups_titles.group_id=ghafiye_groups.id', 'INNER');
@@ -109,7 +110,7 @@ class search extends controller{
 			$group->where("ghafiye_groups_titles.title", $data['word'], "contains");
 			db::groupBy('ghafiye_groups.id');
 			db::setQueryOption("DISTINCT");
-			$groups = $group->get(null, array("ghafiye_groups.*", "ghafiye_groups_titles.lang as `showing_lang`"));
+			$groups = $group->get(null, array("ghafiye_groups.*"));
 			$persons = array_merge($groups, $persons);
 
 			if(isset($data['type']) and $data['type']){

@@ -62,6 +62,7 @@ class song extends dbObject{
 		$lyric = new lyric();
 		$lyric->where("lang", $lang);
 		$lyric->where("song", $this->id);
+		$lyric->where("status", lyric::published);
 		return $lyric->get();
 	}
 	public function getSinger() {
