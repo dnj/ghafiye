@@ -82,6 +82,9 @@ class lyrics extends controller{
 			$like->ip = http::$client['ip'];
 			$like->cookie =  http::$request['cookies']['like'];
 			$like->song = $song->id;
+			if (authentication::check()) {
+				$like->user = authentication::getID();
+			}
 			$like->save();
 			$song->likes++;
 			$this->response->setData(true, "liked");
