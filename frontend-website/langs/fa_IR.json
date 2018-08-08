@@ -205,6 +205,7 @@
 		"ghafiye.song.lyric.time": "زمان",
 		"ghafiye.contribute.sync.song": "همگام سازی آهنگ {title}",
 		"ghafiye.contribute.edit": "ویرایش",
-		"ghafiye.contribute.edit.song": "ویراش آهنگ {title}"
+		"ghafiye.contribute.edit.song": "ویراش آهنگ {title}",
+		"ghafiye.contribute.view": "مشاهده مشارکت"
 	}
 }
