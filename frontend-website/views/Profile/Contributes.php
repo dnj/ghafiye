@@ -11,7 +11,7 @@ class Contributes extends parentView {
 	function __beforeLoad(){
 		$this->user = $this->getUser();
 		$this->contributes = $this->getContributes();
-		$this->setTitle(translator::trans("ghafiye.profile", ["title" => $this->user->getFullName()]));
+		$this->setTitle(translator::trans("ghafiye.profile", ["name" => $this->user->getFullName()]));
 		$this->addBodyClass("profile");
 		$this->addBodyClass("contributes");
 		$this->addBodyClass("article");

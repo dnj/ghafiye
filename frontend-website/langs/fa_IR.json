@@ -206,6 +206,8 @@
 		"ghafiye.contribute.sync.song": "همگام سازی آهنگ {title}",
 		"ghafiye.contribute.edit": "ویرایش",
 		"ghafiye.contribute.edit.song": "ویراش آهنگ {title}",
-		"ghafiye.contribute.view": "مشاهده مشارکت"
+		"ghafiye.contribute.view": "مشاهده مشارکت",
+		"ghafiye.profile": "مشاهده فعالیت های {name}",
+		"ghafiye.profile.favorits": "مشاهده علاقه مندی های {name}"
 	}
 }

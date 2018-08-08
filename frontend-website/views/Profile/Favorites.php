@@ -11,7 +11,7 @@ class Favorites extends parentView {
 	function __beforeLoad(){
 		$this->user = $this->getUser();
 		$this->favorites = $this->getFavoriteSongs();
-		$this->setTitle(translator::trans("ghafiye.profile.favorits", ["title" => $this->user->getFullName()]));
+		$this->setTitle(translator::trans("ghafiye.profile.favorits", ["name" => $this->user->getFullName()]));
 		$this->addBodyClass("profile");
 		$this->addBodyClass("favorites");
 		$this->addBodyClass("article");

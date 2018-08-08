@@ -23,6 +23,10 @@ $this->the_header();
 						</div>
 					</div>
 				</div>
+				<?php
+				$songs = $this->getFavoritSongs();
+				if ($songs) {
+				?>
 				<div class="panel panel-default favorit-songs">
 					<div class="panel-heading">
 						علاقه مندی ها
@@ -30,8 +34,6 @@ $this->the_header();
 					<div class="panel-body">
 						<ul class="list-group">
 							<?php
-							$songs = $this->getFavoritSongs();
-							if ($songs) {
 								foreach ($this->getFavoritSongs() as $song) {
 									$singer = $song->getPerson(person::singer);
 							?>
@@ -48,22 +50,14 @@ $this->the_header();
 									</div>
 								</div>
 							</li>
-							<?php
-								}
-							} else {
-							?>
-							<li class="list-group-item">
-								بدون علاقه مندی
-							</li>
 							<?php } ?>
 						</ul>
 					</div>
-					<?php if ($songs) { ?>
 					<div class="panel-footer text-center">
 						<a href="<?php echo base\url("profile/favorites/{$this->user->id}"); ?>" class="btn btn-bloc">بیشتر</a>
 					</div>
-					<?php } ?>
 				</div>
+				<?php } ?>
 			</div>
 			<div class="col-sm-7">
 				<div class="contributes">
