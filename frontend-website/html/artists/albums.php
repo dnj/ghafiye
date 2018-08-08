@@ -8,7 +8,8 @@ $lang = $this->getSongLanguage();
 ?>
 <div class="row main-row">
 	<?php
-	foreach($this->getAlbums() as $album){
+	if ($albums = $this->getAlbums()) {
+		foreach($this->getAlbums() as $album){
 	?>
 	<div class="col-md-3 col-sm-6">
 		<a class="album" href="<?php echo(base\url($this->artist->encodedName($lang).'/albums/'.$album->encodedTitle($lang))); ?>">
@@ -20,6 +21,17 @@ $lang = $this->getSongLanguage();
 				</ul>
 			</div>
 		</a>
+	</div>
+	<?php
+		}
+	} else {
+	?>
+	<div class="col-sm-8 col-sm-offset-2">
+		<div class="alert alert-warning text-center">
+			<p>
+			آلبومی برای نمایش یافت نشد
+			</p>
+		</div>
 	</div>
 	<?php } ?>
 </div>

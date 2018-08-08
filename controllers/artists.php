@@ -36,9 +36,6 @@ class artists extends controller{
 			$group = group::byId($groupName->group_id);
 			$songs = song::where("status", song::publish)->byGroup($group);
 		}
-		if(!$songs){
-			throw new NotFound;
-		}
 		if($person){
 			$albums = album::where("ghafiye_songs.status", song::publish)->bySinger($person, 5);
 			$view->setArtist($person);

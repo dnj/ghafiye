@@ -9,10 +9,11 @@ $lang = $this->getSongLanguage();
 <div class="row main-row">
 	<section class="songs col-sm-8">
 		<h3><?php echo translator::trans('lyrics.top.byArtist', array('artist' => $this->artist->name($lang))); ?></h3>
+		<?php if ($songs = $this->getSongs()) { ?>
 		<ul>
 			<?php
 			$x = 0;
-			foreach($this->getSongs() as $song){
+			foreach($songs as $song){
 				$singer = $song->getPerson(person::singer);
 			?>
 			<li class="row">
@@ -29,9 +30,14 @@ $lang = $this->getSongLanguage();
 			</li>
 			<?php } ?>
 		</ul>
-
+		<?php } else { ?>
+			<div class="alert alert-warning">
+				<p>هنوز آهنگی برای این خواننده اضافه نشده است</p>
+			</div>
+		<?php } ?>
 	</section>
 	<aside class="col-sm-4">
+		<?php if ($albums = $this->getAlbums()) { ?>
 		<div class="panel panel-albums">
 			<div class="panel-heading">
 				<?php echo translator::trans('artist.albums'); ?>
@@ -40,7 +46,7 @@ $lang = $this->getSongLanguage();
 			<div class="panel-body">
 				<ul>
   	  			<?php
-	  	  			foreach($this->getAlbums() as $album){
+	  	  			foreach($albums as $album){
 	  	  			?>
 	  	  			<li>
 	  	  				<img src="<?php echo $album->getImage(42, 42); ?>" alt="<?php echo $album->title($lang); ?>">
@@ -50,13 +56,14 @@ $lang = $this->getSongLanguage();
 	  	  				</div>
 	  	  			</li>
 	  	  			<?php } ?>
-	  	  		</ul>
+				</ul>
 			</div>
 		</div>
+		<?php } ?>
 		<div class="row">
-		<div class="col-xs-12">
-			<a class="banner-ad" href="https://www.jeyserver.com" target="_blank" title="هاست لینوکس، برنامه نویسی php">
-				<img src="<?php echo theme::url("assets/images/ads/3078323516528828115111121661694.gif"); ?>" alt="جی هاست لینوکس، برنامه نویسی php">
+			<div class="col-xs-12">
+				<a class="banner-ad" href="https://www.jeyserver.com" target="_blank" title="هاست لینوکس، برنامه نویسی php">
+					<img src="<?php echo theme::url("assets/images/ads/3078323516528828115111121661694.gif"); ?>" alt="جی هاست لینوکس، برنامه نویسی php">
 				</a>
 			</div>
 		</div>

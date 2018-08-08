@@ -24,6 +24,8 @@ $lang = $this->getSongLanguage();
 <nav class="row">
 	<ul>
 		<li<?php if($this instanceof themes\musixmatch\views\artists\view)echo(' class="active"'); ?>><a href="<?php echo base\url($this->artist->encodedName($lang)); ?>"><?php echo translator::trans('artist.songs'); ?></a></li>
+		<?php if ($this->getAlbums()) { ?>
 		<li<?php if($this instanceof themes\musixmatch\views\artists\albums)echo(' class="active"'); ?>><a href="<?php echo base\url($this->artist->encodedName($lang)."/albums"); ?>"><?php echo translator::trans('artist.albums'); ?></a></li>
+		<?php } ?>
 	</ul>
 </nav>
