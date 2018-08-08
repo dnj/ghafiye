@@ -475,4 +475,190 @@ class Song extends controller {
 		$this->response->setStatus(true);
 		return $this->response;
 	}
+	public function edit($data) {
+		$song = new songObj();
+		$song->where("id", $data["song"]);
+		$song->where("status", songObj::publish);
+		if (!$song = $song->getOne()) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\contributes\songs\Edit::class);
+		$this->response->setView($view);
+		$view->setSong($song);
+		$this->response->setStatus(true);
+		return $this->response;
+	}
+	public function update($data) {
+		$song = new songObj();
+		$song->where("id", $data["song"]);
+		$song->where("status", songObj::publish);
+		if (!$song = $song->getOne()) {
+			throw new NotFound();
+		}
+		$view = view::byName(views\contributes\songs\Edit::class);
+		$this->response->setView($view);
+		$view->setSong($song);
+		$inputsRules = array(
+			"image" => array(
+				"type" => "file",
+				"optional" => true,
+				"empty" => true,
+			),
+			"title" => array(
+				"type" => "string",
+			),
+			"lyrics" => array(),
+		);
+		$inputs = $this->checkinputs($inputsRules);
+		if (isset($inputs["image"])) {
+			if ($inputs["image"]["error"] == 0) {
+				$type = getimagesize($inputs["image"]["tmp_name"]);
+				if (!in_array($type[2], array(IMAGETYPE_JPEG ,IMAGETYPE_GIF, IMAGETYPE_PNG))) {
+					throw new inputValidation("image");
+				}
+			} else if ($inputs["image"]["error"] == 4) {
+				unset($inputs["image"]);
+			} else {
+				throw new inputValidation("image");
+			}
+		}
+		$lyric = new lyric();
+		$lyric->where("song", $song->id);
+		$lyric->where("lang", $song->lang);
+		$lyric->where("status", lyric::published);
+		$lyric->orderBy("ordering", "ASC");
+		$lyrics = array();
+		foreach ($lyric->get() as $lyric) {
+			$lyrics[$lyric->id] = $lyric;
+		}
+		$ids = array();
+		foreach ($inputs["lyrics"] as $key => $lyric) {
+			if (isset($lyric["text"]) and !$lyric["text"]) {
+				unset($inputs["lyrics"][$key]);
+				continue;
+			}
+			if (isset($lyric["id"])) {
+				if ($lyric["id"]) {
+					$ids[] = $lyric["id"];
+					if (!isset($lyrics[$lyric["id"]])) {
+						throw new inputValidation("lyrics[{$key}][text]");
+					}
+				} else {
+					unset($inputs["lyrics"][$key]["id"]);
+				}
+			}
+		}
+		$inputs["lyrics"] = array_values($inputs["lyrics"]);
+		foreach ($inputs["lyrics"] as $key => $lyric) {
+			if (isset($lyric["id"])) {
+				$lyr = $lyrics[$lyric["id"]];
+				if ($lyr->text == $lyric["text"] and $lyr->ordering == $key + 1) {
+					unset($inputs["lyrics"][$key]);
+				}
+			}
+		}
+		if (
+			$inputs["lyrics"] or 
+			count($ids) != count($lyrics) or 
+			$song->title($song->lang) != $inputs["title"] or
+			isset($inputs["image"])
+		) {
+			$contribute = new Contribute();
+			$contribute->title = translator::trans("ghafiye.contributes.title.songs.edit", array("title" => $song->title($song->lang)));
+			$contribute->user = authentication::getID();
+			$contribute->song = $song->id;
+			$contribute->lang = $song->lang;
+			$contribute->type = songs\Edit::class;
+			$contribute->point = (new songs\Edit)->getPoint();
+			$contribute->save();
+			
+			$deleted = array();
+			foreach ($lyrics as $lyric) {
+				if (!in_array($lyric->id, $ids)) {
+					$clyr = new ContributeLyric();
+					$clyr->contribute = $contribute->id;
+					$clyr->text = $lyric->text;
+					$clyr->lyric = $lyric->id;
+					$clyr->ordering = $lyric->ordering;
+					$clyr->save();
+					$deleted[] = $clyr->id;
+				}
+			}
+			$orderingUpLyrics = array();
+			$orderingDownLyrics = array();
+			foreach ($inputs["lyrics"] as $key => $lyr) {
+				$ordering = $key + 1;
+				$clyr = new ContributeLyric();
+				$clyr->contribute = $contribute->id;
+				$clyr->text = $lyr["text"];
+				if (isset($lyr["id"])) {
+					$lyric = $lyrics[$lyr["id"]];
+					$clyr->lyric = $lyric->id;
+					if ($lyric->text != $lyr["text"]) {
+						$clyr->old_text = $lyric->text;
+					}
+				} else {
+					$lyric = new lyric();
+					$lyric->song = $song->id;
+					$lyric->lang = $song->lang;
+					$lyric->time = 0;
+					$lyric->text = $lyr["text"];
+					$lyric->status = lyric::draft;
+					$lyric->ordering = $ordering;
+					$lyric->save();
+
+					$clyr->lyric = $lyric->id;
+				}
+				$clyr->ordering = $ordering;
+				$clyr->save();
+				if (isset($lyr["id"])) {
+					if ($lyric->ordering > $ordering) {
+						$orderingUpLyrics[] = $clyr->id;
+					} else if ($lyric->ordering < $ordering) {
+						$orderingDownLyrics[] = $clyr->id;
+					}
+				}
+			}
+			if ($orderingUpLyrics) {
+				$contribute->setParam("orderingUpLyrics", $orderingUpLyrics);
+			}
+			if ($orderingDownLyrics) {
+				$contribute->setParam("orderingDownLyrics", $orderingDownLyrics);
+			}
+			if ($deleted) {
+				$contribute->setParam("deletedLyrics", $deleted);
+			}
+			if ($song->title($song->lang) != $inputs["title"]) {
+				$contribute->setParam("title", $inputs["title"]);
+			}
+			if (isset($inputs["image"])) {
+				$file = new file\local($inputs["image"]["tmp_name"]);
+				$tmpfile = new file\tmp();
+				$type = getimagesize($file->getPath());
+				switch($type[2]){
+					case(IMAGETYPE_JPEG):
+						$image = new image\jpeg($file);
+						$type_name = ".jpg";
+						break;
+					case(IMAGETYPE_PNG):
+						$image = new image\png($file);
+						$type_name = ".png";
+						break;
+				}
+				$image->saveToFile($tmpfile);
+				$path = "storage/public/songs/" . $tmpfile->md5() . $type_name;
+				$contribute->setParam("image", $path);
+				$image = new file\local(packages::package("ghafiye")->getFilePath($path));
+				$image->getDirectory()->make(true);
+				$tmpfile->copyTo($image);
+			}
+			$song->save();
+		} else {
+			$this->response->setData(array(
+				"contribute" => false,
+			));
+		}
+		$this->response->setStatus(true);
+		return $this->response;
+	}
 }

@@ -14,6 +14,7 @@ class lyric extends dbObject{
 		'parent' => array('type' => 'int'),
 		'time' => array('type' => 'int'),
 		'text' => array('type' => 'text', 'required' => true),
+		"ordering" => array("type" => "int", "required" => true),
 		"status" => array("type" => "int", "required" => true),
 	);
     protected $relations = array(

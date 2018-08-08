@@ -390,6 +390,16 @@
 		"method": "post"
 	},
 	{
+		"path": ["contribute", "song", "edit", {"type" : "dynamic", "name" : "song", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\contributes\\Song@edit",
+		"method": "get"
+	},
+	{
+		"path": ["contribute", "song", "edit", {"type" : "dynamic", "name" : "song", "regex" : "/^\\d+$/"}],
+		"controller": "controllers\\contributes\\Song@update",
+		"method": "post"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

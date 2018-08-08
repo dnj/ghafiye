@@ -15,6 +15,7 @@ class Lyric  extends dbObject {
 		"old_text" => array("type" => "text"),
 		"text" => array("type" => "text"),
 		"time" => array("type" => "int"),
+		"ordering" => array("type" => "int"),
 	);
     protected $relations = array(
         "contribute" => array("hasOne", Contribute::class, "contribute"),

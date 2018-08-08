@@ -4,6 +4,7 @@ use packages\userpanel\date;
 use packages\base\{db, db\dbObject};
 
 class Contribute extends dbObject {
+	use Paramable;
 	const accepted = 1;
 	const waitForAccept = 2;
 	const rejected = 3;

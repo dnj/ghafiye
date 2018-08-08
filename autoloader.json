@@ -576,6 +576,18 @@
 		{
 			"classes":["views\\contributes\\songs\\Sync"],
 			"file":"views/Contributes/Songs/Sync.php"
+		},
+		{
+			"classes":["views\\contributes\\songs\\Edit"],
+			"file":"views/Contributes/Songs/Edit.php"
+		},
+		{
+			"classes":["contributes\\songs\\Edit"],
+			"file":"Contributes/Songs/Edit.php"
+		},
+		{
+			"classes":["Paramable"],
+			"file":"libraries/base/Paramable.php"
 		}
 	]
 }

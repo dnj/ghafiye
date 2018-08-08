@@ -201,6 +201,7 @@
 		"ghafiye.contributes.title.singer.add": "خواننده {name} را اضافه کرد",
 		"ghafiye.contributes.title.group.add": "گروه {title} را اضافه کرد",
 		"ghafiye.contributes.title.album.add": "آلبوم {title} را اضافه کرد",
-		"ghafiye.contributes.title.songs.synce": "آهنگ {title} را همگام سازی کرد"
+		"ghafiye.contributes.title.songs.synce": "آهنگ {title} را همگام سازی کرد",
+		"ghafiye.contributes.title.songs.edit": "آهنگ {title} را ویرایش کرد"
 	}
 }

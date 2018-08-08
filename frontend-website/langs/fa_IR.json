@@ -203,6 +203,8 @@
 		"ghafiye.album.title": "نام آلبوم",
 		"ghafiye.album.lang": "زبان",
 		"ghafiye.song.lyric.time": "زمان",
-		"ghafiye.contribute.sync.song": "همگام سازی آهنگ {title}"
+		"ghafiye.contribute.sync.song": "همگام سازی آهنگ {title}",
+		"ghafiye.contribute.edit": "ویرایش",
+		"ghafiye.contribute.edit.song": "ویراش آهنگ {title}"
 	}
 }

@@ -2,7 +2,7 @@
 use \packages\base;
 use \packages\userpanel\date;
 use \packages\base\{translator, frontend\theme};
-use \packages\ghafiye\{song\lyric, song\person, person\name as personName};
+use \packages\ghafiye\{song\lyric, song\person, person\name as personName, song, authentication};
 $this->the_header();
 $numberOfLangs = $this->numberOfLangs();
 $lang = $this->getLyricsLanguage();
@@ -161,6 +161,26 @@ $lang = $this->getLyricsLanguage();
 		</div>
 	</div>
 	<div class="col-sm-3 tools col-md-pull-8">
+		<div class="row">
+			<div class="col-xs-12">
+				<?php if ($this->song->synced != song::synced) { ?>
+					<a href="<?php echo base\url("contribute/song/sync/" . $this->song->id); ?>" class="btn btn-sync btn-sm btn-block">
+						<div class="btn-icon"><i class="fa fa-clock-o"></i></div>
+						<?php echo translator::trans("ghafiye.contribute.sync"); ?>
+					</a>
+				<?php } ?>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<?php if (authentication::check()) { ?>
+					<a href="<?php echo base\url("contribute/song/edit/" . $this->song->id); ?>" class="btn btn-sm btn-edit btn-block">
+						<div class="btn-icon"><i class="fa fa-pencil"></i></div>
+						<?php echo translator::trans("ghafiye.contribute.edit"); ?>
+					</a>
+				<?php } ?>
+			</div>
+		</div>
 		<ul class="list-group">
 			<a href="#" id="like" class="list-group-item" data-song="<?php echo($this->song->id); ?>">
 				<span class="float-xs-right"><i class="fa like-icon <?php echo(($this->getlikeStatus() ? "fa-heart" : "fa-heart-o")); ?>"></i></span>
