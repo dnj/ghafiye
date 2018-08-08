@@ -125,7 +125,7 @@ class genres extends controller{
 				}
 				foreach($inputs['titles'] as $lang => $title){
 					if($title){
-						$genre->addTitle($title, $lang);
+						$genre->addTitle($title, $lang, genre\title::published);
 					}else{
 						throw new inputValidation("titles[{$lang}]");
 					}
@@ -187,7 +187,7 @@ class genres extends controller{
 				$genre->save();
 				foreach($inputs['titles'] as $lang => $title){
 					if($title){
-						$genre->addTitle($title, $lang);
+						$genre->addTitle($title, $lang, genre\title::published);
 					}else{
 						throw new inputValidation("titles[{$lang}]");
 					}

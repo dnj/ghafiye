@@ -234,7 +234,7 @@ class persons extends controller{
 				}
 				foreach($inputs['names'] as $lang => $name){
 					if($name){
-						$person->addName($name, $lang);
+						$person->addName($name, $lang, person\name::published);
 					}else{
 						throw new inputValidation("names[{$lang}]");
 					}
@@ -381,7 +381,7 @@ class persons extends controller{
 				}
 				$person->save();
 				foreach($inputs['names'] as $lang => $name){
-					$person->addName($name, $lang);
+					$person->addName($name, $lang, person\name::published);
 				}
 				
 				$log = new log();

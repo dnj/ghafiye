@@ -23,4 +23,10 @@ class genre extends dbObject{
 		$genre->setQueryOption('DISTINCT');
 		return $genre->get($limit, "ghafiye_genres.*");
 	}
+	public function getTitles(): array {
+		$title = new genre\title();
+		$title->where("genre", $this->id);
+		$title->where("status", genre\title::published);
+		return $title->get();
+	}
 }

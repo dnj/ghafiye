@@ -139,6 +139,7 @@ class groups extends controller{
 						}
 						$obj = new title();
 						$obj->where('title', $title);
+						$obj->where("status", title::published);
 						$obj->where('group_id', $group->id, '!=');
 						if($obj->has()){
 							throw new duplicateTitleRecord($title);
@@ -243,7 +244,7 @@ class groups extends controller{
 						}
 					}
 					foreach($inputs['titles'] as $lang => $title){
-						$group->addTitle($title, $lang);
+						$group->addTitle($title, $lang, title::published);
 					}
 				}
 				if(isset($inputs['persons'])){
@@ -432,7 +433,7 @@ class groups extends controller{
 					$person->save();
 				}
 				foreach($inputs['titles'] as $lang => $title){
-					$group->addTitle($title, $lang);
+					$group->addTitle($title, $lang, title::published);
 				}
 
 				$log = new log();

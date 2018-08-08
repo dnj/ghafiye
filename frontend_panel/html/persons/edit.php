@@ -129,7 +129,7 @@ $person = $this->getperson();
 													<?php if($hasButtons){ ?><th></th><?php } ?>
 												</thead>
 												<tbody class="langs" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
-													<?php foreach($person->names as $name){ ?>
+													<?php foreach($person->getNames() as $name){ ?>
 													<tr data-lang="<?php echo $name->lang; ?>">
 														<td class="column-left"><?php
 														$this->createField(array(
@@ -191,7 +191,7 @@ $person = $this->getperson();
 				)
 			);
 			foreach($feilds as $input){
-				echo $this->createField($input);
+				$this->createField($input);
 			}
 			?>
 		</form>

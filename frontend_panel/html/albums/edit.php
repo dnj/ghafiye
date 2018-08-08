@@ -68,7 +68,7 @@ $album = $this->getAlbum();
 												<th></th>
 											</thead>
 											<tbody class="titles" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
-												<?php foreach($album->titles as $title){ ?>
+												<?php foreach($album->getTitles() as $title){ ?>
 												<tr data-lang="<?php echo $title->lang; ?>">
 													<td class="column-left"><?php
 													$this->createField(array(

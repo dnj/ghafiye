@@ -76,7 +76,7 @@ $group = $this->getGroup();
 												<th></th>
 											</thead>
 											<tbody class="titles" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
-												<?php foreach($group->titles as $title){ ?>
+												<?php foreach($group->getTitles() as $title){ ?>
 												<tr data-lang="<?php echo $title->lang; ?>">
 													<td class="column-left"><?php
 													$this->createField(array(

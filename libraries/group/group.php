@@ -39,4 +39,10 @@ class group extends dbObject{
 	public function name($lang = null){
 		return $this->title($lang);
 	}
+	public function getTitles(): array {
+		$title = new group\title();
+		$title->where("group", $this->id);
+		$title->where("status", group\title::published);
+		return $title->get();
+	}
 }

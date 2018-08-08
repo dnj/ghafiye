@@ -34,4 +34,10 @@ class person extends dbObject{
 	public function getCover(int $width, int $height){
 		return $this->getImage($width, $height, 'cover');
 	}
+	public function getNames(): array {
+		$name = new person\name();
+		$name->where("person", $this->id);
+		$name->where("status", person\name::published);
+		return $name->get();
+	}
 }

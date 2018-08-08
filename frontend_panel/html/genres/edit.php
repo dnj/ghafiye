@@ -44,7 +44,7 @@ $genre = $this->getgenre();
 												<th></th>
 											</thead>
 											<tbody class="langs" data-langs='<?php echo json\encode($this->getLangsForSelect()); ?>'>
-												<?php foreach($genre->titles as $title){ ?>
+												<?php foreach($genre->getTitles() as $title){ ?>
 												<tr data-lang="<?php echo $title->lang; ?>">
 													<td class="column-left"><?php
 													$this->createField(array(

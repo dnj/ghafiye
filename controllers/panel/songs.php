@@ -692,12 +692,14 @@ class songs extends controller{
 						$songPerson->save();
 					}
 				}
+				$i = 1;
 				foreach($inputs['lyric'] as $lyr){
 					$lyric = new lyric();
 					$lyric->song = $song->id;
 					$lyric->lang = $song->lang;
 					$lyric->time = $lyr['time'];
 					$lyric->text = $lyr['text'];
+					$lyric->ordering = $i++;
 					$lyric->save();
 				}
 				$log = new log();

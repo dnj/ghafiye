@@ -79,4 +79,10 @@ class album extends dbObject{
 		}
 		return false;
 	}
+	public function getTitles() {
+		$title = new album\title();
+		$title->where("album", $this->id);
+		$title->where("status", album\title::published);
+		return $title->get();
+	}
 }

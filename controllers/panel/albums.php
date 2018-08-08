@@ -151,7 +151,7 @@ class albums extends controller{
 				}
 				foreach($inputs['titles'] as $lang => $title){
 					if($title){
-						$album->addTitle($title, $lang);
+						$album->addTitle($title, $lang, album\title::published);
 					}else{
 						throw new inputValidation("titles[{$lang}]");
 					}
@@ -314,7 +314,7 @@ class albums extends controller{
 				}
 				$album->save();
 				foreach($inputs['titles'] as $lang => $title){
-					$album->addTitle($title, $lang);
+					$album->addTitle($title, $lang, album\title::published);
 				}
 				foreach($songs as $song){
 					$song->album = $album->id;
