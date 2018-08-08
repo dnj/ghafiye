@@ -20,18 +20,19 @@ class Translate extends Contributes {
 	}
 	public function buildFrontend(): string {
 		$isLtr = $this->isLtr($this->contribute->song->lang);
+		$translteILtr = $this->isLtr($this->contribute->lang);
 		$html = '<div class="row">
 			<div class="col-sm-4 col-xs-12">
 				<div class="row">
 					<div class="col-xs-12">
-						<img src="' . $this->getImage(250, 250) . '" alt="' . $this->contribute->song->title() . '" class="img-responsive">
+						<img src="' . $this->getImage(250, 250) . '" alt="' . $this->getTitle() . '" class="img-responsive">
 					</div>
 				</div>
 				<div class="row">
 					<div class="col-xs-12">
 						<div class="form-group">
 							<label class="col-xs-5">' . translator::trans("ghafiye.song.title") . ':</label>
-							<div class="col-xs-7' . ($isLtr ? " ltr" : "") .'">' . $this->contribute->song->title($this->contribute->song->lang) . '</div>
+							<div class="col-xs-7' . ($translteILtr ? " ltr" : "") .'">' . $this->getTitle() . '</div>
 						</div>
 						<div class="form-group">
 							<label class="col-xs-5">' . translator::trans("ghafiye.singer") . ':</label>
@@ -113,6 +114,9 @@ class Translate extends Contributes {
 				$lyr->lyric->save();
 			}
 		}
+		if ($title = $this->contribute->param("title")) {
+			$this->contribute->song->setTitle($title, $this->contribute->lang);
+		}
 		$lyric = new song\lyric();
 		$lyric->where("song", $this->song->id);
 		$lyric->where("lang", $this->song->lang);
@@ -154,6 +158,16 @@ class Translate extends Contributes {
 		$this->contribute->save();
 	}
 	public function onDelete() {
-		$this->contribute->song->delete();
+		$lyric = new Lyric();
+		$lyric->where("contribute", $this->contribute->id);
+		foreach ($lyric->get() as $lyr) {
+			if ($lyr->lyric) {
+				$lyr->lyric->delete();
+			}
+		}
+	}
+	protected function getTitle(): string {
+		$title = $this->contribute->param("title");
+		return $title ? $title : $this->contribute->song->title($this->contribute->lang);
 	}
 }

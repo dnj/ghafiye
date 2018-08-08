@@ -47,6 +47,7 @@ export default class Translate {
 				success: function(data) {
 					$("> p", $progress).html(`درصد ترجمه شده: `);
 					$(that).prop("disabled", false);
+					$(".translate-panel .tanslate-input", Translate.$form).val("");
 					for (const lyric of data.items as Lyric[]) {
 						$(`input[name="translates[${lyric.parent}]"]`, Translate.$form).val(lyric.text);
 					}
@@ -108,9 +109,18 @@ export default class Translate {
 			};
 			$(this).formAjax({
 				success: (data: any) => {
+					if (data.hasOwnProperty("contribute")) {
+						if (!data.contribute) {
+							$.growl.warning({
+								title: "ناموفق",
+								message: "برای دریافت امتیاز مشارکت نیاز است تا فعالیتی داشته باشید ."
+							});
+							return;
+						}
+					}
 					$.growl.notice({
 						title: "موفق",
-						message: "امتیاز فعالیت شما بعد از تایید ترجمه برایتان حساب خواهد شد"
+						message: "امتیاز فعالیت شما بعد از تایید ترجمه اهدا خواهد شد"
 					});
 				},
 				error: function(error: any) {

@@ -310,94 +310,88 @@ class Song extends controller {
 			"translates" => array(),
 		);
 		$inputs = $this->checkinputs($inputsRules);
-		try {
-			if ($inputs["lang"] == $song->lang) {
-				throw new inputValidation("lang");
-			}
-			if ($song->translatedTo($inputs["lang"])) {
-				throw new alreadyTranslated();
-			}
-			if (!$inputs["translates"]) {
-				throw new inputValidation("translates");
-			}
-			$lyric = new lyric();
-			$lyric->where("song", $song->id);
-			$lyric->where("status", lyric::published);
-			$lyric->where("lang", array($song->lang, $inputs["lang"]), "in");
-			$lyrics = $lyric->get();
-			foreach ($lyrics as $lyric) {
-				if ($lyric->lang == $song->lang) {
-					if (isset($inputs["translates"][$lyric->id])) {
-						if (!$inputs["translates"][$lyric->id]) {
-							unset($inputs["translates"][$lyric->id]);
-						}
-					}
-				} else {
-					if (isset($inputs["translates"][$lyric->parent])) {
-						if ($inputs["translates"][$lyric->parent]) {
-							if ($lyric->text == $inputs["translates"][$lyric->parent]) {
-								unset($inputs["translates"][$lyric->parent]);
-							}
-						} else {
-							unset($inputs["translates"][$lyric->parent]);
-						}
+		if ($inputs["lang"] == $song->lang) {
+			throw new inputValidation("lang");
+		}
+		if (!$inputs["translates"]) {
+			throw new inputValidation("translates");
+		}
+		$lyric = new lyric();
+		$lyric->where("song", $song->id);
+		$lyric->where("status", lyric::published);
+		$lyric->where("lang", array($song->lang, $inputs["lang"]), "in");
+		$lyrics = $lyric->get();
+		foreach ($lyrics as $lyric) {
+			if ($lyric->lang == $song->lang) {
+				if (isset($inputs["translates"][$lyric->id])) {
+					if (!$inputs["translates"][$lyric->id]) {
+						unset($inputs["translates"][$lyric->id]);
 					}
 				}
-			}
-			if ($inputs["translates"]) {
-				$contribute = new Contribute();
-				$contribute->title = translator::trans("ghafiye.contributes.title.songs.translate", array(
-					"title" => $song->title($song->lang),
-					"lang" => translator::trans("translations.langs.{$inputs["lang"]}"),
-				));
-				$contribute->user = authentication::getID();
-				$contribute->song = $song->id;
-				$contribute->lang = $inputs["lang"];
-				$contribute->type = songs\Translate::class;
-				$contribute->point = (new songs\Translate)->getPoint();
-				$contribute->save();
-				foreach ($lyrics as $lyric) {
-					if ($lyric->lang == $song->lang) {
-						continue;
-					}
-					if (isset($inputs["translates"][$lyric->parent])) {
-						$clyr = new ContributeLyric();
-						$clyr->contribute = $contribute->id;
-						$clyr->parent = $lyric->parent;
-						$clyr->lyric = $lyric->id;
-						$clyr->old_text = $lyric->text;
-						$clyr->text = $inputs["translates"][$lyric->parent];
-						$clyr->save();
+			} else {
+				if (isset($inputs["translates"][$lyric->parent])) {
+					if ($inputs["translates"][$lyric->parent]) {
+						if ($lyric->text == $inputs["translates"][$lyric->parent]) {
+							unset($inputs["translates"][$lyric->parent]);
+						}
+					} else {
 						unset($inputs["translates"][$lyric->parent]);
 					}
 				}
-				foreach ($inputs["translates"] as $lyric => $translate) {
-					$lyr = new lyric();
-					$lyr->song = $song->id;
-					$lyr->lang = $inputs["lang"];
-					$lyr->text = $translate;
-					$lyr->parent = $lyric;
-					$lyr->status = lyric::draft;
-					$lyr->save();
-
+			}
+		}
+		if ($inputs["translates"] or (isset($inputs["title"]) and $song->title($inputs["lang"]) != $inputs["title"])) {
+			$contribute = new Contribute();
+			$contribute->title = translator::trans("ghafiye.contributes.title.songs.translate", array(
+				"title" => $song->title($song->lang),
+				"lang" => translator::trans("translations.langs.{$inputs["lang"]}"),
+			));
+			$contribute->user = authentication::getID();
+			$contribute->song = $song->id;
+			$contribute->lang = $inputs["lang"];
+			$contribute->type = songs\Translate::class;
+			$contribute->point = (new songs\Translate)->getPoint();
+			$contribute->save();
+			foreach ($lyrics as $lyric) {
+				if ($lyric->lang == $song->lang) {
+					continue;
+				}
+				if (isset($inputs["translates"][$lyric->parent])) {
 					$clyr = new ContributeLyric();
 					$clyr->contribute = $contribute->id;
-					$clyr->parent = $lyric;
-					$clyr->lyric = $lyr->id;
-					$clyr->text = $lyr->text;
+					$clyr->parent = $lyric->parent;
+					$clyr->lyric = $lyric->id;
+					$clyr->old_text = $lyric->text;
+					$clyr->text = $inputs["translates"][$lyric->parent];
 					$clyr->save();
-				}
-				if (isset($inputs["title"])) {
-					$song->addTitle($inputs["title"], $inputs["lang"], title::draft);
+					unset($inputs["translates"][$lyric->parent]);
 				}
 			}
-			$this->response->setStatus(true);
-		} catch (alreadyTranslated $e) {
-			$error = new error();
-			$error->setType(error::WARNING);
-			$error->setMessage(translator::trans("error.contribute.songs.translate.alreadyTranslated"));
-			$view->addError($error);
+			foreach ($inputs["translates"] as $lyric => $translate) {
+				$lyr = new lyric();
+				$lyr->song = $song->id;
+				$lyr->lang = $inputs["lang"];
+				$lyr->text = $translate;
+				$lyr->parent = $lyric;
+				$lyr->status = lyric::draft;
+				$lyr->save();
+
+				$clyr = new ContributeLyric();
+				$clyr->contribute = $contribute->id;
+				$clyr->parent = $lyric;
+				$clyr->lyric = $lyr->id;
+				$clyr->text = $lyr->text;
+				$clyr->save();
+			}
+			if (isset($inputs["title"]) and $song->title($inputs["lang"]) != $inputs["title"]) {
+				$contribute->setParam("title", $inputs["title"]);
+			}
+		} else {
+			$this->response->setData(array(
+				"contribute" => false,
+			));
 		}
+		$this->response->setStatus(true);
 		return $this->response;
 	}
 	public function sync($data) {

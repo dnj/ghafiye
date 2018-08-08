@@ -70,10 +70,11 @@ trait title{
 		$title = new $this->relations['titles'][1]();
 		$title->where("lang", $lang);
 		$title->where($column, $this->id);
-		$title->getOne();
-		if($title->id){
+		$title = $title->getOne();
+		if($title and $title->id){
 			$title->title = $titletxt;
 		}else{
+			$title = new $this->relations['titles'][1]();
 			$title->$column = $this->id;
 			$title->lang = $lang;
 			$title->title = $titletxt;
