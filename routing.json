@@ -400,6 +400,11 @@
 		"method": "post"
 	},
 	{
+		"path": ["register"],
+		"controller": "controllers\\Login@register",
+		"method": "post"
+	},
+	{
 		"path": [{"type":"dynamic","name":"artist"},"albums"],
 		"controller": "controllers\\artists@albums",
 		"method":"get"

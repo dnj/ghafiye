@@ -588,6 +588,10 @@
 		{
 			"classes":["Paramable"],
 			"file":"libraries/base/Paramable.php"
+		},
+		{
+			"classes":["controllers\\Login"],
+			"file":"controllers/Login.php"
 		}
 	]
 }
