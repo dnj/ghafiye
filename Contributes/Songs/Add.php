@@ -80,9 +80,7 @@ class add extends Contributes {
 		$this->contribute->user->save();
 	}
 	public function onReject() {
-		$this->contribute->song->delete();
-		$this->contribute->status = Contribute::rejected;
-		$this->contribute->save();
+		$this->contribute->delete();
 	}
 	public function onDelete() {
 		$this->contribute->song->delete();
