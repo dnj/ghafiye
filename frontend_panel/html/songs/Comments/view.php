@@ -11,7 +11,7 @@ $this->the_header();
 	<div class="col-md-12">
 		<div class="panel panel-default view-comment">
 			<div class="panel-heading">
-				<i class="fa fa-comment-o"></i> <?php echo translator::trans("ghafiye.panel.songs.comments"); ?>
+				<i class="fa fa-comment-o"></i> <?php echo translator::trans("ghafiye.panel.songs.comments.view"); ?>
 				<div class="panel-tools">
 					<a class="btn btn-xs btn-link panel-collapse collapses" href="#"></a>
 				</div>
@@ -79,6 +79,7 @@ $this->the_header();
 		</div>
 	</div>
 </div>
+<?php if ($this->comment->status != Comment::accepted) { ?>
 <div class="modal fade" id="accept-comment" tabindex="-1" data-show="true" role="dialog">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -95,6 +96,10 @@ $this->the_header();
 		<button type="button" class="btn btn-default" data-dismiss="modal" aria-hidden="true"><?php echo translator::trans("cancel"); ?></button>
 	</div>
 </div>
+<?php
+}
+if ($this->comment->status != Comment::rejected) {
+?>
 <div class="modal fade" id="reject-comment" tabindex="-1" data-show="true" role="dialog">
 	<div class="modal-header">
 		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -112,4 +117,5 @@ $this->the_header();
 	</div>
 </div>
 <?php
+}
 $this->the_footer();
