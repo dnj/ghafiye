@@ -1,9 +1,9 @@
 {
 	"permissions": "*",
 	"routing": "routing.json",
-	"frontend":["frontend-website","frontend_panel"],
+	"frontend":["frontend-website","frontend_panel", "frontend-userpanel"],
 	"autoload":"autoloader.json",
-	"dependencies": ["base","userpanel", "blog", "musixmatch", "geoip"],
+	"dependencies": ["base","userpanel", "musixmatch", "geoip"],
 	"languages":{
 		"fa_IR": "langs/fa_IR.json"
 	},
