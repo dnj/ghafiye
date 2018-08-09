@@ -33,24 +33,47 @@ use packages\ghafiye\authentication;
 					<span>فــ&zwj;</span>
 					<span>یـه</span>
 				</a>
-				<ul>
+				<ul class="navbar-right">
 					<?php
+					$user;
 					if (authentication::check()) {
 						$user = authentication::getUser();
 					?>
-						<li>
+						<li class="visible-xs">
 							<a href="<?php echo base\url("profile"); ?>">
 								<img class="img-circle" src="<?php echo $user->getAvatar(32, 32); ?>" alt="<?php echo $user->getFullName(); ?>">
 							</a>
 						</li>
+						<li class="visible-xs">
+							<a href="<?php echo userpanel\url("logout"); ?>">
+								<i class="fa fa-sign-out fa-2x"></i>
+							</a>
+						</li>
 					<?php } else { ?>
-					<li><a href="<?php echo userpanel\url("login", array("backTo" => http::$request["uri"])); ?>"><?php echo translator::trans("ghafiye.login"); ?></a></li>
-					<li><a href="<?php echo userpanel\url("register", array("backTo" => http::$request["uri"])); ?>"><?php echo translator::trans("ghafiye.register"); ?></a></li>
+					<li class="visible-xs"><a href="<?php echo userpanel\url("login", array("backTo" => http::$request["uri"])); ?>"><?php echo translator::trans("ghafiye.login"); ?></a></li>
+					<li class="visible-xs"><a href="<?php echo userpanel\url("register", array("backTo" => http::$request["uri"])); ?>"><?php echo translator::trans("ghafiye.register"); ?></a></li>
 					<?php } ?>
-					<li class="divider"></li>
+					<li class="divider visible-xs"></li>
 					<li><a href="<?php echo base\url("contribute"); ?>"><?php echo translator::trans("ghafiye.contribute"); ?></a></li>
 					<li><a href="<?php echo base\url("community"); ?>"><?php echo translator::trans("ghafiye.community"); ?></a></li>
 					<li><a href="<?php echo base\url('explore'); ?>"><?php echo translator::trans('toplyrics'); ?></a></li>
+				</ul>
+				<ul class="navbar-left">
+				<?php if (authentication::check()) { ?>
+					<li class="hidden-xs">
+						<a href="<?php echo base\url("profile"); ?>" class="tooltips" title="<?php echo translator::trans("ghafiye.profile.my"); ?>" data-placement="bottom">
+							<img class="img-circle" src="<?php echo $user->getAvatar(32, 32); ?>" alt="<?php echo $user->getFullName(); ?>">
+						</a>
+					</li>
+					<li class="hidden-xs">
+						<a href="<?php echo userpanel\url("logout"); ?>" class="tooltips" title="<?php echo translator::trans("ghafiye.logout"); ?>" data-placement="bottom">
+							<i class="fa fa-sign-out fa-2x"></i>
+						</a>
+					</li>
+				<?php } else { ?>
+					<li class="hidden-xs"><a href="<?php echo userpanel\url("login", array("backTo" => http::$request["uri"])); ?>"><?php echo translator::trans("ghafiye.login"); ?></a></li>
+					<li class="hidden-xs"><a href="<?php echo userpanel\url("register", array("backTo" => http::$request["uri"])); ?>"><?php echo translator::trans("ghafiye.register"); ?></a></li>
+				<?php } ?>
 				</ul>
 				<form class="searchbox hidden-xs hidden-sm hidden-md">
 					<div class="form-group has-icon">

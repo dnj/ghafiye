@@ -210,6 +210,8 @@
 		"ghafiye.profile": "مشاهده فعالیت های {name}",
 		"ghafiye.profile.favorits": "مشاهده علاقه مندی های {name}",
 		"ghafiye.person.name": "نام",
-		"ghafiye.person.lang": "زبان"
+		"ghafiye.person.lang": "زبان",
+		"ghafiye.logout": "خروج",
+		"ghafiye.profile.my": "مشاهده پروفایل"
 	}
 }
