@@ -8,8 +8,8 @@ $this->the_header();
 	<div class="col-sm-8">
 		<div class="alert alert-warning">
 			<button data-dismiss="alert" class="close" type="button">&times;</button>
-			<h4 class="alert-heading"><i class="fa fa-headphones"></i> به جامعه آماری قافیه خوش آمدید </h4>
-			<p class="text-muted">متن آهنگ ها را با دیگران به اشتراک بگذارید، متن آهنگ ها را ترجمه کنید و این لذت را با دیگران سهیم شوید.</p>
+			<h4 class="alert-heading"><i class="fa fa-headphones"></i> به جامعه قافیه خوش آمدید </h4>
+			<p class="text-muted">متن آهنگ ها را با دیگران به اشتراک بگذارید، ترجمه کنید و این لذت را با دیگران سهیم شوید.</p>
 			<a href="<?php echo base\url("contribute");  ?>" class="btn btn-primary">مشارکت در لیگ قافیه</a>
 		</div>
 		<div class="contributes">
