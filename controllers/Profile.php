@@ -33,6 +33,7 @@ class Profile extends controller {
 		db::join("ghafiye_songs_likes", "ghafiye_songs_likes.song=ghafiye_songs.id", "INNER");
 		$song = new song;
 		$song->where("ghafiye_songs_likes.user", $user->id);
+		$song->orderBy("ghafiye_songs_likes.id", "DESC");
 		$view->setFavoritSongs($song->get(10, "ghafiye_songs.*"));
 		$this->response->setStatus(true);
 		$this->response->setView($view);
@@ -56,6 +57,7 @@ class Profile extends controller {
 		db::join("ghafiye_songs_likes", "ghafiye_songs_likes.song=ghafiye_songs.id", "INNER");
 		$song = new song;
 		$song->where("ghafiye_songs_likes.user", $user->id);
+		$song->orderBy("ghafiye_songs_likes.id", "DESC");
 		$song->pageLimit = $this->items_per_page;
 		$songs = $song->paginate($this->page, "ghafiye_songs.*");
 		$view->setFavoriteSongs($songs);
