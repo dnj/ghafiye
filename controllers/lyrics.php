@@ -135,6 +135,9 @@ class lyrics extends controller{
 		$comment->content = $inputs["content"];
 		$comment->sent_at = date::time();
 		$comment->song = $song->id;
+		if (authentication::check()) {
+			$comment->user = authentication::getID();
+		}
 		$comment->status = song\Comment::waitForAccept;
 		if (isset($inputs["reply"])) {
 			$comment->reply = $inputs["reply"];

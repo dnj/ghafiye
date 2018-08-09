@@ -25,6 +25,7 @@ class view extends lyricsView {
 		$this->addMetaTags();
 		$this->comments = $this->getComments();
 		$this->isLogin = authentication::check();
+		$this->setFormData();
 	}
 	function getGenres() {
 		return genre::getActives(6);
@@ -356,8 +357,16 @@ class view extends lyricsView {
 			if ($comment->reply == $reply) {
 				$html .= '<div id="comment-' . $comment->id .'" class="row comment' . ($comment->reply ? " reply" : "") . '">';
 					$html .= '<div class="col-sm-1 col-xs-2">';
-						$gravatar = "http://www.gravatar.com/avatar/" . md5(strtolower(trim($comment->email))). "?s=50&r=G&d=" . urlencode("http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=50");
-						$html .= '<img src="' . $gravatar . '" alt="' . $comment->name . '" class="img-circle">';
+						$avatar = "";
+						if ($comment->user) {
+							$avatar = $comment->user->getAvatar(50, 50);
+							$html .= '<a href="' . base\url("profile/" . $comment->user->id) . '"><img src="' . $avatar . '" alt="' . $comment->name . '" class="img-circle"></a>';
+						} else {
+							$avatar = "http://www.gravatar.com/avatar/" . md5(strtolower(trim($comment->email))). "?s=50&r=G&d=" . urlencode("http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=50");
+							$html .= '<img src="' . $avatar . '" alt="' . $comment->name . '" class="img-circle">';
+						}
+						
+						
 					$html .= '</div>';
 					$html .= '<div class="col-sm-11 col-xs-10">';
 						$html .= '<div class="panel panel-default">';
@@ -384,5 +393,12 @@ class view extends lyricsView {
 			}
 		}
 		return $html;
+	}
+	protected function setFormData() {
+		if ($this->isLogin) {
+			$user = authentication::getUser();
+			$this->setDataForm($user->getFullName(), "name");
+			$this->setDataForm($user->email, "email");
+		}
 	}
 }

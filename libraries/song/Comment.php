@@ -1,6 +1,6 @@
 <?php
 namespace packages\ghafiye\song;
-use packages\ghafiye\song;
+use packages\ghafiye\{song, User};
 use packages\base\db\dbObject;
 
 class Comment extends dbObject {
@@ -11,6 +11,7 @@ class Comment extends dbObject {
 	protected $primaryKey = "id";
 	protected $dbFields = array(
 		"song" => array("type" => "int", "required" => true),
+		"user" => array("type" => "int"),
 		"reply" => array("type" => "int"),
 		"sent_at" => array("type" => "int", "required" => true),
 		"name" => array("type" => "text", "required" => true),
@@ -20,6 +21,7 @@ class Comment extends dbObject {
 	);
     protected $relations = array(
         "song" => array("hasOne", song::class, "song"),
+        "user" => array("hasOne", User::class, "user"),
 	);
 	public function getReply() {
 		if (!$this->reply) {
