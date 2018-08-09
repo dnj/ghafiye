@@ -1,6 +1,6 @@
 <?php
 namespace themes\clipone;
-use packages\base\{http, frontend\theme, view\error, translator};
+use packages\base\{http, view\error, translator};
 use packages\userpanel\{frontend, authorization, authentication};
 
 trait viewTrait{
@@ -204,10 +204,6 @@ trait viewTrait{
 	}
 	protected function getSelfAvatarURL(){
 		$user = authentication::getUser();
-		if($user->avatar){
-			return packages::package('userpanel')->url($user->avatar);
-		}else{
-			return theme::url('assets/images/defaultavatar.jpg');
-		}
+		return $user->getAvatar(30, 30);
 	}
 }
