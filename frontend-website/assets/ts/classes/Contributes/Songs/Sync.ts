@@ -11,6 +11,7 @@ export default class Sync {
 		Sync.$form = $("body.contribute .panel-sync .panel-body form");
 		Sync.setTimePickerEvents();
 		Sync.runFormSubmitListener();
+		Sync.rememberingFileds();
 	}
 	protected static formatTime(time: number): string {
 		let min = Math.floor(time / 60);
@@ -69,13 +70,20 @@ export default class Sync {
 				$(".has-error", this).removeClass("has-error");
 				$(".help-block", this).remove();
 			};
+			if (!Sync.checkForContribute()) {
+				$.growl.warning({
+					title: "توجه",
+					message: "برای دریافت امتیاز مشارکت نیاز هست تا فعالیتی داشته باشید"
+				});
+				return false;
+			}
 			$(this).formAjax({
 				success: (data: any) => {
 					if (data.hasOwnProperty("contribute")) {
 						if (!data.contribute) {
 							$.growl.warning({
 								title: "توجه",
-								message: "برای مشارکت میبایست فعالیتی انجام دهید ."
+								message: "برای دریافت امتیاز مشارکت نیاز هست تا فعالیتی داشته باشید"
 							});
 							return;
 						}
@@ -84,6 +92,7 @@ export default class Sync {
 						title: "موفق",
 						message: "امتیاز فعالیت شما بعد از تایید ترجمه برایتان حساب خواهد شد"
 					});
+					Sync.rememberingFileds();
 				},
 				error: function(error: any) {
 					reset();
@@ -123,5 +132,20 @@ export default class Sync {
 				}
 			});
 		});
+	}
+	protected static rememberingFileds() {
+		$(".sync-panel .sync-input", Sync.$form).each(function() {
+			$(this).data("val", $(this).val());
+		});
+		const $title = $("input[name=title]", Sync.$form);
+		$title.data("val", $title.val());
+	}
+	protected static checkForContribute(): boolean {
+		for (const input of $(".sync-panel .sync-input", Sync.$form).get()) {
+			if ($(input).val() !== $(input).data("val")) {
+				return true;
+			}
+		}
+		return false;
 	}
 }

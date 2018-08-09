@@ -74,6 +74,7 @@ export default class Translate {
 					} else {
 						$(".container .errors").html("");
 					}
+					Translate.rememberingFileds();
 				},
 				error: function() {
 					$("> p", $progress).html(`درصد ترجمه شده: `);
@@ -107,6 +108,13 @@ export default class Translate {
 				$(".has-error", this).removeClass("has-error");
 				$(".help-block", this).remove();
 			};
+			if (!Translate.checkForContribute()) {
+				$.growl.warning({
+					title: "توجه",
+					message: "برای دریافت امتیاز مشارکت نیاز هست تا فعالیتی داشته باشید"
+				});
+				return false;
+			}
 			$(this).formAjax({
 				success: (data: any) => {
 					if (data.hasOwnProperty("contribute")) {
@@ -122,6 +130,7 @@ export default class Translate {
 						title: "موفق",
 						message: "امتیاز فعالیت شما بعد از تایید ترجمه اهدا خواهد شد"
 					});
+					Translate.rememberingFileds();
 				},
 				error: function(error: any) {
 					reset();
@@ -161,5 +170,21 @@ export default class Translate {
 				}
 			});
 		});
+	}
+	protected static rememberingFileds() {
+		$(".translate-panel .tanslate-input", Translate.$form).each(function() {
+			$(this).data("val", $(this).val());
+		});
+		const $title = $("input[name=title]", Translate.$form);
+		$title.data("val", $title.val());
+	}
+	protected static checkForContribute(): boolean {
+		for (const input of $(".translate-panel .tanslate-input", Translate.$form).get()) {
+			if ($(input).val() !== $(input).data("val")) {
+				return true;
+			}
+		}
+		const $title = $("input[name=title]", Translate.$form);
+		return $title.data("val") !== $title.val();
 	}
 }

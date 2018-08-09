@@ -15,6 +15,7 @@ export default class Edit {
 		Edit.runAvatarPreview();
 		Edit.setLyricsEvents($(".edit-panel", Edit.$form));
 		Edit.runFormSubmitListener();
+		Edit.rememberingFileds();
 	}
 	protected static runAvatarPreview() {
 		new AvatarPreview($(".user-image", Edit.$form));
@@ -146,6 +147,13 @@ export default class Edit {
 				$(".has-error", this).removeClass("has-error");
 				$(".help-block", this).remove();
 			};
+			if (!Edit.checkForContribute()) {
+				$.growl.warning({
+					title: "ناموفق",
+					message: "برای دریافت امتیاز مشارکت نیاز هست تا فعالیتی داشته باشید"
+				});
+				return false;
+			}
 			$(this).formAjax({
 				data: new FormData(form),
 				contentType: false,
@@ -164,6 +172,7 @@ export default class Edit {
 						title: "موفق",
 						message: "امتیاز فعالیت شما بعد از تایید ترجمه برایتان حساب خواهد شد"
 					});
+					Edit.rememberingFileds();
 				},
 				error: function(error: any) {
 					reset();
@@ -203,5 +212,21 @@ export default class Edit {
 				}
 			});
 		});
+	}
+	protected static rememberingFileds() {
+		$(".edit-panel .edit-input", Edit.$form).each(function() {
+			$(this).data("val", $(this).val());
+		});
+		const $title = $("input[name=title]", Edit.$form);
+		$title.data("val", $title.val());
+	}
+	protected static checkForContribute(): boolean {
+		for (const input of $(".edit-panel .edit-input", Edit.$form).get()) {
+			if ($(input).val() !== $(input).data("val")) {
+				return true;
+			}
+		}
+		const $title = $("input[name=title]", Edit.$form);
+		return $title.data("val") !== $title.val();
 	}
 }
