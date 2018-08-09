@@ -244,7 +244,7 @@ export class viewLyric{
 				$container.css("height", "auto");
 			}
 			$(".btn-close", $container).one("click", () => {
-				$popover.parent().popover("hide").fadeOut();
+				$popover.popover("hide");
 			});
 			$("form", $popover).on("submit", function(e) {
 				e.preventDefault();
@@ -256,10 +256,10 @@ export class viewLyric{
 					dataType: "json",
 					success: () => {
 						$.growl.notice({
-							title:"متشکریم",
-							message:"توضیح شما بعد از تایید ما به نمایش در خواهد آمد."
+							title: "متشکریم",
+							message: "توضیح شما بعد از تایید ما به نمایش در خواهد آمد."
 						});
-						$popover.parent().popover("hide").fadeOut();
+						$popover.popover("hide");
 					},
 					error: function(error: any) {
 						if(error.error == "data_duplicate" || error.error == "data_validation"){
