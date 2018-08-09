@@ -108,4 +108,54 @@ body {
 			}
 		}
 	}
+	@media (max-width: 576px) {
+		> header {
+			.container {
+				> nav {
+					overflow: hidden;
+					display: block;
+					height: auto;
+				}
+			}
+		}
+	}
+	@media (max-width: 522px) {
+		> header {
+			.container {
+				> nav {
+					> .logo {
+						display: block;
+						width: 100%;
+					}
+					> ul {
+						padding-right: 20%;
+						display: block;
+						text-align: center;
+					}
+				}
+			}
+		}
+	}
+	@media (max-width: 400px) {
+		> header {
+			.container {
+				> nav {
+					> ul {
+						padding-right: 12%;
+					}
+				}
+			}
+		}
+	}
+	@media (max-width: 350px) {
+		> header {
+			.container {
+				> nav {
+					> ul {
+						padding-right: 0;
+					}
+				}
+			}
+		}
+	}
 }
