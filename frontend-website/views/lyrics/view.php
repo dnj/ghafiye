@@ -1,9 +1,9 @@
 <?php
 namespace themes\musixmatch\views\lyrics;
-use \packages\base;
-use \packages\base\{db, translator, frontend\theme, date};
-use \packages\ghafiye\{genre, album, song, song\person, views\lyrics\view as lyricsView};
-use \themes\musixmatch\{viewTrait, views\formTrait};
+use packages\base;
+use packages\base\{db, translator, frontend\theme, date};
+use packages\ghafiye\{genre, album, song, song\person, views\lyrics\view as lyricsView, authentication};
+use themes\musixmatch\{viewTrait, views\formTrait};
 
 class view extends lyricsView {
 	use viewTrait, formTrait;
@@ -11,6 +11,7 @@ class view extends lyricsView {
 	protected $singer;
 	protected $loadSideAd = false;
 	protected $comments;
+	protected $isLogin;
 	function __beforeLoad() {
 		$this->song = $this->getSong();
 		$this->singer = $this->song->getPerson(person::singer);
@@ -23,6 +24,7 @@ class view extends lyricsView {
 		$this->addBodyClass('lyric');
 		$this->addMetaTags();
 		$this->comments = $this->getComments();
+		$this->isLogin = authentication::check();
 	}
 	function getGenres() {
 		return genre::getActives(6);

@@ -2,7 +2,7 @@
 use \packages\base;
 use \packages\userpanel\date;
 use \packages\base\{translator, frontend\theme};
-use \packages\ghafiye\{song\lyric, song\person, person\name as personName, song, authentication};
+use \packages\ghafiye\{song\lyric, song\person, person\name as personName, song};
 $this->the_header();
 $numberOfLangs = $this->numberOfLangs();
 $lang = $this->getLyricsLanguage();
@@ -15,6 +15,26 @@ $lang = $this->getLyricsLanguage();
 	<div class="col-sm-9 title<?php echo $topAd ? " withAd" : "" ?>">
 		<h1><?php echo $this->song->title($lang); ?></h1>
 		<h2><a href="<?php echo(base\url($this->singer->encodedName($lang))); ?>"><?php echo $this->singer->name($lang); ?></a></h2>
+		<div class="row visible-xs">
+			<div class="col-xs-12">
+				<?php if ($this->song->synced != song::synced) { ?>
+					<a href="<?php echo base\url("contribute/song/sync/" . $this->song->id); ?>" class="btn btn-sync btn-sm btn-block">
+						<div class="btn-icon"><i class="fa fa-clock-o"></i></div>
+						<?php echo translator::trans("ghafiye.contribute.sync"); ?>
+					</a>
+				<?php } ?>
+			</div>
+		</div>
+		<?php if ($this->isLogin) { ?>
+		<div class="row visible-xs">
+			<div class="col-xs-12">
+					<a href="<?php echo base\url("contribute/song/edit/" . $this->song->id); ?>" class="btn btn-sm btn-edit btn-block">
+						<div class="btn-icon"><i class="fa fa-pencil"></i></div>
+						<?php echo translator::trans("ghafiye.contribute.edit"); ?>
+					</a>
+			</div>
+		</div>
+		<?php } ?>
 		<?php echo $topAd; ?>
 		<div class="translations">
 			<span><i class="fa fa-language"></i> <?php echo translator::trans('translations'); ?></span>
@@ -161,7 +181,7 @@ $lang = $this->getLyricsLanguage();
 		</div>
 	</div>
 	<div class="col-sm-3 tools col-md-pull-8">
-		<div class="row">
+		<div class="row hidden-xs">
 			<div class="col-xs-12">
 				<?php if ($this->song->synced != song::synced) { ?>
 					<a href="<?php echo base\url("contribute/song/sync/" . $this->song->id); ?>" class="btn btn-sync btn-sm btn-block">
@@ -171,16 +191,16 @@ $lang = $this->getLyricsLanguage();
 				<?php } ?>
 			</div>
 		</div>
-		<div class="row">
+		<?php if ($this->isLogin) { ?>
+		<div class="row hidden-xs">
 			<div class="col-xs-12">
-				<?php if (authentication::check()) { ?>
-					<a href="<?php echo base\url("contribute/song/edit/" . $this->song->id); ?>" class="btn btn-sm btn-edit btn-block">
-						<div class="btn-icon"><i class="fa fa-pencil"></i></div>
-						<?php echo translator::trans("ghafiye.contribute.edit"); ?>
-					</a>
-				<?php } ?>
+				<a href="<?php echo base\url("contribute/song/edit/" . $this->song->id); ?>" class="btn btn-sm btn-edit btn-block">
+					<div class="btn-icon"><i class="fa fa-pencil"></i></div>
+					<?php echo translator::trans("ghafiye.contribute.edit"); ?>
+				</a>
 			</div>
 		</div>
+		<?php } ?>
 		<ul class="list-group">
 			<a href="#" id="like" class="list-group-item" data-song="<?php echo($this->song->id); ?>">
 				<span class="float-xs-right"><i class="fa like-icon <?php echo(($this->getlikeStatus() ? "fa-heart" : "fa-heart-o")); ?>"></i></span>
