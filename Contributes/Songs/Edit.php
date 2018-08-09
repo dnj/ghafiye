@@ -5,7 +5,7 @@ use packages\base\{db, translator, packages};
 use packages\ghafiye\{Contributes, contribute\Lyric, song, Contribute};
 
 class Edit extends Contributes {
-	protected $point = 5;
+	protected $point = 10;
 	protected $lyrics = array();
 	protected $checkeDeletedLyrics = false;
 	protected $deletedLyrics = array();

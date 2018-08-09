@@ -4,7 +4,7 @@ use packages\base\translator;
 use packages\ghafiye\{Contributes, contribute\Lyric, song, Contribute};
 
 class Sync extends Contributes {
-	protected $point = 5;
+	protected $point = 25;
 	protected $lyrics = array();
 	public function getPoint(): int {
 		return $this->point;

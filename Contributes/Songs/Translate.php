@@ -5,7 +5,7 @@ use packages\base\translator;
 use packages\ghafiye\{Contributes, contribute\Lyric, song, Contribute};
 
 class Translate extends Contributes {
-	protected $point = 10;
+	protected $point = 30;
 	protected $translates;
 	protected $lyrics;
 	public function getPoint(): int {

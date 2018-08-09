@@ -5,7 +5,7 @@ use packages\base\{translator, db};
 use packages\ghafiye\{Contributes, song, album, Contribute};
 
 class Add extends Contributes {
-	protected $point = 10;
+	protected $point = 5;
 	public function getPoint():int {
 		return $this->point;
 	}
