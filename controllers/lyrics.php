@@ -37,8 +37,7 @@ class lyrics extends controller{
 		$lyric->where("song", $song->id);
 		$lyric->where("lang", array_unique(array($songTitle->lang, $song->lang)), 'in');
 		$lyric->where("status", lyric::published);
-		$lyric->orderby('time', 'asc');
-		$lyric->orderby('id', 'asc');
+		$lyric->orderby("ordering", "ASC");
 		$lyrices = $lyric->get();
 		$parenthesis = new parenthesis();
 		$parenthesis->where("ip", http::$client['ip']);
