@@ -58,7 +58,7 @@ use packages\ghafiye\authentication;
 					<li><a href="<?php echo base\url("community"); ?>"><?php echo translator::trans("ghafiye.community"); ?></a></li>
 					<li><a href="<?php echo base\url('explore'); ?>"><?php echo translator::trans('toplyrics'); ?></a></li>
 				</ul>
-				<ul class="navbar-left">
+				<ul class="navbar-left hidden-xs">
 				<?php if (authentication::check()) { ?>
 					<li class="hidden-xs">
 						<a href="<?php echo base\url("profile"); ?>" class="tooltips" title="<?php echo translator::trans("ghafiye.profile.my"); ?>" data-placement="bottom">
