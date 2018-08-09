@@ -25,7 +25,6 @@ $lang = $this->getLyricsLanguage();
 				<?php } ?>
 			</div>
 		</div>
-		<?php if ($this->isLogin) { ?>
 		<div class="row visible-xs">
 			<div class="col-xs-12">
 					<a href="<?php echo base\url("contribute/song/edit/" . $this->song->id); ?>" class="btn btn-sm btn-edit btn-block">
@@ -34,7 +33,6 @@ $lang = $this->getLyricsLanguage();
 					</a>
 			</div>
 		</div>
-		<?php } ?>
 		<?php echo $topAd; ?>
 		<div class="translations">
 			<span><i class="fa fa-language"></i> <?php echo translator::trans('translations'); ?></span>
@@ -193,7 +191,6 @@ $lang = $this->getLyricsLanguage();
 				<?php } ?>
 			</div>
 		</div>
-		<?php if ($this->isLogin) { ?>
 		<div class="row hidden-xs">
 			<div class="col-xs-12">
 				<a href="<?php echo base\url("contribute/song/edit/" . $this->song->id); ?>" class="btn btn-sm btn-edit btn-block">
@@ -202,7 +199,6 @@ $lang = $this->getLyricsLanguage();
 				</a>
 			</div>
 		</div>
-		<?php } ?>
 		<ul class="list-group">
 			<a href="#" id="like" class="list-group-item" data-song="<?php echo($this->song->id); ?>">
 				<span class="float-xs-right"><i class="fa like-icon <?php echo(($this->getlikeStatus() ? "fa-heart" : "fa-heart-o")); ?>"></i></span>
