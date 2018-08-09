@@ -208,6 +208,8 @@
 		"ghafiye.contribute.edit.song": "ویراش آهنگ {title}",
 		"ghafiye.contribute.view": "مشاهده مشارکت",
 		"ghafiye.profile": "مشاهده فعالیت های {name}",
-		"ghafiye.profile.favorits": "مشاهده علاقه مندی های {name}"
+		"ghafiye.profile.favorits": "مشاهده علاقه مندی های {name}",
+		"ghafiye.person.name": "نام",
+		"ghafiye.person.lang": "زبان"
 	}
 }

@@ -297,6 +297,8 @@
 		"ghafiye.song.genre": "سبک آهنگ",
 		"ghafiye.song.lyrics": "متن آهنگ",
 		"ghafiye.contribute.add.group.persons.not.active": "شخص و یا اشخاصی از این گروه هنوز تایید نشده اند<br> تایید گروه به منزله ی تایید تمامی اشخاص در نظر گرفته می شود .",
-		"ghafiye.panel.songs.comments.view": "مشاهده نظر"
+		"ghafiye.panel.songs.comments.view": "مشاهده نظر",
+		"ghafiye.person.name": "نام",
+		"ghafiye.person.lang": "زبان"
 	}
 }
