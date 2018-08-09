@@ -33,6 +33,21 @@ $lang = $this->getLyricsLanguage();
 					</a>
 			</div>
 		</div>
+		<?php
+		$lyriclang = $this->getLyricsLanguage();
+		$translateUrlParamater = array();
+		if ($lyriclang != $this->song->lang) {
+			$translateUrlParamater = array("songlang" => $lyriclang);
+		}
+		?>
+		<div class="row visible-xs">
+			<div class="col-xs-12">
+				<a href="<?php echo base\url("contribute/song/translate/" . $this->song->id, $translateUrlParamater); ?>" class="btn btn-sm btn-translate btn-block">
+					<div class="btn-icon"><i class="fa fa-language"></i></div>
+					<?php echo translator::trans("ghafiye.contribute.translate"); ?>
+				</a>
+			</div>
+		</div>
 		<?php echo $topAd; ?>
 		<div class="translations">
 			<span><i class="fa fa-language"></i> <?php echo translator::trans('translations'); ?></span>
@@ -196,6 +211,14 @@ $lang = $this->getLyricsLanguage();
 				<a href="<?php echo base\url("contribute/song/edit/" . $this->song->id); ?>" class="btn btn-sm btn-edit btn-block">
 					<div class="btn-icon"><i class="fa fa-pencil"></i></div>
 					<?php echo translator::trans("ghafiye.contribute.edit"); ?>
+				</a>
+			</div>
+		</div>
+		<div class="row hidden-xs">
+			<div class="col-xs-12">
+				<a href="<?php echo base\url("contribute/song/translate/" . $this->song->id, $translateUrlParamater); ?>" class="btn btn-sm btn-translate btn-block">
+					<div class="btn-icon"><i class="fa fa-language"></i></div>
+					<?php echo translator::trans("ghafiye.contribute.translate"); ?>
 				</a>
 			</div>
 		</div>
