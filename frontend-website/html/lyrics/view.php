@@ -149,12 +149,14 @@ $lang = $this->getLyricsLanguage();
 										$this->createField(array(
 											"name" => "name",
 											"label" => translator::trans("ghafiye.comment.name"),
+											"readonly" => $this->isLogin,
 										));
 										$this->createField(array(
 											"type" => "email",
 											"name" => "email",
 											"label" => translator::trans("ghafiye.comment.email"),
 											"ltr" => true,
+											"readonly" => $this->isLogin,
 										));
 										?>
 										<small class="text-muted"><?php echo translator::trans("ghafiye.songs.comment.email.description"); ?></small>
