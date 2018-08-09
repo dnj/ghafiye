@@ -1,8 +1,9 @@
 <?php
 namespace packages\ghafiye\controllers;
 use packages\base;
+use packages\base\NotFound;
 use packages\userpanel\controllers\login as userpanelLogin;
-use packages\ghafiye\{view, views, controller, authentication};
+use packages\ghafiye\{view, views, controller, authentication, authorization};
 
 class Login extends controller {
 	public function register() {
@@ -40,5 +41,11 @@ class Login extends controller {
 		$this->response->setStatus(true);
 		$this->response->Go(base\url());
 		return $this->response;
+	}
+	public function validate($data) {
+		if (authentication::check() and !authorization::is_accessed("can_login_in_userpanel")) {
+			throw new NotFound();
+		}
+		return true;
 	}
 }

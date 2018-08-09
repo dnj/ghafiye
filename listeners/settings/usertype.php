@@ -48,6 +48,8 @@ class usertype{
 			"contributes_view",
 			"contributes_edit",
 			"contributes_delete",
+			
+			"can_login_in_userpanel",
 		);
 		foreach($permissions as $permission){
 			permissions::add('ghafiye_'.$permission);

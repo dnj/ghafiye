@@ -65,6 +65,8 @@
 //@import "themes/dark.less";
 //@import "themes/green.less";
 //@import "themes/navy.less";
+@import "notfound.less";
+@import "search.less";
 body {
 	color: #000000; 
 	font-family: 'Open+Sans', sans-serif;
@@ -121,6 +123,11 @@ body {
 					text-decoration: none;
 				}
 			}
+			a {
+				&:hover {
+					text-decoration: none;
+				}
+			}
 			.navbar-right {
 				float: right;
 				margin-bottom: 0;
@@ -128,6 +135,32 @@ body {
 				@media (max-width: 767px){
 					margin-left: auto;
 				}
+				li{
+					float: right;
+					list-style: none;
+					padding: 2px 4px 0 0;
+					a{
+						color: #7f8c8d;
+						font-size: 14px;
+						font-family: yekan;
+						font-weight: 600;
+						margin-left: 10px;
+						&:hover, &:focus {
+							color: #000;
+							background-color: transparent;
+						}
+					}
+					&.divider {
+						height: 50%;
+						margin: 14px;
+						overflow: hidden;
+						background-color: #e5e5e5;
+						width: 1px;
+						padding: 0;
+					}
+				}
+			}
+			.navbar-left {
 				li{
 					float: right;
 					list-style: none;
@@ -183,6 +216,19 @@ body {
 						pointer-events: none;
 						font-size: 16px;
 						color: #a6aeb6;
+					}
+				}
+			}
+		}
+		&.ghafiye {
+			.container {
+				.navbar-right, .navbar-left {
+					margin-bottom: 0;
+					li {
+						line-height: 55px;
+						.fa.fa-sign-out {
+							vertical-align: middle;
+						}
 					}
 				}
 			}

@@ -27,5 +27,6 @@
 	}, {
 		"type":"dynamic",
 		"controller":"controllers\\sitemap@import"
-	}]
+	}],
+	"bootstrap": "bootstrap.php"
 }

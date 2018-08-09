@@ -15,7 +15,7 @@ class notfound extends notfoundView{
 	function __beforeLoad(){
 		$this->setTitle(translator::trans('notfound'));
 		$this->loged_in = authentication::check();
-
+		$this->addBodyClass("notfound");
 		if(!$this->loged_in){
 			$this->addBodyClass('error-full-page');
 		}
