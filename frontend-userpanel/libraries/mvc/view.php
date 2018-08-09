@@ -1,6 +1,6 @@
 <?php
 namespace themes\clipone;
-use packages\base\{http, view\error, translator};
+use packages\base\{http, frontend\theme, view\error, translator};
 use packages\userpanel\{frontend, authorization, authentication};
 
 trait viewTrait{
