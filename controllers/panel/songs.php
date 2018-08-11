@@ -452,13 +452,13 @@ class songs extends controller{
 					}
 				}
 				if(isset($inputs['lyric'])){
-					foreach($song->getLyricByLang($inputs['lyric_lang']) as $key => $lyric){
+					foreach($song->getLyricByLang($inputs['lyric_lang']) as $lyric){
 						if(!in_array($lyric->id, $lyricIDs)){
 							$parameters['oldData']['lyrics'][] = $lyric;
 							$lyric->delete();
 						}
 					}
-					foreach($inputs['lyric'] as $key => $lyric){
+					foreach(array_values($inputs['lyric']) as $key => $lyric){
 						if (isset($lyric['obj'])) {
 							if ($lyric['obj']->parent) {
 								$lyric['obj']->parent = $lyric['parent'];
