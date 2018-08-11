@@ -122,6 +122,7 @@ export default class Song{
 			let html = `<div class="row lyrics" data-lyriclang="${lang}">
 				<div class="col-sm-3 col-xs-4">
 					<div class="form-group">
+						<input value="" name="" class="form-control lyric_id" type="hidden">
 						<input value="${Song.formatTime(time)}" name="lyric[][time]" class="form-control lyric_time ltr" type="text">
 					</div>
 				</div>
@@ -194,14 +195,19 @@ export default class Song{
 		}
 		function moveDownInput($row:JQuery){
 			let $nextLyric = $('.lyric_text', $row.next());
-			let $thisLyric = $('.lyric_text', $row);
+			const $thisLyric = $('.lyric_text', $row);
+			const $thisID = $('.lyric_id', $row);
 			if(!$nextLyric.length){
 				$thisLyric.trigger('keyup');
-				$nextLyric = $('.lyric_text', $row.next());
 			}
-			let tmp = $nextLyric.val();
+			$nextLyric = $('.lyric_text', $row.next());
+			const $nextID = $('.lyric_id', $row.next());
+			const tmpLyric = $nextLyric.val();
 			$nextLyric.val($thisLyric.val());
-			$thisLyric.val(tmp);
+			$thisLyric.val(tmpLyric);
+			const tmpID = $nextID.val();
+			$nextID.val($thisID.val());
+			$thisID.val(tmpID);
 			$nextLyric.focus();
 			$nextLyric.data('keys', $thisLyric.data('keys'));
 			$thisLyric.data('keys', []);
@@ -209,10 +215,15 @@ export default class Song{
 		function moveUpInput($row:JQuery){
 			let $beforeLyric = $('.lyric_text', $row.prev());
 			if($beforeLyric.length){
+				const $thisID = $('.lyric_id', $row);
 				let $thisLyric = $('.lyric_text', $row);
-				let tmp = $beforeLyric.val();
+				let tmpLyric = $beforeLyric.val();
 				$beforeLyric.val($thisLyric.val());
-				$thisLyric.val(tmp);
+				$thisLyric.val(tmpLyric);
+				const $prevID = $('.lyric_id', $row.prev());
+				const tmpID = $prevID.val();
+				$prevID.val($thisID.val());
+				$thisID.val(tmpID);
 				$beforeLyric.focus();
 				$beforeLyric.data('keys', $thisLyric.data('keys'));
 				$thisLyric.data('keys', []);
@@ -631,10 +642,92 @@ export default class Song{
 		new AvatarPreview($('.user-image', Song.$form));
 	}
 	private static runSubmitFormListener(){
+		let submitAnyWay = false;
 		Song.$form.on('submit', function(e){
 			e.preventDefault();
+			const $lyricTimes = $(".lyric_time", this).get();
+			let lasttime = 0;
+			const wrongTimePlace: HTMLElement[] = [];
+			for (const $time of $lyricTimes) {
+				const time = Song.makeTime($($time).val());
+				if (lasttime !== undefined && time < lasttime) {
+					wrongTimePlace.push($time);
+				}
+				lasttime = time;
+			}
+			const reset = () => {
+				$(".has-error", this).removeClass("has-error");
+				$(".help-block", this).remove();
+			};
+			reset();
+			const form = this as HTMLFormElement;
+			const data = new FormData(form);
+			if (wrongTimePlace.length) {
+				const $LyricsFields = $(".lyricFields", this);
+				const $panelLyrics = $LyricsFields.parents(".panel.panel-white");
+				const $lyrics = $(".lyricFields .lyrics").get();
+				if (submitAnyWay) {
+					data.append("un-synced", "1");
+				}
+				for (const $time of wrongTimePlace) {
+					$($time).parent().addClass("has-error");
+				}
+				$(".alert-sync", this).remove();
+				if (!submitAnyWay) {
+					const alert = `<div class="alert alert-warning alert-sync">
+						<h4 class="alert-heading">
+							<i class="fa fa-exclamation-triangle"></i> هشدار </h4>
+						<div class="alert-body">
+							<div class="row">
+								<div class="col-xs-12">
+									<p>متن عباراتی که با رنگ قرمز مشخص شده اند از نظر زمانی در مکان درست قرار ندارند .</p>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-sm-4">
+									<button class="btn btn-info btn-block btn-sm btn-submit-any-way" type="button">بعدا هماهنگ می کنم</button>
+								</div>
+								<div class="col-sm-4">
+									<button class="btn btn-success btn-block btn-sm btn-ordering" type="button">مرتب سازی بر اساس زمان</button>
+								</div>
+								<div class="col-sm-4">
+									<button class="btn btn-primary btn-block btn-sm btn-reset" type="button" disabled>بازگرداندن تغییرات</button>
+								</div>
+							</div>
+						</div>
+					</div>`;
+					const $alert = $(alert).insertBefore($panelLyrics);
+					$("html, body").animate({ scrollTop: $alert.offset().top }, 500)
+					$(".btn-ordering", $alert).on("click", (e) => {
+						e.preventDefault();
+						reset();
+						$(".btn-reset", $alert).prop("disabled", false);
+						const sorted = ($(".lyricFields .lyrics").get()).sort((a, b): number => {
+							const time1 = Song.makeTime($(".lyric_time", a).val());
+							const time2 = Song.makeTime($(".lyric_time", b).val());
+							return time1 - time2;
+						});
+						$(sorted).detach().appendTo($LyricsFields);
+					});
+					$(".btn-reset", $alert).on("click", function(e) {
+						e.preventDefault();
+						$(this).prop("disabled", true);
+						$($lyrics).detach().appendTo($LyricsFields);
+					});
+					$(".btn-submit-any-way", $alert).on("click", function(e) {
+						e.preventDefault();
+						reset();
+						$alert.remove();
+						submitAnyWay = true;
+						$(form).submit();
+					});
+					return false;
+				}
+			} else if ($(".alert-sync", form).length) {
+				$(".alert-sync", this).remove();
+			}
 			$(this).formAjax({
-				data: new FormData(this as HTMLFormElement),
+				data: data,
 				contentType: false,
 				processData: false,
 				success: (data: webuilder.AjaxResponse) => {
@@ -685,7 +778,8 @@ export default class Song{
 		$('#importForm').on('submit', function(e){
 			e.preventDefault();
 			const lyrics = $('textarea[name=lyrics]').val() as string;
-			if(lyrics){
+			if (lyrics) {
+				$(".alert-sync", Song.$form).remove();
 				$('.lyricFields').html('');
 				let time = 0;
 				let index = 0;
@@ -695,6 +789,7 @@ export default class Song{
 						const html = `<div class="row lyrics" data-lyriclang="${$('select[name=lang] option:selected').val()}">
 							<div class="col-sm-3 col-xs-4">
 								<div class="form-group">
+									<input value="" name="" class="form-control lyric_id" type="hidden">
 									<input value="${Song.formatTime(++time)}" name="lyric[${index}][time]" class="form-control lyric_time ltr" type="text">
 								</div>
 							</div>
@@ -713,6 +808,16 @@ export default class Song{
 			}
 		});
 	}
+	protected static makeTime(strTime:string): number {
+		let $val = strTime.split(":");
+		if($val.length != 2)return -1;
+		let $min = parseInt($val[0]);
+		let $sec = parseInt($val[1]);
+		if(isNaN($min) || isNaN($sec)){
+			return -1;
+		}
+		return $min * 60 + $sec;
+	}
 	private static editImportLyrics():void{
 		let lyrics:string = '';
 		$('.lyric_text').each(function(){
@@ -720,20 +825,11 @@ export default class Song{
 		});
 		$('textarea[name=lyrics]').val(lyrics);
 
-		function makeTime(strTime:string):number{
-			let $val = strTime.split(":");
-			if($val.length != 2)return -1;
-			let $min = parseInt($val[0]);
-			let $sec = parseInt($val[1]);
-			if(isNaN($min) || isNaN($sec)){
-				return -1;
-			}
-			return $min * 60 + $sec;
-		}
 		$('#importForm').on('submit', function(e){
 			e.preventDefault();
 			const lyrics = $('textarea[name=lyrics]').val() as string;
-			if(lyrics){
+			if (lyrics) {
+				$(".alert-sync", Song.$form).remove();
 				let time = 0;
 				let index = 0;
 				const lang = $('select[name=lang] option:selected').val() as string;
@@ -746,7 +842,7 @@ export default class Song{
 							}
 						}else if($("input.lyric_time").parents('.lyrics').data('lyriclang') == $('select[name=lang] option:selected').val()){
 							const $lastInput = $("input.lyric_time").last();
-							let time = makeTime($lastInput.val() as string) + 2;
+							let time = Song.makeTime($lastInput.val() as string) + 2;
 							let ltr = $("input.lyric_text").hasClass("ltr") ? 'ltr' : "";
 							let lang = $lastInput.parents('.lyrics').data('lyriclang');
 							const html = `<div class="row lyrics" data-lyriclang="${lang}">

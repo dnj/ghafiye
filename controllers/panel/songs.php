@@ -165,6 +165,7 @@ class songs extends controller{
 				'duration' => array(
 					'type' => 'string',
 					'optional' => true,
+					"empty" => true,
 				),
 				'genre' => array(
 					'type' => 'string',
@@ -203,7 +204,12 @@ class songs extends controller{
 				"update_at" => [
 					"type" => "date",
 					"optional" => true,
-				]
+				],
+				"un-synced" => array(
+					"type" => "bool",
+					"optional" => true,
+					"empty" => true,
+				),
 			);
 			try{
 				$lyricIDs = [];
@@ -276,11 +282,11 @@ class songs extends controller{
 						throw new inputValidation("titles");
 					}
 				}
+				$isOriginalLyric = ($inputs['lyric_lang'] == $song->lang);
 				if(isset($inputs['lyric'])){
 					if(!isset($inputs['lyric_lang'])){
 						throw new inputValidation("lyric_lang");
 					}
-					$isOriginalLyric = ($inputs['lyric_lang'] == $song->lang);
 					if(is_array($inputs['lyric'])){
 						foreach($inputs['lyric'] as $key => $lyric){
 							if($isOriginalLyric){
@@ -446,39 +452,59 @@ class songs extends controller{
 					}
 				}
 				if(isset($inputs['lyric'])){
-					foreach($song->getLyricByLang($inputs['lyric_lang']) as $lyric){
+					foreach($song->getLyricByLang($inputs['lyric_lang']) as $key => $lyric){
 						if(!in_array($lyric->id, $lyricIDs)){
 							$parameters['oldData']['lyrics'][] = $lyric;
 							$lyric->delete();
 						}
 					}
-					foreach($inputs['lyric'] as $lyric){
-						if(isset($lyric['obj'])){
-							if($lyric['obj']->parent){
+					foreach($inputs['lyric'] as $key => $lyric){
+						if (isset($lyric['obj'])) {
+							if ($lyric['obj']->parent) {
 								$lyric['obj']->parent = $lyric['parent'];
 							}
 							$time = $isOriginalLyric ? $lyric['time'] : 0;
-							if($lyric['obj']->time != $time or $lyric['obj']->text != $lyric['text']){
+							if ($lyric['obj']->time != $time or $lyric['obj']->text != $lyric['text']) {
 								$parameters['oldData']['lyrics'][] = $lyric['obj'];
 							}
-							$lyric['obj']->time = $time;
-							$lyric['obj']->text = $lyric['text'];
-							$lyric['obj']->save();
-						}else{
-							if(isset($lyric['parent']) and $lyric['parent'] instanceof lyric){
+						} else {
+							if (isset($lyric['parent']) and $lyric['parent'] instanceof lyric) {
 								$lyric['obj'] = new lyric();
 								$lyric['obj']->song = $song->id;
 								$lyric['obj']->lang = $inputs['lyric_lang'];
 								$lyric['obj']->parent = $lyric['parent']->id;
-							}else{
+							} else {
 								$lyric['obj'] = new lyric();
 								$lyric['obj']->song = $song->id;
 								$lyric['obj']->lang = $inputs['lyric_lang'];
 							}
 						}
+						$lyric['obj']->ordering = $key + 1;
+						$lyric['obj']->time = $time;
+						$lyric['obj']->text = $lyric['text'];
+						$lyric['obj']->save();
 					}
 				}
-				
+				if ($isOriginalLyric) {
+					$synced = true;
+					if (isset($inputs["un-synced"]) and $inputs["un-synced"]) {
+						$synced = false;
+					} else {
+						$lyrics = array_values($inputs["lyric"]);
+						$unSyncedLyrics = 0;
+						foreach ($lyrics as $key => $lyr) {
+							if ($lyr["time"] == $key + 1) {
+								$unSyncedLyrics++;
+							}
+						}
+						$synced = !(count($lyrics) == $unSyncedLyrics);
+					}
+					if ($synced) {
+						$song->synced = song::synced;
+					} else {
+						$song->synced = 0;
+					}
+				}
 				$song->save();
 
 				$log = new log();
@@ -562,7 +588,12 @@ class songs extends controller{
 				"release_at" => [
 					"type" => "date",
 					"optional" => true,
-				]
+				],
+				"un-synced" => array(
+					"type" => "bool",
+					"optional" => true,
+					"empty" => true,
+				),
 			);
 			try{
 				$inputs = $this->checkinputs($inputsRules);
@@ -680,6 +711,22 @@ class songs extends controller{
 						$song->$key = $inputs[$key];
 					}
 				}
+				$synced = true;
+				if (isset($inputs["un-synced"]) and $inputs["un-synced"]) {
+					$synced = false;
+				} else {
+					$lyrics = array_values($inputs["lyric"]);
+					$unSyncedLyrics = 0;
+					foreach ($lyrics as $key => $lyr) {
+						if ($lyr["time"] == $key + 1) {
+							$unSyncedLyrics++;
+						}
+					}
+					$synced = !(count($lyrics) == $unSyncedLyrics);
+				}
+				if ($synced) {
+					$song->synced = song::synced;
+				}
 				$song->save();
 				$song->setTitle($inputs['title'], $inputs['lang']);
 				if(isset($inputs['persons'])){
@@ -700,6 +747,7 @@ class songs extends controller{
 					$lyric->time = $lyr['time'];
 					$lyric->text = $lyr['text'];
 					$lyric->ordering = $i++;
+					$lyric->status = lyric::published;
 					$lyric->save();
 				}
 				$log = new log();

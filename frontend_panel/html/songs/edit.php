@@ -198,7 +198,7 @@ $this->the_header();
 													<?php
 													$this->createField(array(
 														'type' => 'hidden',
-														'name' => 'titles['.$title->lang.']'
+														'name' => "titles[{$title->lang}]"
 													));
 													echo translator::trans("translations.langs.{$title->lang}");
 													?></td>

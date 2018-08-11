@@ -14,12 +14,11 @@ class edit extends listview{
 		if($song->group){
 			$this->setDataForm($song->group->getTitle(), 'group_name');
 		}
-		$title = new song\title();
-		$title->where("song", $song->id);
-		$title->where("status", song\title::published);
-		foreach($title->get() as $title){
-			$this->setDataForm($title->title, 'titles['.$title->lang.']');
+		$titles = array();
+		foreach($song->titles as $title){
+			$titles[$title->lang] = $title->title;
 		}
+		$this->setDataForm($titles, "titles");
 		$this->setDataForm($song->getLyricByLang()[0]->lang, 'lyric_lang');
 		$lyrics = [];
 		foreach($song->getLyricByLang() as $lyric){
