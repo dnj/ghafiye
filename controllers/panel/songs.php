@@ -497,7 +497,7 @@ class songs extends controller{
 								$unSyncedLyrics++;
 							}
 						}
-						$synced = !(count($lyrics) == $unSyncedLyrics);
+						$synced = (count($lyrics) != $unSyncedLyrics);
 					}
 					if ($synced) {
 						$song->synced = song::synced;
@@ -722,7 +722,7 @@ class songs extends controller{
 							$unSyncedLyrics++;
 						}
 					}
-					$synced = !(count($lyrics) == $unSyncedLyrics);
+					$synced = (count($lyrics) != $unSyncedLyrics);
 				}
 				if ($synced) {
 					$song->synced = song::synced;
