@@ -29,7 +29,7 @@ class Login extends controller {
 		$login = new userpanelLogin();
 		$user = $login->register_helper($inputsRules);
 		$this->response->setStatus(true);
-		$this->response->Go(base\url());
+		$this->response->Go(base\url("contribute"));
 		return $this->response;
 	}
 	public function validate($data) {
