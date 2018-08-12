@@ -23,11 +23,6 @@ $this->the_header("login");
 						"name" => "name",
 						"placeholder" => translator::trans("register.user.name")
 					));
-					
-					$this->createField(array(
-						"name" => "lastname",
-						"placeholder" => translator::trans("register.user.lastname")
-					));
 					$this->createField(array(
 						"name" => "email",
 						"type" => "email",

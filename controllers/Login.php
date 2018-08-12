@@ -15,11 +15,6 @@ class Login extends controller {
 			"name" => array(
 				"type" => "string",
 			),
-			"lastname" => array(
-				"type" => "string",
-				"optional" => true,
-				"empty" => true,
-			),
 			"email" => array(
 				"type" => "email",
 			),
@@ -31,11 +26,6 @@ class Login extends controller {
 			),
 		);
 		$inputs = $this->checkinputs($inputsRules);
-		if (isset($inputs["lastname"])) {
-			if (!$inputs["lastname"]) {
-				unset($inputs["lastname"]);
-			}
-		}
 		$login = new userpanelLogin();
 		$user = $login->register_helper($inputsRules);
 		$this->response->setStatus(true);
