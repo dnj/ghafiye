@@ -88,7 +88,7 @@ class view extends lyricsView {
 		return [
 			[
 				"name"=> "facebook",
-				"link"=> "http://www.facebook.com/sharer.php?u=".$url
+				"link"=> "https://www.facebook.com/sharer.php?u=".$url
 			],
 			[
 				"name"=> "telegram",
@@ -96,15 +96,15 @@ class view extends lyricsView {
 			],
 			[
 				"name"=> "twitter",
-				"link"=> "http://www.twitter.com/share?url=".$url
+				"link"=> "https://www.twitter.com/share?url=".$url
 			],
 			[
 				"name"=> "google-plus",
-				"link"=> "http://www.plus.google.com/share?url=".$url
+				"link"=> "https://www.plus.google.com/share?url=".$url
 			],
 			[
 				"name"=> "pinterest",
-				"link"=> "http://www.pinterest.com/pin/create/button/?url=".$url
+				"link"=> "https://www.pinterest.com/pin/create/button/?url=".$url
 			],
 			[
 				"name"=> "linkedin",
@@ -112,15 +112,15 @@ class view extends lyricsView {
 			],
 			[
 				"name"=> "tumblr",
-				"link"=> "http://www.tumblr.com/share/link?url=".$url
+				"link"=> "https://www.tumblr.com/share/link?url=".$url
 			],
 			[
 				"name"=> "vk",
-				"link"=> "http://www.vk.com/share.php?url=".$url
+				"link"=> "https://www.vk.com/share.php?url=".$url
 			],
 			[
 				"name"=> "reddit",
-				"link"=> "http://www.reddit.com/submit?url=".$url
+				"link"=> "https://www.reddit.com/submit?url=".$url
 			],
 			[
 				"name"=> "mail",
@@ -362,7 +362,7 @@ class view extends lyricsView {
 							$avatar = $comment->user->getAvatar(50, 50);
 							$html .= '<a href="' . base\url("profile/" . $comment->user->id) . '"><img src="' . $avatar . '" alt="' . $comment->name . '" class="img-circle"></a>';
 						} else {
-							$avatar = "http://www.gravatar.com/avatar/" . md5(strtolower(trim($comment->email))). "?s=50&r=G&d=" . urlencode("http://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=50");
+							$avatar = "https://www.gravatar.com/avatar/" . md5(strtolower(trim($comment->email))). "?s=50&r=G&d=" . urlencode("https://0.gravatar.com/avatar/ad516503a11cd5ca435acc9bb6523536?s=50");
 							$html .= '<img src="' . $avatar . '" alt="' . $comment->name . '" class="img-circle">';
 						}
 						
