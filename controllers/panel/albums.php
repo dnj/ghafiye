@@ -211,6 +211,7 @@ class albums extends controller{
 				}elseif($inputs["avatar"]['error'] != 4){
 					throw new inputValidation("avatar");
 				}
+				$album->status = album::accepted;
 				$album->save();
 
 				$log = new log();
