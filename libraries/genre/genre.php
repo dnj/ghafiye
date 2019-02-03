@@ -18,7 +18,7 @@ class genre extends dbObject{
 		$genre = new genre();
 		$genre->join("packages\\ghafiye\\song", null, "inner", "genre");
 		$genre->having("COUNT(ghafiye_songs.id)", 0, '>');
-		$genre->where("ghafiye_songs.status", song::publish);
+		$genre->where("ghafiye_songs.status", [song::publish, song::Block], "in");
 		$genre->groupBy('ghafiye_songs.id');
 		$genre->setQueryOption('DISTINCT');
 		return $genre->get($limit, "ghafiye_genres.*");

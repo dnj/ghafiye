@@ -9,6 +9,8 @@ class song extends dbObject{
 	use title, imageTrait;
 	const publish = 1;
 	const draft = 2;
+	const Block = 3;
+	
 	const synced = 1;
 	protected $singer;
 	protected $dbTable = "ghafiye_songs";

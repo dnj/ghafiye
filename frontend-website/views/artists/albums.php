@@ -24,7 +24,7 @@ class albums extends albumsView{
 	}
 	protected function getAlbumReleaseDate(album $album){
 		db::where("album", $album->id);
-		db::where("status", song::publish);
+		db::where("status", [song::publish, song::Block], "in");
 		db::orderby('release_at', 'desc');
 		return db::getValue('ghafiye_songs', 'release_at');
 	}

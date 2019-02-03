@@ -15,7 +15,7 @@ class explore extends controller{
 	public function best(){
 		$view = view::byName("\\packages\\ghafiye\\views\\explore\\best");
 		$song = new song();
-		$song->where("status", song::publish);
+		$song->where("status", [song::publish, song::Block], "in");
 		$song->orderBy("views", "desc");
 		$song->pageLimit = $this->items_per_page;
 		$songs = $song->paginate($this->page);
@@ -28,7 +28,7 @@ class explore extends controller{
 	public function lastest(){
 		$view = view::byName("\\packages\\ghafiye\\views\\explore\\lastest");
 		$song = new song();
-		$song->where("status", song::publish);
+		$song->where("status", [song::publish, song::Block], "in");
 		$song->orderBy("release_at", "desc");
 		$song->pageLimit = $this->items_per_page;
 		$songs = $song->paginate($this->page);
@@ -48,7 +48,7 @@ class explore extends controller{
 		$genre = genre::byId($genreTitle->genre);
 		$song = new song();
 		$song->where("genre", $genre->id);
-		$song->where("status", song::publish);
+		$song->where("status", [song::publish, song::Block], "in");
 		$song->orderBy("views", "desc");
 		$song->pageLimit = $this->items_per_page;
 		$songs = $song->paginate($this->page);

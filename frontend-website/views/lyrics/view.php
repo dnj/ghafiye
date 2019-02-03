@@ -32,14 +32,14 @@ class view extends lyricsView {
 	}
 	protected function getTopSongs() {
 		$song = new song();
-		$song->where("status", song::publish);
+		$song->where("status",[song::publish, song::Block], "in");
 		$song->orderBy("views", "desc");
 		$song->setQueryOption("DISTINCT");
 		return $song->get(6);
 	}
 	protected function getTopSongsByGenre(genre $genre) {
 		$song = new song();
-		$song->where("status", song::publish);
+		$song->where("status", [song::publish, song::Block], "in");
 		$song->where("genre", $genre->id);
 		$song->orderBy("views", "desc");
 		$song->setQueryOption("DISTINCT");
@@ -65,7 +65,7 @@ class view extends lyricsView {
 	protected function getSongs() {
 		if ($album = $this->song->album) {
 			$song = new song();
-			$song->where("ghafiye_songs.status", song::publish);
+			$song->where("ghafiye_songs.status", [song::publish, song::Block], "in");
 			$song->where('ghafiye_songs.id', $this->song->id, '!=');
 			$song->where('ghafiye_songs.album', $album->id);
 			$song->orderBy("ghafiye_songs.release_at", "desc");
@@ -76,7 +76,7 @@ class view extends lyricsView {
 	protected function isMoreSong():bool{
 		$album = $this->song->album;
 		$song = new song();
-		$song->where("ghafiye_songs.status", song::publish);
+		$song->where("ghafiye_songs.status", [song::publish, song::Block], "in");
 		$song->where('ghafiye_songs.id', $this->song->id, '!=');
 		$song->where('ghafiye_songs.album', $album->id);
 		return $song->count() > 4;
@@ -154,7 +154,7 @@ class view extends lyricsView {
 	}
 	protected function getAlbumReleaseDate(album $album) {
 		db::where("album", $album->id);
-		db::where("status", song::publish);
+		db::where("status", [song::publish, song::Block], "in");
 		db::orderby('release_at', 'desc');
 		return db::getValue('ghafiye_songs', 'release_at');
 	}
@@ -163,22 +163,22 @@ class view extends lyricsView {
 			return [];
 		}
 		if (!$this->song->group) {
-			return album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer, 4);
+			return album::where("ghafiye_songs.status", [song::publish, song::Block], "in")->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer, 4);
 		} else {
-			return album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->byGroup($this->song->group, 4);
+			return album::where("ghafiye_songs.status", [song::publish, song::Block], "in")->where('ghafiye_albums.id', $this->song->album->id, '!=')->byGroup($this->song->group, 4);
 		}
 	}
 	protected function isMoreAlbum():bool{
 		if (!$this->song->group) {
-			return count(album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer)) > 4;
+			return count(album::where("ghafiye_songs.status", [song::publish, song::Block], "in")->where('ghafiye_albums.id', $this->song->album->id, '!=')->bySinger($this->singer)) > 4;
 		} else {
-			return count(album::where("ghafiye_songs.status", song::publish)->where('ghafiye_albums.id', $this->song->album->id, '!=')->byGroup($this->song->group)) > 4;
+			return count(album::where("ghafiye_songs.status", [song::publish, song::Block], "in")->where('ghafiye_albums.id', $this->song->album->id, '!=')->byGroup($this->song->group)) > 4;
 		}
 	}
 	protected function getPopularSongs():array{
 		db::setQueryOption("DISTINCT");
 		if (!$this->song->group) {
-			return song::where("status", song::publish)->orderBy("views", "DESC")->bySinger($this->singer, 5);
+			return song::where("status", [song::publish, song::Block], "in")->orderBy("views", "DESC")->bySinger($this->singer, 5);
 		} else {
 			return song::where('ghafiye_songs.group', $this->song->group->id)->orderBy("views", "DESC")->get(5, "ghafiye_songs.*");
 		}
@@ -186,7 +186,7 @@ class view extends lyricsView {
 	protected function isMorePopularSong():bool{
 		db::setQueryOption("DISTINCT");
 		if (!$this->song->group) {
-			return count(song::where("status", song::publish)->bySinger($this->singer)) > 5;
+			return count(song::where("status", [song::publish, song::Block], "in")->bySinger($this->singer)) > 5;
 		} else {
 			return song::where('ghafiye_songs.group', $this->song->group->id)->where('ghafiye_songs.id', $this->song->id, "!=")->count() > 5;
 		}

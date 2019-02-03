@@ -18,6 +18,7 @@ use \packages\musixmatch\artist;
 use \packages\musixmatch\album;
 use \packages\musixmatch\track;
 use \packages\musixmatch\genre;
+use \packages\musixmatch\lyrics;
 
 use \packages\ghafiye;
 use \packages\ghafiye\person;
@@ -294,6 +295,8 @@ class crawler extends process{
 			$genre = null;
 		}
 
+		$lyrics = $track->hasSubtitle ? $track->subtitle() : $track->lyrics();
+
 		$song = new song();
 		$song->musixmatch_id = $track->id;
 		$song->spotify_id = $track->spotify_id;
@@ -317,14 +320,13 @@ class crawler extends process{
 		$person->primary = 1;
 		$person->save();
 
-		$this->importLyrics($track, $song);
-		if($track->hasTranslationTo('fa')){
+		$this->importLyrics($lyrics, $track, $song);
+		if($track->language != 'fa' and $track->hasTranslationTo('fa')){
 			$this->importTranslatedLyrics($track, $song, 'fa');
 		}
 		return $song;
 	}
-	private function importLyrics(track $track, song $song){
-		$lyrics = $track->hasSubtitle ? $track->subtitle() : $track->lyrics();
+	private function importLyrics(lyrics $lyrics, track $track, song $song){
 		foreach($lyrics->texts as $key => $text){
 			$lyric = new song\lyric;
 			$lyric->song = $song->id;

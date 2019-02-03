@@ -99,6 +99,10 @@ class add extends ADDSongs{
 			array(
 				'title' => translator::trans("ghafiye.panel.song.status.draft"),
 				'value' => song::draft
+			),
+			array(
+				'title' => translator::trans("ghafiye.panel.song.status.block"),
+				'value' => song::Block
 			)
 		);
 	}

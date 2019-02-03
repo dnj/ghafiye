@@ -23,20 +23,20 @@ class view extends artistsView{
 	}
 	protected function getTopSongs(){
 		$song = new song();
-		$song->where("status", song::publish);
+		$song->where("status", [song::publish, song::Block], "in");
 		$song->orderBy("views", "desc");
 		return $song->get(6);
 	}
 	protected function getTopSongsByGenre(genre $genre){
 		$song = new song();
-		$song->where("status", song::publish);
+		$song->where("status", [song::publish, song::Block], "in");
 		$song->where("genre", $genre->id);
 		$song->orderBy("views", "desc");
 		return $song->get(6);
 	}
 	protected function getAlbumReleaseDate(album $album){
 		db::where("album", $album->id);
-		db::where("status", song::publish);
+		db::where("status", [song::publish, song::Block], "in");
 		db::orderby('release_at', 'desc');
 		return db::getValue('ghafiye_songs', 'release_at');
 	}
@@ -53,7 +53,7 @@ class view extends artistsView{
 	}
 	protected function getLastSongs(){
 		$song = new song();
-		$song->where("status", song::publish);
+		$song->where("status", [song::publish, song::Block], "in");
 		$song->orderBy("release_at", "desc");
 		return $song->get(4);
 	}

@@ -184,7 +184,7 @@ class songs extends controller{
 				'status' => array(
 					'type' => 'number',
 					'optional' => true,
-					'values' => array(song::publish, song::draft)
+					'values' => array(song::publish, song::draft, song::Block)
 				),
 				'lyric_lang' => array(
 					'type' => 'string',
@@ -576,7 +576,7 @@ class songs extends controller{
 				),
 				'status' => array(
 					'type' => 'number',
-					'values' => array(song::publish, song::draft)
+					'values' => array(song::publish, song::draft, song::Block)
 				),
 				'title' => array(
 					'type' => 'string',

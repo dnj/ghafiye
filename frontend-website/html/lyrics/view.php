@@ -6,7 +6,34 @@ use \packages\ghafiye\{song\lyric, song\person, person\name as personName, song}
 $this->the_header();
 $numberOfLangs = $this->numberOfLangs();
 $lang = $this->getLyricsLanguage();
+if ($this->song->status == song::Block) {
 ?>
+<div class="modal-backdrop fade in filtering-backdrop"></div>
+<div class="modal fade in" tabindex="-1" id="filtering-modal" data-show="true" role="dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title"><i class="fa fa-ban"></i> فیلترینگ</h4>
+			</div>
+			<div class="modal-body">
+				<div class="row">
+					<div class="col-sm-4 text-center">
+						<img src="<?php echo theme::url("assets/images/anger.png"); ?>" alt="Anger icon">
+					</div>
+					<div class="col-sm-8 text-justify">
+						<p>ما به تازگی از سوی <a href="http://internet.ir">کمیته مصادیق مجرمانه</a> (فیلترینگ) دستوری مبنی بر مسدود سازی دسترسی کاربران به این آهنگ را دریافت کردیم.</p>
+						<p style="font-size:25px;" class="text-center"><strong>شرمنده ایم!</strong><br> که دسترسی به متن آهنگ مورد علاقیتان ندارید.</p>
+						<p>صدای ما که به جایی نمیرسد، ولی اگر شما از این مسدود سازی ناراضی هستید لطفا به <a href="http://rafefilter.internet.ir/" target="_blank">این صفحه</a> مراجعه کنید و خواستار رفع فیلتر این آهنگ شوید.</p>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="https://google.com/search?<?php echo http_build_query(array('q' => 'متن آهنگ ' . $this->song->title() . ' از ' . $this->singer->name())); ?>" class="btn btn-default">جستجو در سایت های دیگر</a>
+			</div>
+		</div>
+	</div>
+</div>
+<?php } ?>
 <header class="row">
 	<div class="col-sm-3">
 		<img src="<?php echo $this->song->getImage(255, 255); ?>" class="song-image">

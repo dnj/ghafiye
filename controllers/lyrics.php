@@ -16,10 +16,10 @@ class lyrics extends controller{
 		$person = $group = $song = null;
 		if($personName){
 			$person = person::byId($personName->person);
-			$song = song::where("ghafiye_songs.status", song::publish)->bySingerAndTitle($person, $data['song']);
+			$song = song::where("ghafiye_songs.status", [song::publish, song::Block], "in")->bySingerAndTitle($person, $data['song']);
 		}else{
 			$group = group::byId($groupName->group_id);
-			$song = song::where("ghafiye_songs.status", song::publish)->byGroupAndTitle($group, $data['song']);
+			$song = song::where("ghafiye_songs.status", [song::publish, song::Block], "in")->byGroupAndTitle($group, $data['song']);
 		}
 		if(!$song){
 			throw new NotFound;

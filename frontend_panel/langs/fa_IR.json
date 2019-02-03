@@ -105,6 +105,7 @@
 		"ghafiye.panel.song.status": "وضعیت",
 		"ghafiye.panel.song.status.publish": "منتشر شده",
 		"ghafiye.panel.song.status.draft": "پیش نویس",
+		"ghafiye.panel.song.status.block": "مسدود شده",
 		"ghafiye.panel.song.person": "خواننده",
 		"ghafiye.song.delete.warning": "آیا از حذف آهنگ به شناسه #{song_id} اطمینان دارید؟ این عملیات بدون بازگشت است.",
 		"genres": "سبک ها",

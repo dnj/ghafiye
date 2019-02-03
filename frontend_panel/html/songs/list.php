@@ -49,11 +49,13 @@ $this->the_header();
 								$this->setButtonParam('delete', 'link', userpanel\url("songs/delete/".$song->id));
 								$statusClass = utility::switchcase($song->status, array(
 									'label label-success' => song::publish,
-									'label label-warning' => song::draft
+									'label label-warning' => song::draft,
+									'label label-danger' => song::Block
 								));
 								$statusTxt = utility::switchcase($song->status, array(
 									'ghafiye.panel.song.status.publish' => song::publish,
-									'ghafiye.panel.song.status.draft' => song::draft
+									'ghafiye.panel.song.status.draft' => song::draft,
+									'ghafiye.panel.song.status.block' => song::Block
 								));
 							?>
 							<tr>

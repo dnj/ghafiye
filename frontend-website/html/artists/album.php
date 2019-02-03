@@ -19,7 +19,7 @@ $lang = $this->getSongLanguage();
 			<?php
 			$x=0;
 			foreach($this->getSongs() as $song){
-				if($song->status == song::publish){
+				if(in_array($song->status, [song::publish, song::Block])){
 			?>
 			<li>
 				<a href="<?php echo(base\url($this->artist->encodedName($lang).'/'.$song->encodedTitle($lang))); ?>" class="row">

@@ -72,7 +72,7 @@ class Contributes extends listview {
 					$item["image"] = $contribute->album->getImage(48, 48);
 					$song = new song();
 					$song->where("album", $contribute->album->id);
-					$song->where("status", song::publish);
+					$song->where("status", [song::publish, song::Block], "in");
 					if ($song = $song->getOne()) {
 						$item["group"] = array(
 							"name" => $contribute->album->title($contribute->lang),

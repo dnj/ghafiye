@@ -31,6 +31,10 @@ export class viewLyric{
 		viewLyric.addCommentsubmitFormListener();
 		viewLyric.runLyricsDescription();
 		viewLyric.setCommentsReplyEvents();
+		$("#filtering-modal").modal({
+			show: true,
+			backdrop: "static"
+		});
 	}
 	protected static song: number;
 	public static runLikelistener():void{

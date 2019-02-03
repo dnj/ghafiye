@@ -28,7 +28,7 @@ class sitemap extends controller{
 		db::join("ghafiye_songs", "ghafiye_songs.id=ghafiye_songs_persons.song", "inner");
 
 		db::where("ghafiye_songs_persons.role", song\person::singer);
-		db::where("ghafiye_songs.status", song::publish);
+		db::where("ghafiye_songs.status", [song::publish, song::Block], "in");
 		db::setQueryOption('DISTINCT');
 
 		$personsData = db::get("ghafiye_persons", null, array("ghafiye_persons.*"));
@@ -48,7 +48,7 @@ class sitemap extends controller{
 		return $items;
 	}
 	private function export_songs(){
-		db::where("ghafiye_songs.status", song::publish);
+		db::where("ghafiye_songs.status", [song::publish, song::Block], "in");
 		$songsData = db::get("ghafiye_songs", null, array("ghafiye_songs.*"));
 		$songs = array();
 		foreach($songsData as $songData){
@@ -71,7 +71,7 @@ class sitemap extends controller{
 	}
 	private function export_genres(){
 		db::join("ghafiye_songs", "ghafiye_songs.genre=ghafiye_genres.id", "inner");
-		db::where("ghafiye_songs.status", song::publish);
+		db::where("ghafiye_songs.status", [song::publish, song::Block], "in");
 		db::setQueryOption('DISTINCT');
 		$genresData = db::get("ghafiye_genres", null, array("ghafiye_genres.*"));
 		$genres = array();
@@ -91,7 +91,7 @@ class sitemap extends controller{
 	}
 	private function export_albums(){
 		db::join("ghafiye_songs", "ghafiye_songs.album=ghafiye_albums.id", "inner");
-		db::where("ghafiye_songs.status", song::publish);
+		db::where("ghafiye_songs.status", [song::publish, song::Block], "in");
 		db::setQueryOption('DISTINCT');
 		$albumsData = db::get("ghafiye_albums", null, array("ghafiye_albums.*"));
 		$albums = array();
@@ -102,7 +102,7 @@ class sitemap extends controller{
 			db::join("ghafiye_songs_persons", "ghafiye_songs_persons.person=ghafiye_persons.id", "inner");
 			db::join("ghafiye_songs", "ghafiye_songs.id=ghafiye_songs_persons.song", "inner");
 			db::where("ghafiye_songs.album", $album->id);
-			db::where("ghafiye_songs.status", song::publish);
+			db::where("ghafiye_songs.status", [song::publish, song::Block], "in");
 			db::where("ghafiye_songs_persons.role", song\person::singer);
 			$singerData = db::getOne("ghafiye_persons", "ghafiye_persons.*");
 			$singer = new person($singerData);
