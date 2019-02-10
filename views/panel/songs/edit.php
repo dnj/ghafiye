@@ -40,7 +40,7 @@ class edit extends listview{
 		$this->setDataForm($persons, "persons");
 		$this->setDataForm(date::format("Y/m/d H:i:s", $song->release_at), "release_at");
 		if ($song->update_at) {
-			$this->setDataForm(date::format("Y/m/d H:i:s", $song->update_at), "update_at");
+			$this->setDataForm("", "update_at");
 		}
 	}
 	private function formatTime($time){

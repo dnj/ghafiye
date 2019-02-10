@@ -1,7 +1,7 @@
 <?php
 namespace packages\ghafiye\contributes\songs;
 use packages\base;
-use packages\base\{translator, db};
+use packages\base\{translator, db, date};
 use packages\ghafiye\{Contributes, song, Contribute};
 
 class add extends Contributes {
@@ -67,6 +67,7 @@ class add extends Contributes {
 		return $lyric->get();
 	}
 	public function onAccept() {
+		$this->contribute->song->update_at = date::time();
 		$this->contribute->song->status = song::publish;
 		$this->contribute->song->save();
 		db::where("ghafiye_songs_lyrices.song", $this->contribute->song->id);

@@ -204,6 +204,7 @@ class songs extends controller{
 				"update_at" => [
 					"type" => "date",
 					"optional" => true,
+					"empty" => true,
 				],
 				"un-synced" => array(
 					"type" => "bool",
@@ -227,6 +228,9 @@ class songs extends controller{
 					} else {
 						unset($inputs['update_at']);
 					}
+				}
+				if (!isset($inputs["update_at"])) {
+					$inputs["update_at"] = date::time();
 				}
 				if(isset($inputs['group'])){
 					if($inputs['group']){

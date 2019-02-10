@@ -1,7 +1,7 @@
 <?php
 namespace packages\ghafiye\contributes\songs;
 use packages\base;
-use packages\base\{db, translator, packages};
+use packages\base\{db, translator, packages, date};
 use packages\ghafiye\{Contributes, contribute\Lyric, song, Contribute};
 
 class Edit extends Contributes {
@@ -93,6 +93,7 @@ class Edit extends Contributes {
 		if ($img = $this->contribute->param("image")) {
 			$this->contribute->song->image = $img;
 		}
+		$this->contribute->song->update_at = date::time();
 		$this->contribute->song->save();
 		$lyric = new song\lyric();
 		$lyric->where("song", $this->contribute->song->id);

@@ -1,7 +1,7 @@
 <?php
 namespace packages\ghafiye\contributes\songs;
 use packages\base;
-use packages\base\translator;
+use packages\base\{translator, date};
 use packages\ghafiye\{Contributes, contribute\Lyric, song, Contribute};
 
 class Translate extends Contributes {
@@ -141,6 +141,8 @@ class Translate extends Contributes {
 			$translate->progress = $progress > 100 ? 100 : $progress;
 			$translate->save();
 		}
+		$this->contribute->song->update_at = date::time();
+		$this->contribute->song->save();
 		$this->contribute->status = Contribute::accepted;
 		$this->contribute->save();
 		$this->contribute->user->points += $this->point;

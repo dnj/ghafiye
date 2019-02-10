@@ -100,7 +100,7 @@ $this->the_header();
 									"name" => "update_at",
 									"label" => translator::trans("ghafiye.panel.song.update_at"),
 									"ltr" => true,
-									"placeholder" => date::format("Y/m/d H:i:s", date::time()),
+									"placeholder" => $this->song->update_at ? date::format("Y/m/d H:i:s", $this->song->update_at) : date::format("Y/m/d H:i:s", date::time()),
 								]);
 								?>
 							</div>

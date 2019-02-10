@@ -1,6 +1,7 @@
 <?php
 namespace packages\ghafiye\contributes\songs;
-use packages\base\translator;
+use packages\base;
+use packages\base\{translator, date};
 use packages\ghafiye\{Contributes, contribute\Lyric, song, Contribute};
 
 class Sync extends Contributes {
@@ -94,6 +95,7 @@ class Sync extends Contributes {
 			}
 		}
 		if ($synced) {
+			$song->update_at = date::time();
 			$song->synced = song::synced;
 			$song->save();
 		}
