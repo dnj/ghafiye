@@ -39,7 +39,7 @@ RUN rm -fr packages/dockerize; \
 		chown -R www-data:www-data /var/www/html; \
 	fi; \
 	(crontab -l 2>/dev/null; echo -e -n \
-		'* * * * * php /var/www/html/index.php --process=packages/ghafiye/processes/crawler@run' '\n' \
+		'* * * * * php /var/www/html/index.php --process=packages/ghafiye/processes/crawler@start' '\n' \
 	) | crontab -
 
 WORKDIR /var/www/html
