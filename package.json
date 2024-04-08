@@ -2,8 +2,10 @@
 	"permissions": "*",
 	"routing": "routing.json",
 	"frontend":["frontend-website","frontend_panel", "frontend-userpanel"],
-	"autoload":"autoloader.json",
-	"dependencies": ["base","userpanel", "musixmatch", "geoip"],
+	"autoload": {
+		"directories": ["controllers", "libraries", "listeners", "views", "processes", "Contributes", "logs"]
+	},
+	"dependencies": ["base", "userpanel", "musixmatch", "geoip"],
 	"languages":{
 		"fa_IR": "langs/fa_IR.json"
 	},
@@ -19,6 +21,10 @@
 		{
 			"name":"\\packages\\base\\frontend\\events\\throwDynamicData",
 			"listener": "listeners\\Base@beforeLoad"
+		},
+		{
+			"name": "/packages/base/events/PackagesLoaded",
+			"listener": "listeners/Base@packagesLoaded"
 		}
 	],
 	"sitemap": [{

@@ -315,7 +315,7 @@ export class Main{
 		Main.runSelect2();
 		Main.runElementsPosition();
 		Main.runNavigationToggler();
-		Main.runNavigationMenu();
+		// Main.runNavigationMenu();
 		Main.runGoTop();
 		Main.runModuleTools();
 		Main.runTooltips();

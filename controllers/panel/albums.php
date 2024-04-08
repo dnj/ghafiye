@@ -313,6 +313,7 @@ class albums extends controller{
 					}
 					$album->image = "storage/public/albums/".$title.$type_name;
 				}
+				$album->status = album::accepted;
 				$album->save();
 				foreach($inputs['titles'] as $lang => $title){
 					$album->addTitle($title, $lang, album\title::published);

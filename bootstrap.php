@@ -1,10 +1,10 @@
 <?php
 namespace packages\ghafiye;
-use packages\base\{http, json, router, router\rule};
+use packages\base\{http, json, router, router\rule, Packages};
 
 foreach (router::getRules() as $rule) {
 	$path = $rule->getPath();
-	if ($path[0]["name"] == "userpanel") {
+	if (isset($path[0]["name"]) and $path[0]["name"] == "userpanel") {
 		$name = "";
 		if (isset($path[1])) {
 			$name = $path[1]["name"];

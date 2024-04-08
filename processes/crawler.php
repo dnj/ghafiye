@@ -28,18 +28,21 @@ use \packages\ghafiye\crawler\queue;
 class crawler extends process{
 	private $musixmatch;
 
-	public function run(){
+	public function start(){
+		log::setLevel('debug');
 		$log = log::getInstance();
+
 		$log->info("looking for queued jobs");
 		$jobs = (new queue)->where("status",queue::queued)->get();
 		$log->reply(count($jobs), "found");
-		
+
 		foreach($jobs as $key => $queue){
 			$log->info("run #{$queue->id}");
 			$this->runJob($queue);
 		}
 	}
 	public function runJob(array $data){
+		log::setLevel('debug');
 		if(!isset($data['job'])){
 			throw new Exception("need job argument");
 		}
@@ -305,7 +308,7 @@ class crawler extends process{
 		$song->update_at = $track->updated_at->getTimestamp();
 		$song->duration = $track->length;
 		$song->genre = $genre ? $genre->id : null;
-		$song->lang = $track->language ? $track->language : 'en';
+		$song->lang = "fa";//$track->language ? $track->language : 'en';
 		$song->image = $this->downloadImage($track->album_cover);
 		$song->views = 0;
 		$song->likes = intval($track->favourites);

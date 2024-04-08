@@ -48,7 +48,7 @@ export class Crawler{
 		function setEventsForCards($card:JQuery){
 			$('.btn-info', $card).on('click', function(){
 				Crawler.goToStep('result-info');
-				const result = $(this).parents('.card').data('result');
+				var result = $(this).parents('.card').data('result');
 				Crawler.showResultInformation(result);
 			});
 			$('.btn-select', $card).on('click', function(){
@@ -122,7 +122,7 @@ export class Crawler{
 								};
 								break;
 							case('artist'):
-								const result = paging.data('result');
+								var result = paging.data('result');
 								data = {
 									artist: result.id,
 									type: 3,
@@ -130,7 +130,7 @@ export class Crawler{
 								};
 								break;
 							case('album'):
-								const result = paging.data('result');
+								var result = paging.data('result');
 								data = {
 									album: result.id,
 									type: 3,
@@ -141,7 +141,7 @@ export class Crawler{
 						Crawler.sources.track.goTo(page, data);
 						break;
 					case('4'):
-						const result = paging.data('result');
+						var result = paging.data('result');
 						data = {
 							artist: result.id,
 							type: 4
