@@ -1,4 +1,4 @@
-FROM ghcr.io/dnj/php-alpine:7.4-mysql-nginx
+FROM ghcr.io/dnj/php-alpine:8.2-mysql-nginx
 
 ARG TSCONFIG_PATH="packages/ghafiye/frontend-userpanel/tsconfig.json"
 
