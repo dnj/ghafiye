@@ -1,0 +1,208 @@
+name: 'Install Dependencies'
+description: 'Install Jalno Dependencies For Ghafiye'
+
+inputs:
+  GITLAB_PRIVATE_KEY:
+    description: 'git.jeyserver.com private token'
+    required: true
+  GITLAB_KNOWN_HOST:
+    description: 'git.jeyserver.com known host'
+    required: true
+  GITLAB_SERVER_URL:
+    description: 'git.jeyserver.com url'
+    required: false
+    default: 'https://git.jeyserver.com'
+  CACHE_PACKAGES:
+    description: 'cache Jalno dependencies in packages directory, except base and ghafiye package'
+    required: false
+    default: 'true'
+  CACHE_PACKAGES_KEY_DATE_FORMAT:
+    description: 'a format to give date command to generate key for cache'
+    required: false
+    default: '+%Y%m%d'
+
+runs:
+  using: "composite"
+  steps:
+    - name: Checkout jalno/base
+      uses: actions/checkout@v4
+      with:
+        repository: jalno/base
+        path: base
+
+    - name: Get Date for Cache Key
+      id: get-cache-key
+      if: inputs.CACHE_PACKAGES == 'true'
+      run: |
+        echo "date=$(/bin/date -u "${{ inputs.CACHE_PACKAGES_KEY_DATE_FORMAT }}")" >> $GITHUB_OUTPUT
+        echo $GITHUB_OUTPUT
+      shell: bash
+
+    - name: Restore cached Jalno Packages
+      id: cache-packages-restore
+      if: inputs.CACHE_PACKAGES == 'true'
+      uses: actions/cache/restore@v4
+      with:
+        path: base/packages
+        key: ${{ runner.os }}-jalno-packages-${{ steps.get-cache-key.outputs.date }}
+
+    - name: Checkout jalno/PhpParser
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: jalno/PhpParser
+        path: base/packages/PhpParser
+
+    - name: Checkout jalno/notifications
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: jalno/notifications
+        path: base/packages/notifications
+
+    - name: Checkout jalno/userpanel
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: jalno/userpanel
+        path: base/packages/userpanel
+
+    - name: Checkout abedi/blog
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: abedi/blog
+        path: base/packages/blog
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Checkout abedi/contactus
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: abedi/contactus
+        path: base/packages/contactus
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Checkout yeganemehr/email
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: yeganemehr/email
+        path: base/packages/email
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Checkout abedi/geoip
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: abedi/geoip
+        path: base/packages/geoip
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Checkout dnj/musixmatch
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: dnj/musixmatch
+        path: base/packages/musixmatch
+
+    - name: Checkout abedi/pages
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: abedi/pages
+        path: base/packages/pages
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Checkout abedi/redirect
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: abedi/redirect
+        path: base/packages/redirect
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Checkout yeganemehr/sitemap
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: yeganemehr/sitemap
+        path: base/packages/sitemap
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Checkout yeganemehr/sms
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: yeganemehr/sms
+        path: base/packages/sms
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Checkout hosni/phpmailer
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: hosni/phpmailer
+        path: base/packages/phpmailer
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Checkout yeganemehr/phpmailer_emailsender
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: yeganemehr/phpmailer_emailsender
+        path: base/packages/phpmailer_emailsender
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Checkout hosni/s3
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: hosni/s3
+        path: base/packages/s3
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Checkout hosni/s3_api
+      uses: actions/checkout@v4
+      if: (inputs.CACHE_PACKAGES != 'true' || steps.cache-packages-restore.outputs.cache-hit != 'true')
+      with:
+        repository: hosni/s3_api
+        path: base/packages/s3_api
+        github-server-url: ${{ inputs.GITLAB_SERVER_URL }}
+        ssh-known-hosts: ${{ inputs.GITLAB_KNOWN_HOST }}
+        ssh-key: ${{ inputs.GITLAB_PRIVATE_KEY }}
+
+    - name: Cache Jalno Packages
+      id: cache-packages
+      if: inputs.CACHE_PACKAGES == 'true'
+      uses: actions/cache@v4
+      with:
+        path: base/packages
+        key: ${{ runner.os }}-jalno-packages-${{ steps.get-cache-key.outputs.date }}
+
+    - name: Checkout dnj/ghafiye
+      uses: actions/checkout@v4
+      with:
+        path: base/packages/ghafiye
