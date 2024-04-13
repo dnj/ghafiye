@@ -432,5 +432,12 @@
 			"\\packages\\base\\NotFound"
 		],
 		"handler": "controllers\\home@notfound"
+	},
+	{
+		"paths": ["contribute/"],
+		"exceptions":[
+			"\\packages\\userpanel\\AuthenticationException"
+		],
+		"handler": "controllers/Contribute@handleAuthenticationException"
 	}
 ]

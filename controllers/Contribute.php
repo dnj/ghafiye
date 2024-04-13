@@ -2,10 +2,11 @@
 namespace packages\ghafiye\controllers;
 use packages\base\{db, response};
 use packages\userpanel\controller;
+use packages\userpanel\controllers\Dashboard as UserpanelDashboardController;
 use packages\ghafiye\{view, views, authorization, song, Contribute as contributeObj};
 
 class Contribute extends controller {
-	public $authentication = true;
+	public $authentication = false;
 	public function main(): response {
 		$view = view::byName(views\contribute\Main::class);
 		$this->response->setView($view);
@@ -70,5 +71,9 @@ class Contribute extends controller {
 		$view->setContribute($contribute);
 		$this->response->setStatus(true);
 		return $this->response;
+	}
+
+	public function handleAuthenticationException(): Response {
+		return (new UserpanelDashboardController)->authError();
 	}
 }

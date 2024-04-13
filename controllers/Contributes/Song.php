@@ -6,6 +6,7 @@ use packages\ghafiye\{view, views, authentication, song as songObj, album, perso
 
 class Song extends controller {
 	protected $authentication = true;
+
 	public function add($data) {
 		$view = view::byName(views\contributes\songs\Add::class);
 		$this->response->setView($view);
